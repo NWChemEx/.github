@@ -1,0 +1,33 @@
+name: Test Documentation
+on:
+  workflow_call:
+    inputs:
+      repoName:
+        required: true
+        type: string
+      dependencies:
+        required: true
+        type: string
+  workflow_dispatch:
+      
+jobs:
+  build-documentation:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cmake_version: [3.16.3]
+    steps:
+    - name: Obtain Source
+      uses: actions/checkout@v2
+    - name: Get dependencies
+      env:
+        cmake_version: ${{ matrix.cmake_version }}
+      uses: TLW-orgtesting/ci-config/get_dependencies@v1.021
+      with:
+        dependencies: ${{inputs.dependencies}}
+    - name: Build documentation
+      env:
+        cmake_version: ${{ matrix.cmake_version }}
+      uses: TLW-orgtesting/ci-config/build_docs@v1.022
+      with:
+        repoName: ${{inputs.repoName}}

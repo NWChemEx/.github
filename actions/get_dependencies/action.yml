@@ -1,0 +1,14 @@
+name: Test Documentation
+inputs:
+  dependencies:
+    required: true
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - name: Give Permission
+      run: chmod +x ${{github.action_path}}/get_dependencies.sh 
+      shell: bash 
+    - name: Get dependencies
+      run: ${{github.action_path}}/get_dependencies.sh ${{inputs.dependencies}}
+      shell: bash 
