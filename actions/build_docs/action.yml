@@ -1,6 +1,6 @@
 name: Test Documentation
 inputs:
-  repoName:
+  target:
     required: true
     type: string
 runs:
@@ -10,5 +10,5 @@ runs:
       run: chmod +x ${{github.action_path}}/build_docs.sh 
       shell: bash 
     - name: Build Documentation
-      run: ${{github.action_path}}/build_docs.sh ${{inputs.repoName}}
+      run: ${{github.action_path}}/build_docs.sh ${{inputs.target}}
       shell: bash
