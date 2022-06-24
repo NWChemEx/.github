@@ -30,4 +30,4 @@ jobs:
         cmake_version: ${{ matrix.cmake_version }}
       uses: NWChemEx-Project/.github/actions/build_docs@master
       with:
-        repoName: ${{inputs.target}}
+        target: ${{inputs.target}}
