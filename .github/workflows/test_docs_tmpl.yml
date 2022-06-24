@@ -22,12 +22,12 @@ jobs:
     - name: Get dependencies
       env:
         cmake_version: ${{ matrix.cmake_version }}
-      uses: NWChemEx-Project/.github/actions/get_dependencies@demo-0.0.2
+      uses: NWChemEx-Project/.github/actions/get_dependencies@master
       with:
         dependencies: ${{inputs.dependencies}}
     - name: Build documentation
       env:
         cmake_version: ${{ matrix.cmake_version }}
-      uses: NWChemEx-Project/.github/actions/build_docs@demo-0.0.2
+      uses: NWChemEx-Project/.github/actions/build_docs@master
       with:
         repoName: ${{inputs.repoName}}

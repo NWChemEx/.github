@@ -27,7 +27,7 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
-        uses: NWChemEx-Project/.github/actions/get_dependencies@demo-0.0.2
+        uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
           dependencies: ${{inputs.get_dependencies_params}}
       - name: Build and test
@@ -35,7 +35,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@demo-0.0.2
+        uses: NWChemEx-Project/.github/actions/build_and_test@master
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
