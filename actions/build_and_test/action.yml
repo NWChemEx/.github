@@ -1,0 +1,10 @@
+name: Build and Test
+runs:
+  using: "composite"
+  steps:
+    - name: Give Permission
+      run: chmod +x ${{github.action_path}}/build_and_test.sh 
+      shell: bash 
+    - name: Build Documentation
+      run: ${{github.action_path}}/build_and_test.sh
+      shell: bash 

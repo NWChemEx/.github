@@ -22,12 +22,12 @@ jobs:
     - name: Get dependencies
       env:
         cmake_version: ${{ matrix.cmake_version }}
-      uses: TLW-orgtesting/ci-config/get_dependencies@v1.021
+      uses: NWChemEx-Project/.github/actions/get_dependencies@demo-0.0.2
       with:
         dependencies: ${{inputs.dependencies}}
     - name: Build documentation
       env:
         cmake_version: ${{ matrix.cmake_version }}
-      uses: TLW-orgtesting/ci-config/build_docs@v1.022
+      uses: NWChemEx-Project/.github/actions/build_docs@demo-0.0.2
       with:
         repoName: ${{inputs.repoName}}
