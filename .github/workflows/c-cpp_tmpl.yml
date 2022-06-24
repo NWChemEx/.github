@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   workflow_call:
     inputs:
-      get_dependencies_params:
+      dependencies:
         required: true
         type: string
   
@@ -29,7 +29,7 @@ jobs:
           gcc_version: ${{ matrix.gcc_version }}
         uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
-          dependencies: ${{inputs.get_dependencies_params}}
+          dependencies: ${{inputs.dependencies}}
       - name: Build and test
         env:
           cmake_version: ${{ matrix.cmake_version }}

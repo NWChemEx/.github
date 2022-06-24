@@ -2,7 +2,7 @@ name: Test Documentation
 on:
   workflow_call:
     inputs:
-      repoName:
+      target:
         required: true
         type: string
       dependencies:
@@ -30,4 +30,4 @@ jobs:
         cmake_version: ${{ matrix.cmake_version }}
       uses: NWChemEx-Project/.github/actions/build_docs@master
       with:
-        repoName: ${{inputs.repoName}}
+        repoName: ${{inputs.target}}
