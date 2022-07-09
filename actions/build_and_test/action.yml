@@ -1,4 +1,8 @@
 name: Build and Test
+inputs:
+  CPP_GITHUB_TOKEN:
+    description: CPP Github Token
+    required: true
 runs:
   using: "composite"
   steps:
