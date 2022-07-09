@@ -35,7 +35,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        uses: NWChemEx-Project/.github/actions/build_and_test@reuseable-workflow
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
