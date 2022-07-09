@@ -6,9 +6,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: check name
-      run: echo ${{inputs.CPP_GITHUB_TOKEN}}
-      shell: bash
     - name: Give Permission
       run: chmod +x ${{github.action_path}}/build_and_test.sh 
       shell: bash 
