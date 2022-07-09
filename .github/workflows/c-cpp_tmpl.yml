@@ -7,6 +7,10 @@ on:
       dependencies:
         required: true
         type: string
+    secrets:
+      CPP_GITHUB_TOKEN:
+        required: true
+
   
 
 jobs:
@@ -20,16 +24,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/setup-python@v1
-        with:
-          python-version: '3.x'
-      - name: Get dependencies
-        env:
-          cmake_version: ${{ matrix.cmake_version }}
-          gcc_version: ${{ matrix.gcc_version }}
-        uses: NWChemEx-Project/.github/actions/get_dependencies@master
-        with:
-          dependencies: ${{inputs.dependencies}}
+      # - uses: actions/setup-python@v1
+      #   with:
+      #     python-version: '3.x'
+      # - name: Get dependencies
+      #   env:
+      #     cmake_version: ${{ matrix.cmake_version }}
+      #     gcc_version: ${{ matrix.gcc_version }}
+      #   uses: NWChemEx-Project/.github/actions/get_dependencies@master
+      #   with:
+      #     dependencies: ${{inputs.dependencies}}
+      - name: check CODECOV_TOKEN
+        run: echo 'this is tocken ' ${{secrets.CPP_GITHUB_TOKEN}}
       - name: Build and test
         env:
           cmake_version: ${{ matrix.cmake_version }}
