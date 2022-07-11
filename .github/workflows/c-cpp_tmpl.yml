@@ -1,13 +1,14 @@
 name: C_C++_CI
 
 on:
-  workflow_dispatch:
   workflow_call:
     inputs:
       dependencies:
         required: true
         type: string
-  
+    secrets:
+      CPP_GITHUB_TOKEN:
+        required: true
 
 jobs:
   build:
@@ -34,8 +35,9 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
         uses: NWChemEx-Project/.github/actions/build_and_test@master
+        with: 
+          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
