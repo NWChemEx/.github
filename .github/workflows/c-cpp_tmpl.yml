@@ -31,6 +31,9 @@ jobs:
         uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
           dependencies: ${{inputs.dependencies}}
+      - name: For NWChemEx-Project
+        if: github.event.repository.name == 'NWChemEx'
+        run: echo 'inside NWChemEx'
       - name: Build and test
         env:
           cmake_version: ${{ matrix.cmake_version }}
