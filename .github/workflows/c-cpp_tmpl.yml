@@ -32,7 +32,9 @@ jobs:
       #   with:
       #     dependencies: ${{inputs.dependencies}}
       - name: For NWChemEx-Project
-        if: github.event.repository.name == 'NWChemEx' and steps.cache.outputs.cache-hit != 'true'
+        if: |
+          github.event.repository.name == 'NWChemEx' &&
+          steps.cache.outputs.cache-hit != 'true'
         run: echo 'inside NWChemEx'
       # - name: Build and test
       #   env:
