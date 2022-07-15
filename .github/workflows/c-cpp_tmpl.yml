@@ -28,40 +28,17 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
-        uses: NWChemEx-Project/.github/actions/get_dependencies@reuseable-workflow
+        uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
           dependencies: ${{inputs.dependencies}}
-      # - name: cache-libint
-      #   if: github.event.repository.name == 'NWChemEx'
-      #   id: cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: install
-      #     key: libint-gcc${{ matrix.gcc_version }}
-      # - name: Build libint
-      #   if: |
-      #     github.event.repository.name == 'NWChemEx' &&
-      #     steps.cache.outputs.cache-hit != 'true'
-      #   run: |
-      #     export INSTALL_PATH=`pwd`/install
-      #     # check code out
-      #     wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
-      #     tar -zxf libint-2.6.0.tgz
-      #     cd libint-2.6.0
-      #     export CXX=`which g++`
-      #     export CC=`which gcc`
-      #     ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
-      #     cd build
-      #     make
-      #     make install
-      # - name: Build and test
-      #   env:
-      #     cmake_version: ${{ matrix.cmake_version }}
-      #     gcc_version: ${{ matrix.gcc_version }}
-      #   uses: NWChemEx-Project/.github/actions/build_and_test@master
-      #   with: 
-      #     CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-      # - uses: codecov/codecov-action@v1
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     file: ./coverage.xml
+      - name: Build and test
+        env:
+          cmake_version: ${{ matrix.cmake_version }}
+          gcc_version: ${{ matrix.gcc_version }}
+        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        with: 
+          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
