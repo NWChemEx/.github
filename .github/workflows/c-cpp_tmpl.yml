@@ -31,7 +31,14 @@ jobs:
         uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
           dependencies: ${{inputs.dependencies}}
-      - name: For NWChemEx-Project
+      - name: cache-libint
+        if: github.event.repository.name == 'NWChemEx'
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: install
+          key: libint-gcc${{ matrix.gcc_version }}
+      - name: Build libint
         if: |
           github.event.repository.name == 'NWChemEx' &&
           steps.cache.outputs.cache-hit != 'true'
