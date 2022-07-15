@@ -269,7 +269,7 @@ for depend in "$@"; do
   elif [ "${depend}" = "togglebutton" ]; then
     get_togglebutton
   elif [ "${depend}" = "libint" ]; then
-  get_libint
+    get_libint
   else
     echo "Unrecognized dependency: ${depend}"
     exit 99
