@@ -254,6 +254,8 @@ for depend in "$@"; do
     get_gcovr
   elif [ "${depend}" = "lapacke" ]; then
     get_lapacke
+  elif [ "${depend}" = "libint" ]; then
+    get_libint
   elif [ "${depend}" = "ninja" ]; then
     get_ninja
   elif [ "${depend}" = "numpy" ]; then
@@ -268,8 +270,6 @@ for depend in "$@"; do
     get_sphinx
   elif [ "${depend}" = "togglebutton" ]; then
     get_togglebutton
-  elif [ "${depend}" = "libint" ]; then
-    get_libint
   else
     echo "Unrecognized dependency: ${depend}"
     exit 99
