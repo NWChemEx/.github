@@ -3,7 +3,6 @@ on:
   workflow_call:
     inputs:
       target:
-        required: true
         type: string
       dependencies:
         required: true

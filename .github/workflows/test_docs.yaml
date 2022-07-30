@@ -11,5 +11,4 @@ jobs:
   Build-Documentation:
     uses: NWChemEx-Project/.github/.github/workflows/test_docs_tmpl.yml@master
     with:
-      target: .github_cxx_api
       dependencies: sphinx

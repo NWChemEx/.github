@@ -9,5 +9,4 @@ jobs:
   Build-Documentation:
     uses: NWChemEx-Project/.github/.github/workflows/deploy_docs_tmpl.yml@master
     with: 
-      target: .github_cxx_api
       dependencies: sphinx
