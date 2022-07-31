@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - reuseable-workflow
+      # - reuseable-workflow
 
 jobs:
   Build-Documentation:

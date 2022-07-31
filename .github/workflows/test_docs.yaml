@@ -1,26 +1,37 @@
+# name: Test Documentation
+# on:
+#   pull_request:
+#     branches:
+#       - master
+#   push:
+#     branches:
+#       - reuseable-workflow
+
+# jobs:
+#   Build-Documentation:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Obtain Source
+#         uses: actions/checkout@v2
+#       - name: Get dependencies
+#         env:
+#           cmake_version: 3.16.3
+#         uses: NWChemEx-Project/.github/actions/get_dependencies@master
+#         with:
+#           dependencies: sphinx
+#       - name: Build documentation
+#         run: |
+#           . venv/bin/activate
+#           cd docs
+#           make 
 name: Test Documentation
 on:
   pull_request:
     branches:
       - master
-  push:
-    branches:
-      - reuseable-workflow
 
 jobs:
   Build-Documentation:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Obtain Source
-        uses: actions/checkout@v2
-      - name: Get dependencies
-        env:
-          cmake_version: 3.16.3
-        uses: NWChemEx-Project/.github/actions/get_dependencies@master
-        with:
-          dependencies: sphinx
-      - name: Build documentation
-        run: |
-          . venv/bin/activate
-          cd docs
-          make html
+    uses: NWChemEx-Project/.github/.github/workflows/test_docs_tmpl.yml@reuseable-workflow
+    with:
+      dependencies: sphinx
