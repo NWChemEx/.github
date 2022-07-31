@@ -31,7 +31,7 @@ on:
       - master
   push:
     branches:
-      - master
+      - reuseable-workflow
 
 jobs:
   Build-Documentation:
