@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setting Up VSCode for NWX &mdash; DeveloperTools 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Building NWX with VSCode" href="building.html" />
+    <link rel="prev" title="VSCode" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> DeveloperTools
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../conventions/index.html">Project Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developing NWChemEx</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../preliminaries.html">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cxx_development_workflow.html">C++ Development Workflow</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Using IDEs to Develop NWX</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">VSCode</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Setting Up VSCode for NWX</a></li>
+<li class="toctree-l4"><a class="reference internal" href="building.html">Building NWX with VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="developing.html">Developing NWX with VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tips_and_tricks.html">Tips and Tricks for VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faqs.html">FAQs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project_management/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DeveloperTools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Developing NWChemEx</a> &raquo;</li>
+          <li><a href="../index.html">Using IDEs to Develop NWX</a> &raquo;</li>
+          <li><a href="index.html">VSCode</a> &raquo;</li>
+      <li>Setting Up VSCode for NWX</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/development/ides/vscode/setup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="setting-up-vscode-for-nwx">
+<h1>Setting Up VSCode for NWX<a class="headerlink" href="#setting-up-vscode-for-nwx" title="Permalink to this heading"></a></h1>
+<p>This page focuses on how to initially setup VSCode, specifically from the
+perspective of NWX development.</p>
+<section id="creating-a-workspace">
+<h2>Creating a Workspace<a class="headerlink" href="#creating-a-workspace" title="Permalink to this heading"></a></h2>
+<p>When you first start up VSCode you will want to go to
+<code class="docutils literal notranslate"><span class="pre">files-&gt;add</span> <span class="pre">folder</span> <span class="pre">to</span> <span class="pre">workspace</span></code> and provide VSCode with one of the NWChemEx
+repos in your NWX workspace, <em>e.g.</em>, <cite>nwx_workspace/SCF</cite> in the directory
+structure assumed in <span class="xref std std-ref">Workflow Preliminaries</span>). Once you have done this you
+should see your folder and its subdirectories in the explorer view
+(explorer view is the icon with a page overlying a square in the left toolbar).
+You can repeat this process for each of the additional NWX repos in your
+workspace. It is recommend that you then save your workspace
+(File-&gt;Save Workspace As) that way you can quickly open all of these repos
+again.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>AFAIK adding each repo individually in this manner is the only way for the
+CMake extension to properly register the root CMakeLists.txt for each repo.
+If you try to add the workspace root it will instead look for the root
+CMakeLists.txt there.</p>
+</div>
+</section>
+<section id="adding-extensions">
+<h2>Adding Extensions<a class="headerlink" href="#adding-extensions" title="Permalink to this heading"></a></h2>
+<p>By default VSCode is pretty bare bones. Additional features
+are added/enabled by installing extensions. When you load up source code VSCode
+will inspect it and automatically recommend you install the corresponding
+extenstion (if it’s not installed already). For developing NWX we recommend you
+minimally install:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ms-vscode.cpptools</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ms-vscode.cmake-tools</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ms-python.python</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lextudio.restructuredtext</span></code></p></li>
+</ol>
+<p>To install an extension click on the extensions view (the icon in the left
+toolbar with a square broken into four smaller squares) and search for the
+identifiers given in the above list.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="VSCode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="building.html" class="btn btn-neutral float-right" title="Building NWX with VSCode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

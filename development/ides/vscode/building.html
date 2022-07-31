@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building NWX with VSCode &mdash; DeveloperTools 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Developing NWX with VSCode" href="developing.html" />
+    <link rel="prev" title="Setting Up VSCode for NWX" href="setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> DeveloperTools
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../conventions/index.html">Project Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developing NWChemEx</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../preliminaries.html">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cxx_development_workflow.html">C++ Development Workflow</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Using IDEs to Develop NWX</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">VSCode</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="setup.html">Setting Up VSCode for NWX</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Building NWX with VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="developing.html">Developing NWX with VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tips_and_tricks.html">Tips and Tricks for VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faqs.html">FAQs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project_management/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DeveloperTools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Developing NWChemEx</a> &raquo;</li>
+          <li><a href="../index.html">Using IDEs to Develop NWX</a> &raquo;</li>
+          <li><a href="index.html">VSCode</a> &raquo;</li>
+      <li>Building NWX with VSCode</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/development/ides/vscode/building.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="building-nwx-with-vscode">
+<h1>Building NWX with VSCode<a class="headerlink" href="#building-nwx-with-vscode" title="Permalink to this heading"></a></h1>
+<p>Once you’ve minimally added the C++ and CMake extensions it’s time to start
+setting up your build process. For the purposes of this tutorial we assume you
+are using a toolchain file with all of your CMake options. For sake of arguement
+we assume that the full path to your toolchain file is given by:
+<code class="docutils literal notranslate"><span class="pre">/home/user/nwx_workspace/toolchain.cmake</span></code>.</p>
+<p>To modify VSCode’s CMake settings click on the gear in the left toolbar and then
+settings. You will then be presented with all of VSCode’s settings. At the top
+you will see three tabs (“User”, “Workspace”, and the name of your current
+folder); these tabs indicate the scope of the settings you are setting (user
+settings follow you, workspace settings are for the entire workspace, and folder
+setings are only for the current folder). Since building is somewhat project-
+specific we recommend you click on either “Workspace” or folder. The CMake
+settings are then accessed by expanding the “Extensions” settings and navigating
+to “CMake configuration”.</p>
+<section id="configuring-the-build">
+<h2>Configuring the Build<a class="headerlink" href="#configuring-the-build" title="Permalink to this heading"></a></h2>
+<p>The first step is to set the paths of the CMake executables. If the <code class="docutils literal notranslate"><span class="pre">cmake</span></code>
+and <code class="docutils literal notranslate"><span class="pre">ctest</span></code> executables are in your path feel free to skip this step.
+Otherwise set “CMake Path” to the full path to your CMake executable. VSCode
+will automatically use the <code class="docutils literal notranslate"><span class="pre">ctest</span></code> executable that comes with the <code class="docutils literal notranslate"><span class="pre">cmake</span></code>
+executable you specify (but if you want to use a different one you can change
+its path below via the “Ctest Path” option).</p>
+<p>Next we need to make sure the build uses our toolchain file. For our purposes
+the main option we need to change is “Configure Args” (do not confuse this with
+“Build Tool Args”, which are the arguments that get passed to
+the underlying build tool, typically <code class="docutils literal notranslate"><span class="pre">make</span></code>). Under “Configure Args” click on
+“Add Item” and type:</p>
+<div class="highlight-.cmake notranslate"><div class="highlight"><pre><span></span>-DCMAKE_TOOLCHAIN_FILE=/home/user/nwx_workspace/toolchain.cmake
+</pre></div>
+</div>
+<p>substituting in your toolchain’s path.</p>
+</section>
+<section id="configuring-the-project-i-e-running-cmake">
+<h2>Configuring the Project (i.e., running CMake)<a class="headerlink" href="#configuring-the-project-i-e-running-cmake" title="Permalink to this heading"></a></h2>
+<p>Once you’ve setup the options it’s time to actually configure the project. To
+configure say SCF, click on a C++ file or a CMake file in the <code class="docutils literal notranslate"><span class="pre">SCF</span></code> directory.
+The bottom toolbar should show a folder icon with <code class="docutils literal notranslate"><span class="pre">SCF</span></code> next to it; this is
+how you can tell which project will be configured. In the bottom toolbar you
+should also see a panel with something like “CMake: [Debug]: Ready”. Click on
+this. You will get a pop-up asking you to select a kit. Choose “Unspecified” to
+let CMake detect the kit for you (it’ll end-up using your toolchain file). Then
+pick the build type you want (Debug for normal development). After this you
+should see the normal CMake configuration dialog fly by in the terminal. You’ll
+know it’s configured successfully if you get a line like</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-- Build files have been written to: &lt;your/build/directory/path&gt;
+</pre></div>
+</div>
+</section>
+<section id="building-the-project">
+<h2>Building the Project<a class="headerlink" href="#building-the-project" title="Permalink to this heading"></a></h2>
+<p>Once the project has been configured you simply click the word “Build” in the
+toolbar at the bottom. Akin to the configure step, you should see the usual
+build dialog fly by on the terminal.</p>
+</section>
+<section id="testing-the-project">
+<h2>Testing the Project<a class="headerlink" href="#testing-the-project" title="Permalink to this heading"></a></h2>
+<p>After a successful build you should be able to click the play arrow
+(right-facing triangle) in the bottom toolbar to run the resulting executable
+(assuming you enabled testing by putting <code class="docutils literal notranslate"><span class="pre">BUILD_TESTING=TRUE</span></code> in your
+toolchain file). Again the normal testing output will fly by in the terminal.</p>
+</section>
+<section id="building-sphinx-documentation">
+<h2>Building Sphinx Documentation<a class="headerlink" href="#building-sphinx-documentation" title="Permalink to this heading"></a></h2>
+<p>As a preliminary step you will need to install the documentation dependencies.
+Each repo should contain instructions on how to do this, which amount to
+something like:</p>
+<ul class="simple">
+<li><p>Create a virtual Python environment</p></li>
+<li><p>run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code></p></li>
+</ul>
+<p>Assuming you have installed the documentation’s actual dependencies and the
+<code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code> extension, the easiest way to setup the documentation build
+is to go to settings (click on gear, then “settings”) and navigate to
+<code class="docutils literal notranslate"><span class="pre">Extensions-&gt;reStructuredText</span></code> in the settings scope of your choice.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All NWX repos follow the same conventions for documentation so if you like
+you can safely use these settings for the entire workspace.</p>
+</div>
+<p>Minimally you should then set:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Built</span> <span class="pre">Documentation</span> <span class="pre">Path</span></code> to <code class="docutils literal notranslate"><span class="pre">${workspaceFolder}/build/html</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Conf</span> <span class="pre">Path</span></code> to <code class="docutils literal notranslate"><span class="pre">${workspaceFolder}/docs/source</span></code></p></li>
+</ul>
+<p>It is then recommended that you set:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">on</span> <span class="pre">Text</span> <span class="pre">Changed</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> (may be the default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">Delay</span></code> to a smaller value</p></li>
+</ul>
+<p>and if you are using virtual environments you will need to set
+<code class="docutils literal notranslate"><span class="pre">Sphinx</span> <span class="pre">Build</span> <span class="pre">Path</span></code> so that it points to the <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> executable in
+your virtual environment (should be something like
+<code class="docutils literal notranslate"><span class="pre">/path/to/venv/bin/sphinx-build</span></code>. If for each repo you always create the
+virtual environment in the same location you can still set this for the entire
+workspace.</p>
+<p>Once you have set this all up you can open a <code class="docutils literal notranslate"><span class="pre">.rst</span></code> file and hit
+<code class="docutils literal notranslate"><span class="pre">ctrl+shift+R</span></code> to build the documentation (you’ll want to point your
+webbrowser at <code class="docutils literal notranslate"><span class="pre">${workspaceFolder}/build/html/index.html</span></code> to see it).</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="setup.html" class="btn btn-neutral float-left" title="Setting Up VSCode for NWX" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="developing.html" class="btn btn-neutral float-right" title="Developing NWX with VSCode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

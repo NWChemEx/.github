@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NWChemEx’s Developer Documentation &mdash; DeveloperTools 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Project Conventions" href="conventions/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> DeveloperTools
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conventions/index.html">Project Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_management/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">DeveloperTools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>NWChemEx’s Developer Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nwchemex-s-developer-documentation">
+<h1>NWChemEx’s Developer Documentation<a class="headerlink" href="#nwchemex-s-developer-documentation" title="Permalink to this heading"></a></h1>
+<p>This documentation is aimed primarily at developers of NWChemEx. Broadly
+speaking this documentation focuses on:</p>
+<ul class="simple">
+<li><p>Project-wide design decisions</p></li>
+<li><p>Project-wide conventions</p></li>
+<li><p>Tips and tricks for developing with NWChemEX</p></li>
+<li><p>Tutorials related to tools closely associated with NWChemEx (e.g. git)</p></li>
+</ul>
+<p>This documentation is meant to be a living document so please feel free to
+contribute.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="conventions/index.html">Project Conventions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="conventions/cxx_conventions.html">C++ Coding Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions/doxygen_conventions.html">Using Doxygen in the NWChemEx Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions/python_conventions.html">Python Coding Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions/rst_conventions.html">Conventions for Writing reST Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design/index.html">Design Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="design/philosophy.html">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design/nwx_ecosystem.html">NWChemEx Ecosystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design/overall_design.html">Overall Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design/overall_justifications/index.html">Overall Design Justification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design/energy_workflow.html">Energy Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design/faqs.html">FAQs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development/index.html">Developing NWChemEx</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="development/preliminaries.html">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/cxx_development_workflow.html">C++ Development Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development/ides/index.html">Using IDEs to Develop NWX</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="project_management/index.html">Project Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="project_management/ci_maintainer_notes.html">How NWX’s CI Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_management/documentation.html">Documentation Deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="resources/index.html">Additional Developer Resources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="resources/git_tutorial.html">Git and GitHub Procedures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources/rest_cheatsheet.html">reST Cheat Sheet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources/writing_tutorials.html">Writing Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources/recommended_development_resources.html">Recommended Development Resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="conventions/index.html" class="btn btn-neutral float-right" title="Project Conventions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

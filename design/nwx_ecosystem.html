@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NWChemEx Ecosystem &mdash; DeveloperTools 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overall Design" href="overall_design.html" />
+    <link rel="prev" title="Design Philosophy" href="philosophy.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> DeveloperTools
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../conventions/index.html">Project Conventions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Design Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="philosophy.html">Design Philosophy</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NWChemEx Ecosystem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nwchemex-use-cases">NWChemEx Use Cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overall-software-ecosystem">Overall Software Ecosystem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="overall_design.html">Overall Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overall_justifications/index.html">Overall Design Justification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="energy_workflow.html">Energy Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">FAQs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../development/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_management/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DeveloperTools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Design Documentation</a> &raquo;</li>
+      <li>NWChemEx Ecosystem</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/design/nwx_ecosystem.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="nwchemex-ecosystem">
+<h1>NWChemEx Ecosystem<a class="headerlink" href="#nwchemex-ecosystem" title="Permalink to this heading"></a></h1>
+<p>In this section we spec out the use cases for NWChemEx and how it fits into the
+broader computational chemistry ecosystem.</p>
+<section id="nwchemex-use-cases">
+<h2>NWChemEx Use Cases<a class="headerlink" href="#nwchemex-use-cases" title="Permalink to this heading"></a></h2>
+<p>Generally speaking we see NWChemEx being used for:</p>
+<ul class="simple">
+<li><p>electronic structure calculations on the largest supercomputers in the world</p></li>
+<li><p>day-to-day electronic structure calculations</p></li>
+<li><p>as part of high-throughput workflows</p></li>
+<li><p>as a research platform for developing new theories</p></li>
+</ul>
+<p>At this stage of design we are not concerned with capabilities (e.g.
+single-point energies, thermodynamic analysis, molecular dynamics) those will be
+handled at a lower level of design. Rather we’re interested in what sort of
+design requirements need to be built into the highest level APIs. From these
+use cases we can establish the following concerns:</p>
+<ul class="simple">
+<li><p>performance (needed to make running on supercomputers worthwhile)</p></li>
+<li><p>high-quality linear algebra (electronic structure involves lots of
+linear algebra)</p></li>
+<li><p>ease of use (too high of a barrier will inhibit use cases where there are
+other choices)</p></li>
+<li><p>library instead of program mentality (we shouldn’t assume we are driving the
+workflow)</p></li>
+<li><p>extensibility (adding new theories should be easy)</p></li>
+<li><p>varying levels of programming expertise (research is done by undergraduates,
+graduates, post docs, scientists/professors from a multitude of backgrounds)</p></li>
+</ul>
+<p>These concerns are not orthogonal (for example ease of use and varying levels of
+programming expertise are related).</p>
+</section>
+<section id="overall-software-ecosystem">
+<h2>Overall Software Ecosystem<a class="headerlink" href="#overall-software-ecosystem" title="Permalink to this heading"></a></h2>
+<p>The following figure serves as a brief introduction to how NWChemEx addresses
+the aforementioned concerns as an organization, how the key pieces of the
+NWChemEx design fit together, and how the NWChemEx organization fits into the
+broader software ecosystem.</p>
+<figure class="align-center" id="id1" style="width: 100%">
+<img alt="../_images/nwx_ecosystem.png" src="../_images/nwx_ecosystem.png" />
+<figcaption>
+<p><span class="caption-text">Coarse overview of the NWChemEx software stack and its connections to other
+key stake holders in the broader community.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>As a disclaimer, this figure is very coarse. A lot of the stack’s complexity is
+swept up into each of the boxes (particularly the “Internal Module Collections”
+box, which includes pretty much every electronic structure method that NWChemEx
+supports).</p>
+<p>Performance key points:</p>
+<ol class="arabic simple">
+<li><p>Internal components of NWChemEx written in C++ to take advantage of the
+growing HPC support for C++ and to provide developers a performance focused
+coding language.</p></li>
+<li><p>Performance is treated as a fundamental concern entering into the stack as
+part of the low level ParallelZone component.</p></li>
+<li><p>ParallelZone acts as a sort of domain-specific language (DSL) for the rest of
+the NWChemEx stack, abstracting away much of the implementation details</p></li>
+<li><p>Much of the actual scheduling, data movement, etc. is handled by the
+externally maintained MADNESS runtime and the libraries underlying it.</p></li>
+</ol>
+<p>Linear algebra key points:</p>
+<ol class="arabic simple">
+<li><p>Linear algebra is the among the second lowest components of the stack,
+entering via Chemist.</p></li>
+<li><p>Like ParallelZone, Chemist provides abstractions which allow the rest of the
+stack to express its linear algebra needs in a sort of DSL without worrying
+about the underlying details.</p></li>
+<li><p>Efficient and performant linear algebra and tensor-related operations are
+provided by TiledArray.</p></li>
+</ol>
+<p>Ease of use key points:</p>
+<ol class="arabic simple">
+<li><p>The tiered stack makes it easier to hide details.</p></li>
+<li><p>The focus on DSLs at each layer lowers the barrier to entry as code looks
+more like what its modeling and less abstract.</p></li>
+</ol>
+<p>Component mentality key points:</p>
+<ol class="arabic simple">
+<li><p>User facing APIs are written in Python to take advantage of its popularity in
+scientific software (particularly in workflows)</p></li>
+<li><p>PluginPlay provides NWChemEx’s abstractions for interacting with software
+components.</p></li>
+<li><p>The bulk of NWChemEx’s capabilities are provided by its internal module
+collection, which PluginPlay can run.</p></li>
+<li><p>Other chemistry codes can link to any of our internal module collections and
+use any module in that collection.</p></li>
+</ol>
+<p>Extensibility key points:</p>
+<ol class="arabic simple">
+<li><p>Developers outside the organization can write modules, which can then be
+immediately used with the NWChemEx software stack via PluginPlay.</p></li>
+<li><p>Adding modules does not require modifying NWChemEx</p></li>
+</ol>
+<p>Varying programmer expertise key points:</p>
+<ol class="arabic simple">
+<li><p>The focus on abstraction allows each layer to hide many of the technical
+details of the layer below it. These details are not lost, they are rolled up
+into opaque objects which get unrolled as they traverse the stack.</p></li>
+<li><p>By time someone considers a layer like SimDE they are typically using objects
+like wavefunctions, molecules, and orbitals to express their computation
+rather than tensor ops or MPI calls.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="philosophy.html" class="btn btn-neutral float-left" title="Design Philosophy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="overall_design.html" class="btn btn-neutral float-right" title="Overall Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

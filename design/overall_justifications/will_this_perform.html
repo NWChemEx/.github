@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sure it Looks Pretty, But is it Going to Scale? &mdash; DeveloperTools 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Why is C++ the Primary Language of NWChemEx?" href="why_cxx.html" />
+    <link rel="prev" title="Why Object-Oriented Programming?" href="why_oop.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> DeveloperTools
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../conventions/index.html">Project Conventions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Design Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../philosophy.html">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nwx_ecosystem.html">NWChemEx Ecosystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overall_design.html">Overall Design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Overall Design Justification</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="why_oop.html">Why Object-Oriented Programming?</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Sure it Looks Pretty, But is it Going to Scale?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_cxx.html">Why is C++ the Primary Language of NWChemEx?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_python.html">Why is the NWChemEx API Written in Python?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="one_repo_vs_many.html">Why not Just Have One Giant Repo?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_pluginplay.html">Why Do We Need PluginPlay?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_simde.html">Why Do We Need SimDE?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_chemcache.html">Why Do We Need ChemCache?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_mokup.html">Why Do We Need Mokup?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_this_partitioning.html">Why are the Repositories Partitioned this Way?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../energy_workflow.html">Energy Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faqs.html">FAQs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../project_management/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DeveloperTools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Design Documentation</a> &raquo;</li>
+          <li><a href="index.html">Overall Design Justification</a> &raquo;</li>
+      <li>Sure it Looks Pretty, But is it Going to Scale?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/design/overall_justifications/will_this_perform.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sure-it-looks-pretty-but-is-it-going-to-scale">
+<h1>Sure it Looks Pretty, But is it Going to Scale?<a class="headerlink" href="#sure-it-looks-pretty-but-is-it-going-to-scale" title="Permalink to this heading"></a></h1>
+<p><a class="reference internal" href="why_oop.html#why-object-oriented-programming"><span class="std std-ref">Why Object-Oriented Programming?</span></a> explained why we opted for an OOP
+paradigm. To some extent this section continues that discussion, but in the
+context of whether or not OOP is just “syntactic sugar” or if it actually allows
+one to write performant code, that looks nice too. Put another way, this section
+justifies why we can adopt a top-down philosophy (design the pretty API, then
+worry about performance) and expect it to perform well.</p>
+<p>The short answer is, OOP really is just “syntactic sugar”. We proposition,
+without proof, that everything on this page can be accomplished with functional
+programming (FP) as well. By this we mean: it is possible to design an FP
+interface that could accomplish the same tasks, in a similar number of code
+statements (as a hand-wavy proof realize that class methods are basically just
+functions whose first argument is the object they were called on). However,
+without defining new types for that FP interface, the result would look much
+nastier, e.g., there would be 10s of (if not 100s of) input parameters (yes
+there’s a lot rolled up into a class, but with the right design you don’t need
+to worry about all the state), and several nested functions per call. That said,
+historically, at least within electronic structure theory, code written using FP
+does not attempt to reach the level of generality we discuss here (likely
+because of how unwieldy the API would be). This is another perk of OOP,
+through abstraction, we can tackle very complicated problems by relatively
+straightforward means.</p>
+<p>One of the first things to keep in mind is that there are layers to the program.
+There are a lot of layers separating the user’s input from functions like
+<code class="docutils literal notranslate"><span class="pre">dgemm</span></code>. As input traverses the layers it gets upacked  and processed. By time
+you get to something like <code class="docutils literal notranslate"><span class="pre">dgemm</span></code> you’ve handled all of the other concerns
+aside from the needed matrix multiplication. This is important to note because
+the appearance a high-level object is designed to give off can be very different
+than what it actually maps to. Case in point are tensors. With the way our
+tensors work you can write building J and K like:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">simde</span><span class="o">::</span><span class="n">tensor_t</span><span class="w"> </span><span class="n">P</span><span class="p">,</span><span class="w"> </span><span class="n">I</span><span class="p">,</span><span class="w"> </span><span class="n">J</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="p">;</span><span class="w"> </span><span class="c1">//Assume P and I are initialized</span>
+<span class="n">J</span><span class="p">(</span><span class="s">&quot;mu,nu&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="s">&quot;lambda,sigma&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">(</span><span class="s">&quot;lambda,sigma,mu,nu&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">K</span><span class="p">(</span><span class="s">&quot;mu,nu&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">(</span><span class="s">&quot;lambda,sigma&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">(</span><span class="s">&quot;lambda,nu,mu,sigma&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For readers familiar with the intricacies of J and K builds, you may say “sure
+you can write it that way, but it’s not efficient”. Turns out, through the magic
+of abstraction, the code above is capable of being used as a(n):</p>
+<ul class="simple">
+<li><p>in core build (all tensors explicitly formed and stored in memory)</p></li>
+<li><p>disk build (all tensors explicitly formed, but <code class="docutils literal notranslate"><span class="pre">I</span></code> is stored on disk)</p></li>
+<li><p>core-disk hybrid (all tensors explicitly formed, only some pieces of <code class="docutils literal notranslate"><span class="pre">I</span></code> are
+put on disk)</p></li>
+<li><p>direct build (<code class="docutils literal notranslate"><span class="pre">I</span></code> is not explicitly formed, blocks are formed on the fly)</p></li>
+<li><p>semi-direct build (expensive parts of <code class="docutils literal notranslate"><span class="pre">I</span></code> are stored in memory, cheap are
+recomputed on the fly)</p></li>
+<li><p>some hybrid of all of the above</p></li>
+</ul>
+<p>Furthermore, the code is actually capable of:</p>
+<ul class="simple">
+<li><p>fully exploiting symmetry</p></li>
+<li><p>fully exploiting sparsity</p></li>
+<li><p>running in a distributed fashion</p></li>
+<li><p>running asynchronously</p></li>
+<li><p>running on CPUs and/or GPUs,</p></li>
+<li><p>being optimized for other architectures (e.g. FPGAs)</p></li>
+</ul>
+<p>(Disclaimer: as of writing this, the code above does not actually have all of
+the aforementioned properties. However the properties described can be added to
+the tensor library in such a manner that the code benefits from them without
+needing to be rewritten. Furthermore, when the additional considerations are
+added to the tensor library they will not only be available to the J/K  build,
+but throughout other modules as well.)</p>
+<p>So how can one little snippet of code do so much? We’re not going to go into all
+of the details, but here’s the highlights:</p>
+<ul class="simple">
+<li><p>The calls above actually build a task graph, before any real work is done</p></li>
+<li><p>From the size of the tensors we know how much work each task requires</p></li>
+<li><p>By having runtime information about the computer we know the amount of
+resources (nodes, CPUs, GPUs, memory, disk, etc.) available to us</p></li>
+<li><p>Using the above information the task graph can be inspected and optimized</p></li>
+</ul>
+<p>One of the criticisms commonly leveraged about the above is that the complexity
+is still there, it’s just hidden. This is true. There really is a code path
+which unrolled looks like a direct J/K build would in an FP code, i.e. something
+like:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// This is pseudocode that omits some details, like the prefactor</span>
+<span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">IJ</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">screened_shell_pairs</span><span class="p">){</span><span class="w"></span>
+<span class="w">     </span><span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">KL</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">screened_shell_pairs</span><span class="p">){</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="n">KL</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">IL</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="k">auto</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">compute_shell_quartet</span><span class="p">(</span><span class="n">IJ</span><span class="p">,</span><span class="w"> </span><span class="n">KL</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="n">I</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"> </span><span class="c1">// integral screening</span>
+<span class="w">         </span><span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">mn</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">IJ</span><span class="p">){</span><span class="w"></span>
+<span class="w">            </span><span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">ls</span><span class="o">:</span><span class="w"> </span><span class="n">KL</span><span class="p">){</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="p">(</span><span class="n">ls</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">mn</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">                </span><span class="n">J</span><span class="p">[</span><span class="n">mn</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="n">ls</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">[</span><span class="n">mnls</span><span class="p">];</span><span class="w"></span>
+<span class="w">                </span><span class="n">J</span><span class="p">[</span><span class="n">ls</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="n">mn</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">[</span><span class="n">mnls</span><span class="p">];</span><span class="w"></span>
+<span class="w">                </span><span class="n">K</span><span class="p">[</span><span class="n">ml</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">[</span><span class="n">mnls</span><span class="p">];</span><span class="w"></span>
+<span class="w">                </span><span class="n">K</span><span class="p">[</span><span class="n">vl</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="n">ms</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">[</span><span class="n">mnls</span><span class="p">];</span><span class="w"></span>
+<span class="w">                </span><span class="n">K</span><span class="p">[</span><span class="n">ms</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="n">nl</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">[</span><span class="n">mnls</span><span class="p">];</span><span class="w"></span>
+<span class="w">                </span><span class="n">K</span><span class="p">[</span><span class="n">ns</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">[</span><span class="n">ml</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">I</span><span class="p">[</span><span class="n">mnls</span><span class="p">];</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>However, instead of the user having to explicitly write such a pattern, our
+objects automatically dispatch to this pattern based on resources available, the
+symmetry of the tensors, which tiles are important, the fact that <code class="docutils literal notranslate"><span class="pre">I</span></code> is being
+recomputed each time it’s called (so we want to fully utilize a block before
+throwing it away), and the equations for the target results (J and K). The point
+is that while the complexity is still there, we argue it is easy for users to
+use (the DSL makes it look like a tensor expression versus nested loops) and the
+implementation is more general and extendable (being applicable to, for example,
+the four-index transform of correlated methods).</p>
+<p>The other concern one may have is what about object overhead? It is true, there
+is a cost for inheritance, the increased number of function calls, and the other
+OOP practices. More often than not, our experience shows that worrying about
+such things is a premature optimization. With aggressive optimizations,
+compilers have gotten really good at eliminating the overhead associated with
+OOP. That said, in C++ one can usually resort to template meta-programming
+techniques to remove much of the remaining runtime overhead (albeit at the cost
+of longer compile times and larger binaries). Furthermore, the layered approach
+means that we can merge two layers if need be, without having to rewrite all of
+the layers on top of or under those layers (assuming APIs remain constant).</p>
+<p>Finally we note that in this section we focused on tensors, primarily for their
+easy to grasp DSL. The same logic applies to all objects. By considering the API
+and implementation of each object to be two different things, one essentially
+gets a series of layered DSLs. Each DSL allows you to expresses the intent of
+the computation divorced from how the computation is actually done. This makes
+it easier for the people above the DSL to interact with that layer, while still
+providing the developers of that layer all the necessary resources to optimize
+that layer.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="why_oop.html" class="btn btn-neutral float-left" title="Why Object-Oriented Programming?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="why_cxx.html" class="btn btn-neutral float-right" title="Why is C++ the Primary Language of NWChemEx?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

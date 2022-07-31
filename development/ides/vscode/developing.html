@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developing NWX with VSCode &mdash; DeveloperTools 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Tips and Tricks for VSCode" href="tips_and_tricks.html" />
+    <link rel="prev" title="Building NWX with VSCode" href="building.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> DeveloperTools
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../conventions/index.html">Project Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developing NWChemEx</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../preliminaries.html">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cxx_development_workflow.html">C++ Development Workflow</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Using IDEs to Develop NWX</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">VSCode</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="setup.html">Setting Up VSCode for NWX</a></li>
+<li class="toctree-l4"><a class="reference internal" href="building.html">Building NWX with VSCode</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Developing NWX with VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tips_and_tricks.html">Tips and Tricks for VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faqs.html">FAQs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../project_management/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DeveloperTools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Developing NWChemEx</a> &raquo;</li>
+          <li><a href="../index.html">Using IDEs to Develop NWX</a> &raquo;</li>
+          <li><a href="index.html">VSCode</a> &raquo;</li>
+      <li>Developing NWX with VSCode</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/development/ides/vscode/developing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="developing-nwx-with-vscode">
+<h1>Developing NWX with VSCode<a class="headerlink" href="#developing-nwx-with-vscode" title="Permalink to this heading"></a></h1>
+<p>Once you’ve got the build working you’re ready to start developing. The
+following subsections provide some basic advice on how to go about doing
+common development tasks.</p>
+<section id="version-control">
+<h2>Version Control<a class="headerlink" href="#version-control" title="Permalink to this heading"></a></h2>
+<p>It’s strongly recommended that you do your development on a new branch and not
+on “master” (the bottom toolbar should show your current branch next to the
+version control icon, three circles in a V-like pattern). Clicking on the branch
+name will bring up a menu where you can select “Create new branch” to create
+your new branch (clicking “Create new branch” will lead to a new menu where you
+name the branch).</p>
+<p>More version control options are available in the left toolbar by clicking on
+the version control symbol. Here you will see a list of uncommitted changes for
+each repo in your workspace. You can click on a change to see the difference.
+Next to the file you also will see buttons for opening the file, reverting the
+file, and staging the file. Next to the branch name is a checkmark which can be
+used to quickly stage and commit all changed files (you’ll have to type a
+commit message in the provided box). Finally For the ellipses (three dots) will
+bring up a menu with common git commands like push and pull.</p>
+</section>
+<section id="code-formatting">
+<h2>Code Formatting<a class="headerlink" href="#code-formatting" title="Permalink to this heading"></a></h2>
+<section id="c">
+<h3>C++<a class="headerlink" href="#c" title="Permalink to this heading"></a></h3>
+<p>Todo!</p>
+</section>
+<section id="python">
+<span id="vscode-python-yapf"></span><h3>Python<a class="headerlink" href="#python" title="Permalink to this heading"></a></h3>
+<p>VSCode can use <code class="docutils literal notranslate"><span class="pre">yapf</span></code> to automatically format Python code through the
+<a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">official Microsoft Python extension</a>.</p>
+<ol class="arabic simple">
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">yapf</span></code> by running:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Highly recommended, but optional virtual environment</span>
+$ python -m venv venv
+$ . venv/bin/activate
+
+<span class="c1"># Install yapf</span>
+$ pip install yapf
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Set the <code class="docutils literal notranslate"><span class="pre">python.formatting.provider</span></code> setting in VSCode to “yapf”.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>More information on VSCode Python formatting can be found <a class="reference external" href="https://code.visualstudio.com/docs/python/editing#_formatting">here</a>.</p>
+</div>
+</section>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+<section id="c-doxygen">
+<h3>C++ (Doxygen)<a class="headerlink" href="#c-doxygen" title="Permalink to this heading"></a></h3>
+<p>Todo!</p>
+</section>
+<section id="python-docstrings">
+<span id="vscode-docstring-gen"></span><h3>Python (Docstrings)<a class="headerlink" href="#python-docstrings" title="Permalink to this heading"></a></h3>
+<p>Sphinx-style docstrings can be autogenerated for fully-defined functions/classes
+in VSCode using the <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring">Python Docstring</a> extension. Once the extension is
+installed, set the <code class="docutils literal notranslate"><span class="pre">autoDocstring.docstringFormat</span></code> setting to “sphinx” to
+match current NWX team <a class="reference internal" href="../../../conventions/python_conventions.html#python-coding-conventions"><span class="std std-ref">Python Coding Conventions</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Further information can be found <a class="reference external" href="https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html#docstrings-in-vs-code">here</a>.</p>
+</div>
+</section>
+</section>
+<section id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading"></a></h2>
+<p>Debugging is one of the main reasons to use an IDE. To debug an executable,
+click on the play-arrow with a bug on it in the left toolbar. If you have no
+debug configurations set up yet there will be a big “Run and Debug” button
+Click on it. This will bring up a menu asking you about the type of C++ debugger
+you want to use. Pick the appropriate one (probably GDB/LLVM). Next, it’ll ask
+you which configuration you want to use. This will generate a JSON with your
+debug configuration and open it in an editor. For most purposes the only thing
+we need to change is the value associated with the “program” key; change this to
+the path for the executable you want to debug (note you can use
+<code class="docutils literal notranslate"><span class="pre">${workspaceFolder}</span></code> to get an absolute path to the top-level directory of
+your current folder).</p>
+<p>Clicking the green play arrow in the top toolbar will start a debugging session
+for the current selected configuration (use the drop down menu next to the
+arrow to select the configuration). The run will automatically stop on any
+signal (such as segfault). It also will automatically stop when it hits a
+breakpoint (you can set a breakpoint by clicking to the left of the line number
+you want to break on). When the program stops the debugging pane will show the
+values of the current variables and the current stack. You can use the toolbar
+at the top-center to respectively: resume/pause execution, go to the next line
+in the current source file, enter the function on the current line, go up one
+call in the stack, restart execution, or stop execution.</p>
+</section>
+<section id="profiling">
+<h2>Profiling<a class="headerlink" href="#profiling" title="Permalink to this heading"></a></h2>
+<p>TODO: Write Me!!!!</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="building.html" class="btn btn-neutral float-left" title="Building NWX with VSCode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tips_and_tricks.html" class="btn btn-neutral float-right" title="Tips and Tricks for VSCode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

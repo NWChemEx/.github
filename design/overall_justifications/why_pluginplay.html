@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Do We Need PluginPlay? &mdash; DeveloperTools 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Why Do We Need SimDE?" href="why_simde.html" />
+    <link rel="prev" title="Why not Just Have One Giant Repo?" href="one_repo_vs_many.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> DeveloperTools
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../conventions/index.html">Project Conventions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Design Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../philosophy.html">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nwx_ecosystem.html">NWChemEx Ecosystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overall_design.html">Overall Design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Overall Design Justification</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="why_oop.html">Why Object-Oriented Programming?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="will_this_perform.html">Sure it Looks Pretty, But is it Going to Scale?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_cxx.html">Why is C++ the Primary Language of NWChemEx?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_python.html">Why is the NWChemEx API Written in Python?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="one_repo_vs_many.html">Why not Just Have One Giant Repo?</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Why Do We Need PluginPlay?</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#how-most-electronic-structure-codes-work-and-why-that-is-bad">How Most Electronic Structure Codes Work (and Why That is Bad)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-current-state-of-the-field">The Current State of the Field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-pluginplay-fixes-this">How PluginPlay Fixes This</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="why_simde.html">Why Do We Need SimDE?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_chemcache.html">Why Do We Need ChemCache?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_mokup.html">Why Do We Need Mokup?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_this_partitioning.html">Why are the Repositories Partitioned this Way?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../energy_workflow.html">Energy Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faqs.html">FAQs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../project_management/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DeveloperTools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Design Documentation</a> &raquo;</li>
+          <li><a href="index.html">Overall Design Justification</a> &raquo;</li>
+      <li>Why Do We Need PluginPlay?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/design/overall_justifications/why_pluginplay.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="why-do-we-need-pluginplay">
+<span id="id1"></span><h1>Why Do We Need PluginPlay?<a class="headerlink" href="#why-do-we-need-pluginplay" title="Permalink to this heading"></a></h1>
+<p>NWChemEx relies heavily on a module system. This section explains why we went
+this route.</p>
+<section id="how-most-electronic-structure-codes-work-and-why-that-is-bad">
+<h2>How Most Electronic Structure Codes Work (and Why That is Bad)<a class="headerlink" href="#how-most-electronic-structure-codes-work-and-why-that-is-bad" title="Permalink to this heading"></a></h2>
+<p>Back in my day…Seriously though there is a long history of electronic
+structure codes being executables that can only be controlled by changing a
+text input. The executable’s functionality could not be extended without opening
+the source code, adding the new functionality, and then recompiling. This is
+fine when you have a tight-knit group of developers all working on the same
+code, but what happens when someone outside the circle wants to extend the code?
+One way or another their contributions need to make it into your source. Maybe
+they make a library, and you add a hook to call that library, or maybe they just
+directly add the functionality to the source code. Either way the source needs
+to change. By modern standards this isn’t very extensible. If I can’t access the
+source code, then I can’t extend it.</p>
+<p>So why is this bad? First, science by its very nature is dynamic. New methods
+are always coming out. Algorithms are improving. Theories are developed while
+others are retired. Anytime one of these events happen your code needs to change
+to keep up. Second, hardware isn’t static. New hardware typically requires new
+optimizations and considerations. In an ideal world once someone optimizes some
+code, or develops a new theory they would release it as a library. Your code
+would then be ready to absorb those changes, and propagate them throughout,
+whenever the library is made available. Ideally this would be done in an
+interoperable manner (meaning you literally do not have to change your code to
+use the library). For the vast majority of electronic structure codes true
+interoperability is impossible as the code needs to be changed to take advantage
+of the new library. If it required only minor changes to add a library, this
+would perhaps be a moot point. In practice, the aforementioned design means that
+a tremendous amount of developer time needs to be spent to incorporate the
+library (especially if it needs to be incorporated in multiple places).</p>
+</section>
+<section id="the-current-state-of-the-field">
+<h2>The Current State of the Field<a class="headerlink" href="#the-current-state-of-the-field" title="Permalink to this heading"></a></h2>
+<p>Admittedly, we’re a long ways away from the ideal world described above, but we
+are moving closer to it. It’s not uncommon for developers to create stand alone
+libraries with new and/or optimized functionality. Funding opportunities are
+routinely making this a requirement. At the moment, true interoperability is a
+pipe dream since no standards exist. Less glim, existence of these libraries
+suggests that with the right code design it should be possible to leverage, and
+propagate, the new functionality by wrapping it.</p>
+<p>Another somewhat recent development is that team sizes are increasing, and
+becoming spatially distributed. This means you have a lot of disparate
+developers trying to work on the same package at the same time. The reality is
+there is minimal communication among these developers (no stand-ups, rarely are
+design sessions held, etc.). Without communication, the likely hood for
+conflicts (both code and interpersonal) increases. While version control like
+<code class="docutils literal notranslate"><span class="pre">git</span></code> helps when developers try to change the same line of code, it doesn’t
+help when developers come up with competing designs.</p>
+</section>
+<section id="how-pluginplay-fixes-this">
+<h2>How PluginPlay Fixes This<a class="headerlink" href="#how-pluginplay-fixes-this" title="Permalink to this heading"></a></h2>
+<p>The full design of PluginPlay is beyond our present scope (see the PluginPlay
+documentation for design details). Instead what we are after here is how the
+concept of PluginPlay, namely building a software package on top of a framework
+where all major functionality is contained in modules, helps rectify the above
+problems.</p>
+<p>Modules are essentially opaque functions. When something calls a module, they
+know what it takes as input and what it returns. How it goes from inputs to
+results doesn’t matter. This is why the module system helps out with extending
+the package. Basically, the package only couples to the API of the module not
+the implementation. So if you wrap the library in a module, that module can
+immediately be used throughout the code. By insisting that all functionality be
+modules, it places all functionality on the same footing (the code doesn’t
+have to distinguish between internal and external calls). This is the key to
+getting the functionality to automatically propagate throughout the code. Since
+every time you want to do X, you get a module from PluginPlay, and then you
+call the module given to you. PluginPlay can swap out the module you’re about to
+call for the new one, automatically (automatically in the sense that you don’t
+have to modify the calling code; it’s not automatic in the sense that PluginPlay
+magically knows which module the user wants to call).</p>
+<p>This disconnect between API and implementation is also the key to helping
+disparately developed codes work together. Basically, each module is a sandbox
+in which the developer is free to go from inputs to results however they want.
+In turn it’s up to the developer to:</p>
+<ul class="simple">
+<li><p>enforce their own coding standards/style (although modules which are part of
+NWChemEx are expected to abide by the community standards/style)</p></li>
+<li><p>choose to implement in Python or C/C++</p></li>
+<li><p>decide what dependencies to use</p></li>
+<li><p>optimize for specific architectures</p></li>
+<li><p>choose what their module exposes (beyond that required by the API)</p></li>
+</ul>
+<p>Keep in mind that module developers are under no obligation to commit their
+modules back to the main NWChemEx repos. While many codes may boast this, the
+reality is since they treat the outside contributions differently, than internal
+contributions, it becomes more likely for compatibility to break (often
+requiring the external developer to perform maintenance to restore the
+compatibility). Being able to maintain the modules in a separate location is
+particularly useful for:</p>
+<ul class="simple">
+<li><p>maintaining code ownership</p></li>
+<li><p>in some cases, avoiding licensing issues</p></li>
+<li><p>working on new methods privately</p></li>
+<li><p>individual tracking metrics</p></li>
+<li><p>collaborating with other projects besides NWChemEx</p></li>
+<li><p>demonstrating the component nature of the code to funding agencies</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="one_repo_vs_many.html" class="btn btn-neutral float-left" title="Why not Just Have One Giant Repo?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="why_simde.html" class="btn btn-neutral float-right" title="Why Do We Need SimDE?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

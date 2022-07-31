@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why is the NWChemEx API Written in Python? &mdash; DeveloperTools 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Why not Just Have One Giant Repo?" href="one_repo_vs_many.html" />
+    <link rel="prev" title="Why is C++ the Primary Language of NWChemEx?" href="why_cxx.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> DeveloperTools
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../conventions/index.html">Project Conventions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Design Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../philosophy.html">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nwx_ecosystem.html">NWChemEx Ecosystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overall_design.html">Overall Design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Overall Design Justification</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="why_oop.html">Why Object-Oriented Programming?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="will_this_perform.html">Sure it Looks Pretty, But is it Going to Scale?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_cxx.html">Why is C++ the Primary Language of NWChemEx?</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Why is the NWChemEx API Written in Python?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="one_repo_vs_many.html">Why not Just Have One Giant Repo?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_pluginplay.html">Why Do We Need PluginPlay?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_simde.html">Why Do We Need SimDE?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_chemcache.html">Why Do We Need ChemCache?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_mokup.html">Why Do We Need Mokup?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_this_partitioning.html">Why are the Repositories Partitioned this Way?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../energy_workflow.html">Energy Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faqs.html">FAQs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../project_management/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">DeveloperTools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Design Documentation</a> &raquo;</li>
+          <li><a href="index.html">Overall Design Justification</a> &raquo;</li>
+      <li>Why is the NWChemEx API Written in Python?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/design/overall_justifications/why_python.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="why-is-the-nwchemex-api-written-in-python">
+<span id="id1"></span><h1>Why is the NWChemEx API Written in Python?<a class="headerlink" href="#why-is-the-nwchemex-api-written-in-python" title="Permalink to this heading"></a></h1>
+<p>The previous section, <a class="reference internal" href="why_cxx.html#why-is-cxx-the-primary-language-of-nwchemex"><span class="std std-ref">Why is C++ the Primary Language of NWChemEx?</span></a>,
+explained the decision to write the majority of NWChemEx in C++. The decision
+has also been made to ensure that all of NWChemEx’s APIs are available from
+Python. This section explains why.</p>
+<p>If you read the previous section, you may recall that Python is one of the most
+popular programming languages, if not the most popular programming language, in
+the world. This popularity has also seeped into computational science, where
+workflows are increasingly written in Python, and rely on tools accessible from
+Python. If we want NWChemEx to be part of this ecosystem it is essential that
+we ensure that we have Python bindings.</p>
+<p>At this point, it is perhaps worth noting that nothing prevents us from having
+bindings to other languages (we actually also trivially have C++ bindings). So
+if down the road we want Julia or Go bindings they can coexist with the Python
+bindings. In fact, because of its popularity, Python already has the ability to
+interface with a number of other languages; meaning using existing Python
+modules its entirely possible to ignore that NWChemEx is written in C++, and
+call it from say Rust, by relying on a tool like PyO3 (which lets you call
+Rust from Python and vice versa).</p>
+<p>The other major reason for having Python bindings is for plugin system. When a
+user develops a plugin, that plugin depends on the SimDE, but otherwise is an
+independent piece of code from NWChemEx. So how does someone running NWChemEx
+use that plugin? One way would be to link NWChemEx against the plugin at compile
+time, but this kind of defeats the purpose of the plugin in the first place (and
+is somewhat undesirable from the NWChemEx team’s standpoint as we may end up
+having to maintain the plugin as it will likely be absorbed by the code). The
+typical C++ strategy for runtime linking is via <code class="docutils literal notranslate"><span class="pre">dlopen</span></code>. While a number of
+packages use <code class="docutils literal notranslate"><span class="pre">dlopen</span></code> to great success, its notoriously fickle. Enter Python.
+If both NWChemEx, and the plugin, have Python bindings, linking is as simple as
+<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">plugin</span></code>. The reality is there’s no magic here; Python simply does the
+runtime linking for us. However, Python’s runtime linking is extremely well
+vetted and reliable (plus we don’t have to maintain it!!!!).</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="why_cxx.html" class="btn btn-neutral float-left" title="Why is C++ the Primary Language of NWChemEx?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="one_repo_vs_many.html" class="btn btn-neutral float-right" title="Why not Just Have One Giant Repo?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
