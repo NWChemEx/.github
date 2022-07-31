@@ -29,12 +29,12 @@ on:
   pull_request:
     branches:
       - master
-  push:
-    branches:
-      - reuseable-workflow
+  # push:
+  #   branches:
+  #     - reuseable-workflow
 
 jobs:
   Build-Documentation:
-    uses: NWChemEx-Project/.github/.github/workflows/test_docs_tmpl.yml@reuseable-workflow
+    uses: NWChemEx-Project/.github/.github/workflows/test_docs_tmpl.yml@master
     with:
       dependencies: sphinx

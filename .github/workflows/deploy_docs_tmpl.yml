@@ -21,7 +21,7 @@ jobs:
         with:
           dependencies: ${{inputs.dependencies}}
       - name: Build documentation
-        uses: NWChemEx-Project/.github/actions/build_docs@reuseable-workflow
+        uses: NWChemEx-Project/.github/actions/build_docs@master
         with:
           target: ${{inputs.target}}
       - name: Deploy to GitHub Pages

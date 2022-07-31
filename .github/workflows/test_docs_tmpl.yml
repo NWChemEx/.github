@@ -26,6 +26,6 @@ jobs:
     - name: Build documentation
       env:
         cmake_version: ${{ matrix.cmake_version }}
-      uses: NWChemEx-Project/.github/actions/build_docs@reuseable-workflow
+      uses: NWChemEx-Project/.github/actions/build_docs@master
       with:
         target: ${{inputs.target}}
