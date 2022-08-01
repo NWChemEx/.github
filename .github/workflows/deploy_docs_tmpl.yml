@@ -3,11 +3,12 @@ on:
   workflow_call:
     inputs:
       target:
-        required: true
         type: string
       dependencies:
         required: true
         type: string
+      skip_doxygen:
+        type: boolean
 jobs:
   Build-Documentation:
     runs-on: ubuntu-latest
@@ -25,6 +26,7 @@ jobs:
         uses: NWChemEx-Project/.github/actions/build_docs@master
         with:
           target: ${{inputs.target}}
+          skip_doxygen: ${{inputs.skip_doxygen}}
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

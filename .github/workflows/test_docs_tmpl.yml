@@ -3,12 +3,12 @@ on:
   workflow_call:
     inputs:
       target:
-        required: true
         type: string
       dependencies:
         required: true
         type: string
-  workflow_dispatch:
+      skip_doxygen:
+        type: boolean
       
 jobs:
   build-documentation:
@@ -31,3 +31,4 @@ jobs:
       uses: NWChemEx-Project/.github/actions/build_docs@master
       with:
         target: ${{inputs.target}}
+        skip_doxygen: ${{inputs.skip_doxygen}}
