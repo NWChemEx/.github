@@ -11,8 +11,8 @@ runs:
       run: chmod +x ${{github.action_path}}/build_docs.sh 
       shell: bash 
     - name: Build Documentation
-      # if: ${{ inputs.skip_doxygen != true }} ${{github.action_path}}/build_docs.sh ${{inputs.target}}
-      run: echo 'this is skip_doxygen = ' ${{ inputs.skip_doxygen }}
+      if: ${{ inputs.skip_doxygen == false }} 
+      run: ${{github.action_path}}/build_docs.sh ${{inputs.target}}
       shell: bash
     # - name: Give Permission to build_sphinx_docs.sh
     #   run: chmod +x ${{github.action_path}}/build_sphinx_docs.sh 
