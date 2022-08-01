@@ -7,6 +7,8 @@ on:
       dependencies:
         required: true
         type: string
+      skip_doxygen:
+        type: boolean
 jobs:
   Build-Documentation:
     runs-on: ubuntu-latest
@@ -21,9 +23,10 @@ jobs:
         with:
           dependencies: ${{inputs.dependencies}}
       - name: Build documentation
-        uses: NWChemEx-Project/.github/actions/build_docs@master
+        uses: NWChemEx-Project/.github/actions/build_docs@reuseable-workflow
         with:
           target: ${{inputs.target}}
+          skip_doxygen: ${{inputs.skip_doxygen}}
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
