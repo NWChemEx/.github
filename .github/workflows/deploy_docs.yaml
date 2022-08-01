@@ -1,0 +1,13 @@
+name: Build and Deploy Documentation
+on:
+  push:
+    branches:
+      - master
+      - reuseable-workflow
+
+jobs:
+  Build-Documentation:
+    uses: NWChemEx-Project/.github/.github/workflows/deploy_docs_tmpl.yml@master
+    with: 
+      dependencies: sphinx
+      skip_doxygen: true
