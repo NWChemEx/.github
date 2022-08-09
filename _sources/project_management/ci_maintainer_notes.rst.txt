@@ -7,36 +7,54 @@ The purpose of this page is to document various aspects of NWX's CI.
 Overview
 ========
 
-NWX's CI uses GitHub actions. GitHub actions allows you to have one or more
-workflows which get executed upon certain triggers. The workflows themselves are
-YAML and are a bit hard to write in a generic manner. This leads to copy/pasting
-these YAML files across repos and then making repo-specific changes to the copy
-pasted file. This is hard to maintain and leads to several sources of truth. Our
-solution is to write several generic Bash scripts which encapsulate how we do
-various CI steps (e.g., get a dependency or build documentation). The YAML files
-are then written by calling these scripts with the repo-specific options. We
-rely on file synchronization to keep the Bash scripts consistent across repos
-(the master versions live here in the DeveloperTools repo).
+NWX has a lot of repositories. And more repositories will be added into NWX. To make the CIs of NWX generic and re-useable we used reuseable workflows with composite actions for designing our CI architecture. The goal of this design was to keep the number of codes as minimal as possible in the individual repositories and also ensuring maximum re-use of CI components across multiple repositories.
 
-File Synchronization
+The Architecture
 ====================
 
-There are several files which need to appear in each NWX repo and whose content
-needs to be synchronized. This includes:
+Our CI architecture works in four layers:
 
-- .github/workflows/scripts/build_docs.sh
-- .github/workflows/scripts/get_dependencies.sh
-- .github/workflows/scripts/lint.sh
-- .clang-format
-- .gitignore
-- LICENSE
+1. Workflows of individual repositories (Topmost Layer): Each repository under our CI architecture has at least one of the following workflows:
 
-Rather than remembering to update these files in each repo anytime they change,
-we rely on the
-`Files Sync Action<https://github.com/marketplace/actions/files-sync-action>`_
-to keep them synchronized. Synchronizing these files is done in the
-SynchronizeFiles workflow (YAML file: ``.github/workflows/synch_files.yaml``).
-This workflow is executed when a DeveloperTools PR is merged into master.
+a. c-cpp.yaml
+b. deploy_docs.yaml
+c. format.yaml
+d. build_docs.yaml
+
+Each of those workflows calls their correspondent template workflows that resides in .github repository with some input parameters. Those are as follows:
+
+a. c-cpp.yaml calls c-cpp_tmpl.yml template workflow with inputs dependencies and CPP_GITHUB_TOKEN
+b. deploy_docs.yaml calls deploy_docs_tmpl.yml template workflow with inputs target, dependencies and skip_doxygen
+c. format.yaml calls format_tmpl.yml template workflow with input source
+d. test_docs.yaml calls test_docs_tmpl.yml template workflow with input target, dependencies and skip_doxygen.
+
+2. Template workflows of .github repository (Layer 2): We have four template workflows and they reside in the .github repository. So, these are the organization-wide generic template workflows that are used by all other repositories for their workflows. They are:
+
+a. c-cpp_tmpl.yml
+b. deploy_docs_tmpl.yml
+c. format_tmpl.yml
+d. test_docs_tmpl.yml
+
+These template workflows receive the input parameters from the Layer 1 workflow files from which they have been called. These template workflows uses some common custom actions developed by us with the inputs received from caller workflows. For example:
+
+a. c-cpp_tmpl.yml uses the custom actions get_dependencies with input param dependencies and build_and_test with input param CPP_GITHUB_TOKEN. 
+b. deploy_docs_tmpl.yml uses the custom actions get_dependencies with input param dependencies and build_docs with input params target and skip_doxygen.
+c. test_docs_tmpl.yml uses the custom actions get_dependencies with input param dependencies and build_docs with input params target and skip_doxygen.
+
+3. Custom actions of .github repository (Layer 3): The third layer consists of the actions that are used by the template workflows in the .github repository. The custom actions are also developed in a generic manner so that they can be used across all the repositories in the NWX organization and also note that they are composite actions. The custom composite actions are located at the .github/actions directory. There are currently 3 composite actions:
+
+a. build_and_test
+b. build_docs
+c. get_dependencies
+
+All these composite actions usually run some bash scripts with some input params that are passed to it from the template workflows. For example:
+
+a. build_and_test action runs the build_and_test.sh bash scripts with input params CPP_GITHUB_TOKEN 
+b. build_docs action runs the build_docs.sh bash script with input params target
+c. get_dependencies action runs the get_dependencies.sh bash script with input params dependencies.
+
+4. Bash scripts (Bottom Layer): This layer consists of the bash scripts that are used by the custom composite actions. The bash scripts are also developed in a generic manner so that they can be re-used across multiple repository under the NWX organization. These bash scripts contain the bash commands necessary for building, testing and deploying the application and the corresponding documentation. The bash scripts resides in the individual action folders of the .github repository.
+
 
 Writing Workflows
 =================
