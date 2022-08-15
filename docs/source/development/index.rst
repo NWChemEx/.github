@@ -24,4 +24,5 @@ you understand:
 
     preliminaries
     cxx_development_workflow
+    python_development_workflow
     ides/index

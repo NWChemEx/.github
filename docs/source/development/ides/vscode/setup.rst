@@ -10,7 +10,7 @@ Creating a Workspace
 When you first start up VSCode you will want to go to
 ``files->add folder to workspace`` and provide VSCode with one of the NWChemEx
 repos in your NWX workspace, *e.g.*, `nwx_workspace/SCF` in the directory
-structure assumed in :ref:`Workflow Preliminaries`). Once you have done this you
+structure assumed in :ref:`development_preliminaries`). Once you have done this you
 should see your folder and its subdirectories in the explorer view
 (explorer view is the icon with a page overlying a square in the left toolbar).
 You can repeat this process for each of the additional NWX repos in your

@@ -31,12 +31,6 @@ needs to be synchronized. This includes:
 - .gitignore
 - LICENSE
 
-Rather than remembering to update these files in each repo anytime they change,
-we rely on the
-`Files Sync Action<https://github.com/marketplace/actions/files-sync-action>`_
-to keep them synchronized. Synchronizing these files is done in the
-SynchronizeFiles workflow (YAML file: ``.github/workflows/synch_files.yaml``).
-This workflow is executed when a DeveloperTools PR is merged into master.
 
 Writing Workflows
 =================
@@ -99,5 +93,3 @@ To add another repo to NWX's CI follow these steps.
    - Easiest way is by copy/pasting from another NWX repo
 4. Note that the repo must not enforce branch protection rules for admins
    otherwise the synch files plugin can't push the synched files.
-
-
