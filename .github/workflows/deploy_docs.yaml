@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - doc-generation
 
 jobs:
   Build-Documentation:
