@@ -10,7 +10,7 @@ Overview
 NWX has a lot of repositories. And more repositories will be added into NWX. To make the CIs of NWX generic and re-useable we used reuseable workflows with composite actions for designing our CI architecture. The goal of this design was to keep the number of codes as minimal as possible in the individual repositories and also ensuring maximum re-use of CI components across multiple repositories.
 
 The Architecture
-====================
+================
 
 .. image:: architecture.png
   :width: 800
@@ -83,7 +83,7 @@ The bash scripts are shown as ``Action{1,2,3}_bash_{1,2}.sh`` in the architectur
 
 
 CI coverage
-=============================
+===========
 
 Most of the repositories has the following coverage for CIs. 
 
