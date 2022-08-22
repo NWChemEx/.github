@@ -29,10 +29,21 @@ in the NWChemEx workspace directory you created:
 
 ``<virtual_environment_name>`` should be replaced with whatever you want to call
 the virtual environment. The last line installs Cppyy which is needed for
-generating the Python bindings for NWChemEx.
+generating the Python bindings for NWChemEx. It is worth noting that you may
+want to respectively set the environment variables ``CC`` and ``CXX`` to
+the full paths of your C and C++ compilers before running ``pip install cppyy``
+to help ensure that Cppyy is built with the correct compiler.
 
-Unfortunately, the Python detection in NWChemEx will not find the virtual
-environment Python by default so you have to add:
+.. note::
+
+   There is a known
+   `issue <https://github.com/NWChemEx-Project/.github/issues/29>`__ with
+   Cppyy, NWChemEx, and GCC 9. It is thus strongly recommended you use GCC 11
+   (or newer).
+
+Unfortunately, by default the Python detection in NWChemEx will not find
+the virtual environment Python interpreter by default. To get around this
+you can add:
 
 .. code-block:: cmake
 
@@ -45,11 +56,33 @@ to your toolchain (obviously substituting the actual path). This is a known
 Step 2: Build NWChemEx
 **********************
 
-Instructions for building NWChemEx can be found xxx.
-
-.. todo::
-
-   add link
+Instructions for building NWChemEx can be found
+`here <https://nwchemex-project.github.io/NWChemEx/installation/building.html>`__.
 
 For the sake of this tutorial we'll assume that ``${BUILD_DIR}`` is the build
 directory where NWChemEx was built.
+
+*******************
+Step 3: Python Path
+*******************
+
+After Step 2, the NWChemEx Python modules will reside at
+``${BUILD_DIR}/Python`` so assuming you have a Python script ``test.py`` which
+contains:
+
+.. code-block:: python
+
+    import nwchemex as nwx
+
+    # Do stuff with nwx
+
+You'll have to run ``test.py`` like:
+
+.. code-block:: bash
+
+   PYTHONPATH=${BUILD_DIR}/Python python3 test.py
+
+(or similarly correctly set up the Python path).
+
+
+At this point you should now have access to all of NWChemEx from Python.
