@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Why are the Repositories Partitioned this Way? &mdash; DeveloperTools 1.0.0 documentation</title>
+  <title>Why Does NWChemEx Rely on Two Tensor Libraries? &mdash; DeveloperTools 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Why Does NWChemEx Rely on Two Tensor Libraries?" href="why_two_tensor_libraries.html" />
-    <link rel="prev" title="Why Do We Need Mokup?" href="why_mokup.html" /> 
+    <link rel="next" title="Energy Workflow" href="../energy_workflow.html" />
+    <link rel="prev" title="Why are the Repositories Partitioned this Way?" href="why_this_partitioning.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,8 +58,8 @@
 <li class="toctree-l3"><a class="reference internal" href="why_simde.html">Why Do We Need SimDE?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="why_chemcache.html">Why Do We Need ChemCache?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="why_mokup.html">Why Do We Need Mokup?</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Why are the Repositories Partitioned this Way?</a></li>
-<li class="toctree-l3"><a class="reference internal" href="why_two_tensor_libraries.html">Why Does NWChemEx Rely on Two Tensor Libraries?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_this_partitioning.html">Why are the Repositories Partitioned this Way?</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Why Does NWChemEx Rely on Two Tensor Libraries?</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../energy_workflow.html">Energy Workflow</a></li>
@@ -87,9 +87,9 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html">Design Documentation</a> &raquo;</li>
           <li><a href="index.html">Overall Design Justification</a> &raquo;</li>
-      <li>Why are the Repositories Partitioned this Way?</li>
+      <li>Why Does NWChemEx Rely on Two Tensor Libraries?</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/design/overall_justifications/why_this_partitioning.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/design/overall_justifications/why_two_tensor_libraries.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -97,19 +97,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="why-are-the-repositories-partitioned-this-way">
-<h1>Why are the Repositories Partitioned this Way?<a class="headerlink" href="#why-are-the-repositories-partitioned-this-way" title="Permalink to this heading"></a></h1>
-<p>Some of the other discussions in this justification chapter touched on why
-specific repositories exist. The point of this section is to explain why the
-remaining repositories are partitioned the way they are.</p>
+  <section id="why-does-nwchemex-rely-on-two-tensor-libraries">
+<h1>Why Does NWChemEx Rely on Two Tensor Libraries?<a class="headerlink" href="#why-does-nwchemex-rely-on-two-tensor-libraries" title="Permalink to this heading"></a></h1>
+<p>At the moment NWChemEx has two tensor libraries: TiledArray (TA) and TAMM. TA is
+used to define all of the APIs by virtue of being under the hood of the
+TensorWrapper component of Chemist. TAMM is used throughout the TAMM-SDE repo.
+Developers new to the project may wonder why this is and this page does its best
+to explain how this decision came to be.</p>
+<p>So why do we not just use TA everywhere? The answer here is historical more
+than anything else. Basically TAMM was originally supposed to be the tensor
+library used throughout NWChemEx, but the initial developers of SCF and MP2 had
+difficulty implementing SCF and MP2 routines (particularly the local versions)
+with TAMM. Owing to time constraints, the decision was made to use TA to
+implement SCF and MP2. This also required solidifying a number of APIs, which is
+why TA (under the hood of TensorWrapper) became the default library.</p>
+<p>While the above was going on, the TAMM team was hard at work on an HPC
+implementation of CCSD and CCSD(T), which relied on TAMM. These implementations
+underlie the modules in the TAMM-SDE repo.</p>
+<p>Long-term the use of multiple tensor libraries in the community is a real
+hurdle to interoperability and use of SimDE. This is part of the reason why we
+introduced TensorWrapper. It is our hope that the various tensor libraries in
+use can learn to communicate under the hood of TensorWrapper so that module
+developers can use their tensor library of choice. Whether this is possible
+remains to be seen.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="why_mokup.html" class="btn btn-neutral float-left" title="Why Do We Need Mokup?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="why_two_tensor_libraries.html" class="btn btn-neutral float-right" title="Why Does NWChemEx Rely on Two Tensor Libraries?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="why_this_partitioning.html" class="btn btn-neutral float-left" title="Why are the Repositories Partitioned this Way?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../energy_workflow.html" class="btn btn-neutral float-right" title="Energy Workflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

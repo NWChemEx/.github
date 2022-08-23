@@ -1,3 +1,5 @@
+.. _rest_conventions:
+
 ##########################################
 Conventions for Writing reST Documentation
 ##########################################
@@ -7,7 +9,7 @@ Style
 *****
 
 The style of reST pages follows Python's
-`conventions <https://devguide.python.org/documenting/#documenting-python>`_.
+`conventions <https://devguide.python.org/documenting/#documenting-python>`__.
 In particular:
 
 - Follow the usual practice of at most 80 characters per line
@@ -19,7 +21,8 @@ In particular:
 Sections
 ********
 
-Python's reST `conventions <https://devguide.python.org/documenting/#sections>`_
+Python's reST
+`conventions <https://devguide.python.org/documenting/#sections>`__
 for denoting sections are:
 
 - ``#`` with overline should be used for parts

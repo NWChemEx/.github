@@ -33,7 +33,7 @@ the main option we need to change is "Configure Args" (do not confuse this with
 the underlying build tool, typically ``make``). Under "Configure Args" click on
 "Add Item" and type:
 
-.. code-block:: .cmake
+.. code-block::
 
    -DCMAKE_TOOLCHAIN_FILE=/home/user/nwx_workspace/toolchain.cmake
 

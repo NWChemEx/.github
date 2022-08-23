@@ -4,9 +4,14 @@ C++ Development Workflow
 
 This page assumes you have already read
 :ref:`development_preliminaries` and that you are adding a module to a repo
-which is considered part of NWChemEx (see :ref:`software_stack_overview` for
-more clarification on what's part of NWChemEx and what's not). If you are
-developing a plugin for NWChemEx you should follow the documentation at xxx.
+which is considered part of NWChemEx
+
+.. todo::
+
+   Link to documentation detailing what is/isn't part of NWX
+
+If you are developing a plugin for NWChemEx you should follow the documentation
+at xxx.
 
 .. todo::
 

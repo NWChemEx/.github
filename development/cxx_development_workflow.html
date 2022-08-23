@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>C++ Development Workflow &mdash; Developer Documentation 1.0.0 documentation</title>
+  <title>C++ Development Workflow &mdash; DeveloperTools 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Using IDEs to Develop NWX" href="ides/index.html" />
+    <link rel="next" title="Python Development Workflow" href="python_development_workflow.html" />
     <link rel="prev" title="Preliminaries" href="preliminaries.html" /> 
 </head>
 
@@ -28,7 +28,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Developer Documentation
+            <a href="../index.html" class="icon icon-home"> DeveloperTools
           </a>
               <div class="version">
                 1.0.0
@@ -56,6 +56,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="python_development_workflow.html">Python Development Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ides/index.html">Using IDEs to Develop NWX</a></li>
 </ul>
 </li>
@@ -69,7 +70,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Developer Documentation</a>
+          <a href="../index.html">DeveloperTools</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -92,10 +93,14 @@
 <h1>C++ Development Workflow<a class="headerlink" href="#c-development-workflow" title="Permalink to this heading"></a></h1>
 <p>This page assumes you have already read
 <a class="reference internal" href="preliminaries.html#development-preliminaries"><span class="std std-ref">Preliminaries</span></a> and that you are adding a module to a repo
-which is considered part of NWChemEx (see <span class="xref std std-ref">software_stack_overview</span> for
-more clarification on what’s part of NWChemEx and what’s not). If you are
-developing a plugin for NWChemEx you should follow the documentation at xxx.</p>
+which is considered part of NWChemEx</p>
 <div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Link to documentation detailing what is/isn’t part of NWX</p>
+</div>
+<p>If you are developing a plugin for NWChemEx you should follow the documentation
+at xxx.</p>
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Write plugin documentation and link to it</p>
 </div>
@@ -114,7 +119,7 @@ needs to call a submodule or not. The former is the easier scenario</p>
 <p>This can be done largely as you would expect. You add your source code to the
 repo, add a unit test for your module’s source code, and then make sure the unit
 test works.</p>
-<div class="admonition-todo admonition" id="id2">
+<div class="admonition-todo admonition" id="id3">
 <p class="admonition-title">Todo</p>
 <p>Make this into a true tutorial.</p>
 </div>
@@ -221,7 +226,7 @@ and the latter will likely be deprecated at some point).</p>
 <p>Assuming <code class="docutils literal notranslate"><span class="pre">nwx.load_modules()</span></code> is written in Python, you then would simply need
 to recompile <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF</span></code> and run the above Python script. Python would
 take care of all of the dynamic linking etc.</p>
-<div class="admonition-todo admonition" id="id3">
+<div class="admonition-todo admonition" id="id4">
 <p class="admonition-title">Todo</p>
 <p>Finish/write this section when NWX’s Python bindings allow this workflow.</p>
 </div>
@@ -350,7 +355,7 @@ real integrals modules.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="preliminaries.html" class="btn btn-neutral float-left" title="Preliminaries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="ides/index.html" class="btn btn-neutral float-right" title="Using IDEs to Develop NWX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="python_development_workflow.html" class="btn btn-neutral float-right" title="Python Development Workflow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
