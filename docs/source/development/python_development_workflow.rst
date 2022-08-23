@@ -5,7 +5,13 @@ Python Development Workflow
 ###########################
 
 This page is intended to get you up and running so that you can develop for
-NWX from Python.
+NWX from Python. These instructions walk you through getting to a point
+where you can do ``import nwchemex`` in Python.
+
+.. todo::
+
+   At some point it will probably make sense to combine at least some of these
+   instructions with the build instructions in the NWChemEx repo.
 
 *********************
 Step 0: Preliminaries
