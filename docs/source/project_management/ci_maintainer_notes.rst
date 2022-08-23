@@ -29,7 +29,7 @@ In the architecture image these workflows are pictured as ``Task{{1,2,3,4}}.yml`
 
 Each of those workflows calls their correspondent template workflows that resides in ``.github`` repository with some input parameters. Those are as follows: 
 
-a. ``c-cpp.yaml`` calls ``c-cpp_tmpl.yml`` template workflow with inputs dependencies and ``CPP_GITHUB_TOKEN``
+a. ``c-cpp.yaml`` calls ``c-cpp_tmpl.yml`` template workflow with inputs ``dependencies`` and ``CPP_GITHUB_TOKEN``
 b. ``deploy_docs.yaml`` calls ``deploy_docs_tmpl.yml`` template workflow with inputs ``target``, ``dependencies`` and ``skip_doxygen``
 c. ``format.yaml`` calls ``format_tmpl.yml`` template workflow with input ``source``
 d. ``test_docs.yaml`` calls ``test_docs_tmpl.yml`` template workflow with input ``target``, ``dependencies`` and ``skip_doxygen``.
