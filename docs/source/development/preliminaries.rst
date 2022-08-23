@@ -1,14 +1,15 @@
 .. _development_preliminaries:
 
-*************
+#############
 Preliminaries
-*************
+#############
 
 NWChemEx modules are written in C++ and a large part of the setup for developing
 for NWChemEx pertains to setting up a good C++ development environment.
 
+************
 Dependencies
-------------
+************
 
 The NWChemEx build system can build a lot of dependencies for you; however, it
 can't build everything. You'll need to get:
@@ -22,8 +23,9 @@ can't build everything. You'll need to get:
 on your own. Check your operating system's package manager as they're all super
 common things.
 
+*******************
 Directory Structure
--------------------
+*******************
 
 Once you have your dependencies you'll need to get the NWChemEx source code. The
 source code for NWChemEx is spread out over a series of repos. It is strongly
@@ -46,14 +48,15 @@ workspace will look like:
    |
    |-- SCF/
    |
-   `--toolchain.cmake
+   `-- toolchain.cmake
 
 where the ``toolchain.cmake`` file will be described below. It should be noted
 that to do development in the SCF repo this a complete NWChemEx workspace, you
 don't need to clone any other repo.
 
+**************
 Toolchain File
---------------
+**************
 
 The last piece of the preliminary set-up is the toolchain file. By convention
 this is a file named ``toolchain.cmake``. Its contents are a series of CMake
@@ -81,6 +84,6 @@ multiple ``FETCHCONTENT_SOURCE_DIR_XXX`` values, one for each repo.
 .. note::
 
    Having a line like ``FETCHCONENT_SOURCE_DIR_SCF`` in a toolchain file is fine
-   when building repos which live upstream from SCF (such as SDE and LibChemist)
+   when building repos which live upstream from SCF (such as SimDE and Chemist)
    and even for SCF itself. Thus it's possible to use one toolchain file for the
    entire workspace.

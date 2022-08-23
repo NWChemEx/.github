@@ -4,9 +4,6 @@ How NWX's CI Works
 
 The purpose of this page is to document various aspects of NWX's CI.
 
-Overview
-========
-
 NWX has a lot of repositories. And more repositories will be added into NWX. To make the CIs of NWX generic and re-useable we used reuseable workflows with composite actions for designing our CI architecture. The goal of this design was to keep the number of codes as minimal as possible in the individual repositories and also ensuring maximum re-use of CI components across multiple repositories.
 
 The Architecture
@@ -209,5 +206,3 @@ This ``test_docs.yaml`` file will call the ``deploy_docs_tmpl.yml`` file of cent
 So, you do not need to change anything else.
 
 This ``format.yaml`` file will call the ``format_tmpl.yml`` file of centralized ``.github`` repo and take care of the rest of the things for you!!!
-
-

@@ -1,0 +1,8 @@
+# This is where VSCode stores its settings
+.vscode
+
+#This is a common Python3 virtual environment name
+venv/
+
+# This is the default build directory for the docs
+docs/build
