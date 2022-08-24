@@ -23,7 +23,7 @@ Our CI architecture works in four layers:
 a. ``c-cpp.yaml``
 b. ``deploy_docs.yaml``
 c. ``format.yaml``
-d. ``build_docs.yaml``
+d. ``test_docs.yaml``
 
 In the architecture image these workflows are pictured as ``Task{{1,2,3,4}}.yml``. 
 
