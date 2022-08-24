@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How NWX’s CI Works &mdash; DeveloperTools 1.0.0 documentation</title>
+  <title>How NWX’s CI Works &mdash; Developer Documentation 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -28,7 +28,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> DeveloperTools
+            <a href="../index.html" class="icon icon-home"> Developer Documentation
           </a>
               <div class="version">
                 1.0.0
@@ -48,9 +48,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../development/index.html">Developing NWChemEx</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Project Management</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">How NWX’s CI Works</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#file-synchronization">File Synchronization</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#writing-workflows">Writing Workflows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-architecture">The Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#layer-of-caller-workflows-topmost-layer">1. LAYER OF CALLER WORKFLOWS (TOPMOST LAYER)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#layer-of-callee-reusable-workflows">2. LAYER OF CALLEE (REUSABLE) WORKFLOWS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#layer-of-composite-actions">3. LAYER OF COMPOSITE ACTIONS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#layer-of-bash-scripts-bottom-layer">4. LAYER OF BASH SCRIPTS (BOTTOM LAYER)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ci-coverage">CI coverage</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#installing-dependencies">Installing Dependencies</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#building-the-repo">Building the Repo</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#testing-and-deploying-documentation">Testing and Deploying Documentation</a></li>
@@ -72,7 +77,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">DeveloperTools</a>
+          <a href="../index.html">Developer Documentation</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -94,88 +99,169 @@
   <section id="how-nwx-s-ci-works">
 <h1>How NWX’s CI Works<a class="headerlink" href="#how-nwx-s-ci-works" title="Permalink to this heading"></a></h1>
 <p>The purpose of this page is to document various aspects of NWX’s CI.</p>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
-<p>NWX’s CI uses GitHub actions. GitHub actions allows you to have one or more
-workflows which get executed upon certain triggers. The workflows themselves are
-YAML and are a bit hard to write in a generic manner. This leads to copy/pasting
-these YAML files across repos and then making repo-specific changes to the copy
-pasted file. This is hard to maintain and leads to several sources of truth. Our
-solution is to write several generic Bash scripts which encapsulate how we do
-various CI steps (e.g., get a dependency or build documentation). The YAML files
-are then written by calling these scripts with the repo-specific options. We
-rely on file synchronization to keep the Bash scripts consistent across repos
-(the master versions live here in the DeveloperTools repo).</p>
+<p>NWX has a lot of repositories. And more repositories will be added into NWX. To make the CIs of NWX generic and re-useable we used reuseable workflows with composite actions for designing our CI architecture. The goal of this design was to keep the number of codes as minimal as possible in the individual repositories and also ensuring maximum re-use of CI components across multiple repositories.</p>
+<section id="the-architecture">
+<h2>The Architecture<a class="headerlink" href="#the-architecture" title="Permalink to this heading"></a></h2>
+<a class="reference internal image-reference" href="../_images/architecture.png"><img alt="The Architecture" src="../_images/architecture.png" style="width: 800px;" /></a>
+<p>Our CI architecture works in four layers:</p>
+<section id="layer-of-caller-workflows-topmost-layer">
+<h3>1. LAYER OF CALLER WORKFLOWS (TOPMOST LAYER)<a class="headerlink" href="#layer-of-caller-workflows-topmost-layer" title="Permalink to this heading"></a></h3>
+<p><strong>Workflows of individual repositories:</strong> Each repository under our CI architecture has at least one of the following workflows:</p>
+<ol class="loweralpha simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">c-cpp.yaml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deploy_docs.yaml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">format.yaml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_docs.yaml</span></code></p></li>
+</ol>
+<p>In the architecture image these workflows are pictured as <code class="docutils literal notranslate"><span class="pre">Task{{1,2,3,4}}.yml</span></code>.</p>
+<p>Each of those workflows calls their correspondent template workflows that resides in <code class="docutils literal notranslate"><span class="pre">.github</span></code> repository with some input parameters. Those are as follows:</p>
+<ol class="loweralpha simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">c-cpp.yaml</span></code> calls <code class="docutils literal notranslate"><span class="pre">c-cpp_tmpl.yml</span></code> template workflow with inputs <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> and <code class="docutils literal notranslate"><span class="pre">CPP_GITHUB_TOKEN</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deploy_docs.yaml</span></code> calls <code class="docutils literal notranslate"><span class="pre">deploy_docs_tmpl.yml</span></code> template workflow with inputs <code class="docutils literal notranslate"><span class="pre">target</span></code>, <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> and <code class="docutils literal notranslate"><span class="pre">skip_doxygen</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">format.yaml</span></code> calls <code class="docutils literal notranslate"><span class="pre">format_tmpl.yml</span></code> template workflow with input <code class="docutils literal notranslate"><span class="pre">source</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_docs.yaml</span></code> calls <code class="docutils literal notranslate"><span class="pre">test_docs_tmpl.yml</span></code> template workflow with input <code class="docutils literal notranslate"><span class="pre">target</span></code>, <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> and <code class="docutils literal notranslate"><span class="pre">skip_doxygen</span></code>.</p></li>
+</ol>
 </section>
-<section id="file-synchronization">
-<h2>File Synchronization<a class="headerlink" href="#file-synchronization" title="Permalink to this heading"></a></h2>
-<p>There are several files which need to appear in each NWX repo and whose content
-needs to be synchronized. This includes:</p>
-<ul class="simple">
-<li><p>.github/workflows/scripts/build_docs.sh</p></li>
-<li><p>.github/workflows/scripts/get_dependencies.sh</p></li>
-<li><p>.github/workflows/scripts/lint.sh</p></li>
-<li><p>.clang-format</p></li>
-<li><p>.gitignore</p></li>
-<li><p>LICENSE</p></li>
-</ul>
+<section id="layer-of-callee-reusable-workflows">
+<h3>2. LAYER OF CALLEE (REUSABLE) WORKFLOWS<a class="headerlink" href="#layer-of-callee-reusable-workflows" title="Permalink to this heading"></a></h3>
+<p><strong>Template reusable workflows of .github repository:</strong> We have four template workflows and they reside in the .github repository. So, these are the organization-wide generic template workflows that are used by all other repositories for their workflows. They are:</p>
+<ol class="loweralpha simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">c-cpp_tmpl.yml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deploy_docs_tmpl.yml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">format_tmpl.yml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_docs_tmpl.yml</span></code></p></li>
+</ol>
+<p>The template workflows are pictured as <code class="docutils literal notranslate"><span class="pre">Task{{1,2,3,4}}_tmpl.yml</span></code> in the architecture image.</p>
+<p>These template workflows receive the input parameters from the topmost layer workflow files from which they have been called. These template workflows use some common custom actions developed by us with the inputs received from caller workflows. For example:</p>
+<ol class="loweralpha simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">c-cpp_tmpl.yml</span></code> uses the custom actions <code class="docutils literal notranslate"><span class="pre">get_dependencies</span></code> with input param <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> and <code class="docutils literal notranslate"><span class="pre">build_and_test</span></code> with input param <code class="docutils literal notranslate"><span class="pre">CPP_GITHUB_TOKEN</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deploy_docs_tmpl.yml</span></code> uses the custom actions <code class="docutils literal notranslate"><span class="pre">get_dependencies</span></code> with input param <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> and <code class="docutils literal notranslate"><span class="pre">build_docs</span></code> with input params <code class="docutils literal notranslate"><span class="pre">target</span></code> and <code class="docutils literal notranslate"><span class="pre">skip_doxygen</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_docs_tmpl.yml</span></code> uses the custom actions <code class="docutils literal notranslate"><span class="pre">get_dependencies</span></code> with input param <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> and <code class="docutils literal notranslate"><span class="pre">build_docs</span></code> with input params <code class="docutils literal notranslate"><span class="pre">target</span></code> and <code class="docutils literal notranslate"><span class="pre">skip_doxygen</span></code>.</p></li>
+</ol>
 </section>
-<section id="writing-workflows">
-<h2>Writing Workflows<a class="headerlink" href="#writing-workflows" title="Permalink to this heading"></a></h2>
-<p>The YAML workflows are written in terms of several Bash scripts. The scripts are
-separated into several generic tasks.</p>
+<section id="layer-of-composite-actions">
+<h3>3. LAYER OF COMPOSITE ACTIONS<a class="headerlink" href="#layer-of-composite-actions" title="Permalink to this heading"></a></h3>
+<p><strong>Custom actions of .github repository:</strong> The third layer consists of the actions that are used by the template workflows (previous layer) in the <code class="docutils literal notranslate"><span class="pre">.github</span></code> repository. The custom actions are also developed in a generic manner so that they can be used across all the repositories in the NWX organization and also note that they are composite actions. The custom composite actions are located at the <code class="docutils literal notranslate"><span class="pre">.github/actions</span></code> directory. There are currently 3 composite actions:</p>
+<ol class="loweralpha simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build_and_test</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build_docs</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_dependencies</span></code></p></li>
+</ol>
+<p>These composite actions are illustrated as <code class="docutils literal notranslate"><span class="pre">Action{{1,2,3}}.yml</span></code> in the architecture image.</p>
+<p>All these composite actions usually run some bash scripts with some input params that are passed to it from the template workflows. For example:</p>
+<ol class="loweralpha simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build_and_test</span></code> action runs the <code class="docutils literal notranslate"><span class="pre">build_and_test.sh</span></code> bash scripts with input params <code class="docutils literal notranslate"><span class="pre">CPP_GITHUB_TOKEN</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build_docs</span></code> action runs the <code class="docutils literal notranslate"><span class="pre">build_docs.sh</span></code> bash script with input params <code class="docutils literal notranslate"><span class="pre">target</span></code> if <code class="docutils literal notranslate"><span class="pre">doxygen</span></code> dependency is required otherwise it runs the <code class="docutils literal notranslate"><span class="pre">build_sphinx_docs.sh</span></code> bash script without any parameter.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_dependencies</span></code> action runs the <code class="docutils literal notranslate"><span class="pre">get_dependencies.sh</span></code> bash script with input params <code class="docutils literal notranslate"><span class="pre">dependencies</span></code>.</p></li>
+</ol>
+</section>
+<section id="layer-of-bash-scripts-bottom-layer">
+<h3>4. LAYER OF BASH SCRIPTS (BOTTOM LAYER)<a class="headerlink" href="#layer-of-bash-scripts-bottom-layer" title="Permalink to this heading"></a></h3>
+<p><strong>Bash scripts of .github repository:</strong> The bottom layer consists of the bash scripts that are used by the composite actions in the previous layer. The bash scripts are also developed in a generic manner so that they can be re-used across multiple repository under the NWX organization. These bash scripts contain the bash commands necessary for building, testing and deploying the application and the corresponding documentation. The bash scripts reside in the individual action folders of the <code class="docutils literal notranslate"><span class="pre">.github</span></code> repository.</p>
+<p>The bash scripts are shown as <code class="docutils literal notranslate"><span class="pre">Action{1,2,3}_bash_{1,2}.sh</span></code> in the architecture figure.</p>
+</section>
+</section>
+<section id="ci-coverage">
+<h2>CI coverage<a class="headerlink" href="#ci-coverage" title="Permalink to this heading"></a></h2>
+<p>Most of the repositories have the following coverage for CIs.</p>
 <section id="installing-dependencies">
 <h3>Installing Dependencies<a class="headerlink" href="#installing-dependencies" title="Permalink to this heading"></a></h3>
-<p>All logic for installing dependencies is maintained in the
-<cite>workflows/scripts/get_dependencies.sh</cite> script. This script takes a list of
+<p>All logic for installing dependencies of a repository is maintained in the
+<code class="docutils literal notranslate"><span class="pre">.github/actions/get_dependencies/get_dependencies.sh</span></code> script. This script takes a list of
 dependencies to install and installs them. The GitHub workflows should get their
-dependencies by calling this script. This script will be invoked by many of the
-YAML workflows.</p>
+dependencies by calling this script. This script is encapsulated by the composite action <code class="docutils literal notranslate"><span class="pre">get_dependencies</span></code> which resides in the <code class="docutils literal notranslate"><span class="pre">.github/actions/get_dependencies/action.yml</span></code> directory of <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo. Any workflow can call this composite action as a step like the following with a list of dependencies to install those dependencies.</p>
+<div class="highlight-yml notranslate"><div class="highlight"><pre><span></span>- name: Get dependencies
+        env:
+          cmake_version: give_appropriate_cmake_version
+          gcc_version: give_appropriate_gcc_version
+        uses: NWChemEx-Project/.github/actions/get_dependencies@master
+        with:
+          dependencies: &#39;gcc gcovr cmake openblas cblas lapacke scalapack boost eigen3 openmpi cppyy numpy libint&#39;
+</pre></div>
+</div>
+<p>An example of how to use this action in a workflow file can be found in the <code class="docutils literal notranslate"><span class="pre">.github/.github/workflows/c-cpp_tmpl.yml</span></code> workflow file.</p>
 </section>
 <section id="building-the-repo">
 <h3>Building the Repo<a class="headerlink" href="#building-the-repo" title="Permalink to this heading"></a></h3>
 <p>Logic encapsulating the configure, build, and test phases is maintained in the
-<cite>workflows/scripts/build_and_test.sh</cite> script. This script will generate a CMake
+<code class="docutils literal notranslate"><span class="pre">.github/actions/build_and_test/build_and_test.sh</span></code> script. This script will generate a CMake
 toolchain file, use that file to configure the build, actually build the repo,
-run the unit tests (through ctest), and finally process the coverage results.</p>
+run the unit tests (through ctest), and finally process the coverage results. This script is encapsulated by the composite action <code class="docutils literal notranslate"><span class="pre">build_and_test</span></code> which resides in the <code class="docutils literal notranslate"><span class="pre">.github/actions/build_and_test/action.yml</span></code> directory of <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo. Any workflow can call this composite action as a step like the following to build and test the repository.</p>
+<div class="highlight-yml2 notranslate"><div class="highlight"><pre><span></span>- name: Build and test
+        env:
+          cmake_version: give_appropriate_cmake_version
+          gcc_version: give_appropriate_cmake_version
+        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        with:
+          CPP_GITHUB_TOKEN: provide_CPP_GITHUB_TOKEN_here
+</pre></div>
+</div>
+<p>An example of how to use this action in workflow file can be found in the <code class="docutils literal notranslate"><span class="pre">.github/.github/workflows/c-cpp_tmpl.yml</span></code> workflow file.</p>
+<p>Each repo has <code class="docutils literal notranslate"><span class="pre">c-cpp.yaml</span></code> workflow for building and testing the repo.</p>
 </section>
 <section id="testing-and-deploying-documentation">
 <h3>Testing and Deploying Documentation<a class="headerlink" href="#testing-and-deploying-documentation" title="Permalink to this heading"></a></h3>
 <p>Most of the NWChemEx repos use a two-pronged approach to documentation where the
-C++ documentation is documented using Doxygen and the non-API documentation is
-written using Sphinx. The <cite>.github/workflows/scripts/build_docs.sh</cite> script
-encapsulates this process. Each repo is responsible for maintaining two YAML
-files. The first YAML file should install the documentation dependencies
-(<cite>doxygen</cite> and <cite>sphinx</cite>) and then call <cite>build_docs.sh</cite>. This should be done for
-every PR in order to ensure the PR does not break the documentation. The second
-YAML file also installs the dependencies and builds the documentation.
-Additionally this YAML file deploys the documentation to GitHub Pages. The
-second YAML</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Can we combine the two YAML files so that the last step (deployment) is
-only done when we’re pushing to master?</p>
+C++ documentation is built using Doxygen with <code class="docutils literal notranslate"><span class="pre">.github/actions/build_docs/build_docs.sh</span></code> script and the non-API documentation is built using Sphinx with the <code class="docutils literal notranslate"><span class="pre">.github/actions/build_docs/build_sphinx_docs.sh</span></code> script. The build_docs action encapsulates this process which resides in <code class="docutils literal notranslate"><span class="pre">.github/actions/build_and_test/action.yml</span></code>. Any workflow can call this composite action as a step like the following to install dependencies and build the documentation of a repository.</p>
+<div class="highlight-yml3 notranslate"><div class="highlight"><pre><span></span>- name: Build documentation
+        uses: NWChemEx-Project/.github/actions/build_docs@master
+        with:
+          target: reponame_cxx_api (ex. nwchemex_cxx_api)
+          skip_doxygen: true_if_skip_doxygen_install_else_false
+</pre></div>
 </div>
+<p>An example of how to use this action in workflow file can be found in the <code class="docutils literal notranslate"><span class="pre">.github/.github/workflows/test_docs_tmpl.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">.github/.github/workflows/deploy_docs_tmpl.yml</span></code> workflow file.</p>
+<p>Each repo is responsible for maintaining two workflow files. They are <code class="docutils literal notranslate"><span class="pre">test_docs.yaml</span></code> and <code class="docutils literal notranslate"><span class="pre">deploy_docs.yaml</span></code>. <code class="docutils literal notranslate"><span class="pre">test_docs.yaml</span></code> installs the dependencies and builds the documentation whereas <code class="docutils literal notranslate"><span class="pre">deploy_docs.yaml</span></code> install dependencies, builds the documentation and also deploys the documentation to github pages.</p>
 </section>
 <section id="linting">
 <h3>Linting<a class="headerlink" href="#linting" title="Permalink to this heading"></a></h3>
-<p>Linting of the C++ source code is done with clang-format (specifically version
-9). The <cite>.github/workflows/scripts/lint.sh</cite> script actually executes the
-linting. The workflow YAML file is responsible for installing clang-format, for
-calling <cite>lint.sh</cite>, and for making a PR from the diff.</p>
+<p>Linting of the C++ source code is done with <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> (specifically version
+9). The <code class="docutils literal notranslate"><span class="pre">.github/.github/workflows/format_tmpl.yml</span></code> workflow file is responsible for installing <code class="docutils literal notranslate"><span class="pre">clang-format</span></code>.</p>
 </section>
 </section>
 <section id="adding-a-new-repo">
 <h2>Adding a New Repo<a class="headerlink" href="#adding-a-new-repo" title="Permalink to this heading"></a></h2>
-<p>To add another repo to NWX’s CI follow these steps.</p>
+<p>If a CI coverage for a new repo is required then we can do the following easy steps:</p>
 <ol class="arabic simple">
-<li><p>Add the repo to <cite>synch_files.yaml</cite> so that it gets the synchronized files</p></li>
-<li><p>Commit that change (once it’s merged that should trigger the synchronization)</p></li>
-<li><p>Add workflow files for the CI actions you are interested in
-- Easiest way is by copy/pasting from another NWX repo</p></li>
-<li><p>Note that the repo must not enforce branch protection rules for admins
-otherwise the synch files plugin can’t push the synched files.</p></li>
+<li><p>To install dependencies, build and test repo first copy the <code class="docutils literal notranslate"><span class="pre">c-cpp.yaml</span></code> file from <code class="docutils literal notranslate"><span class="pre">NWChemEx-Project/NWChemEx/.github/workflows/c-cpp.yaml</span></code>. Now we only need to change the <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> parameter and only give the names of the dependencies that are required by the new repo. Everything else remains the same.</p></li>
 </ol>
+<p>This <code class="docutils literal notranslate"><span class="pre">c-cpp.yaml</span></code> file will call the <code class="docutils literal notranslate"><span class="pre">c-cpp_tmpl.yml</span></code> file of the centralized <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo and take care of the rest of the things for you!!!</p>
+<ol class="arabic simple" start="2">
+<li><p>To install dependencies and build documentation first copy the <code class="docutils literal notranslate"><span class="pre">test_docs.yaml</span></code> file from <code class="docutils literal notranslate"><span class="pre">NWChemEx-Project/NWChemEx/.github/workflows/test_docs.yaml</span></code>. It has the following parameters the values should be as follows:</p></li>
+</ol>
+<div class="highlight-yml notranslate"><div class="highlight"><pre><span></span>target: reponame_cxx_api (for example: nwchemex_cxx_api)
+dependencies: cmake doxygen sphinx
+</pre></div>
+</div>
+<p>However if you do not need doxygen then it should be as follows:</p>
+<div class="highlight-yml notranslate"><div class="highlight"><pre><span></span>dependencies: sphinx
+skip_doxygen: true
+</pre></div>
+</div>
+<p>Notice target is not requried.</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">test_docs.yaml</span></code> file will call the <code class="docutils literal notranslate"><span class="pre">test_docs_tmpl.yml</span></code> file of the centralized <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo and take care of the rest of the things for you!!!</p>
+<ol class="arabic simple" start="3">
+<li><p>To install dependencies, build documentation and also to deploy the documentation to github pages first copy the <code class="docutils literal notranslate"><span class="pre">deploy_docs.yaml</span></code> file from <code class="docutils literal notranslate"><span class="pre">NWChemEx-Project/NWChemEx/.github/workflows/deploy_docs.yaml</span></code>. It has the following parameters and the values should be as follows:</p></li>
+</ol>
+<div class="highlight-yml notranslate"><div class="highlight"><pre><span></span>target: reponame_cxx_api (for example: nwchemex_cxx_api)
+dependencies: cmake doxygen sphinx
+</pre></div>
+</div>
+<p>However if you do not need doxygen then it should be as follows:</p>
+<div class="highlight-yml notranslate"><div class="highlight"><pre><span></span>dependencies: sphinx
+skip_doxygen: true
+</pre></div>
+</div>
+<p>Notice <code class="docutils literal notranslate"><span class="pre">target</span></code> is not requried.</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">test_docs.yaml</span></code> file will call the <code class="docutils literal notranslate"><span class="pre">deploy_docs_tmpl.yml</span></code> file of the centralized <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo and take care of the rest of the things for you!!!</p>
+<ol class="arabic simple" start="4">
+<li><p>To install <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> first copy the <code class="docutils literal notranslate"><span class="pre">format.yaml</span></code> file from <code class="docutils literal notranslate"><span class="pre">NWChemEx-Project/NWChemEx/.github/workflows/format.yaml</span></code>. It has the following parameters and the values should be as follows:</p></li>
+</ol>
+<div class="highlight-yml notranslate"><div class="highlight"><pre><span></span>source: &#39;include src tests&#39;.
+</pre></div>
+</div>
+<p>So, you do not need to change anything else.</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">format.yaml</span></code> file will call the <code class="docutils literal notranslate"><span class="pre">format_tmpl.yml</span></code> file of the centralized <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo and take care of the rest of the things for you!!!</p>
 </section>
 </section>
 
