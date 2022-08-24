@@ -10,7 +10,7 @@ import os
 
 # -- Project information -----------------------------------------------------
 
-project = u'DeveloperTools'
+project = u'Developer Documentation'
 copyright = u'2020, NWChemEx Team'
 author = u'NWChemEx Team'
 
