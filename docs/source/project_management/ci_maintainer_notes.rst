@@ -49,7 +49,7 @@ The template workflows are pictured as ``Task{{1,2,3,4}}_tmpl.yml`` in the archi
 
 These template workflows receive the input parameters from the topmost layer workflow files from which they have been called. These template workflows use some common custom actions developed by us with the inputs received from caller workflows. For example:
 
-a. ``c-cpp_tmpl.yml`` uses the custom actions ``get_dependencies`` with input param dependencies and ``build_and_test`` with input param ``CPP_GITHUB_TOKEN``. 
+a. ``c-cpp_tmpl.yml`` uses the custom actions ``get_dependencies`` with input param ``dependencies`` and ``build_and_test`` with input param ``CPP_GITHUB_TOKEN``. 
 b. ``deploy_docs_tmpl.yml`` uses the custom actions ``get_dependencies`` with input param ``dependencies`` and ``build_docs`` with input params ``target`` and ``skip_doxygen``.
 c. ``test_docs_tmpl.yml`` uses the custom actions ``get_dependencies`` with input param ``dependencies`` and ``build_docs`` with input params ``target`` and ``skip_doxygen``.
 
@@ -67,7 +67,7 @@ These composite actions are illustrated as ``Action{{1,2,3}}.yml`` in the archit
 All these composite actions usually run some bash scripts with some input params that are passed to it from the template workflows. For example:
 
 a. ``build_and_test`` action runs the ``build_and_test.sh`` bash scripts with input params ``CPP_GITHUB_TOKEN``
-b. ``build_docs`` action runs the ``build_docs.sh`` bash script with input params ``target`` if ``doxygen`` dependency is required otherwise it runs the ``build_sphinx_docs.sh`` bash script wihtout any parameter.
+b. ``build_docs`` action runs the ``build_docs.sh`` bash script with input params ``target`` if ``doxygen`` dependency is required otherwise it runs the ``build_sphinx_docs.sh`` bash script without any parameter.
 c. ``get_dependencies`` action runs the ``get_dependencies.sh`` bash script with input params ``dependencies``.
 
 
@@ -102,7 +102,7 @@ dependencies by calling this script. This script is encapsulated by the composit
            with:
              dependencies: 'gcc gcovr cmake openblas cblas lapacke scalapack boost eigen3 openmpi cppyy numpy libint'
 
-An example of how to use this action in workflow file can be found in the ``.github/.github/workflows/c-cpp_tmpl.yml`` workflow file. 
+An example of how to use this action in a workflow file can be found in the ``.github/.github/workflows/c-cpp_tmpl.yml`` workflow file. 
 
 Building the Repo
 -----------------
@@ -110,7 +110,7 @@ Building the Repo
 Logic encapsulating the configure, build, and test phases is maintained in the
 ``.github/actions/build_and_test/build_and_test.sh`` script. This script will generate a CMake
 toolchain file, use that file to configure the build, actually build the repo,
-run the unit tests (through ctest), and finally process the coverage results. This script is encapuslated by the composite action ``build_and_test`` which resides in the ``.github/actions/build_and_test/action.yml`` directory of ``.github`` repo. Any workflow can call this composite action as a step like the following to build and test the repository.
+run the unit tests (through ctest), and finally process the coverage results. This script is encapsulated by the composite action ``build_and_test`` which resides in the ``.github/actions/build_and_test/action.yml`` directory of ``.github`` repo. Any workflow can call this composite action as a step like the following to build and test the repository.
 
 .. code-block:: yml2
 
