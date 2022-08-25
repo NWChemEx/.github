@@ -1,13 +1,4 @@
 #!/bin/sh
-################################################################################
-#
-# The master get_dependencies.sh script lives at
-# NWChemEx-Project/DeveloperTools/.gihub/workflows/scripts. The
-# get_dependencies.sh script contained in all other NWChemEx-Project
-# repositories is a synchronized copy of the master script. Thus to make changes
-# to the get_dependencies.sh file please make them to the master script.
-#
-################################################################################
 # Wraps the process of getting dependencies during CI.
 #
 # Usage:
@@ -192,6 +183,13 @@ get_openmpi() {
   ${APT_COMMAND} update
   ${APT_GET_COMMAND} install openmpi-bin libopenmpi-dev
 }
+# Wraps installing PySCF
+#
+# Usage:
+#  get_pyscf
+get_pyscf() {
+  ${PIP_COMMAND} install git+https://github.com/pyscf/pyscf
+}
 # Wraps installing ScaLAPACK
 #
 # Usage:
@@ -265,6 +263,8 @@ for depend in "$@"; do
     get_openblas
   elif [ "${depend}" = "openmpi" ]; then
     get_openmpi
+  elif [ "${depend}" = "pyscf" ]; then
+    get_pyscf
   elif [ "${depend}" = "scalapack" ]; then
     get_scalapack
   elif [ "${depend}" = "sphinx" ]; then
