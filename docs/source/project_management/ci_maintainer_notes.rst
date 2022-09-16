@@ -220,3 +220,20 @@ The ``test_docs.yaml`` file will call the ``deploy_docs_tmpl.yaml`` file of the 
 You do not need to change anything else.
 
 This ``format.yaml`` file will call the ``format_tmpl.yaml`` file of the centralized ``.github`` repo and take care of the rest of the tasks for you!!!
+
+Automatically Adding License Headers
+====================================
+
+NWChemEx uses `Apache License (2.0) <https://www.apache.org/licenses/LICENSE-2.0>`__. We want all our source codes (except for some configuration, test and input files) to have the proper license header when deployed. We have workflow files for automatically adding the license header. The main workflow file resides in ``.github/.github/workflows/add_licenses_master.yaml`` which is in the ``.github`` repo. You may recall that it is where all template workflows live. You do not need to do any change in this file. You will need to add two workflow files to get it running for your new repo. 
+
+1. Firstly, you can copy the ``add_licenses.yaml`` file from any other repo listed in the very beginning of this documentation and paste it in your new repository's ``.github/workflows`` path which will be something like ``new-repo-name/.github/workflows/``. For example, you can copy the ``add_licenses.yaml`` file from ``NWChemEx`` repository which resides in the path ``NWChemEx/.github/workflows/add_licenses.yaml`` of the repository. This workflow file calls the ``add_licenses_master.yaml`` wrokflow file which resides in the ``.github`` repo with ``config_file`` and ``token``. The value for ``token`` should be ``{{ secrets.GITHUB_TOKEN }}``, which is same for every repositories.
+
+2. For, ``config_file`` you can copy the ``.licenserc.yaml`` file from any other repo listed in the very beginning of this documentation and paste it in your new repository's ``.github/`` path which will be something like ``new-repo-name/.github/``. For example, you can copy the ``.licenserc.yaml`` file from ``NWChemEx`` repository which resides in the path ``NWChemEx/.github/.licenserc.yaml`` of the repository. Everything will remain same except the ``paths-ignore`` property. For example, ``NWChemEx`` repo has the following paths in ``paths-ignore``:
+
+.. code-block:: yaml
+    paths-ignore:
+        - .github/
+        - docs/Makefile
+        - LICENSE
+
+That means the files ``docs/Makefile``, ``LICENSE`` and all files in the directory ``.github/`` will not have the license header. You may need to modify which paths and files you wish to exclude for licensing as adding license headers to configuration, test or input data files may cause error. So, in the ``paths-ignore`` property you should add the paths or files that do not require the license headers. A rule of thumb is to make sure that all source codes in the repo get the license header and leaving configuration, test (if it causes error) and input data files of source codes out of the consideration of automated licensing.
