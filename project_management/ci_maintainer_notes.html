@@ -63,6 +63,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#adding-a-new-repo">Adding a New Repo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#automatically-adding-license-headers">Automatically Adding License Headers</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="documentation.html">Documentation Deployment</a></li>
@@ -110,6 +111,20 @@ the individual repositories and to ensure maximum re-use of CI components across
 <li><p><a class="reference external" href="https://docs.github.com/en/actions/quickstart">Quickstart for GitHub Actions</a></p></li>
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=TLB5MY9BBa4">GitHub Actions Tutorial, From Zero to Hero in 90 minutes</a></p></li>
 </ul>
+<p>Currently the following repositories in <code class="docutils literal notranslate"><span class="pre">NWChemEx-Project</span></code> follow our <strong>4-Layered CI Architecutre</strong>:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ChemCache</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Chemist</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.github</span></code> (This is our configuration repository)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Mokup</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NWChemEx</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ParallelZone</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PluginPlay</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SimDE</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SCF</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TensorWrapper</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Utilities</span></code></p></li>
+</ol>
 <section id="the-architecture">
 <h2>The Architecture<a class="headerlink" href="#the-architecture" title="Permalink to this heading"></a></h2>
 <a class="reference internal image-reference" href="../_images/architecture.png"><img alt="The Architecture" src="../_images/architecture.png" style="width: 800px;" /></a>
@@ -276,6 +291,21 @@ C++ documentation is built using Doxygen with the <code class="docutils literal 
 </div>
 <p>You do not need to change anything else.</p>
 <p>This <code class="docutils literal notranslate"><span class="pre">format.yaml</span></code> file will call the <code class="docutils literal notranslate"><span class="pre">format_tmpl.yaml</span></code> file of the centralized <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo and take care of the rest of the tasks for you!!!</p>
+</section>
+<section id="automatically-adding-license-headers">
+<h2>Automatically Adding License Headers<a class="headerlink" href="#automatically-adding-license-headers" title="Permalink to this heading"></a></h2>
+<p>NWChemEx uses <a class="reference external" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License (2.0)</a>. We want all our source code (except for some configuration, test and input files) to have the proper license header when deployed. We have workflow files for automatically adding the license header. The main workflow file resides in <code class="docutils literal notranslate"><span class="pre">.github/.github/workflows/add_licenses_master.yaml</span></code> which is in the <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo. You may recall that this is where all template workflows live. You do not need to make any changes in this file. You will need to add two workflow files to get it running for your new repo.</p>
+<ol class="arabic simple">
+<li><p>Firstly, you can copy the <code class="docutils literal notranslate"><span class="pre">add_licenses.yaml</span></code> file from any other repo ( except <code class="docutils literal notranslate"><span class="pre">.github</span></code> ) listed in the very beginning of this documentation and paste it in your new repository’s <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code> path which will be something like <code class="docutils literal notranslate"><span class="pre">new-repo-name/.github/workflows/</span></code>. For example, you can copy the <code class="docutils literal notranslate"><span class="pre">add_licenses.yaml</span></code> file from the <code class="docutils literal notranslate"><span class="pre">NWChemEx</span></code> repository which resides in the path <code class="docutils literal notranslate"><span class="pre">NWChemEx/.github/workflows/add_licenses.yaml</span></code> of the repository. This workflow file calls the <code class="docutils literal notranslate"><span class="pre">add_licenses_master.yaml</span></code> workflow file which resides in the <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo with two parameters: <code class="docutils literal notranslate"><span class="pre">config_file</span></code> and <code class="docutils literal notranslate"><span class="pre">token</span></code>. The value for <code class="docutils literal notranslate"><span class="pre">token</span></code> should be <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">secrets.GITHUB_TOKEN</span> <span class="pre">}}</span></code>, which is same for every repository.</p></li>
+<li><p>For, <code class="docutils literal notranslate"><span class="pre">config_file</span></code> you can copy the <code class="docutils literal notranslate"><span class="pre">.licenserc.yaml</span></code> file from any other repo ( except <code class="docutils literal notranslate"><span class="pre">.github</span></code> ) listed in the very beginning of this documentation and paste it in your new repository’s <code class="docutils literal notranslate"><span class="pre">.github/</span></code> path which will be something like <code class="docutils literal notranslate"><span class="pre">new-repo-name/.github/</span></code>. For example, you can copy the <code class="docutils literal notranslate"><span class="pre">.licenserc.yaml</span></code> file from the <code class="docutils literal notranslate"><span class="pre">NWChemEx</span></code> repository which resides in the path <code class="docutils literal notranslate"><span class="pre">NWChemEx/.github/.licenserc.yaml</span></code> of the repository. Everything will remain the same except the <code class="docutils literal notranslate"><span class="pre">paths-ignore</span></code> property. For example, <code class="docutils literal notranslate"><span class="pre">NWChemEx</span></code> repo has the following paths in <code class="docutils literal notranslate"><span class="pre">paths-ignore</span></code>:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">paths-ignore</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">-.github/</span><span class="w"></span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">-docs/Makefile</span><span class="w"></span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">-LICENSE</span><span class="w"></span>
+</pre></div>
+</div>
+<p>That means the files <code class="docutils literal notranslate"><span class="pre">docs/Makefile</span></code> and <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> and all files in the directory <code class="docutils literal notranslate"><span class="pre">.github/</span></code> will not have the license header. You may need to modify which paths and files you wish to exclude for licensing as adding license headers to configuration, test or input data files may cause errors. So, in the <code class="docutils literal notranslate"><span class="pre">paths-ignore</span></code> property you should add the paths or files that do not require the license headers. A rule of thumb is to make sure that all source files in the repo get the license header and leaving configuration, test (if it causes error) and input data files of source codes out of consideration.</p>
 </section>
 </section>
 
