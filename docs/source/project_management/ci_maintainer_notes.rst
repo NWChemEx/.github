@@ -16,6 +16,20 @@ Here are a few useful tutorials on workflows in GitHub:
 - `Quickstart for GitHub Actions <https://docs.github.com/en/actions/quickstart>`__
 - `GitHub Actions Tutorial, From Zero to Hero in 90 minutes <https://www.youtube.com/watch?v=TLB5MY9BBa4>`__
 
+Currently the following repositories in ``NWChemEx-Project`` follow our **4-Layered CI Architecutre**:
+
+1. ``ChemCache``
+2. ``Chemist`` 
+3. ``.github`` (This is our configuration repository) 
+4. ``Mokup`` 
+5. ``NWChemEx`` 
+6. ``ParallelZone``
+7. ``PluginPlay``
+8. ``SimDE``
+9. ``SCF``
+10. ``TensorWrapper``
+11. ``Utilities``
+
 The Architecture
 ================
 
@@ -220,3 +234,21 @@ The ``test_docs.yaml`` file will call the ``deploy_docs_tmpl.yaml`` file of the 
 You do not need to change anything else.
 
 This ``format.yaml`` file will call the ``format_tmpl.yaml`` file of the centralized ``.github`` repo and take care of the rest of the tasks for you!!!
+
+Automatically Adding License Headers
+====================================
+
+NWChemEx uses `Apache License (2.0) <https://www.apache.org/licenses/LICENSE-2.0>`__. We want all our source code (except for some configuration, test and input files) to have the proper license header when deployed. We have workflow files for automatically adding the license header. The main workflow file resides in ``.github/.github/workflows/add_licenses_master.yaml`` which is in the ``.github`` repo. You may recall that this is where all template workflows live. You do not need to make any changes in this file. You will need to add two workflow files to get it running for your new repo. 
+
+1. Firstly, you can copy the ``add_licenses.yaml`` file from any other repo ( except ``.github`` ) listed in the very beginning of this documentation and paste it in your new repository's ``.github/workflows`` path which will be something like ``new-repo-name/.github/workflows/``. For example, you can copy the ``add_licenses.yaml`` file from the ``NWChemEx`` repository which resides in the path ``NWChemEx/.github/workflows/add_licenses.yaml`` of the repository. This workflow file calls the ``add_licenses_master.yaml`` workflow file which resides in the ``.github`` repo with two parameters: ``config_file`` and ``token``. The value for ``token`` should be ``{{ secrets.GITHUB_TOKEN }}``, which is same for every repository.
+
+2. For, ``config_file`` you can copy the ``.licenserc.yaml`` file from any other repo ( except ``.github`` ) listed in the very beginning of this documentation and paste it in your new repository's ``.github/`` path which will be something like ``new-repo-name/.github/``. For example, you can copy the ``.licenserc.yaml`` file from the ``NWChemEx`` repository which resides in the path ``NWChemEx/.github/.licenserc.yaml`` of the repository. Everything will remain the same except the ``paths-ignore`` property. For example, ``NWChemEx`` repo has the following paths in ``paths-ignore``:
+
+.. code-block:: yaml
+
+    paths-ignore:
+        -.github/
+        -docs/Makefile
+        -LICENSE
+
+That means the files ``docs/Makefile`` and ``LICENSE`` and all files in the directory ``.github/`` will not have the license header. You may need to modify which paths and files you wish to exclude for licensing as adding license headers to configuration, test or input data files may cause errors. So, in the ``paths-ignore`` property you should add the paths or files that do not require the license headers. A rule of thumb is to make sure that all source files in the repo get the license header and leaving configuration, test (if it causes error) and input data files of source codes out of consideration.
