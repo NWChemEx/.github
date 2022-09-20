@@ -42,7 +42,7 @@ jobs:
         uses: haya14busa/action-bumpr@v1
         with:
           default_bump_level: patch
-          github_token: ${{ secrets.token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           tag_as_user: cmakepp[bot]
           tag_as_email: cmakepp[bot]@github.com
       - id: compute_output
