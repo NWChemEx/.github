@@ -39,15 +39,15 @@ jobs:
         uses: actions/checkout@v2
 
       - id: bumpr
-        if: "!startsWith(github.ref, 'refs/tags/')"
         uses: haya14busa/action-bumpr@v1
         with:
           default_bump_level: patch
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          tag_as_user: cmakepp[bot]
-          tag_as_email: cmakepp[bot]@github.com
+          tag_as_user: .github[bot]
+          tag_as_email: .github[bot]@github.com
       - id: compute_output
         run: |
+          echo hellothere
           current_version=${{ steps.bumpr.outputs.current_version }}
           next_version=${{ steps.bumpr.outputs.next_version }}
           current_major="$(echo ${current_version} | cut -d'.' -f1)"
