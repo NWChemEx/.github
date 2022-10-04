@@ -47,7 +47,6 @@ jobs:
           tag_as_email: .github[bot]@github.com
       - id: compute_output
         run: |
-          echo hellothere
           current_version=${{ steps.bumpr.outputs.current_version }}
           next_version=${{ steps.bumpr.outputs.next_version }}
           current_major="$(echo ${current_version} | cut -d'.' -f1)"
