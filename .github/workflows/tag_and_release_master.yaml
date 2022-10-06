@@ -37,12 +37,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+      - name: Test Token
+        run: echo ${{ secrets.token }}
       - id: bumpr
         uses: haya14busa/action-bumpr@v1
         with:
           default_bump_level: patch
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.token }}
           tag_as_user: .github[bot]
           tag_as_email: .github[bot]@github.com
       - id: compute_output
