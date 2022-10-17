@@ -57,7 +57,7 @@ get_clang() {
   echo ${1}
   ${APT_COMMAND} update
   ${APT_GET_COMMAND} install clang-${1} --install-suggests
-  clang --version
+  which -a clang
 }
 # Wraps installing clang-format
 #
