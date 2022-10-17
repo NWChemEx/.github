@@ -49,6 +49,14 @@ get_cblas() {
   ${APT_COMMAND} update
   ${APT_GET_COMMAND} install libgslcblas0 libgsl-dev
 }
+# Wraps installing clang
+#
+# Usage:
+#   get_clang clang_version
+get_clang() {
+  ${APT_COMMAND} update
+  ${APT_GET_COMMAND} install clang-${1} --install-suggests
+}
 # Wraps installing clang-format
 #
 # Usage:
@@ -237,6 +245,8 @@ for depend in "$@"; do
     get_boost
   elif [ "${depend}" = "cblas" ]; then
     get_cblas
+  elif [ "${depend}" = "clang" ]; then
+    get_clang "${clang_version}"
   elif [ "${depend}" = "clang_format" ]; then
     get_clang_format
   elif [ "${depend}" = "cmake" ]; then
