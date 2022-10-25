@@ -33,3 +33,15 @@ jobs:
         uses: NWChemEx-Project/.github/actions/get_dependencies@clang-test
         with:
           dependencies: ${{inputs.dependencies}}
+      # - name: Build and test
+      #   env:
+      #     cmake_version: ${{ matrix.cmake_version }}
+      #     gcc_version: ${{ matrix.gcc_version }}
+      #     clang_version: ${{ inputs.clang_version }}
+      #   uses: NWChemEx-Project/.github/actions/build_and_test@clang-test
+      #   with: 
+      #     CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      # - uses: codecov/codecov-action@v1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: ./coverage.xml

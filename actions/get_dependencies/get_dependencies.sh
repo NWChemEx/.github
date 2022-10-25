@@ -54,9 +54,12 @@ get_cblas() {
 # Usage:
 #   get_clang clang_version
 get_clang() {
+  clang_no_v="/usr/bin/clang"
+  clang_v="${clang_no_v}-${1}"
   echo ${1}
   ${APT_COMMAND} update
   ${APT_GET_COMMAND} install clang-${1} --install-suggests
+  sudo update-alternatives --install "${clang_no_v}" clang "${clang_v}" 95
   which -a clang
 }
 # Wraps installing clang-format
