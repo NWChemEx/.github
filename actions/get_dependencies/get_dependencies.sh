@@ -131,7 +131,7 @@ get_gcovr() {
 #   get_graphviz
 get_graphviz() {
   ${APT_COMMAND} update
-  #{APT_GET_COMMAND} install graphviz
+  ${APT_GET_COMMAND} install graphviz
 }
 # Wraps installing LAPACKe
 #
