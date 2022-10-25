@@ -60,7 +60,7 @@ get_clang() {
   ${APT_COMMAND} update
   ${APT_GET_COMMAND} install clang-${1} --install-suggests
   sudo update-alternatives --install "${clang_no_v}" clang "${clang_v}" 95
-  which -a clang
+  which clang
 }
 # Wraps installing clang-format
 #
