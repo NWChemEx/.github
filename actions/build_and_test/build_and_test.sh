@@ -33,6 +33,7 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
 {
   echo "set(CMAKE_CXX_STANDARD 17)"
   echo "set(CMAKE_C_COMPILER /usr/bin/clang)"
+  echo "set(CMAKE_CXX_COMPILER /usr/bin/clang)"
   echo 'set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)'
   echo "set(BUILD_SHARED_LIBS ON)"
   echo "set(CATCH_ENABLE_COVERAGE ON)"
