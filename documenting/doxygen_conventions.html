@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Doxygen in the NWChemEx Project &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Conventions for Writing reST Documentation" href="rst_conventions.html" />
+    <link rel="prev" title="Writing Tutorials" href="writing_tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Documenting NWChemEx</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="writing_design_documentation.html">Writing Design Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_tutorials.html">Writing Tutorials</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using Doxygen in the NWChemEx Project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#intro-to-doxygen">Intro To Doxygen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#minimal-documentation-standards">Minimal Documentation Standards</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst_conventions.html">Conventions for Writing reST Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_cheatsheet.html">reST Cheat Sheet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../continuous_integration/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Documenting NWChemEx</a> &raquo;</li>
+      <li>Using Doxygen in the NWChemEx Project</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/documenting/doxygen_conventions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-doxygen-in-the-nwchemex-project">
+<h1>Using Doxygen in the NWChemEx Project<a class="headerlink" href="#using-doxygen-in-the-nwchemex-project" title="Permalink to this heading"></a></h1>
+<p>The purpose of this page is to give you a (likely less than 10 minute) primer on
+how to use Doxygen particularly with respect to the NWChemEx project. The
+NWChemEx project uses Doxygen to document C++ code. For documenting Python or
+writing documentation pages like this one the project uses Sphinx’s ReST flavor.</p>
+<section id="intro-to-doxygen">
+<h2>Intro To Doxygen<a class="headerlink" href="#intro-to-doxygen" title="Permalink to this heading"></a></h2>
+<p>Doxygen allows you to document your C++ code in a minimally invasive manner.  It
+does this by requiring you to write your C++ comments using Doxygen’s markup
+language. Bare-bones this looks like:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">/// This is a Doxygen, single-line comment for the following function</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">function1</span><span class="p">();</span><span class="w"></span>
+
+<span class="cm">/** For more extened documentation block comments are preferred.</span>
+<span class="cm"> *</span>
+<span class="cm"> *  This line is also part of the comment.</span>
+<span class="cm"> */</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">function3</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Doxygen supports other conventions; however, the two above are the approved
+conventions for the NWChemEx project.  For consistency please use them.</p>
+<p>Doxygen has two types of comments: brief and detailed. Brief comments are
+primarily used to give a reader a quick, one-line summary of a function, class,
+<em>etc.</em>. By convention single line comments are always briefs, whereas the first
+line (up to the first period)of a multi-line comment is the brief and the
+remaining lines are the detailed description.  When making multi-line comments
+it is good practice to start the brief with <code class="docutils literal notranslate"><span class="pre">&#64;brief</span></code>.  This will ensure that
+the brief continues until the first blank line and will prevent surprises from
+forgetting the period convention. <code class="docutils literal notranslate"><span class="pre">&#64;brief</span></code> is an example of a Doxgyen keyword.
+Keywords are signaled by the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> symbol (there’s another convention too, but
+this is the one approved for NWChemEx) and have a special meaning to Doxygen.
+There’s a lot of
+<a class="reference external" href="http://www.stack.nl/~dimitri/doxygen/manual/commands.html">keywords</a> and the
+next section acquaints you with the minimum set of keywords that you must use
+when documenting C++ code for use with NWChemEx.</p>
+</section>
+<section id="minimal-documentation-standards">
+<h2>Minimal Documentation Standards<a class="headerlink" href="#minimal-documentation-standards" title="Permalink to this heading"></a></h2>
+<p>By far the most useful keywords are shown in the following code example.  For
+documenting a function this should be considered as a minimal acceptable
+amount of documentation.  For documenting data members and types a single line
+comment is often fine (just describing what it is).</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="cm">/** @brief This is the brief description of fake function 1.</span>
+<span class="cm">   *</span>
+<span class="cm">   *  Fake function 1 demonstrates the bare minimal documentation standards.</span>
+<span class="cm">   *  What you are currently reading, is the detailed description that will</span>
+<span class="cm">   *  show up in the documentation. The &quot;*&quot; border is optional, but</span>
+<span class="cm">   *  encouraged.</span>
+<span class="cm">   *</span>
+<span class="cm">   *  @tparam T The type this function takes.  The documentation should tell</span>
+<span class="cm">   *            you what concept it satisfies.</span>
+<span class="cm">   *  @param[in] Param1 The first parameter; it&#39;s read-only.</span>
+<span class="cm">   *  @param[out] Param2 The second parameter; it&#39;s going to be written to.</span>
+<span class="cm">   *  @param[in,out] Param3 The third parameter; it&#39;s going to be read from</span>
+<span class="cm">   *                        and written to.</span>
+<span class="cm">   *  @returns Whatever this function returns.</span>
+<span class="cm">   *</span>
+<span class="cm">   *  @throws std::runtime_error Tell you when it throws and what exception</span>
+<span class="cm">   *                             guarantee is afforded.</span>
+<span class="cm">   */</span><span class="w"></span>
+<span class="w">  </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">function1</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">Param1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Param2</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Param3</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">Obviously</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">real</span><span class="w"> </span><span class="n">documentation</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">helpful</span><span class="p">,</span><span class="w"> </span><span class="n">but</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">illustrates</span><span class="w"></span>
+<span class="n">the</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="n">things</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">document</span><span class="o">:</span><span class="w"> </span><span class="n">brief</span><span class="p">,</span><span class="w"> </span><span class="n">detailed</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="o">/</span><span class="n">output</span><span class="w"></span>
+<span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="k">template</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="p">(</span><span class="n">or</span><span class="w"> </span><span class="n">non</span><span class="o">-</span><span class="n">type</span><span class="p">)</span><span class="w"> </span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"></span>
+<span class="n">exceptions</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">thrown</span><span class="w"> </span><span class="p">(</span><span class="n">as</span><span class="w"> </span><span class="n">well</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="n">guarantee</span><span class="p">).</span><span class="w"></span>
+
+<span class="n">Other</span><span class="w"> </span><span class="n">useful</span><span class="w"> </span><span class="n">commands</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">aware</span><span class="w"> </span><span class="n">of</span><span class="o">:</span><span class="w"></span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;file</span></code> for documenting files (particularly useful for files containing
+many functions)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;defgroup</span></code> used to define groups for organizational reasons</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;ingroup</span></code> for associating a file, class, member, <em>etc.</em> with a particular
+group</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;f$&lt;latex</span> <span class="pre">here&gt;</span> <span class="pre">&#64;f$</span></code> for adding on line Latex formulae</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;f{eqnarray}{</span></code> for starting a Latex <code class="docutils literal notranslate"><span class="pre">eqnarray</span></code> (change the environment
+name to get other environments), this environment is ended by <code class="docutils literal notranslate"><span class="pre">&#64;f}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;note</span></code> for starting a note</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;warning</span></code> for displaying a warning to the reader</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;bug</span></code> for letting the reader know about a known bug</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&#64;relates</span></code> for free-functions associated with a particular class</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="writing_tutorials.html" class="btn btn-neutral float-left" title="Writing Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rst_conventions.html" class="btn btn-neutral float-right" title="Conventions for Writing reST Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

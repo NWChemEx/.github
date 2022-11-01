@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python Coding Conventions &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Using IDEs to Develop NWX" href="../ides/index.html" />
+    <link rel="prev" title="Python Development Workflow" href="python_development_workflow.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developing NWChemEx</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../preliminaries.html">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cxx/index.html">Developing C++ Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Developing Python Software</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="python_development_workflow.html">Python Development Workflow</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Python Coding Conventions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#code-formatting">Code Formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#docstrings">Docstrings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ides/index.html">Using IDEs to Develop NWX</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../documenting/index.html">Documenting NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../continuous_integration/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Developing NWChemEx</a> &raquo;</li>
+          <li><a href="index.html">Developing Python Software</a> &raquo;</li>
+      <li>Python Coding Conventions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/coding/python/python_conventions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="python-coding-conventions">
+<span id="id1"></span><h1>Python Coding Conventions<a class="headerlink" href="#python-coding-conventions" title="Permalink to this heading"></a></h1>
+<p>This page tentatively introduces the NWX team’s coding conventions for writing
+Python.</p>
+<section id="code-formatting">
+<h2>Code Formatting<a class="headerlink" href="#code-formatting" title="Permalink to this heading"></a></h2>
+<p>When possible, <code class="docutils literal notranslate"><span class="pre">yapf</span></code> (<a class="reference external" href="https://pypi.org/project/yapf/">PyPI link</a>) will
+be used to enforce code conventions. In general, Python code should be
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8 compliant</a>.</p>
+</section>
+<section id="docstrings">
+<h2>Docstrings<a class="headerlink" href="#docstrings" title="Permalink to this heading"></a></h2>
+<p>A general description of a docstring and standardized conventions are described
+in <a class="reference external" href="https://www.python.org/dev/peps/pep-0257/">PEP 257</a>. Docstrings in
+NWChemEx are written using the <code class="docutils literal notranslate"><span class="pre">Sphinx</span></code> format, described
+<a class="reference external" href="https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html">here</a>.</p>
+<p>Docstrings should be used to sufficiently document Python modules, classes,
+and functions, similar to the expectation that C++ code be documented
+sufficiently through Doxygen documentation blocks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For IDE tools to help with these conventions, see <a class="reference internal" href="../ides/index.html#nwx-ide-development"><span class="std std-ref">Using IDEs to Develop NWX</span></a>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="python_development_workflow.html" class="btn btn-neutral float-left" title="Python Development Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../ides/index.html" class="btn btn-neutral float-right" title="Using IDEs to Develop NWX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

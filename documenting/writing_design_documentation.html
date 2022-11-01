@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing Design Documentation &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Writing Tutorials" href="writing_tutorials.html" />
+    <link rel="prev" title="Documenting NWChemEx" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Documenting NWChemEx</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Writing Design Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-design-documentation">What is Design Documentation?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#why-do-we-need-design-documentation">Why Do We Need Design Documentation?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-should-design-documentation-include">What Should Design Documentation Include?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contributing-design-documentation-to-nwchemex">Contributing Design Documentation to NWChemEx</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="writing_tutorials.html">Writing Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doxygen_conventions.html">Using Doxygen in the NWChemEx Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_conventions.html">Conventions for Writing reST Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_cheatsheet.html">reST Cheat Sheet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../continuous_integration/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Documenting NWChemEx</a> &raquo;</li>
+      <li>Writing Design Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/documenting/writing_design_documentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="writing-design-documentation">
+<span id="id1"></span><h1>Writing Design Documentation<a class="headerlink" href="#writing-design-documentation" title="Permalink to this heading"></a></h1>
+<p>Many NWChemEx developers, particularly if they come from the chemistry side of
+things, are likely not familiar with design documentation. This page is
+intended to provide a gentle introduction to what design documentation is and
+to establish what the NWChemEx team is looking for in design documentation.</p>
+<section id="what-is-design-documentation">
+<span id="id2"></span><h2>What is Design Documentation?<a class="headerlink" href="#what-is-design-documentation" title="Permalink to this heading"></a></h2>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Software_design_description">Wikipedia</a>
+defines design documentation as:</p>
+<blockquote class="pull-quote">
+<div><p><em>…a representation of a software design that is to be used for recording
+design information, addressing various design concerns, and communicating
+that information to the design’s stakeholders.</em></p>
+</div></blockquote>
+</section>
+<section id="why-do-we-need-design-documentation">
+<h2>Why Do We Need Design Documentation?<a class="headerlink" href="#why-do-we-need-design-documentation" title="Permalink to this heading"></a></h2>
+<p>The NWChemEx project is a massive undertaking and involves a large number of
+developers. One of the primary reasons we need design documentation is to
+outline the software infrastructure. This includes outlining the overall project
+(design documents in this repo) and each sub-project (design documents in the
+respective sub-repo). In theory, a new developer (or an established developer
+who needs refreshers) should be able to start from the design documentation in
+this repo and find their way to the source code component of interest purely
+by reading the design documentation, <em>i.e.</em>, without having to read the source
+code.</p>
+<p>The other reason we need design documentation is to communicate the shared
+vision of the project. NWChemEx is a large project and no one person is
+expected to know every aspect of it. Design documentation provides a
+mechanism for a developer new to NWChemEx, or to a piece of NWChemEx, to come
+up to speed with the motivation, considerations, and decisions pertaining to
+a piece of the project without having been part of the original design
+discussions. Hence the design documentation communicates the shared vision of
+the project.</p>
+</section>
+<section id="what-should-design-documentation-include">
+<h2>What Should Design Documentation Include?<a class="headerlink" href="#what-should-design-documentation-include" title="Permalink to this heading"></a></h2>
+<p>Ideally design document should document every decision made in structuring the
+software. This ranges from repository structure to class hierarchies. Admittedly
+this is a tall order. We strive to have design documentation for as much of the
+NWChemEx project as possible, but realize that most of us are not getting paid
+to write it. If you run into a piece of NWChemEx without design documentation
+consider adding it (spoiler alert much of the present design documentation was
+actually written after the code was implemented).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The outline below is a recommendation, and not all parts are relevant for all
+design stages. So use your best judgment.</p>
+</div>
+<p>As for the literal contents of a design document consider an outline like:</p>
+<ol class="arabic simple">
+<li><p>Define the component, feature, class</p>
+<ul class="simple">
+<li><p>This is a section making sure everyone’s on the same page about what design
+aspect is being documented.</p></li>
+<li><p>For example consider the <a class="reference internal" href="#what-is-design-documentation"><span class="std std-ref">What is Design Documentation?</span></a> section
+above, which defines design documentation.</p></li>
+</ul>
+</li>
+<li><p>Statement of Need</p>
+<ul class="simple">
+<li><p>Once you have defined the component, feature, class, or whatever explain
+why we need it.</p></li>
+<li><p>A lot of NWChemEx was designed top-down. So often the statement of need
+is more or less the feature above us kicked the can down the road to this
+component.</p></li>
+</ul>
+</li>
+<li><p>Considerations</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>When a stakeholder interacts with this component, feature, class, or
+whatever, what should they expect?</p></li>
+<li><p>Ideally the considerations should be at the same granularity as the feature.
+For example when discussing the repo structure of NWChemEx it doesn’t make
+sense to explicitly consider that we’ll need to be able to build a
+two-center integral between f-orbitals.</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>Existing Options</p>
+<ul class="simple">
+<li><p>For large components, extravagant features, or detailed classes consider
+using a library which provides that feature.</p></li>
+<li><p>Once you’re in the nitty-gritty, discussing existing options usually
+doesn’t make as much sense because you’re now worried about designing a
+component which works with infrastructure largely provided by the NWChemEx
+project, i.e., there usually won’t be an existing implementation.</p></li>
+</ul>
+</li>
+<li><p>Strategy</p>
+<ul class="simple">
+<li><p>Now that you’ve laid out what you’re trying to do, and why, describe how
+you’re going to do it.</p></li>
+<li><p>For C++ code Doxygen can automatically generate API documentation, call
+graphs, callee graphs, and UML diagrams, so there’s no need to write
+these explicitly. It usually suffices to show what components are under the
+hood to give an idea of what functionality stakeholders can expect.</p></li>
+<li><p>This is a good place to work through complicated scenarios which may arise
+and explain how the component should respond.</p></li>
+</ul>
+</li>
+<li><p>Further Considerations</p>
+<ul class="simple">
+<li><p>What’s been left out of the design.</p></li>
+<li><p>What’s the current state of the implementation?</p></li>
+<li><p>What has been tried, but failed?</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="contributing-design-documentation-to-nwchemex">
+<h2>Contributing Design Documentation to NWChemEx<a class="headerlink" href="#contributing-design-documentation-to-nwchemex" title="Permalink to this heading"></a></h2>
+<p>Now that you know what design documentation is, why we need it, and what it
+should include, the last step according to the last section is to explain how
+it will work (I know pretty meta how this page follows the outline it suggests).
+We strongly suggest that developers write design documentation for
+contributions which implement new:</p>
+<ul class="simple">
+<li><p>repositories (it’s important to know how these repos integrate)</p></li>
+<li><p>(extensive) features</p></li>
+<li><p>(complex) classes</p></li>
+</ul>
+<p>Keep in mind, you may also need to modify the design documentation of the
+architecture components above and below your component so it reflects the
+existence of your new contribution.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>What constitutes an extensive feature or a complex class is up for debate,
+but as a rule of thumb if someone isn’t going to figure out how your
+feature/class works from the API and a couple seconds of perusing the
+source, you probably need design documentation.</p>
+</div>
+<p>Project-wide design documentation lives in this repo’s documentation. This
+includes documentation governing how the GitHub organization interacts with
+various stakeholders and how the repositories in the organization interact.
+Design documentation for features/classes that live in a specific repository
+should be added to the documentation of that repository. All repositories
+presently contain a <code class="docutils literal notranslate"><span class="pre">docs/source/design</span></code> directory where design documentation
+should be placed.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Documenting NWChemEx" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="writing_tutorials.html" class="btn btn-neutral float-right" title="Writing Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
