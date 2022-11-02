@@ -6,8 +6,6 @@ on:
       dependencies:
         required: true
         type: string
-      clang_version:
-        type: number
     secrets:
       CPP_GITHUB_TOKEN:
         required: true
@@ -20,6 +18,7 @@ jobs:
       matrix:
         cmake_version: [3.16.3]
         gcc_version: [9]
+        clang_version: [11]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
@@ -29,15 +28,14 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
-          clang_version: ${{ inputs.clang_version }}
+          clang_version: ${{ matrix.clang_version }}
         uses: NWChemEx-Project/.github/actions/get_dependencies@clang-test
         with:
           dependencies: ${{inputs.dependencies}}
       - name: Build and test using Clang
         env:
           cmake_version: ${{ matrix.cmake_version }}
-          gcc_version: ${{ matrix.gcc_version }}
-          clang_version: ${{ inputs.clang_version }}
+          clang_version: ${{ matrix.clang_version }}
         uses: NWChemEx-Project/.github/actions/build_and_test@clang-test
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
