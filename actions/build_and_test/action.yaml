@@ -11,7 +11,7 @@ runs:
       shell: bash 
     - name: Build Documentation
       env:
-        cmake_version: ${{ matrix.cmake_version }}
+        # cmake_version: ${{ matrix.cmake_version }}
         # gcc_version: ${{ matrix.gcc_version }}
         # clang_version: ${{ matrix.clang_version }}
         CPP_GITHUB_TOKEN: ${{inputs.CPP_GITHUB_TOKEN}}
