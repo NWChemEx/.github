@@ -59,6 +59,7 @@ then
     } >> "${toolchain_file}"
 else 
   {
+    echo "inside else"
     echo "set(CMAKE_C_COMPILER /usr/bin/gcc)"
     echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"  
   } >> "${toolchain_file}"
