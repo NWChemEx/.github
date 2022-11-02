@@ -11,9 +11,8 @@ on:
         required: true
 
 jobs:
-  build:
+  build-with-clang:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         cmake_version: [3.16.3]
@@ -39,6 +38,31 @@ jobs:
         uses: NWChemEx-Project/.github/actions/build_and_test@clang-test
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+
+  build-with-gcc:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cmake_version: [3.16.3]
+        gcc_version: [9]
+        clang_version: [11]
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - name: Get dependencies
+        env:
+          cmake_version: ${{ matrix.cmake_version }}
+          gcc_version: ${{ matrix.gcc_version }}
+          clang_version: ${{ matrix.clang_version }}
+        uses: NWChemEx-Project/.github/actions/get_dependencies@clang-test
+        with:
+          dependencies: ${{inputs.dependencies}}
       - name: Build and test using GCC
         env:
           cmake_version: ${{ matrix.cmake_version }}
