@@ -49,6 +49,8 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   #echo 'set(lapack_LIBRARIES ${LAPACK_LIBRARIES})'
 } >> "${toolchain_file}"
 
+# if clang_version is not empty set clang and 
+# clang++ as default c and cxx compiler
 if [ ! -z "$clang_version" ]
 then
     {
