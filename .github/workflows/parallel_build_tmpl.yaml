@@ -17,8 +17,7 @@ jobs:
       dependencies: {{inputs.dependencies}}
       clang-build: true
     secrets:
-      CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }} }}
-          file: ./coverage.xml
+      CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
 
   build-with-gcc:
     uses: NWChemEx-Project/.github/.github/workflows/parallel-build-test.yaml@parallel-template
@@ -26,5 +25,4 @@ jobs:
       dependencies: {{inputs.dependencies}}
       clang-build: false
     secrets:
-      CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }} }}
-          file: ./coverage.xml
+      CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}

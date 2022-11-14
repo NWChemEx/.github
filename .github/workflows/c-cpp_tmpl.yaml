@@ -23,25 +23,27 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
-      - name: Get dependencies
-        env:
-          cmake_version: ${{ matrix.cmake_version }}
-          gcc_version: ${{ matrix.gcc_version }}
-          clang_version: ${{ matrix.clang_version }}
-        uses: NWChemEx-Project/.github/actions/get_dependencies@clang-test
-        with:
-          dependencies: ${{inputs.dependencies}}
-      - name: Build and test using Clang
-        env:
-          cmake_version: ${{ matrix.cmake_version }}
-          clang_version: ${{ matrix.clang_version }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@clang-test
-        with: 
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-      - uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
+      - name: Wrapping Get Dependency, Build and Test
+
+      # - name: Get dependencies
+      #   env:
+      #     cmake_version: ${{ matrix.cmake_version }}
+      #     gcc_version: ${{ matrix.gcc_version }}
+      #     clang_version: ${{ matrix.clang_version }}
+      #   uses: NWChemEx-Project/.github/actions/get_dependencies@clang-test
+      #   with:
+      #     dependencies: ${{inputs.dependencies}}
+      # - name: Build and test using Clang
+      #   env:
+      #     cmake_version: ${{ matrix.cmake_version }}
+      #     clang_version: ${{ matrix.clang_version }}
+      #   uses: NWChemEx-Project/.github/actions/build_and_test@clang-test
+      #   with: 
+      #     CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      # - uses: codecov/codecov-action@v1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: ./coverage.xml
 
   build-with-gcc:
     runs-on: ubuntu-latest
