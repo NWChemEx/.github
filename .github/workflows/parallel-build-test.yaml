@@ -37,7 +37,7 @@ jobs:
       - name:
         run: echo 'input clang build' {{inputs.clang-build}}
       - name: Build and test using Clang
-        if: {{inputs.clang-build == true}}
+        if: ${{inputs.clang-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
@@ -45,7 +45,7 @@ jobs:
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       - name: Build and test using GCC
-        if: {{inputs.clang-build == false}}
+        if: ${{inputs.clang-build == false}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
