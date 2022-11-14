@@ -14,7 +14,7 @@ on:
         required: true
 
 jobs:
-  build-with-clang:
+  Build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,8 +34,6 @@ jobs:
         uses: NWChemEx-Project/.github/actions/get_dependencies@clang-test
         with:
           dependencies: ${{inputs.dependencies}}
-      - name:
-        run: echo 'input clang build' {{inputs.clang-build}}
       - name: Build and test using Clang
         if: ${{inputs.clang-build == true}}
         env:
