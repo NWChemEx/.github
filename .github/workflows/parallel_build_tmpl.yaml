@@ -14,7 +14,7 @@ jobs:
   build-with-clang:
     uses: NWChemEx-Project/.github/.github/workflows/parallel-build-test.yaml@parallel-template
     with: 
-      dependencies: {{inputs.dependencies}}
+      dependencies: ${{inputs.dependencies}}
       clang-build: true
     secrets:
       CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
@@ -22,7 +22,7 @@ jobs:
   build-with-gcc:
     uses: NWChemEx-Project/.github/.github/workflows/parallel-build-test.yaml@parallel-template
     with: 
-      dependencies: {{inputs.dependencies}}
+      dependencies: ${{inputs.dependencies}}
       clang-build: false
     secrets:
       CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
