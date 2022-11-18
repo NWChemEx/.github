@@ -135,7 +135,7 @@ get_gcc() {
 #   get_gcovr
 get_gcovr() {
   ${APT_COMMAND} update
-  ${APT_GET_COMMAND} install libxml2-dev libxslt-dev python-dev
+  ${APT_GET_COMMAND} install libxml2-dev libxslt-dev python2-dev
   ${PIP_COMMAND} install gcovr
 }
 # Wraps installing LAPACKe
