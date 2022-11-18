@@ -36,7 +36,8 @@ PIP_COMMAND="pip"
 #
 get_boost() {
   BOOST_VERSION="${1-1.74}"
-  ${APT_REPO_COMMAND} ppa:mhier/libboost-latest
+  sudo apt-get install libboost-all-dev
+  # ${APT_REPO_COMMAND} ppa:mhier/libboost-latest
   ${APT_COMMAND} update
   ${APT_GET_COMMAND} install "libboost${BOOST_VERSION}-dev"
 }
