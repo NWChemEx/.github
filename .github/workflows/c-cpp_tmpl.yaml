@@ -18,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        cmake_version: [3.16.3]
+        # cmake_version: [3.16.3]
+        cmake_version: [3.18.6]
         gcc_version: [9]
         clang_version: [11]
     steps:
