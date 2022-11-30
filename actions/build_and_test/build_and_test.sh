@@ -56,6 +56,12 @@ then
     {
       echo "set(CMAKE_C_COMPILER /usr/bin/clang)"
       echo "set(CMAKE_CXX_COMPILER /usr/bin/clang++)"  
+      echo 'set(OpenMP_CXX "${CMAKE_CXX_COMPILER}" CACHE STRING "" FORCE)'
+      echo 'set(OpenMP_CXX_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument" CACHE STRING "" FORCE)'
+      echo 'set(OpenMP_CXX_LIB_NAMES "libomp" "libgomp" "libiomp5" CACHE STRING "" FORCE)'
+      echo 'set(OpenMP_libomp_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
+      echo 'set(OpenMP_libgomp_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
+      echo 'set(OpenMP_libiomp5_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
     } >> "${toolchain_file}"
 else 
   {
