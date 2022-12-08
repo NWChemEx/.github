@@ -18,8 +18,6 @@
 NWChemEx Community Guidelines for Pull Requests
 ###############################################
 
-Pull requests (PR)
-
 *************
 What is a PR?
 *************
@@ -63,7 +61,8 @@ features by reviewing code.
 
 PRs are also about staking a claim. When you open a draft PR you're telling
 people that you are going to work on resolving a bug etc. This tells other
-people not to.
+people not to duplicate the effort and/or gives them a chance to join the
+cause.
 
 
 *****************
@@ -92,21 +91,212 @@ three use cases:
    - Bug fixes, typos, documentation tweaks
    - Performance optimizations spanning a couple lines of code
 
-In general PR considerations are going to be highly tied to what the PR wants
-to accomplish, the following subsections group considerations into which of the
-the three use cases they address.
+In general the PR considerations are going to be highly tied to what the PR
+wants to accomplish, the following subsections group considerations by use cases
+and assume archetypal PRs. In other words, not all points are going to be
+relevant to every PR. If they're not relevant for a specific PR they should be
+ignored.
 
 General Considerations
 ======================
 
-- Channels for discussion between reviewers and the PR author.
-- Start early to get on radar of reviewers
-- Sufficiently explain what is and is not in scope for the PR
-- Each PR should have a lifetime of no more than 2 weeks!!!
+#. Making a PR should be easy.
+
+   - If it's too hard to make a PR people won't do it.
+   - Setting the bar too high discourages new contributors.
+
+#. Should be possible to open the PR early
+
+   - Channel for discussion between reviewers and the PR author.
+   - Gets work on radar of reviewers and other developers.
+   - Time to hash out what is and is not in scope before time is wasted
+
+#. PR lifetimes should be short.
+
+   - The code base moves fast, PRs get stale quickly.
+   - Shoot for merging in less than two weeks.
+   - Merge function by function if necessary.
+
+#. Code submitted as PRs should adhere to the organization's standards.
+
+   - Important for continuity
+   - Makes code reviews easier
+   - Current standards:
+
+      - :ref:`cxx_conventions`.
+      - :ref:`python-coding-conventions`.
+      - :ref:`rest_conventions`.
+      - :ref:`doxygen_conventions`.
+
 
 API Breaking Changes
 ====================
 
-- Require detailed explanation why the API must break.
-- What has been tried to avoid the break?
--
+#. Should be last resort.
+
+   - Maintaining stable APIs leads to users instilling trust in us.
+   - Need to document what was tried to avoid the break.
+
+#. Need plan to avoid breaking API again.
+
+   - Determine breakage points
+   - Update design documentation relying on old API.
+   - Carefully plan design of new API to avoid another break
+   - Test new API
+
+Features
+========
+
+#. Avoid "Hit by a bus scenario"
+
+   - The NWChemEx code base needs to be maintainable by multiple developers.
+   - Knowledge needs to be discoverable and shared
+   - Design Documentation helps other developers understand the feature
+   - User documentation makes sure users can use the feature without needing to
+     read the code/ask a developer.
+   - Developer documentation for technical aspects, avoids the costly exercise
+     of reverse engineering how algorithms work.
+
+#. Testing
+
+   - As a scientific code we need to be reliable and reproducible.
+   - NWChemEx is a big project, can be very difficult to understand
+     ramifications of a change. Can be caught be testing.
+
+
+Patches
+=======
+
+#. Often small and ready to go upon opening PR
+
+   - Don't require PR to be opened in advance.
+
+#. Not all feature considerations are applicable
+
+   - Documentation usually not needed for bug fixes.
+   - Need tests to ensure bug doesn't appear again.
+   - New documentation usually doesn't need new tests.
+   - Snippets added to documentation do need tested.
+   - Performance updates may require updating documentation if it affects
+     behavior and/or use cases, *e.g.*, the method's scope may have expanded.
+
+
+*****************
+Current PR Policy
+*****************
+
+Based on the above considerations our current PR policies are listed below.
+
+Pull Request Template
+=====================
+
+.. note::
+
+   GitHub supports PR templates (although as of this writing 12/8/2022) they do
+   not seem to support the same feature set as issue templates (and some of the
+   information seems outdated, like being able to have a separate directory).
+   Should this get fixed we should look into multiple PRs for the different use
+   cases.
+
+We have written a PR template to streamline the process of opening PRs. The
+template is designed to have meaningful prompts that can be filled out quickly.
+The prompts ask the author to:
+
+#. specify what sort of PR this is (major, minor, or patch)
+#. describe what's in scope for the PR
+#. describe what's not in scope for the PR
+#. confirm that they have done documentation, etc.
+#. (for drafts only) listing what still needs to be done.
+
+Why these prompts? The first prompt is for categorizing the PR (and
+automating the resulting semantic versioning that needs to happen). The next
+two relate to ensuring that the reviewer knows what is supposed to be in the PR
+and what is not. The fourth prompt is to hopefully avoid the reviewer needing
+to explicitly ask for documentation, etc. And the fifth is to give a rough
+idea of what still needs to be done before the PR can be merged.
+
+The template contains comments which explain the prompts in more detail.
+
+PR Author Process
+=================
+
+Once an author has decided to work on a feature or patch they should open a PR.
+This entails:
+
+#. Start a branch ``b`` for the PR.
+#. Initiate a draft PR from ``b`` to the target branch (usually master/main).
+#. Fill out the PR template GitHub prompts with.
+#. Continue to push changes to the branch (checking off tasks as appropriate).
+
+   - Generally speaking changes should clearly identify todos raised by the
+     change, *e.g.*, if you add a function, but don't document it. Put
+     ``TODO:document me``.
+   - This helps reviewers know what you've overlooked vs. what you just haven't
+     gotten around to.
+
+#. Notify the reviewers when the author thinks that ``b`` is ready to merge
+   by messaging ``r2g`` (or something similar) in the PR conversation.
+#. Respectfully address any reviewer concern. Marking each one as resolved when
+   it has been addressed.
+#. If the PR has changed return to item 5.
+#. The last approving reviewer merges the PR after all CI workflows pass.
+
+.. note::
+
+   For PRs whose description requires more than a couple sentences. The author
+   should open a corresponding issue with the full description. The issue is
+   for tracking the design, scope, concerns, etc. that the PR should address.
+   The PR itself is for discussing how the PR author literally chose to
+   implement the feature, patch, etc.
+
+
+Review Process
+==============
+
+.. note::
+
+   GitHub allows reviewers to suggest changes. This is very useful when there's
+   a typo, formatting error, etc. Please use this feature rather than
+   writing comments like "should be capitalized".
+
+Reviewers of a PR are expected to:
+
+#. Understand what the PR is supposed to accomplish.
+#. If necessary, the reviewers should help the author refine the PR contents.
+
+   - Should the PR (and corresponding issue) be split into multiple issues/PRs?
+   - Did the author miss any obvious concerns?
+
+#. Keep an eye on the PR as it progresses. The frequency of "check-ins" should
+   be inversely proportional to the author's familiarity with the process,
+   *i.e.*, keep a closer eye on newer authors than seasoned veterans.
+#. Comment on the code when issues are spotted.
+
+   - Is the code using existing infrastructure to the extent possible?
+   - Is the code accruing technical debt?
+   - Is the formatting consistent? (Don't worry about formatting which CI will
+     fix)
+
+#. When the PR is marked as ready to go, complete a final pass through the code
+   flagging any potential issues.
+#. If issues arise work with the author to resolve them. Repeating the previous
+   step as necessary.
+#. If you are the last reviewer to approve a PR then merge it (assuming all
+   CI workflows have passed).
+
+*********************
+Future Considerations
+*********************
+
+As of 12/8/2022, GitHub is overhauling the issue templates and adding issue
+forms. We anticipate that PR templates will get the same treatment. If this
+happens, we should revisit the template and try to make it mesh better with
+CI. For example:
+
+- Automate tagging for versioning.
+- Having content of the template update/change based on user feedback.
+- Auto-assigning reviewers.
+- Not marking a PR as ready to go until all items have been addressed (I'm
+  thinking the author needs to confirm they've added documentation etc. before
+  the PR can be made ready to go).
+- Ideally we should automate as much of the required checklist as possible.

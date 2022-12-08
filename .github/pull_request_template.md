@@ -9,29 +9,10 @@
     use cases which are not relevant for your PR. Sorry about the extra step.
 --->
 
-# General PR Questions
-
 <!---
+    General PR Questions
+    ====================
     Please answer all questions in this section for all PRs.
---->
-
-**Brief Description**
-<!---
-    In a couple sentences, describe what this pull request will accomplish. If
-    there is a corresponding issue please link to it with
-    [closing words](
-        https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-
-        using-a-keyword)
-    as appropriate. If the goal is more complicated than can be articulated in
-    a few sentences, please first open an issue and explain it in detail
-    there.
---->
-
-**Not In Scope**
-<!---
-    Some features have obvious extensions or use cases. If you're only targeting
-    a specific use case and don't want to worry about other use cases in this
-    PR please make that clear.
 --->
 
 **PR Type**
@@ -55,6 +36,27 @@
 - [ ] Feature
 - [ ] Patch
 
+**Brief Description**
+<!---
+    In a couple sentences, describe what this pull request will accomplish. If
+    there is a corresponding issue please link to it with
+    [closing words](
+        https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-
+        using-a-keyword)
+    as appropriate. If the goal is more complicated than can be articulated in
+    a few sentences, please first open an issue and explain it in detail
+    there.
+--->
+
+**Not In Scope**
+<!---
+    Some features have obvious extensions or use cases. If you're only targeting
+    a specific use case and don't want to worry about other use cases in this
+    PR please make that clear.
+--->
+
+
+
 **PR Checklist**
 
 <!---
@@ -67,12 +69,9 @@
     you are not sure how to address something on the list.
 --->
 
-- [ ] API Documentation
-- [ ] User and/or developer documentation
-- [ ] Update existing documentation (mainly for patches)
-- [ ] Design documentation (for features or breaking changes only)
-- [ ] Unit testing
-- [ ] Formatting according to organization standards
+- [ ] Documentation (API, user, design, and developer as applicable)
+- [ ] Testing (unit, integration, performance, as applicable)
+- [ ] Code adheres to organization standards
 
 # Draft PRs Only
 <!---

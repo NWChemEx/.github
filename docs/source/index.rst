@@ -17,8 +17,9 @@ contribute.
     :maxdepth: 2
     :caption: Contents:
 
+    community/index
     conventions/index
     design/index
     development/index
-    project_management/index
+    continuous_deployment/index
     resources/index

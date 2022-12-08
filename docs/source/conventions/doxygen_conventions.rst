@@ -1,3 +1,5 @@
+.. _doxygen_conventions:
+
 *************************************
 Using Doxygen in the NWChemEx Project
 *************************************
@@ -18,7 +20,7 @@ language. Bare-bones this looks like:
 
    /// This is a Doxygen, single-line comment for the following function
    void function1();
- 
+
    /** For more extened documentation block comments are preferred.
     *
     *  This line is also part of the comment.
@@ -76,19 +78,19 @@ comment is often fine (just describing what it is).
    int function1(int Param1, int& Param2, int& Param3);
 
  Obviously the real documentation should be more helpful, but this illustrates
- the key things to document: brief, detailed description, input/output 
- parameters, return value, template type (or non-type) parameters, and 
+ the key things to document: brief, detailed description, input/output
+ parameters, return value, template type (or non-type) parameters, and
  exceptions that are thrown (as well as the level of exception guarantee).
- 
+
  Other useful commands to be aware of:
 
-- ``@file`` for documenting files (particularly useful for files containing 
+- ``@file`` for documenting files (particularly useful for files containing
   many functions)
 - ``@defgroup`` used to define groups for organizational reasons
 - ``@ingroup`` for associating a file, class, member, *etc.* with a particular
   group
 - ``@f$<latex here> @f$`` for adding on line Latex formulae
-- ``@f{eqnarray}{`` for starting a Latex ``eqnarray`` (change the environment 
+- ``@f{eqnarray}{`` for starting a Latex ``eqnarray`` (change the environment
   name to get other environments), this environment is ended by ``@f}``
 - ``@note`` for starting a note
 - ``@warning`` for displaying a warning to the reader
