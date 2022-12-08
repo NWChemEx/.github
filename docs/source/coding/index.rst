@@ -19,10 +19,10 @@ you understand:
    Add links so people can educate themselves on these topics.
 
 .. toctree::
-    :maxdepth: 2
-    :caption: Contents:
+   :maxdepth: 2
+   :caption: Contents:
 
-    preliminaries
-    cxx_development_workflow
-    python_development_workflow
-    ides/index
+   preliminaries
+   cxx/index
+   python/index
+   ides/index
