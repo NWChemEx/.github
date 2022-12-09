@@ -60,16 +60,20 @@
 **PR Checklist**
 
 <!---
-    Know that unless you are brand-new contributor (in which case we're just
-    happy to have your contribution), or arrangements have been
-    made in advance, your PR will in general be rejected until you have
-    addressed the items in the following checklist. That said, depending on
-    the content of the PR, some of the checklist may not apply. In that case
-    they obviously won't be held against you. Please ask for clarification if
-    you are not sure how to address something on the list.
+    This checklist is meant for developers who are part of the NWChemEx-Project
+    organization. If you are an outside collaborator, who only occasionally
+    contributes little tweaks, we're just happy to get your contribution. The
+    reviewers will happily make any changes needed to bring your contribution
+    up to snuff.
+
+    For developers who are part of the organization, and outside collaborators making frequent or large contributions, know that the NWChemEx-Project
+    organization strives to be an exemplar of code quality. Unless you have
+    advance approval, your PR will not be merged until all relevant items on the
+    checklist have been addressed. That said, if you're new, we're certainly
+    willing help out, answer questions, and point you to the right resources.
 --->
 
-- [ ] Documentation (API, user, design, and developer as applicable)
+- [ ] Documentation (comments, API, user, design, and developer as applicable)
 - [ ] Testing (unit, integration, performance, as applicable)
 - [ ] Code adheres to organization standards
 

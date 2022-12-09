@@ -16,11 +16,12 @@
 NWChemEx Community
 ##################
 
-Topics in this section go over governance of the NWChemEx-Project and design
-documentation for community interactions (*i.e.*, how we landed on our PR and
-issue templates etc.)
+Topics in this section go over governance of the NWChemEx-Project and explain
+decisions we've made regarding community interactions (*i.e.*, how we landed on
+our PR and issue templates etc.)
 
 .. toctree::
    :maxdepth: 1
 
    pull_requests
+   issues

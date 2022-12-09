@@ -18,8 +18,8 @@ contribute.
     :caption: Contents:
 
     community/index
-    conventions/index
     design/index
-    development/index
+    documenting/index
+    coding/index
     continuous_deployment/index
     resources/index

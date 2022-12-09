@@ -18,6 +18,11 @@
 NWChemEx Community Guidelines for Pull Requests
 ###############################################
 
+TL;DR PRs are the most natural way to update a project hosted on GitHub. We
+have created a PR template to help PR authors include enough detail for
+reviewers to do their job. And we have suggested workflows for authors and
+reviewers.
+
 *************
 What is a PR?
 *************
@@ -128,6 +133,14 @@ General Considerations
       - :ref:`rest_conventions`.
       - :ref:`doxygen_conventions`.
 
+#. PRs should contain code of high-caliber
+
+   - NWChemEx strives to be an exemplar package
+   - Easier to maintain good code
+   - High-quality is especially important for senior developers as new
+     developers look to your code for examples.
+   - There is a time and place for "just get something working", but should
+     ideally be avoided
 
 API Breaking Changes
 ====================
@@ -283,6 +296,51 @@ Reviewers of a PR are expected to:
    step as necessary.
 #. If you are the last reviewer to approve a PR then merge it (assuming all
    CI workflows have passed).
+
+Notes on PR Quality
+===================
+
+.. note::
+
+   The contents of this section are written assuming a 1.0 has occurred. We
+   admittedly have not lived up to the lofty standards of this section and
+   part of getting to a 1.0 is making sure existing code meets or exceeds
+   these standards.
+
+.. note::
+
+   Occasional contributors from outside the project are not the target of this
+   section. This section is targeting developers who are part of the team.
+
+The checklist on the PR template is admittedly asking a lot of the author.
+NWChemEx is designed to be a modular code. The vast majority of electronic
+structure development occurs in modules. Each of these modules are disjoint,
+and can be separately hosted. In turn, you can (and should) go through the
+"just get something working" phase outside of the NWChemEx repositories.
+
+By making a PR which will add a module into an NWX repository you are saying the
+module is ready for users. This does not necessarily mean that it is as
+performant as it is going to get, or that the module is fully featured. It
+simply means that the contents of the module have been vetted for correctness
+and the module has been found potentially useful. Once the module is merged it
+becomes available to users, and since taking it back would break any code that
+uses the module, we as a project are obligated to support that module or break
+API. The point being, we expect the module to be fully documented, tested, and
+to adhere to the organization's standards so that we can begin stewardship of
+the module.
+
+For PRs addressing infrastructure the requirements are a bit different.
+Since infrastructure exists outside modules, it can't really be staged until
+it is ready. For infrastructure we will allow some technical debt, as long as
+the developer is willing to repay that technical debt, and makes a plan for
+repaying it. In practice what this means is, say you really need a new type of
+cache to complete a run. We'll let you merge that cache, say without
+documentation, as long as you open an issue tracking that documentation is
+still needed. Developers are expected to repay technical debt on a relatively
+timely basis. That said, since the infrastructure is going into the main
+repository, it needs to still be vetted. This means it can not still be in the
+design phase, nor can it be untested.
+
 
 *********************
 Future Considerations
