@@ -122,7 +122,7 @@ get_gcc() {
 #   get_gcovr
 get_gcovr() {
   ${APT_COMMAND} update
-  ${APT_GET_COMMAND} install libxml2-dev libxslt-dev python-dev
+  ${APT_GET_COMMAND} install libxml2-dev libxslt-dev python3-dev
   ${PIP_COMMAND} install gcovr
 }
 # Wraps installing graphviz
