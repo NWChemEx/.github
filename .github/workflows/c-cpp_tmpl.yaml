@@ -9,6 +9,9 @@ on:
       clang-build:
         required: true
         type: boolean
+      gcc-build:
+        required: true
+        type: boolean
     secrets:
       CPP_GITHUB_TOKEN:
         required: true
@@ -19,7 +22,6 @@ jobs:
     strategy:
       matrix:
         cmake_version: [3.16.3]
-        #cmake_version: [3.18.6]
         gcc_version: [9]
         clang_version: [11]
     steps:
@@ -32,7 +34,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           clang_version: ${{ matrix.clang_version }}
-        uses: NWChemEx-Project/.github/actions/get_dependencies@parallel-template
+        uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
           dependencies: ${{inputs.dependencies}}
       - name: Build and test using Clang
@@ -40,15 +42,15 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@parallel-template
+        uses: NWChemEx-Project/.github/actions/build_and_test@master
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       - name: Build and test using GCC
-        if: ${{inputs.clang-build == false}}
+        if: ${{inputs.gcc-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@parallel-template
+        uses: NWChemEx-Project/.github/actions/build_and_test@master
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       # - uses: codecov/codecov-action@v1
