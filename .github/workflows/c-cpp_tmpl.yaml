@@ -34,7 +34,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           clang_version: ${{ matrix.clang_version }}
-        uses: NWChemEx-Project/.github/actions/get_dependencies@master
+        uses: NWChemEx-Project/.github/actions/get_dependencies@parallel-template
         with:
           dependencies: ${{inputs.dependencies}}
       - name: Build and test using Clang
@@ -42,7 +42,7 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        uses: NWChemEx-Project/.github/actions/build_and_test@parallel-template
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       - name: Build and test using GCC
@@ -50,7 +50,7 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        uses: NWChemEx-Project/.github/actions/build_and_test@parallel-template
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       # - uses: codecov/codecov-action@v1
