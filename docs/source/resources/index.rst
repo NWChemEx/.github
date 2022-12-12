@@ -11,6 +11,4 @@ used for developing NWChemEx.
     :caption: Contents:
 
     git_tutorial
-    rest_cheatsheet
-    writing_tutorials
     recommended_development_resources

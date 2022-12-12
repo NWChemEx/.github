@@ -17,8 +17,8 @@ contribute.
     :maxdepth: 2
     :caption: Contents:
 
-    conventions/index
     design/index
-    development/index
-    project_management/index
+    coding/index
+    documenting/index
+    continuous_integration/index
     resources/index

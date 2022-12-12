@@ -136,8 +136,16 @@ get_gcc() {
 #   get_gcovr
 get_gcovr() {
   ${APT_COMMAND} update
-  ${APT_GET_COMMAND} install libxml2-dev libxslt-dev python2-dev
+  ${APT_GET_COMMAND} install libxml2-dev libxslt-dev python3-dev
   ${PIP_COMMAND} install gcovr
+}
+# Wraps installing graphviz
+#
+# Usage:
+#   get_graphviz
+get_graphviz() {
+  ${APT_COMMAND} update
+  ${APT_GET_COMMAND} install graphviz
 }
 # Wraps installing LAPACKe
 #
@@ -267,6 +275,8 @@ for depend in "$@"; do
     get_gcc "${gcc_version}"
   elif [ "${depend}" = "gcovr" ]; then
     get_gcovr
+  elif [ "${depend}" = "graphviz" ]; then
+    get_graphviz
   elif [ "${depend}" = "lapacke" ]; then
     get_lapacke
   elif [ "${depend}" = "libint" ]; then
