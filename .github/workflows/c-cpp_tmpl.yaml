@@ -6,19 +6,24 @@ on:
       dependencies:
         required: true
         type: string
+      clang-build:
+        required: true
+        type: boolean
+      gcc-build:
+        required: true
+        type: boolean
     secrets:
       CPP_GITHUB_TOKEN:
         required: true
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         cmake_version: [3.16.3]
         gcc_version: [9]
-
+        clang_version: [11]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
@@ -28,17 +33,27 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
+          clang_version: ${{ matrix.clang_version }}
         uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
           dependencies: ${{inputs.dependencies}}
-      - name: Build and test
+      - name: Build and test using Clang
+        if: ${{inputs.clang-build == true}}
+        env:
+          cmake_version: ${{ matrix.cmake_version }}
+          clang_version: ${{ matrix.clang_version }}
+        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        with: 
+          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      - name: Build and test using GCC
+        if: ${{inputs.gcc-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
         uses: NWChemEx-Project/.github/actions/build_and_test@master
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-      - uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
+      # - uses: codecov/codecov-action@v1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: ./coverage.xml

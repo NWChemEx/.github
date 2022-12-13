@@ -26,9 +26,6 @@ cmake_command=cmake #"${cmake_root}/bin/cmake"
 ctest_command=ctest #"${cmake_root}/bin/ctest"
 toolchain_file=$(pwd)/toolchain.cmake
 
-#Step 1: Write toolchain.cmake
-# TODO: Do we really need all this? I Just took what was in all the old files
-#       and combined it here.
 echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
 {
   echo "set(CMAKE_CXX_STANDARD 17)"
@@ -52,6 +49,28 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   #echo 'set(lapack_LIBRARIES ${LAPACK_LIBRARIES})'
 } >> "${toolchain_file}"
 
+# if clang_version is not empty set clang and 
+# clang++ as default c and cxx compiler
+if [ ! -z "$clang_version" ]
+then
+    {
+      echo "set(CMAKE_C_COMPILER /usr/bin/clang)"
+      echo "set(CMAKE_CXX_COMPILER /usr/bin/clang++)"  
+      # echo 'set(OpenMP_CXX "${CMAKE_CXX_COMPILER}" CACHE STRING "" FORCE)'
+      # echo 'set(OpenMP_CXX_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument" CACHE STRING "" FORCE)'
+      # echo 'set(OpenMP_CXX_LIB_NAMES "libomp" "libgomp" "libiomp5" CACHE STRING "" FORCE)'
+      # echo 'set(OpenMP_libomp_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
+      # echo 'set(OpenMP_libgomp_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
+      # echo 'set(OpenMP_libiomp5_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
+      echo 'set(gpu_backend "none" CACHE STRING "" FORCE)'
+    } >> "${toolchain_file}"
+else 
+  {
+    echo "set(CMAKE_C_COMPILER /usr/bin/gcc)"
+    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"  
+  } >> "${toolchain_file}"
+fi
+
 #Step 2: Configure
 if which ninja >/dev/null
 then
@@ -69,9 +88,9 @@ ${ctest_command} -VV
 cd ..
 
 #Step 5: Generate coverage report
-curr_dir=$(pwd)
-cd ..
-gcovr --root "${curr_dir}" \
-      --filter "${curr_dir}" \
-      --exclude "${curr_dir}"/tests \
-      --xml "${curr_dir}"/coverage.xml
+# curr_dir=$(pwd)
+# cd ..
+# gcovr --root "${curr_dir}" \
+#       --filter "${curr_dir}" \
+#       --exclude "${curr_dir}"/tests \
+#       --xml "${curr_dir}"/coverage.xml
