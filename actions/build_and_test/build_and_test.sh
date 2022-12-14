@@ -80,7 +80,7 @@ else
 fi
 
 #Step 3: Compile
-${cmake_command} --build build
+${cmake_command} -DEVENT__DISABLE_TESTS=ON --build build
 
 #Step 4: Unit-test
 cd build
