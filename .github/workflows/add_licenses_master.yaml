@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Apply Licenses
-        uses: apache/skywalking-eyes@main
+        uses: apache/skywalking-eyes@v0.4.0
         with:
           config: ${{ inputs.config_file }}
           mode: fix
