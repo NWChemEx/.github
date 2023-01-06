@@ -21,5 +21,6 @@ contribute.
     design/index
     documenting/index
     coding/index
+    testing/index
     continuous_deployment/index
     resources/index

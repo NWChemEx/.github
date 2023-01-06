@@ -88,7 +88,7 @@ three use cases:
    - Quality of life improvements (e.g., extensive optimization)
    - Entirely new documentation sections
 
-#. Patch
+#. Patches
 
    - Largely modifies existing code
    - Bug fixes, typos, documentation tweaks
@@ -108,13 +108,13 @@ General Considerations
    - If it's too hard to make a PR people won't do it.
    - Setting the bar too high discourages new contributors.
 
-#. Should be possible to open the PR early
+#. It should be possible to open the PR early.
 
    - Channel for discussion between reviewers and the PR author.
    - Gets work on radar of reviewers and other developers.
    - Time to hash out what is and is not in scope before time is wasted
 
-#. PR lifetimes should be short.
+#. The PR's lifetime should be short.
 
    - The code base moves fast, PRs get stale quickly.
    - Shoot for merging in less than two weeks.
@@ -132,7 +132,7 @@ General Considerations
       - :ref:`rest_conventions`.
       - :ref:`doxygen_conventions`.
 
-#. PRs should contain code of high-caliber
+#. PRs should contain code of high-caliber.
 
    - NWChemEx strives to be an exemplar package
    - Easier to maintain good code
@@ -144,12 +144,13 @@ General Considerations
 API Breaking Changes
 ====================
 
-#. Should be last resort.
+#. Breaking API should be a last resort.
 
-   - Maintaining stable APIs leads to users and developers instilling trust in us.
+   - Maintaining stable APIs leads to users and developers instilling trust
+     in us.
    - Need to document what was tried to avoid the break.
 
-#. Need plan to avoid breaking API again.
+#. Need a plan to avoid breaking the APIs again.
 
    - Determine breakage points
    - Update design documentation relying on old API.
@@ -159,7 +160,7 @@ API Breaking Changes
 Features
 ========
 
-#. Avoid "Hit by a bus scenario"
+#. Need to avoid the "Hit by a bus" scenario.
 
    - The NWChemEx code base needs to be maintainable by multiple developers.
    - Knowledge needs to be discoverable and shared
@@ -169,21 +170,22 @@ Features
    - Developer documentation for technical aspects, avoids the costly exercise
      of reverse engineering how algorithms work.
 
-#. Testing
+#. Features need to be tested.
 
    - As a scientific code we need to be reliable and reproducible.
    - NWChemEx is a big project, so it can be very difficult to understand
-     ramifications of a change. These changes can be caught by appropriate testing.
+     ramifications of a change. These changes can be caught by appropriate
+     testing.
 
 
 Patches
 =======
 
-#. Often small and ready to go upon opening PR
+#. Patches are often small and ready to go upon opening PR.
 
    - Don't require PR to be opened in advance.
 
-#. Not all feature considerations are applicable
+#. Not all feature considerations are applicable to patches.
 
    - Documentation usually not needed for bug fixes.
    - Need tests to ensure bug doesn't appear again.
@@ -217,7 +219,7 @@ The prompts ask the author to:
 #. specify what sort of PR this is (major, minor, or patch)
 #. describe what's in scope for the PR
 #. describe what's not in scope for the PR
-#. confirm that they have done documentation, etc.
+#. confirm that they have done documentation, etc., and
 #. (for drafts only) listing what still needs to be done.
 
 Why these prompts? The first prompt is for categorizing the PR (and
@@ -231,6 +233,11 @@ The template contains comments which explain the prompts in more detail.
 
 PR Author Process
 =================
+
+.. note::
+
+   The contents of this section provide the motivation for
+   :ref:`nwx_github_pull_requests`.
 
 Once an author has decided to work on a feature or patch they should open a PR.
 This entails:
