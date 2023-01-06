@@ -325,7 +325,7 @@ simply means that the contents of the module have been vetted for correctness
 and the module has been found potentially useful. Once the module is merged it
 becomes available to users, and since taking it back would break any code that
 uses the module, we as a project are obligated to support that module or break
-API. The point being, we expect the module to be fully documented, tested, and
+an API. The point being, we expect the module to be fully documented, tested, and
 to adhere to the organization's standards so that we can begin stewardship of
 the module.
 
