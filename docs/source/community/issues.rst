@@ -24,6 +24,8 @@ ecosystem and thus we will use Issues for logging bug reports, and tracking
 user feedback. User feedback includes, but is not limited to: feature requests,
 performance concerns, questions related to the code, and suggestions.
 
+This page is an academic look at issues. For tutorials on how to use issues,
+from the perspective of the NWChemEx organization, see :ref:`nwx_github_issues`.
 
 *************************
 What are (GitHub) Issues?

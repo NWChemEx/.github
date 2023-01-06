@@ -118,7 +118,8 @@ General Considerations
 
    - The code base moves fast, PRs get stale quickly.
    - Shoot for merging in less than two weeks.
-   - Merge function by function if necessary.
+   - Merge function by function if necessary
+   - See :ref:`using_issues_to_track_progress` for tracking progress.
 
 #. Code submitted as PRs should adhere to the organization's standards.
 
