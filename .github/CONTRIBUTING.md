@@ -11,7 +11,7 @@ you become familiar with our more formal developer documentation located
 
 Questions come up. We strive to have helpful documentation, but it's unlikely
 to have all the answers. If you have a question, please search the
-documentation and the GitHub issues for answers. If you can not find the
+documentation and the GitHub issues for answers. If you cannot find the
 answer then feel free to open a GitHub issue with the question, using the
 "Question" template.
 
