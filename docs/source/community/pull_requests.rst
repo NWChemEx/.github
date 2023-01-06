@@ -329,7 +329,7 @@ an API. The point being, we expect the module to be fully documented, tested, an
 to adhere to the organization's standards so that we can begin stewardship of
 the module.
 
-For PRs addressing infrastructure the requirements are a bit different.
+For PRs addressing infrastructure, the requirements are a bit different.
 Since infrastructure exists outside modules, it can't really be staged until
 it is ready. For infrastructure we will allow some technical debt, as long as
 the developer is willing to repay that technical debt, and makes a plan for
