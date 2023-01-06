@@ -54,45 +54,46 @@ able to track tasks and make the code better.
 What Do We Want to Use Issues For?
 **********************************
 
-#. Bug tracking.
+#. Bug tracking and pull requests.
 
    - It's easy to open an issue, link it to a line of code, or type a quick
      description.
-   - "TODO" statements get forgotten (there's GitHub integrations for turning
+   - "TODO" statements in PRs or other Issues get forgotten (there's GitHub integrations for turning
      them into issues. This is very convenient for avoiding context switching
-     from the code to GitHub to open the issue).
-   - Emails, Slack conversations, forum posts, etc. get lost/forgotten
+     from the code to GitHub to open the issue.).
+   - Emails, Slack conversations, forum posts, etc. get lost/forgotten.
 
 #. Feature Requests
 
    - Most new features require some planning.
    - Opening an issue starts the process.
-   - Issues integrate easily with Projects, facilitating organization.
+   - Issues integrate easily with GitHub Projects, facilitating organization.
 
 #. Work Planning
 
-   - Similar to feature requests, but more general
-   - Individual tasks in a longer sprint (not necessarily a feature)
-   - Issues are natural building blocks for GitHub Projects
+   - Similar to feature requests, but more general.
+   - Documents individual tasks in a longer sprint (not necessarily a feature).
+   - Issues are natural building blocks for GitHub Projects.
 
 #. User to Developer Communication
 
-   - Bug tracking and feature requests are specific use cases
-   - Users can ask questions
-   - Users can provide other feedback (code is slow, hard to use, etc.)
+   - Bug tracking and feature requests are specific use cases.
+   - Users can ask questions.
+   - Users can provide other feedback (code is slow, hard to use, etc.).
+   - Users can see challenges that other users are having.
 
 
 ******************
 Issue Alternatives
 ******************
 
-This section explores some of the other alternatives to GitHub Issues. This is
+To provide background, this section explores some of the other alternatives to GitHub Issues. This is
 far from exhaustive and just represents some other options we considered.
 
 GitHub Discussions
 ==================
 
-Over the years GitHub as rolled out many communication features. To help GitHub
+Over the years GitHub has rolled out many communication features. To help GitHub
 users navigate the options, GitHub provides guidance
 `here <https://docs.github.com/en/get-started/quickstart/communicating-on-github>`__.
 The take-away is that of all the GitHub communication features, issues most
@@ -128,7 +129,9 @@ Jira
 
 Jira is a commercial software solution for tracking product development. At
 this point the NWChemEx project is not at a point where we would use Jira for
-anything beyond what Issues already provides. Thus it's not clear what the
+anything beyond what Issues already provides. With the most recent changes and improvements
+in GitHub project boards, some of the Jira project management features are also available in
+a GitHub workflow. Thus it's not clear what the
 benefit would be. It's possible that with a more thorough review of Jira this
 opinion would change, but for now, the fact that Issues is free and well
 integrate with GitHub make us prefer Issues over Jira.
@@ -138,7 +141,7 @@ Trello
 
 `Main page <https://trello.com/>`__.
 
-Before GitHub Projects Trello was a very attractive option. Trello allows you
+Before GitHub Projects Trello, was a very attractive option. Trello allows you
 to create tickets, and organize them on kanban boards. Now, however, using
 Trello just adds an extra synchronization step between the repo and the Trello
 board.
@@ -165,7 +168,7 @@ NWChemEx-Project organization are kept in the ``.github`` repository in the
 
 #. Bug reports
 #. Feature requests
-#. Question
+#. Questions
 
 (it's assumed that most user feedback will be questions, not statements).
 
@@ -173,7 +176,7 @@ The full details of project planning are beyond this page. What is relevant
 here is that GitHub Projects are comprised of Issues. The idea is that when
 a more involved feature or development effort is to be undertaken the team
 creates a project board. In the project board, individual tasks are added as
-issues. As PRs are merged, the issues are closed and removed from the project.
+Issues. As PRs are merged, the Issues are closed and removed from the project.
 
 We also note that issue templates hosted in the ``.github`` repository are used
 as the defaults organization wide. They can be overridden on a repo by repo
