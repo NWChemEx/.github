@@ -81,6 +81,9 @@
     - [Design](https://nwchemex-project.github.io/.github/documenting/writing_design_documentation.html)
     - [Developer](https://nwchemex-project.github.io/.github/documenting/writing_developer_documentation.html)
 - [ ] Testing (unit, integration, performance, as applicable)
+    - [Unit](https://nwchemex-project.github.io/.github/testing/unit.html)
+    - [Integration](https://nwchemex-project.github.io/.github/testing/integration.html)
+    - [Performance](https://nwchemex-project.github.io/.github/testing/performance.html)
 - [ ] Code adheres to organization standards
     - [C++](https://nwchemex-project.github.io/.github/coding/cxx/cxx_conventions.html)
     - [Python](https://nwchemex-project.github.io/.github/coding/python/python_conventions.html)
