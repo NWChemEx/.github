@@ -18,7 +18,7 @@
 NWChemEx Community Guidelines for Pull Requests
 ###############################################
 
-TL;DR PRs are the most natural way to update a project hosted on GitHub. We
+TL;DR Pull Requests (PRs) are the most natural way to update a project hosted on GitHub. We
 have created a PR template to help PR authors include enough detail for
 reviewers to do their job. And we have suggested workflows for authors and
 reviewers.
@@ -32,9 +32,10 @@ specifically, each GitHub repo contains one or more branches. When you
 want to modify one of those branches you:
 
 #. Fork the target repo on GitHub
-#. Clone the fork on you local machine
+#. Clone the fork on your local machine
 #. Make a new branch in your local copy.
 #. Make the changes to the new branch
+#. Ensure that the changes compile and pass tests
 #. Push the modified branch to the fork on GitHub
 #. Open a PR on the target repo asking the maintainers to pull the branch from
    your fork.
@@ -47,8 +48,8 @@ The master branch of each repo is considered the "single source of truth." As
 a community we need to do our best to make sure this branch is the best it can
 be and conforms to the design and vision of the project. Bluntly speaking, the
 primary point of a PR is to make sure contributions do not invalidate the single
-source of truth by breaking the code, or moving the code in an inconsistent
-direction. That said, particularly in a large project like NWChemEx it can be
+source of truth by breaking the code or moving the code in an inconsistent
+direction. That said, particularly in a large project like NWChemEx, it can be
 almost impossible for any one person to fully understand what can break any
 given component or for any one person to comprehend the entire design and
 vision. The point being, while PRs do protect against malicious attacks, they
@@ -94,7 +95,7 @@ three use cases:
 
    - Largely modifies existing code
    - Bug fixes, typos, documentation tweaks
-   - Performance optimizations spanning a couple lines of code
+   - Performance optimizations spanning a relatively small amount of code
 
 In general the PR considerations are going to be highly tied to what the PR
 wants to accomplish, the following subsections group considerations by use cases
@@ -138,7 +139,7 @@ General Considerations
    - NWChemEx strives to be an exemplar package
    - Easier to maintain good code
    - High-quality is especially important for senior developers as new
-     developers look to your code for examples.
+     developers look to your code for examples
    - There is a time and place for "just get something working", but should
      ideally be avoided
 
@@ -147,7 +148,7 @@ API Breaking Changes
 
 #. Should be last resort.
 
-   - Maintaining stable APIs leads to users instilling trust in us.
+   - Maintaining stable APIs leads to users and developers instilling trust in us.
    - Need to document what was tried to avoid the break.
 
 #. Need plan to avoid breaking API again.
@@ -173,8 +174,8 @@ Features
 #. Testing
 
    - As a scientific code we need to be reliable and reproducible.
-   - NWChemEx is a big project, can be very difficult to understand
-     ramifications of a change. Can be caught be testing.
+   - NWChemEx is a big project, so it can be very difficult to understand
+     ramifications of a change. These changes can be caught by appropriate testing.
 
 
 Patches
@@ -189,7 +190,7 @@ Patches
    - Documentation usually not needed for bug fixes.
    - Need tests to ensure bug doesn't appear again.
    - New documentation usually doesn't need new tests.
-   - Snippets added to documentation do need tested.
+   - Snippets added to documentation do need to be tested.
    - Performance updates may require updating documentation if it affects
      behavior and/or use cases, *e.g.*, the method's scope may have expanded.
 
@@ -249,7 +250,7 @@ This entails:
 
 #. Notify the reviewers when the author thinks that ``b`` is ready to merge
    by messaging ``r2g`` (or something similar) in the PR conversation.
-#. Respectfully address any reviewer concern. Marking each one as resolved when
+#. Respectfully address any reviewer concerns. Marking each one as resolved when
    it has been addressed.
 #. If the PR has changed return to item 5.
 #. The last approving reviewer merges the PR after all CI workflows pass.
@@ -292,8 +293,8 @@ Reviewers of a PR are expected to:
 
 #. When the PR is marked as ready to go, complete a final pass through the code
    flagging any potential issues.
-#. If issues arise work with the author to resolve them. Repeating the previous
-   step as necessary.
+#. If issues arise, work with the author to resolve them. Repeating the previous
+   steps as necessary.
 #. If you are the last reviewer to approve a PR then merge it (assuming all
    CI workflows have passed).
 
@@ -310,7 +311,7 @@ Notes on PR Quality
 .. note::
 
    Occasional contributors from outside the project are not the target of this
-   section. This section is targeting developers who are part of the team.
+   section. This section is targeting developers who are regular contributors to the code (part of the team).
 
 The checklist on the PR template is admittedly asking a lot of the author.
 NWChemEx is designed to be a modular code. The vast majority of electronic
