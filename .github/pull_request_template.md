@@ -53,7 +53,8 @@
 <!---
     Some features have obvious extensions or use cases. If you're only targeting
     a specific use case and don't want to worry about other use cases in this
-    PR please make that clear.
+    PR please make that clear. As appropriate, open an issue for anything not in scope that will need to be or
+    could be done in the future.
 --->
 
 
@@ -71,7 +72,7 @@
     organization strives to be an exemplar of code quality. Unless you have
     advance approval, your PR will not be merged until all relevant items on the
     checklist have been addressed. That said, if you're new, we're certainly
-    willing help out, answer questions, and point you to the right resources.
+    willing to help out, answer questions, and point you to the right resources.
 --->
 
 - [ ] Documentation (comments, API, user, design, and developer as applicable)
