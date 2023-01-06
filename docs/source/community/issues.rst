@@ -38,6 +38,9 @@ documentation to answer a question you have, you open an issue. If you're a
 developer, you can then use Issues as a task list. If you're a user, you can
 use Issues to give feedback to the code developers.
 
+For a tutorial on using GitHub issues within the NWChemEx-Project organization
+see :ref:`nwx_github_issues`.
+
 **********************
 Why Do We Need Issues?
 **********************
@@ -161,7 +164,7 @@ Using Issues in the NWChemEx Project
 
 Ultimately because of how well Issues integrates with GitHub, the decision has
 been made to use Issues. To address the considerations in
-:ref:`issues_use_cases` we rely on issue templates. The issue templates for the
+:ref:`issues_use_cases` we rely on Issue templates. The Issue templates for the
 NWChemEx-Project organization are kept in the ``.github`` repository in the
 ``.github/ISSUE_TEMPLATES`` directory. We presently have three templates:
 
@@ -177,9 +180,9 @@ a more involved feature or development effort is to be undertaken the team
 creates a project board. In the project board, individual tasks are added as
 Issues. As PRs are merged, the Issues are closed and removed from the project.
 
-We also note that issue templates hosted in the ``.github`` repository are used
+We also note that Issue templates hosted in the ``.github`` repository are used
 as the defaults organization wide. They can be overridden on a repo by repo
-basis by also defining issue templates in individual repos.
+basis by also defining Issue templates in individual repos.
 
 *********************
 Future Considerations
