@@ -22,7 +22,7 @@ There's three main ways to contribute:
 1. Reporting Bugs
 
    NWChemEx uses GitHub's issue feature for bug tracking. If you think you have
-   found a bug please first search the issues to see if it has already been
+   found a bug, please first search the issues to see if it has already been
    reported. If not, feel free to open a new issue using the "Bug report"
    template.
 
