@@ -32,7 +32,8 @@ There's three main ways to contribute:
     are not directly paid to do software maintenance on NWChemEx, which means it
     may take us a while to implement the feature. Like bugs, we use GitHub's
     issue feature for tracking feature requests. Please do a quick search to
-    make sure someone else hasn't already suggested the feature. If the feature
+    make sure someone else hasn't already suggested the feature. If there is an open issue, feel free to
+    add a comment in that issue. This will help us to track the need for a feature. If the feature
     is indeed new, then please open a new issue using the "Feature request"
     template.
 
