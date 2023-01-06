@@ -18,10 +18,10 @@
 NWChemEx Community Guidelines for Pull Requests
 ###############################################
 
-TL;DR Pull Requests (PRs) are the most natural way to update a project hosted on GitHub. We
-have created a PR template to help PR authors include enough detail for
-reviewers to do their job. And we have suggested workflows for authors and
-reviewers.
+TL;DR Pull Requests (PRs) are the most natural way to update a project hosted
+on GitHub. We have created a PR template to help PR authors include enough
+detail for reviewers to do their job. And we have suggested workflows for
+authors and reviewers.
 
 *************
 What is a PR?
@@ -29,16 +29,13 @@ What is a PR?
 
 A PR is a GitHub feature used to contribute changes to a GitHub repo. More
 specifically, each GitHub repo contains one or more branches. When you
-want to modify one of those branches you:
+want to modify one of those branches you open a PR with the suggested changes.
+Maintainers of the branch then determine whether or not they want to pull your
+changes into the branch. Often this is an iterative process where the branch
+maintainers request changes to the PR before they will merge it.
 
-#. Fork the target repo on GitHub
-#. Clone the fork on your local machine
-#. Make a new branch in your local copy.
-#. Make the changes to the new branch
-#. Ensure that the changes compile and pass tests
-#. Push the modified branch to the fork on GitHub
-#. Open a PR on the target repo asking the maintainers to pull the branch from
-   your fork.
+A full tutorial on PRs, tailored to the NWChemEx-Project organization, is
+given in the :ref:`nwx_github_pull_requests` section.
 
 *******************
 Why do We Need PRs?
