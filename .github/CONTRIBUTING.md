@@ -2,7 +2,7 @@
 
 First, thank you for your interest in contributing to the NWChemEx project! We
 strive to be a welcoming community. If you are a newcomer to the project, or just
-want to make some small contributions this page is for you. If you are going to
+want to make some small contributions to the project, this page is for you. If you are going to
 contribute a large feature, or do extensive development, we instead ask that
 you become familiar with our more formal developer documentation located
 [here](https://nwchemex-project.github.io/.github/).
