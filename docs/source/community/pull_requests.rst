@@ -338,7 +338,7 @@ cache to complete a run. We'll let you merge that cache, say without
 documentation, as long as you open an issue tracking that documentation is
 still needed. Developers are expected to repay technical debt on a relatively
 timely basis. That said, since the infrastructure is going into the main
-repository, it needs to still be vetted. This means it can not still be in the
+repository, it needs to still be vetted. This means it cannot still be in the
 design phase, nor can it be untested.
 
 
