@@ -71,7 +71,7 @@
     organization strives to be an exemplar of code quality. Unless you have
     advance approval, your PR will not be merged until all relevant items on the
     checklist have been addressed. That said, if you're new, we're certainly
-    willing help out, answer questions, and point you to the right resources.
+    willing to help out, answer questions, and point you to the right resources.
 --->
 
 - [ ] Documentation (comments, API, user, design, and developer as applicable)
