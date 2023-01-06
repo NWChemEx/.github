@@ -60,6 +60,8 @@ There's three main ways to contribute:
 
     Also if you're just committing a small change, no need to run it by us. Just open the (non-draft) PR with the change!
 
+    For help on creating a pull request see [this](https://nwchemex-project.github.io/.github/resources/github/pull_request.html) tutorial.
+
 ## Contributor License Agreement (CLA)
 
 Since the NWChemEx project is developed primarily by the U.S. Department of

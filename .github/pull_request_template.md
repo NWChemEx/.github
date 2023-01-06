@@ -1,6 +1,7 @@
 <!---
     This is a comment. So are other lines like it. No need to delete them
-    before submitting your PR.
+    before submitting your PR. If you need help on submitting a PR please
+    see our tutorial at https://nwchemex-project.github.io/.github/resources/github/pull_request.html
 --->
 
 <!---
@@ -77,8 +78,10 @@
 - [ ] Testing (unit, integration, performance, as applicable)
 - [ ] Code adheres to organization standards
 
-# Draft PRs Only
 <!---
+    Draft PRs Only
+    ==============
+
     We strongly encourage all PR authors to open PRs as early as possible.
     When you do that your PR is usually not ready for review. Fill this section
     out in that case. Note we encourage breaking PRs down into chunks which
