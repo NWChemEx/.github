@@ -76,8 +76,16 @@
 --->
 
 - [ ] Documentation (comments, API, user, design, and developer as applicable)
+    - [API](https://nwchemex-project.github.io/.github/documenting/writing_api_documentation.html)
+    - [User](https://nwchemex-project.github.io/.github/documenting/writing_tutorials.html)
+    - [Design](https://nwchemex-project.github.io/.github/documenting/writing_design_documentation.html)
+    - [Developer](https://nwchemex-project.github.io/.github/documenting/writing_developer_documentation.html)
 - [ ] Testing (unit, integration, performance, as applicable)
 - [ ] Code adheres to organization standards
+    - [C++](https://nwchemex-project.github.io/.github/coding/cxx/cxx_conventions.html)
+    - [Python](https://nwchemex-project.github.io/.github/coding/python/python_conventions.html)
+    - [Doxygen Conventions](https://nwchemex-project.github.io/.github/documenting/doxygen_conventions.html)
+    - [reST Conventions](https://nwchemex-project.github.io/.github/documenting/rst_conventions.html)
 
 <!---
     Draft PRs Only
