@@ -309,35 +309,50 @@ Notes on PR Quality
 .. note::
 
    Occasional contributors from outside the project are not the target of this
-   section. This section is targeting developers who are regular contributors to the code (part of the team).
+   section. This section is targeting developers who are regular contributors
+   to the code (part of the team).
 
-The checklist on the PR template is admittedly asking a lot of the author.
 NWChemEx is designed to be a modular code. The vast majority of electronic
 structure development occurs in modules. Each of these modules are disjoint,
-and can be separately hosted. In turn, you can (and should) go through the
-"just get something working" phase outside of the NWChemEx repositories.
+and can be separately hosted. The checklist on the PR template is admittedly
+asking a lot of the author. If you are working on new research (as opposed to
+say adding a well known feature) then, you can (and should) go through the
+"just get something working" phase outside of the NWChemEx repositories. Once
+you have hashed out your design, and decided that the feature is worth
+contributing back, then you should begin the PR process, *i.e.*, rapid
+prototyping should be done external to NWChemEx.
 
-By making a PR which will add a module into an NWX repository you are saying the
-module is ready for users. This does not necessarily mean that it is as
-performant as it is going to get, or that the module is fully featured. It
-simply means that the contents of the module have been vetted for correctness
-and the module has been found potentially useful. Once the module is merged it
+When you open a (draft) PR for adding a module into an NWX repository you are
+saying that you think that the module will be useful, should be supported, and
+that you are willing to get the first version of the module up and running.
+This does not necessarily mean that upon merging the PR the module is as
+performant as it is going to get, or that the module is fully featured (both
+of which can be addressed in subsequent PRs). Once the module is merged it
 becomes available to users, and since taking it back would break any code that
-uses the module, we as a project are obligated to support that module or break
-an API. The point being, we expect the module to be fully documented, tested, and
-to adhere to the organization's standards so that we can begin stewardship of
-the module.
+uses the module, we as a project are obligated to support that module (or
+break an API to retract it). The point being, before merging the PR we expect
+the module to be fully documented, tested, and to adhere to the organization's
+standards so that we can begin stewardship of the module. As a slight aside,
+many electronic structure features take a while to implement. If this is the
+case for your feature, open an issue to track progress (see
+:ref:`using_issues_to_track_progress`) and break the module implementation down
+into pieces, *e.g.*, PR one is design, PR two is some low level functions, PR
+three combines the functions, etc.
 
 For PRs addressing infrastructure, the requirements are a bit different.
-Since infrastructure exists outside modules, it can't really be staged until
-it is ready. For infrastructure we will allow some technical debt, as long as
-the developer is willing to repay that technical debt, and makes a plan for
-repaying it. In practice what this means is, say you really need a new type of
-cache to complete a run. We'll let you merge that cache, say without
-documentation, as long as you open an issue tracking that documentation is
-still needed. Developers are expected to repay technical debt on a relatively
-timely basis. That said, since the infrastructure is going into the main
-repository, it needs to still be vetted. This means it cannot still be in the
+When developing a module, the stability of the property type APIs helps ensure
+that your module will remain compatible with the rest of NWChemEx, even if it
+takes you a while to develop the module. Property types do not exist for
+infrastructure, and infrastructure necessarily needs to be developed in a much
+more coupled manner. To facilitate rapid merging of infrastructure, we thus
+allow some technical debt, as long as the developer is willing to repay that
+technical debt, and makes a plan for repaying it. In practice what this means
+is, say you really need a new type of cache to complete a run. We'll let you
+merge that cache, say without documentation, as long as you open an issue
+tracking that documentation is still needed. Developers are expected to repay
+technical debt in a relatively timely manner. That said, since the
+infrastructure is going into the main repository, it still needs to be vetted
+before it can be merged. In turn, infrastructure cannot still be in the
 design phase, nor can it be untested.
 
 
