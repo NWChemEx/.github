@@ -52,7 +52,8 @@
 <!---
     Some features have obvious extensions or use cases. If you're only targeting
     a specific use case and don't want to worry about other use cases in this
-    PR please make that clear.
+    PR please make that clear. As appropriate, open an issue for anything not in scope that will need to be or
+    could be done in the future.
 --->
 
 
