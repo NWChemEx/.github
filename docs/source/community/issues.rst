@@ -36,14 +36,13 @@ on a code base. The basic idea is any time you find a bug, think of a feature
 which would be cool, find an algorithm which runs slow, or can't find
 documentation to answer a question you have, you open an issue. If you're a
 developer, you can then use Issues as a task list. If you're a user, you can
-use Issues to give feedback to the repo's developers.
+use Issues to give feedback to the code developers.
 
 **********************
 Why Do We Need Issues?
 **********************
 
-As much as we wish it weren't true, NWChemEx is not presently the best it can
-be. When we find something that could be better, we need to fix it. Often times
+As much as we wish it weren't true, NWChemEx can always be improved. When we find something that could be better, we need to fix it. Often times
 we're in the middle of something else and don't want to drop everything
 to address the problem. This is where Issues can help. Using Issues we are
 able to track tasks and make the code better.
