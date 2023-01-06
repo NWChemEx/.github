@@ -13,7 +13,9 @@ Questions come up. We strive to have helpful documentation, but it's unlikely
 to have all the answers. If you have a question, please search the
 documentation and the GitHub issues for answers. If you cannot find the
 answer then feel free to open a GitHub issue with the question, using the
-"Question" template.
+"Question" template. If you need help opening an issue, see
+[this](https://nwchemex-project.github.io/.github/resources/github/issue.html)
+tutorial.
 
 ## Ways to Contribute
 

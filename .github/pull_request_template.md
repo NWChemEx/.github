@@ -19,17 +19,17 @@
 <!---
     Please check the corresponding box.
 
-    A "patch" is a PR which touches relatively few lines of code. Patches
-    usually address bugs, minor performance issues, typos, clarify
-    documentation, etc. Most patches are ready to go in a day or two.
+    "Breaking change" is a PR which will break existing user-facing code. These
+    types of PRs must be discussed in advance. They may be very small, or very
+    extensive PRs depending on the change.
 
     A "feature" is a PR which adds a major new capability, massively overhauls
     an existing feature, writes entirely new documentation pages, or optimizes
     an extensive algorithm. Features usually take at least a week to implement.
 
-    "Breaking change" is a PR which will break existing user-facing code. These
-    types of PRs must be discussed in advance. They may be very small, or very
-    extensive PRs depending on the change.
+    A "patch" is a PR which touches relatively few lines of code. Patches
+    usually address bugs, minor performance issues, typos, clarify
+    documentation, etc. Most patches are ready to go in a day or two.
 --->
 
 - [ ] Breaking change

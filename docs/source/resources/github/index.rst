@@ -12,19 +12,20 @@
 .. See the License for the specific language governing permissions and
 .. limitations under the License.
 
-.. _additional_developer_resources:
+.. _nwx_github_tutorials:
 
-##############################
-Additional Developer Resources
-##############################
+##########################
+Using GitHub with NWChemEx
+##########################
 
-The documentation in this section are tutorials and notes assembled by NWChemEx
-developers designed to help other developers come up to speed with the tools
-used for developing NWChemEx.
+The tutorials in this section cover how to use GitHub. Unlike general GitHub
+tutorials on the web, the ones in this section are specifically tailored to
+the NWChemEx project.
 
 .. toctree::
     :maxdepth: 2
     :caption: Contents:
 
-    github/index
-    recommended_development_resources
+    git_tutorial
+    issue
+    pull_request
