@@ -26,6 +26,8 @@ cmake_command=cmake #"${cmake_root}/bin/cmake"
 ctest_command=ctest #"${cmake_root}/bin/ctest"
 toolchain_file=$(pwd)/toolchain.cmake
 
+echo this is ninja build "${ninja-build}"
+
 echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
 {
   echo "set(CMAKE_CXX_STANDARD 17)"
@@ -74,6 +76,7 @@ fi
 #Step 2: Configure
 # if which ninja >/dev/null
 # then
+echo ${{ninja-build}}
 ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
 # else
 #   ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
