@@ -82,6 +82,7 @@ fi
 # fi
 
 if [ "${ninja_build}" = true ] ; then
+  echo this is ninja build "${ninja_build}"
   ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
 else
   ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
