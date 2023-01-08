@@ -12,7 +12,7 @@ on:
       gcc-build:
         required: true
         type: boolean
-      ninja-build:
+      ninja_build:
         required: true
         type: boolean
     secrets:
@@ -54,7 +54,7 @@ jobs:
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
-          ninja-build: ${{ inputs.ninja-build }}
+          ninja_build: ${{ inputs.ninja_build }}
         uses: NWChemEx-Project/.github/actions/build_and_test@ninja-build
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
