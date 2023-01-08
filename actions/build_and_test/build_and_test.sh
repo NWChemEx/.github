@@ -67,17 +67,17 @@ then
 else 
   {
     echo "set(CMAKE_C_COMPILER /usr/bin/gcc)"
-    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"  
+    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"
   } >> "${toolchain_file}"
 fi
 
 #Step 2: Configure
-if which ninja >/dev/null
-then
-  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
-else
-  ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
-fi
+# if which ninja >/dev/null
+# then
+${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
+# else
+#   ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
+# fi
 
 #Step 3: Compile
 ${cmake_command} --build build
