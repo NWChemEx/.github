@@ -86,11 +86,13 @@ perform publicly and display publicly, and to permit others to do so.
 
 This should be self-explanatory, but if you have questions just ask.
 
+
+<!---
 ## Code of Conduct
 
 All interactions with the NWChemEx organization are governed by our
 [Code of Conduct](https://github.com/NWChemEx/.github/blob/master/.github/CODE_OF_CONDUCT.md).
-
+--->
 
 ## Acknowledgments
 
