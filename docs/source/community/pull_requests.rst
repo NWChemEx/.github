@@ -116,8 +116,20 @@ General Considerations
 
 #. The PR's lifetime should be short.
 
-   - The code base moves fast, PRs get stale quickly.
    - Shoot for merging in less than two weeks.
+
+     - Long-lived PRs are typically overlooked in ongoing design
+     - Easy for new changes to break correctness/performance of long-lived PR
+     - Others can't leverage your feature if it's a PR )
+     - PR author needs to keep PR up to date, which can be a lot of time if the
+       PR is long-lived
+     - Hard to remember subtleties over life of long-lived PRs (*e.g.*, why
+       something was/wasn't done)
+     - The longer the PR lives, the more code it tends to contain, and the harder
+       to review
+     - Long-lived PRs tend to increase the amount of technical debt by seemingly
+       justifying the "let's just merge this" mentality
+
    - Merge function by function if necessary
    - See :ref:`using_issues_to_track_progress` for tracking progress.
 

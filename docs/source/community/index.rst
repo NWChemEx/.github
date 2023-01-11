@@ -25,3 +25,4 @@ our PR and issue templates etc.)
 
    pull_requests
    issues
+   faqs
