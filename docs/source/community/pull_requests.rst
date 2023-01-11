@@ -78,7 +78,7 @@ three use cases:
 
 #. API breaking changes
 
-   - Any change to a public-facing API which breaks previously working code.
+   - Any change to a public-facing API which breaks previously working code
 
 #. New features
 
@@ -112,25 +112,25 @@ General Considerations
 
    - Channel for discussion between reviewers and the PR author.
    - Gets work on radar of reviewers and other developers.
-   - Time to hash out what is and is not in scope before time is wasted
+   - Time to hash out what is and is not in scope before time is wasted.
 
 #. The PR's lifetime should be short.
 
    - Shoot for merging in less than two weeks.
 
-     - Long-lived PRs are typically overlooked in ongoing design
-     - Easy for new changes to break correctness/performance of long-lived PR
-     - Others can't leverage your feature if it's a PR )
-     - PR author needs to keep PR up to date, which can be a lot of time if the
-       PR is long-lived
+     - Long-lived PRs are typically overlooked in ongoing design.
+     - Easy for new changes to break correctness/performance of long-lived PR.
+     - Others can't leverage your feature if it's a PR.
+     - PR author needs to keep PR up to date with the rest of the code, which can be a lot of time if the
+       PR is long-lived.
      - Hard to remember subtleties over life of long-lived PRs (*e.g.*, why
-       something was/wasn't done)
+       something was/wasn't done).
      - The longer the PR lives, the more code it tends to contain, and the harder
-       to review
+       to review.
      - Long-lived PRs tend to increase the amount of technical debt by seemingly
-       justifying the "let's just merge this" mentality
+       justifying the "let's just merge this" mentality.
 
-   - Merge function by function if necessary
+   - Merge function by function if necessary.
    - See :ref:`using_issues_to_track_progress` for tracking progress.
 
 #. Code submitted as PRs should adhere to the organization's standards.
@@ -164,10 +164,10 @@ API Breaking Changes
 
 #. Need a plan to avoid breaking the APIs again.
 
-   - Determine breakage points
+   - Determine breakage points.
    - Update design documentation relying on old API.
-   - Carefully plan design of new API to avoid another break
-   - Test new API
+   - Carefully plan design of new API to avoid another break.
+   - Test new API.
 
 Features
 ========
@@ -175,8 +175,8 @@ Features
 #. Need to avoid the "Hit by a bus" scenario.
 
    - The NWChemEx code base needs to be maintainable by multiple developers.
-   - Knowledge needs to be discoverable and shared
-   - Design Documentation helps other developers understand the feature
+   - Knowledge needs to be discoverable and shared.
+   - Design Documentation helps other developers understand the feature.
    - User documentation makes sure users can use the feature without needing to
      read the code/ask a developer.
    - Developer documentation for technical aspects, avoids the costly exercise
@@ -228,9 +228,9 @@ We have written a PR template to streamline the process of opening PRs. The
 template is designed to have meaningful prompts that can be filled out quickly.
 The prompts ask the author to:
 
-#. specify what sort of PR this is (major, minor, or patch)
-#. describe what's in scope for the PR
-#. describe what's not in scope for the PR
+#. specify what sort of PR this is (major, minor, or patch),
+#. describe what's in scope for the PR,
+#. describe what's not in scope for the PR,
 #. confirm that they have done documentation, etc., and
 #. (for drafts only) listing what still needs to be done.
 

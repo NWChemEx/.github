@@ -20,7 +20,7 @@ NWChemEx Community FAQs
 When do I open an issue vs. a draft pull request (PR)?
 ******************************************************
 
-TL;DR, if you're not sure open an issue first.
+TL;DR, if you're not sure, open an issue first.
 
 Draft PRs are meant to signal to the community that you intend to work on a
 task, are ready to get started on it, and have a pretty good idea of how you
