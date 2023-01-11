@@ -70,8 +70,8 @@ automatically be prompted to view and sign the CLA (if you have  not already).
 The contents of the CLA are:
 
 ```
-By contributing computer software code to the CMakePP project I certify that the
-contribution is being made under the Apache 2.0 license
+By contributing computer software code to the <project> project I
+certify that the contribution is being made under the Apache 2.0 license
 (https://www.apache.org/licenses/LICENSE-2.0) and that I have all rights and
 permissions necessary to do so, including authorization from my employer if
 applicable.
