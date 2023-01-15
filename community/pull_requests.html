@@ -1,0 +1,630 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>NWChemEx Community Guidelines for Pull Requests &mdash; Developer Documentation 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NWChemEx Community Guidelines for Issues" href="issues.html" />
+    <link rel="prev" title="NWChemEx Community" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Developer Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">NWChemEx Community</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NWChemEx Community Guidelines for Pull Requests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-a-pr">What is a PR?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#why-do-we-need-prs">Why do We Need PRs?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pr-considerations">PR Considerations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-considerations">General Considerations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#api-breaking-changes">API Breaking Changes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#patches">Patches</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#current-pr-policy">Current PR Policy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pull-request-template">Pull Request Template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pr-author-process">PR Author Process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#review-process">Review Process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#notes-on-pr-quality">Notes on PR Quality</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#future-considerations">Future Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="issues.html">NWChemEx Community Guidelines for Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">NWChemEx Community FAQs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documenting/index.html">Documenting NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../continuous_deployment/index.html">Continuous Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Developer Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">NWChemEx Community</a> &raquo;</li>
+        
+      <li>NWChemEx Community Guidelines for Pull Requests</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/community/pull_requests.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="nwchemex-community-guidelines-for-pull-requests">
+<span id="prs-and-nwx"></span><h1>NWChemEx Community Guidelines for Pull Requests<a class="headerlink" href="#nwchemex-community-guidelines-for-pull-requests" title="Permalink to this heading">¶</a></h1>
+<p>TL;DR Pull Requests (PRs) are the most natural way to update a project hosted
+on GitHub. We have created a PR template to help PR authors include enough
+detail for reviewers to do their job. And we have suggested workflows for
+authors and reviewers.</p>
+<section id="what-is-a-pr">
+<h2>What is a PR?<a class="headerlink" href="#what-is-a-pr" title="Permalink to this heading">¶</a></h2>
+<p>A PR is a GitHub feature used to contribute changes to a GitHub repo. More
+specifically, each GitHub repo contains one or more branches. When you
+want to modify one of those branches you open a PR with the suggested changes.
+Maintainers of the branch then determine whether or not they want to pull your
+changes into the branch. Often this is an iterative process where the branch
+maintainers request changes to the PR before they will merge it.</p>
+<p>A full tutorial on PRs, tailored to the NWChemEx-Project organization, is
+given in the <a class="reference internal" href="../resources/github/pull_request.html#nwx-github-pull-requests"><span class="std std-ref">Using GitHub Pull Requests with NWChemEx</span></a> section.</p>
+</section>
+<section id="why-do-we-need-prs">
+<h2>Why do We Need PRs?<a class="headerlink" href="#why-do-we-need-prs" title="Permalink to this heading">¶</a></h2>
+<p>The master branch of each repo is considered the “single source of truth.” As
+a community we need to do our best to make sure this branch is the best it can
+be and conforms to the design and vision of the project. Bluntly speaking, the
+primary point of a PR is to make sure contributions do not invalidate the single
+source of truth by breaking the code or moving the code in an inconsistent
+direction. That said, particularly in a large project like NWChemEx, it can be
+almost impossible for any one person to fully understand what can break any
+given component or for any one person to comprehend the entire design and
+vision. The point being, while PRs do protect against malicious attacks, they
+are primarily meant to avoid accidental breakages. Part of this is through
+automated continuous integration pipelines (making sure the code builds and
+tests pass, etc.) and part of this is through manual code review, <em>i.e.</em>,
+having people read your code.</p>
+<p>Modern PRs are about more than just code review, they also are meant to be
+learning opportunities for both experienced and inexperienced coders. Again,
+no one person knows every aspect of a code, so when you make a PR it may turn
+out that the reviewer knows a better way to do something. This works both ways
+and reviewers often learn new techniques or discover previously unknown
+features by reviewing code.</p>
+<p>PRs are also about staking a claim. When you open a draft PR you’re telling
+people that you are going to work on resolving a bug etc. This tells other
+people not to duplicate the effort and/or gives them a chance to join the
+cause.</p>
+</section>
+<section id="pr-considerations">
+<h2>PR Considerations<a class="headerlink" href="#pr-considerations" title="Permalink to this heading">¶</a></h2>
+<p>This section lists considerations for authors and/or reviewers of PRs.
+Following semantic versioning, we can think of each PR as addressing one of
+three use cases:</p>
+<ol class="arabic simple">
+<li><p>API breaking changes</p>
+<ul class="simple">
+<li><p>Any change to a public-facing API which breaks previously working code</p></li>
+</ul>
+</li>
+<li><p>New features</p>
+<ul class="simple">
+<li><p>Introduces new code without breaking the API</p></li>
+<li><p>New alternative APIs</p></li>
+<li><p>Allows the code to compute new things</p></li>
+<li><p>Quality of life improvements (e.g., extensive optimization)</p></li>
+<li><p>Entirely new documentation sections</p></li>
+</ul>
+</li>
+<li><p>Patches</p>
+<ul class="simple">
+<li><p>Largely modifies existing code</p></li>
+<li><p>Bug fixes, typos, documentation tweaks</p></li>
+<li><p>Performance optimizations spanning a relatively small amount of code</p></li>
+</ul>
+</li>
+</ol>
+<p>In general the PR considerations are going to be highly tied to what the PR
+wants to accomplish, the following subsections group considerations by use cases
+and assume archetypal PRs. In other words, not all points are going to be
+relevant to every PR. If they’re not relevant for a specific PR they should be
+ignored.</p>
+<section id="general-considerations">
+<h3>General Considerations<a class="headerlink" href="#general-considerations" title="Permalink to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p>Making a PR should be easy.</p>
+<ul class="simple">
+<li><p>If it’s too hard to make a PR people won’t do it.</p></li>
+<li><p>Setting the bar too high discourages new contributors.</p></li>
+</ul>
+</li>
+<li><p>It should be possible to open the PR early.</p>
+<ul class="simple">
+<li><p>Channel for discussion between reviewers and the PR author.</p></li>
+<li><p>Gets work on radar of reviewers and other developers.</p></li>
+<li><p>Time to hash out what is and is not in scope before time is wasted.</p></li>
+</ul>
+</li>
+<li><p>The PR’s lifetime should be short.</p>
+<ul class="simple">
+<li><p>Shoot for merging in less than two weeks.</p>
+<ul>
+<li><p>Long-lived PRs are typically overlooked in ongoing design.</p></li>
+<li><p>Easy for new changes to break correctness/performance of long-lived PR.</p></li>
+<li><p>Others can’t leverage your feature if it’s a PR.</p></li>
+<li><p>PR author needs to keep PR up to date with the rest of the code, which can be a lot of time if the
+PR is long-lived.</p></li>
+<li><p>Hard to remember subtleties over life of long-lived PRs (<em>e.g.</em>, why
+something was/wasn’t done).</p></li>
+<li><p>The longer the PR lives, the more code it tends to contain, and the harder
+to review.</p></li>
+<li><p>Long-lived PRs tend to increase the amount of technical debt by seemingly
+justifying the “let’s just merge this” mentality.</p></li>
+</ul>
+</li>
+<li><p>Merge function by function if necessary.</p></li>
+<li><p>See <a class="reference internal" href="../resources/github/issue.html#using-issues-to-track-progress"><span class="std std-ref">Using Issues to Track Progress</span></a> for tracking progress.</p></li>
+</ul>
+</li>
+<li><p>Code submitted as PRs should adhere to the organization’s standards.</p>
+<ul>
+<li><p>Important for continuity</p></li>
+<li><p>Makes code reviews easier</p></li>
+<li><p>Current standards:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../coding/cxx/cxx_conventions.html#cxx-conventions"><span class="std std-ref">C++ Coding Conventions</span></a>.</p></li>
+<li><p><a class="reference internal" href="../coding/python/python_conventions.html#python-coding-conventions"><span class="std std-ref">Python Coding Conventions</span></a>.</p></li>
+<li><p><a class="reference internal" href="../documenting/rst_conventions.html#rest-conventions"><span class="std std-ref">Conventions for Writing reST Documentation</span></a>.</p></li>
+<li><p><a class="reference internal" href="../documenting/doxygen_conventions.html#doxygen-conventions"><span class="std std-ref">Using Doxygen in the NWChemEx Project</span></a>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>PRs should contain code of high-caliber.</p>
+<ul class="simple">
+<li><p>NWChemEx strives to be an exemplar package</p></li>
+<li><p>Easier to maintain good code</p></li>
+<li><p>High-quality is especially important for senior developers as new
+developers look to your code for examples</p></li>
+<li><p>There is a time and place for “just get something working”, but should
+ideally be avoided</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="api-breaking-changes">
+<h3>API Breaking Changes<a class="headerlink" href="#api-breaking-changes" title="Permalink to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Breaking API should be a last resort.</p>
+<ul class="simple">
+<li><p>Maintaining stable APIs leads to users and developers instilling trust
+in us.</p></li>
+<li><p>Need to document what was tried to avoid the break.</p></li>
+</ul>
+</li>
+<li><p>Need a plan to avoid breaking the APIs again.</p>
+<ul class="simple">
+<li><p>Determine breakage points.</p></li>
+<li><p>Update design documentation relying on old API.</p></li>
+<li><p>Carefully plan design of new API to avoid another break.</p></li>
+<li><p>Test new API.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Need to avoid the “Hit by a bus” scenario.</p>
+<ul class="simple">
+<li><p>The NWChemEx code base needs to be maintainable by multiple developers.</p></li>
+<li><p>Knowledge needs to be discoverable and shared.</p></li>
+<li><p>Design Documentation helps other developers understand the feature.</p></li>
+<li><p>User documentation makes sure users can use the feature without needing to
+read the code/ask a developer.</p></li>
+<li><p>Developer documentation for technical aspects, avoids the costly exercise
+of reverse engineering how algorithms work.</p></li>
+</ul>
+</li>
+<li><p>Features need to be tested.</p>
+<ul class="simple">
+<li><p>As a scientific code we need to be reliable and reproducible.</p></li>
+<li><p>NWChemEx is a big project, so it can be very difficult to understand
+ramifications of a change. These changes can be caught by appropriate
+testing.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="patches">
+<h3>Patches<a class="headerlink" href="#patches" title="Permalink to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Patches are often small and ready to go upon opening PR.</p>
+<ul class="simple">
+<li><p>Don’t require PR to be opened in advance.</p></li>
+</ul>
+</li>
+<li><p>Not all feature considerations are applicable to patches.</p>
+<ul class="simple">
+<li><p>Documentation usually not needed for bug fixes.</p></li>
+<li><p>Need tests to ensure bug doesn’t appear again.</p></li>
+<li><p>New documentation usually doesn’t need new tests.</p></li>
+<li><p>Snippets added to documentation do need to be tested.</p></li>
+<li><p>Performance updates may require updating documentation if it affects
+behavior and/or use cases, <em>e.g.</em>, the method’s scope may have expanded.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="current-pr-policy">
+<h2>Current PR Policy<a class="headerlink" href="#current-pr-policy" title="Permalink to this heading">¶</a></h2>
+<p>Based on the above considerations our current PR policies are listed below.</p>
+<section id="pull-request-template">
+<h3>Pull Request Template<a class="headerlink" href="#pull-request-template" title="Permalink to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GitHub supports PR templates (although as of this writing 12/8/2022) they do
+not seem to support the same feature set as issue templates (and some of the
+information seems outdated, like being able to have a separate directory).
+Should this get fixed we should look into multiple PRs for the different use
+cases.</p>
+</div>
+<p>We have written a PR template to streamline the process of opening PRs. The
+template is designed to have meaningful prompts that can be filled out quickly.
+The prompts ask the author to:</p>
+<ol class="arabic simple">
+<li><p>specify what sort of PR this is (major, minor, or patch),</p></li>
+<li><p>describe what’s in scope for the PR,</p></li>
+<li><p>describe what’s not in scope for the PR,</p></li>
+<li><p>confirm that they have done documentation, etc., and</p></li>
+<li><p>(for drafts only) listing what still needs to be done.</p></li>
+</ol>
+<p>Why these prompts? The first prompt is for categorizing the PR (and
+automating the resulting semantic versioning that needs to happen). The next
+two relate to ensuring that the reviewer knows what is supposed to be in the PR
+and what is not. The fourth prompt is to hopefully avoid the reviewer needing
+to explicitly ask for documentation, etc. And the fifth is to give a rough
+idea of what still needs to be done before the PR can be merged.</p>
+<p>The template contains comments which explain the prompts in more detail.</p>
+</section>
+<section id="pr-author-process">
+<h3>PR Author Process<a class="headerlink" href="#pr-author-process" title="Permalink to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The contents of this section provide the motivation for
+<a class="reference internal" href="../resources/github/pull_request.html#nwx-github-pull-requests"><span class="std std-ref">Using GitHub Pull Requests with NWChemEx</span></a>.</p>
+</div>
+<p>Once an author has decided to work on a feature or patch they should open a PR.
+This entails:</p>
+<ol class="arabic simple">
+<li><p>Start a branch <code class="docutils literal notranslate"><span class="pre">b</span></code> for the PR.</p></li>
+<li><p>Initiate a draft PR from <code class="docutils literal notranslate"><span class="pre">b</span></code> to the target branch (usually master/main).</p></li>
+<li><p>Fill out the PR template GitHub prompts with.</p></li>
+<li><p>Continue to push changes to the branch (checking off tasks as appropriate).</p>
+<ul class="simple">
+<li><p>Generally speaking changes should clearly identify todos raised by the
+change, <em>e.g.</em>, if you add a function, but don’t document it. Put
+<code class="docutils literal notranslate"><span class="pre">TODO:document</span> <span class="pre">me</span></code>.</p></li>
+<li><p>This helps reviewers know what you’ve overlooked vs. what you just haven’t
+gotten around to.</p></li>
+</ul>
+</li>
+<li><p>Notify the reviewers when the author thinks that <code class="docutils literal notranslate"><span class="pre">b</span></code> is ready to merge
+by messaging <code class="docutils literal notranslate"><span class="pre">r2g</span></code> (or something similar) in the PR conversation.</p></li>
+<li><p>Respectfully address any reviewer concerns. Marking each one as resolved when
+it has been addressed.</p></li>
+<li><p>If the PR has changed return to item 5.</p></li>
+<li><p>The last approving reviewer merges the PR after all CI workflows pass.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For PRs whose description requires more than a couple sentences. The author
+should open a corresponding issue with the full description. The issue is
+for tracking the design, scope, concerns, etc. that the PR should address.
+The PR itself is for discussing how the PR author literally chose to
+implement the feature, patch, etc.</p>
+</div>
+</section>
+<section id="review-process">
+<h3>Review Process<a class="headerlink" href="#review-process" title="Permalink to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GitHub allows reviewers to suggest changes. This is very useful when there’s
+a typo, formatting error, etc. Please use this feature rather than
+writing comments like “should be capitalized”.</p>
+</div>
+<p>Reviewers of a PR are expected to:</p>
+<ol class="arabic simple">
+<li><p>Understand what the PR is supposed to accomplish.</p></li>
+<li><p>If necessary, the reviewers should help the author refine the PR contents.</p>
+<ul class="simple">
+<li><p>Should the PR (and corresponding issue) be split into multiple issues/PRs?</p></li>
+<li><p>Did the author miss any obvious concerns?</p></li>
+</ul>
+</li>
+<li><p>Keep an eye on the PR as it progresses. The frequency of “check-ins” should
+be inversely proportional to the author’s familiarity with the process,
+<em>i.e.</em>, keep a closer eye on newer authors than seasoned veterans.</p></li>
+<li><p>Comment on the code when issues are spotted.</p>
+<ul class="simple">
+<li><p>Is the code using existing infrastructure to the extent possible?</p></li>
+<li><p>Is the code accruing technical debt?</p></li>
+<li><p>Is the formatting consistent? (Don’t worry about formatting which CI will
+fix)</p></li>
+</ul>
+</li>
+<li><p>When the PR is marked as ready to go, complete a final pass through the code
+flagging any potential issues.</p></li>
+<li><p>If issues arise, work with the author to resolve them. Repeating the previous
+steps as necessary.</p></li>
+<li><p>If you are the last reviewer to approve a PR then merge it (assuming all
+CI workflows have passed).</p></li>
+</ol>
+</section>
+<section id="notes-on-pr-quality">
+<h3>Notes on PR Quality<a class="headerlink" href="#notes-on-pr-quality" title="Permalink to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The contents of this section are written assuming a 1.0 has occurred. We
+admittedly have not lived up to the lofty standards of this section and
+part of getting to a 1.0 is making sure existing code meets or exceeds
+these standards.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Occasional contributors from outside the project are not the target of this
+section. This section is targeting developers who are regular contributors
+to the code (part of the team).</p>
+</div>
+<p>NWChemEx is designed to be a modular code. The vast majority of electronic
+structure development occurs in modules. Each of these modules are disjoint,
+and can be separately hosted. The checklist on the PR template is admittedly
+asking a lot of the author. If you are working on new research (as opposed to
+say adding a well known feature) then, you can (and should) go through the
+“just get something working” phase outside of the NWChemEx repositories. Once
+you have hashed out your design, and decided that the feature is worth
+contributing back, then you should begin the PR process, <em>i.e.</em>, rapid
+prototyping should be done external to NWChemEx.</p>
+<p>When you open a (draft) PR for adding a module into an NWX repository you are
+saying that you think that the module will be useful, should be supported, and
+that you are willing to get the first version of the module up and running.
+This does not necessarily mean that upon merging the PR the module is as
+performant as it is going to get, or that the module is fully featured (both
+of which can be addressed in subsequent PRs). Once the module is merged it
+becomes available to users, and since taking it back would break any code that
+uses the module, we as a project are obligated to support that module (or
+break an API to retract it). The point being, before merging the PR we expect
+the module to be fully documented, tested, and to adhere to the organization’s
+standards so that we can begin stewardship of the module. As a slight aside,
+many electronic structure features take a while to implement. If this is the
+case for your feature, open an issue to track progress (see
+<a class="reference internal" href="../resources/github/issue.html#using-issues-to-track-progress"><span class="std std-ref">Using Issues to Track Progress</span></a>) and break the module implementation down
+into pieces, <em>e.g.</em>, PR one is design, PR two is some low level functions, PR
+three combines the functions, etc.</p>
+<p>For PRs addressing infrastructure, the requirements are a bit different.
+When developing a module, the stability of the property type APIs helps ensure
+that your module will remain compatible with the rest of NWChemEx, even if it
+takes you a while to develop the module. Property types do not exist for
+infrastructure, and infrastructure necessarily needs to be developed in a much
+more coupled manner. To facilitate rapid merging of infrastructure, we thus
+allow some technical debt, as long as the developer is willing to repay that
+technical debt, and makes a plan for repaying it. In practice what this means
+is, say you really need a new type of cache to complete a run. We’ll let you
+merge that cache, say without documentation, as long as you open an issue
+tracking that documentation is still needed. Developers are expected to repay
+technical debt in a relatively timely manner. That said, since the
+infrastructure is going into the main repository, it still needs to be vetted
+before it can be merged. In turn, infrastructure cannot still be in the
+design phase, nor can it be untested.</p>
+</section>
+</section>
+<section id="future-considerations">
+<h2>Future Considerations<a class="headerlink" href="#future-considerations" title="Permalink to this heading">¶</a></h2>
+<p>As of 12/8/2022, GitHub is overhauling the issue templates and adding issue
+forms. We anticipate that PR templates will get the same treatment. If this
+happens, we should revisit the template and try to make it mesh better with
+CI. For example:</p>
+<ul class="simple">
+<li><p>Automate tagging for versioning.</p></li>
+<li><p>Having content of the template update/change based on user feedback.</p></li>
+<li><p>Auto-assigning reviewers.</p></li>
+<li><p>Not marking a PR as ready to go until all items have been addressed (I’m
+thinking the author needs to confirm they’ve added documentation etc. before
+the PR can be made ready to go).</p></li>
+<li><p>Ideally we should automate as much of the required checklist as possible.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="issues.html" class="btn btn-neutral float-right" title="NWChemEx Community Guidelines for Issues" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="NWChemEx Community" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, NWChemEx Team.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

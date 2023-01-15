@@ -41,7 +41,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Design Documentation" href="design/index.html" /> 
+    <link rel="next" title="NWChemEx Community" href="community/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -92,10 +92,12 @@
             
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="community/index.html">NWChemEx Community</a></li>
 <li class="toctree-l1"><a class="reference internal" href="design/index.html">Design Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="coding/index.html">Developing NWChemEx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="documenting/index.html">Documenting NWChemEx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="continuous_integration/index.html">Project Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="continuous_deployment/index.html">Continuous Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="resources/index.html">Additional Developer Resources</a></li>
 </ul>
 
@@ -179,6 +181,12 @@ contribute.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="community/index.html">NWChemEx Community</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community/pull_requests.html">NWChemEx Community Guidelines for Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community/issues.html">NWChemEx Community Guidelines for Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community/faqs.html">NWChemEx Community FAQs</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="design/index.html">Design Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="design/philosophy.html">Design Philosophy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="design/nwx_ecosystem.html">NWChemEx Ecosystem</a></li>
@@ -188,6 +196,16 @@ contribute.</p>
 <li class="toctree-l2"><a class="reference internal" href="design/faqs.html">FAQs</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="documenting/index.html">Documenting NWChemEx</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documenting/writing_design_documentation.html">Writing Design Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documenting/writing_api_documentation.html">Writing API Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documenting/writing_developer_documentation.html">Writing Developer Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documenting/writing_tutorials.html">Writing Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documenting/doxygen_conventions.html">Using Doxygen in the NWChemEx Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documenting/rst_conventions.html">Conventions for Writing reST Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documenting/rst_cheatsheet.html">reST Cheat Sheet</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="coding/index.html">Developing NWChemEx</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="coding/preliminaries.html">Preliminaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="coding/cxx/index.html">Developing C++ Software</a></li>
@@ -195,21 +213,19 @@ contribute.</p>
 <li class="toctree-l2"><a class="reference internal" href="coding/ides/index.html">Using IDEs to Develop NWX</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="documenting/index.html">Documenting NWChemEx</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="documenting/writing_design_documentation.html">Writing Design Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documenting/writing_tutorials.html">Writing Tutorials</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documenting/doxygen_conventions.html">Using Doxygen in the NWChemEx Project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documenting/rst_conventions.html">Conventions for Writing reST Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documenting/rst_cheatsheet.html">reST Cheat Sheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing/index.html">Testing NWChemEx</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing/unit.html">Writing Unit Tests for NWChemEx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing/integration.html">Writing Integration Tests for NWChemEx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing/performance.html">Writing Performance Tests for NWChemEx</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="continuous_integration/index.html">Project Management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="continuous_integration/ci_maintainer_notes.html">How NWX’s Continuous Integration (CI) Works</a></li>
-<li class="toctree-l2"><a class="reference internal" href="continuous_integration/documentation.html">Documentation Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="continuous_deployment/index.html">Continuous Deployment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="continuous_deployment/ci_maintainer_notes.html">How NWX’s Continuous Integration (CI) Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="continuous_deployment/documentation.html">Documentation Deployment</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="resources/index.html">Additional Developer Resources</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="resources/git_tutorial.html">Git and GitHub Procedures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources/github/index.html">Using GitHub with NWChemEx</a></li>
 <li class="toctree-l2"><a class="reference internal" href="resources/recommended_development_resources.html">Recommended Development Resources</a></li>
 </ul>
 </li>
@@ -223,7 +239,7 @@ contribute.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="design/index.html" class="btn btn-neutral float-right" title="Design Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="community/index.html" class="btn btn-neutral float-right" title="NWChemEx Community" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

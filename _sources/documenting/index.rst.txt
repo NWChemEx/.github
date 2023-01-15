@@ -23,6 +23,8 @@ conventions, to tutorials.
    :maxdepth: 1
 
    writing_design_documentation
+   writing_api_documentation
+   writing_developer_documentation
    writing_tutorials
    doxygen_conventions
    rst_conventions
