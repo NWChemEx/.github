@@ -12,20 +12,17 @@
 .. See the License for the specific language governing permissions and
 .. limitations under the License.
 
-####################
-Documenting NWChemEx
-####################
+##################
+NWChemEx Community
+##################
 
-The topics below relate to documenting NWChemEx. These range from agreed upon
-conventions, to tutorials.
+Topics in this section go over governance of the NWChemEx-Project and explain
+decisions we've made regarding community interactions (*i.e.*, how we landed on
+our PR and issue templates etc.)
 
 .. toctree::
    :maxdepth: 1
 
-   writing_design_documentation
-   writing_api_documentation
-   writing_developer_documentation
-   writing_tutorials
-   doxygen_conventions
-   rst_conventions
-   rst_cheatsheet
+   pull_requests
+   issues
+   faqs
