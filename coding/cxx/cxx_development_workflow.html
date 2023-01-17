@@ -1,77 +1,38 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>C++ Development Workflow &mdash; Developer Documentation 1.0.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="C++ Coding Conventions" href="cxx_conventions.html" />
     <link rel="prev" title="Developing C++ Software" href="index.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> Developer Documentation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 1.0.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -79,18 +40,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../community/index.html">NWChemEx Community</a></li>
@@ -116,77 +66,34 @@
 <li class="toctree-l1"><a class="reference internal" href="../../resources/index.html">Additional Developer Resources</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Developer Documentation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">Developing NWChemEx</a> &raquo;</li>
-        
-          <li><a href="index.html">Developing C++ Software</a> &raquo;</li>
-        
-      <li>C++ Development Workflow</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Developing NWChemEx</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Developing C++ Software</a></li>
+      <li class="breadcrumb-item active">C++ Development Workflow</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/coding/cxx/cxx_development_workflow.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <section id="c-development-workflow">
-<h1>C++ Development Workflow<a class="headerlink" href="#c-development-workflow" title="Permalink to this heading">¶</a></h1>
+             
+  <div class="section" id="c-development-workflow">
+<h1>C++ Development Workflow<a class="headerlink" href="#c-development-workflow" title="Permalink to this heading"></a></h1>
 <p>This page assumes you have already read
 <a class="reference internal" href="../preliminaries.html#development-preliminaries"><span class="std std-ref">Preliminaries</span></a> and that you are adding a module to a repo
 which is considered part of NWChemEx</p>
@@ -210,8 +117,8 @@ call (unless it’s not available in any other repo). Providing your module with
 the submodule will happen at runtime.</p>
 <p>Module development looks a little different depending on whether your module
 needs to call a submodule or not. The former is the easier scenario</p>
-<section id="developing-a-module-without-submodules">
-<h2>Developing a Module without Submodules<a class="headerlink" href="#developing-a-module-without-submodules" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="developing-a-module-without-submodules">
+<h2>Developing a Module without Submodules<a class="headerlink" href="#developing-a-module-without-submodules" title="Permalink to this heading"></a></h2>
 <p>This can be done largely as you would expect. You add your source code to the
 repo, add a unit test for your module’s source code, and then make sure the unit
 test works.</p>
@@ -219,9 +126,9 @@ test works.</p>
 <p class="admonition-title">Todo</p>
 <p>Make this into a true tutorial.</p>
 </div>
-</section>
-<section id="developing-a-module-with-submodule-s">
-<h2>Developing a Module with Submodule(s)<a class="headerlink" href="#developing-a-module-with-submodule-s" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="developing-a-module-with-submodule-s">
+<h2>Developing a Module with Submodule(s)<a class="headerlink" href="#developing-a-module-with-submodule-s" title="Permalink to this heading"></a></h2>
 <p>Development gets a bit more hairy when your module depends on a submodule (and
 those submodules are not part of the current repo). For concreteness let’s
 assume we are writing a module called <code class="docutils literal notranslate"><span class="pre">JCanonical</span></code> which does a naive
@@ -283,8 +190,8 @@ adding:</p>
 </pre></div>
 </div>
 <p>to <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/src/scf/scf_mm.cpp</span></code>.</p>
-<section id="running-the-module">
-<h3>Running the Module<a class="headerlink" href="#running-the-module" title="Permalink to this heading">¶</a></h3>
+<div class="section" id="running-the-module">
+<h3>Running the Module<a class="headerlink" href="#running-the-module" title="Permalink to this heading"></a></h3>
 <p>Now that we wrote the module we need to test/run it. Since our module needs
 integrals, and integrals are not provided by the SCF repo, we can’t simply add a
 unit test to <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/tests</span></code> which calls our module (we’ll get to
@@ -293,8 +200,8 @@ have integrals. How to proceed depends on whether you are ok with using a Python
 script to run the calculation or if you insist on the entire development
 (including running the calculation) occurring in C++ (the former is preferred
 and the latter will likely be deprecated at some point).</p>
-<section id="running-the-module-from-python">
-<h4>Running the module from Python<a class="headerlink" href="#running-the-module-from-python" title="Permalink to this heading">¶</a></h4>
+<div class="section" id="running-the-module-from-python">
+<h4>Running the module from Python<a class="headerlink" href="#running-the-module-from-python" title="Permalink to this heading"></a></h4>
 <p>In theory you write a Python script which looks like:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nwchemex</span> <span class="k">as</span> <span class="nn">nwx</span>
 
@@ -326,9 +233,9 @@ take care of all of the dynamic linking etc.</p>
 <p class="admonition-title">Todo</p>
 <p>Finish/write this section when NWX’s Python bindings allow this workflow.</p>
 </div>
-</section>
-<section id="running-the-module-from-c">
-<h4>Running the module from C++<a class="headerlink" href="#running-the-module-from-c" title="Permalink to this heading">¶</a></h4>
+</div>
+<div class="section" id="running-the-module-from-c">
+<h4>Running the module from C++<a class="headerlink" href="#running-the-module-from-c" title="Permalink to this heading"></a></h4>
 <p>To run our module from C++ the eaiest way is to add a validation test to the
 NWChemEx repo, say <code class="docutils literal notranslate"><span class="pre">nwx_workspace/NWChemEx/tests/j_canonical.cpp</span></code>. The
 contents of this validation test look something like:</p>
@@ -371,10 +278,10 @@ the SCF repo; if the toolchain file is setup correctly building
 to the <code class="docutils literal notranslate"><span class="pre">NWChemEx/src/nwchemex/load_modules.cpp</span></code> file. So that the module is
 ready to be used outside of just the validation test.</p>
 </div>
-</section>
-</section>
-<section id="unit-testing-the-module">
-<h3>Unit Testing the Module<a class="headerlink" href="#unit-testing-the-module" title="Permalink to this heading">¶</a></h3>
+</div>
+</div>
+<div class="section" id="unit-testing-the-module">
+<h3>Unit Testing the Module<a class="headerlink" href="#unit-testing-the-module" title="Permalink to this heading"></a></h3>
 <p>It’s sometimes easier to get a module working using “real” data, which is what
 the previous section focused on. That said the unit test for our module should
 live in the SCF repo and not be coupled to the module used to get the integrals,
@@ -442,56 +349,39 @@ data when it makes sense.</p>
 start with these unit tests and then to proceed to the validation tests with
 real integrals modules.</p>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="cxx_conventions.html" class="btn btn-neutral float-right" title="C++ Coding Conventions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Developing C++ Software" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cxx_conventions.html" class="btn btn-neutral float-right" title="C++ Coding Conventions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, NWChemEx Team.
-
-    </p>
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

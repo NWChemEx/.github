@@ -1,78 +1,39 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>reST Cheat Sheet &mdash; Developer Documentation 1.0.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Developing NWChemEx" href="../coding/index.html" />
     <link rel="prev" title="Conventions for Writing reST Documentation" href="rst_conventions.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> Developer Documentation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 1.0.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -80,18 +41,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../community/index.html">NWChemEx Community</a></li>
@@ -119,80 +69,38 @@
 <li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Developer Documentation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="index.html">Documenting NWChemEx</a> &raquo;</li>
-        
-      <li>reST Cheat Sheet</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Documenting NWChemEx</a></li>
+      <li class="breadcrumb-item active">reST Cheat Sheet</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/documenting/rst_cheatsheet.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <section id="rest-cheat-sheet">
-<h1>reST Cheat Sheet<a class="headerlink" href="#rest-cheat-sheet" title="Permalink to this heading">¶</a></h1>
+             
+  <div class="section" id="rest-cheat-sheet">
+<h1>reST Cheat Sheet<a class="headerlink" href="#rest-cheat-sheet" title="Permalink to this heading"></a></h1>
 <p>The purpose of this page is to provide a convenient resource for quickly
 becoming familiar with ReStructured text (reST) as commonly needed in
 documenting NWChemEx.</p>
-<section id="terminology">
-<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this heading"></a></h2>
 <p>reST is an extensible markup language, which means it’s a bit more complicated
 than say Markdown. This complication comes from some additional concepts.</p>
 <ul class="simple">
@@ -207,9 +115,9 @@ than say Markdown. This complication comes from some additional concepts.</p>
 </ul>
 </li>
 </ul>
-</section>
-<section id="basic-text-formatting">
-<h2>Basic Text Formatting<a class="headerlink" href="#basic-text-formatting" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="basic-text-formatting">
+<h2>Basic Text Formatting<a class="headerlink" href="#basic-text-formatting" title="Permalink to this heading"></a></h2>
 <ul class="simple">
 <li><p>Italics: <code class="docutils literal notranslate"><span class="pre">*text</span> <span class="pre">to</span> <span class="pre">italicize</span></code></p>
 <ul>
@@ -222,9 +130,9 @@ than say Markdown. This complication comes from some additional concepts.</p>
 </ul>
 </li>
 </ul>
-</section>
-<section id="math">
-<h2>Math<a class="headerlink" href="#math" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="math">
+<h2>Math<a class="headerlink" href="#math" title="Permalink to this heading"></a></h2>
 <p>To write inline math use the <code class="docutils literal notranslate"><span class="pre">:math:</span></code> role:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span>The area, <span class="na">:math:</span><span class="nv">`a`</span>, of a circle of radius <span class="na">:math:</span><span class="nv">`r`</span> is <span class="na">:math:</span><span class="nv">`a=\pi r^2`</span>
 </pre></div>
@@ -294,9 +202,9 @@ The <span class="na">:math:</span><span class="nv">`\mu\nu`</span>-th element of
 </div>
 <p>Which renders as:</p>
 <p>The <span class="math notranslate nohighlight">\(\mu\nu\)</span>-th element of the fock matrix is <span class="math notranslate nohighlight">\(f_{\mu\nu}\)</span>.</p>
-</section>
-<section id="code-blocks">
-<h2>Code Blocks<a class="headerlink" href="#code-blocks" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="code-blocks">
+<h2>Code Blocks<a class="headerlink" href="#code-blocks" title="Permalink to this heading"></a></h2>
 <p>Code blocks are done with the <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">code-block::</span></code> directive. To get syntax
 highlighting you can specify the language after the <code class="docutils literal notranslate"><span class="pre">::</span></code>. For example:</p>
 <div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">python</span>
@@ -310,9 +218,9 @@ highlighting you can specify the language after the <code class="docutils litera
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The current directory is: &quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
 </pre></div>
 </div>
-</section>
-<section id="faqs">
-<h2>FAQs<a class="headerlink" href="#faqs" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="faqs">
+<h2>FAQs<a class="headerlink" href="#faqs" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>How do I have URLs with the same generic link text?</p></li>
 </ol>
@@ -332,55 +240,38 @@ underscores at the end like:</p>
 cool repo.
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../coding/index.html" class="btn btn-neutral float-right" title="Developing NWChemEx" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="rst_conventions.html" class="btn btn-neutral float-left" title="Conventions for Writing reST Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../coding/index.html" class="btn btn-neutral float-right" title="Developing NWChemEx" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, NWChemEx Team.
-
-    </p>
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

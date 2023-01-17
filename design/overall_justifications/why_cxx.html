@@ -1,77 +1,38 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Why is C++ the Primary Language of NWChemEx? &mdash; Developer Documentation 1.0.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
+    <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Why is the NWChemEx API Written in Python?" href="why_python.html" />
     <link rel="prev" title="Sure it Looks Pretty, But is it Going to Scale?" href="will_this_perform.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../index.html" class="icon icon-home"> Developer Documentation
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 1.0.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -79,18 +40,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../community/index.html">NWChemEx Community</a></li>
@@ -129,84 +79,41 @@
 <li class="toctree-l1"><a class="reference internal" href="../../resources/index.html">Additional Developer Resources</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Developer Documentation</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../index.html">Design Documentation</a> &raquo;</li>
-        
-          <li><a href="index.html">Overall Design Justification</a> &raquo;</li>
-        
-      <li>Why is C++ the Primary Language of NWChemEx?</li>
-    
-    
+      <li><a href="../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Design Documentation</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Overall Design Justification</a></li>
+      <li class="breadcrumb-item active">Why is C++ the Primary Language of NWChemEx?</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../../_sources/design/overall_justifications/why_cxx.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <section id="why-is-c-the-primary-language-of-nwchemex">
-<span id="why-is-cxx-the-primary-language-of-nwchemex"></span><h1>Why is C++ the Primary Language of NWChemEx?<a class="headerlink" href="#why-is-c-the-primary-language-of-nwchemex" title="Permalink to this heading">¶</a></h1>
+             
+  <div class="section" id="why-is-c-the-primary-language-of-nwchemex">
+<span id="why-is-cxx-the-primary-language-of-nwchemex"></span><h1>Why is C++ the Primary Language of NWChemEx?<a class="headerlink" href="#why-is-c-the-primary-language-of-nwchemex" title="Permalink to this heading"></a></h1>
 <p><a class="reference internal" href="why_oop.html#why-object-oriented-programming"><span class="std std-ref">Why Object-Oriented Programming?</span></a> explained our justification for using
 object-oriented programming paradigms. This limits our choice of primary coding
 languages to those which support OOP practices. We ultimately chose to go with
 C++, in short because it is the popular language which still allows us to
 achieve performance. This subsections below provide more details.</p>
-<section id="why-not-fortran">
-<h2>Why Not Fortran?<a class="headerlink" href="#why-not-fortran" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="why-not-fortran">
+<h2>Why Not Fortran?<a class="headerlink" href="#why-not-fortran" title="Permalink to this heading"></a></h2>
 <p>Fortran 2003 added support so that derived types can encapsulate both data and
 features; furthermore derived types support inheritance. That’s all the basic
 underpinnings of OOP. The original NWChem was written in Fortran so writing
@@ -233,9 +140,9 @@ supporting OOP. Thus we would need to reinvent a large number of wheels just to
 use OOP and Fortran. Admittedly, compared to Java or Python, the number
 of third-party C++ libraries is also not great, but support seems to be there
 for most needs.</p>
-</section>
-<section id="why-not-python">
-<h2>Why Not Python?<a class="headerlink" href="#why-not-python" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="why-not-python">
+<h2>Why Not Python?<a class="headerlink" href="#why-not-python" title="Permalink to this heading"></a></h2>
 <p>Python is right now one of the most popular languages, if not the most popular
 language, in the world. With it’s easy to learn syntax, abundance of tutorials,
 and its plethora of modules, what’s not to love? Furthermore Python is quickly
@@ -254,9 +161,9 @@ rely on compiled code under the hood (e.g. NumPy). Even PySCF, the champion of
 Python in computational chemistry, contains a significant amount of C under the
 hood. So the point remains that Python just isn’t at a point where it’s suitable
 for HPC, at least at the moment. Who knows, in 10 years this might change.</p>
-</section>
-<section id="why-not-java">
-<h2>Why Not Java?<a class="headerlink" href="#why-not-java" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="why-not-java">
+<h2>Why Not Java?<a class="headerlink" href="#why-not-java" title="Permalink to this heading"></a></h2>
 <p>Like Python, Java is also one of the most popular languages in the world right
 now. It’s one of the most taught, if not the most taught language in the world.
 Pretty much every computer science student knows Java. So why did we decide to
@@ -271,64 +178,47 @@ why C/C++ seem to be emerging as the HPC languages of choice. It probably also
 helps that C++ came out about a decade before Java, so by time Java came out
 there was already investment in C++. Particularly from the HPC perspective, Java
 also leaves a lot to be desired as the underlying runtime is quite heavy.</p>
-</section>
-<section id="why-not-xxx">
-<h2>Why Not XXX?<a class="headerlink" href="#why-not-xxx" title="Permalink to this heading">¶</a></h2>
+</div>
+<div class="section" id="why-not-xxx">
+<h2>Why Not XXX?<a class="headerlink" href="#why-not-xxx" title="Permalink to this heading"></a></h2>
 <p>Look, there’s a ton of other languages. We’re not going to claim that we
 evaluated every single one of them and ultimately decided that C++ was the best.
 It’s entirely possible that in 10 years we’re going to regret our C++ decision
 and really wish we went with Julia or something. We took a look at the languages
 commonly being used in HPC (Fortran, C, C++, and Python) and based on the
 explanations in the previous sub-sections we opted for C++.</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="why_python.html" class="btn btn-neutral float-right" title="Why is the NWChemEx API Written in Python?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="will_this_perform.html" class="btn btn-neutral float-left" title="Sure it Looks Pretty, But is it Going to Scale?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="why_python.html" class="btn btn-neutral float-right" title="Why is the NWChemEx API Written in Python?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2020, NWChemEx Team.
-
-    </p>
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
