@@ -231,7 +231,7 @@ get_sphinx() {
   ${APT_GET_COMMAND} install -f python3-venv
   python3 -m venv venv
   . venv/bin/activate
-  ${PIP_COMMAND} install sphinx sphinx_rtd_theme
+  ${PIP_COMMAND} install 'docutils<=0.16' sphinx sphinx_rtd_theme
 }
 # Wraps installing the Togglebutton Sphinx Extension
 #
