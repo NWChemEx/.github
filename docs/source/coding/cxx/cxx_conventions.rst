@@ -1,3 +1,5 @@
+.. _cxx_conventions:
+
 **********************
 C++ Coding Conventions
 **********************

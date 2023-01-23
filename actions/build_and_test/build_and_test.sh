@@ -26,7 +26,6 @@ cmake_command=cmake #"${cmake_root}/bin/cmake"
 ctest_command=ctest #"${cmake_root}/bin/ctest"
 toolchain_file=$(pwd)/toolchain.cmake
 
-echo this is ninja build "${ninja_build}"
 
 echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
 {
@@ -69,7 +68,7 @@ then
 else 
   {
     echo "set(CMAKE_C_COMPILER /usr/bin/gcc)"
-    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"
+    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"  
   } >> "${toolchain_file}"
 fi
 
@@ -82,7 +81,6 @@ fi
 # fi
 
 if [ "${ninja_build}" = true ] ; then
-  echo this is ninja build "${ninja_build}"
   ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
 else
   ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
