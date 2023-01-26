@@ -28,6 +28,7 @@ on:
         description: "Did we bump the minor?"
         value: ${{ jobs.update_version.outputs.bumped_minor }}
 
+
 jobs:
   update_version:
     runs-on: ubuntu-latest
