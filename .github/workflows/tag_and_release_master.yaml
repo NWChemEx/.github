@@ -39,7 +39,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Get all tags
-        run: git fetch --all --tags
+        run: |
+          git fetch --all --tags
+          git fetch --tags --force
       - id: bumpr
         uses: haya14busa/action-bumpr@v1
         with:
