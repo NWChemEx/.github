@@ -38,6 +38,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Get all tags
+        run: git fetch --all --tags
       - id: bumpr
         uses: haya14busa/action-bumpr@v1
         with:
