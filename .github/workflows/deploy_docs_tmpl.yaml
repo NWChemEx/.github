@@ -19,11 +19,11 @@ jobs:
       - name: Obtain Source
         uses: actions/checkout@v2
       - name: Get dependencies
-        uses: NWChemEx-Project/.github/actions/get_dependencies@master
+        uses: NWChemEx-Project/.github/actions/get_dependencies@automate-versioning
         with:
           dependencies: ${{inputs.dependencies}}
       - name: Build documentation
-        uses: NWChemEx-Project/.github/actions/build_docs@master
+        uses: NWChemEx-Project/.github/actions/build_docs@automate-versioning
         with:
           target: ${{inputs.target}}
           skip_doxygen: ${{inputs.skip_doxygen}}
