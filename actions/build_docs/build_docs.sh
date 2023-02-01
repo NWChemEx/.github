@@ -43,8 +43,6 @@ cd build
 mkdir html
 cd ..
 mv build/html "docs/build/html/${doc_target}"
-echo "this is the file location"
-echo "docs/build/html/${doc_target}"
 
 #Step 3: Build the Sphinx documentation
 # . venv/bin/activate
