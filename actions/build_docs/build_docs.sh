@@ -41,6 +41,9 @@ ${cmake_command} --build build --target "${doc_target}"
 # mkdir docs/build/html
 ls
 pwd
+cd build
+echo "inside build"
+ls
 mv build/html "docs/build/html/${doc_target}"
 echo "this is the file location"
 echo "docs/build/html/${doc_target}"
