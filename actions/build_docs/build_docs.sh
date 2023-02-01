@@ -40,6 +40,8 @@ ${cmake_command} --build build --target "${doc_target}"
 mkdir docs/build
 mkdir docs/build/html
 mv build/html "docs/build/html/${doc_target}"
+echo "this is the file location"
+echo "docs/build/html/${doc_target}"
 
 #Step 3: Build the Sphinx documentation
 # . venv/bin/activate
