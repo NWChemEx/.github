@@ -41,7 +41,14 @@ ${cmake_command} --build build --target "${doc_target}"
 # mkdir docs/build/html
 
 cd build
-mkdir html
+
+if [ -d "html" ]; then
+  rm -r html
+  mkdir html
+else
+  mkdir html
+fi
+
 cd ..
 
 mv build/html "docs/build/html/${doc_target}"
