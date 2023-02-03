@@ -41,10 +41,12 @@ ${cmake_command} --build build --target "${doc_target}"
 # mkdir docs/build/html
 
 pwd
+ls
 
 cd build
 
 pwd
+ls
 
 if [ -d "html" ]; then
   rm -r html
