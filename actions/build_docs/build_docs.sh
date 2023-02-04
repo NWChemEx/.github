@@ -40,26 +40,56 @@ ${cmake_command} --build build --target "${doc_target}"
 # mkdir docs/build
 # mkdir docs/build/html
 
-pwd
-ls
 
-# cd build
+cd build
+
+if [ -d "html" ]; then
+  rm -r html
+  mkdir html
+else
+  mkdir html
+fi
+
+cd ..
+
 cd docs
-pwd
+
+if [ -d "build" ]; then
+  rm -r build
+  mkdir build
+else
+  mkdir build
+fi
+
 ls
 
 cd build
-pwd
+
+if [ -d "html" ]; then
+  rm -r html
+  mkdir html
+else
+  mkdir html
+fi
+
 ls
 
-# if [ -d "html" ]; then
-#   rm -r html
-#   mkdir html
-# else
-#   mkdir html
-# fi
+cd html
 
-# cd ..
+if [ -d "${doc_target}" ]; then
+  rm -r ${doc_target}
+  mkdir ${doc_target}
+else
+  mkdir ${doc_target}
+fi
+
+ls
+
+cd ../../../../
+
+pwd
+
+ls
 
 # mv build/html "docs/build/html/${doc_target}"
 
