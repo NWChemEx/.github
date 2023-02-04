@@ -42,6 +42,7 @@ ${cmake_command} --build build --target "${doc_target}"
 
 
 cd build
+pwd
 
 if [ -d "html" ]; then
   rm -r html
@@ -53,6 +54,7 @@ fi
 cd ..
 
 cd docs
+pwd
 
 if [ -d "build" ]; then
   rm -r build
@@ -64,6 +66,7 @@ fi
 ls
 
 cd build
+pwd
 
 if [ -d "html" ]; then
   rm -r html
@@ -75,6 +78,7 @@ fi
 ls
 
 cd html
+pwd
 
 if [ -d "${doc_target}" ]; then
   rm -r ${doc_target}
@@ -85,7 +89,7 @@ fi
 
 ls
 
-cd ../../../../
+cd ../../../
 
 pwd
 
