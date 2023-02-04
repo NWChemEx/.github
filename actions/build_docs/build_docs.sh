@@ -96,7 +96,9 @@ ${cmake_command} --build build --target "${doc_target}"
 # ls
 
 cd build
-mkdir html
+if [ ! -d "html" ]; then
+  mkdir html
+fi
 cd ..
 
 mv build/html "docs/build/html/${doc_target}"
