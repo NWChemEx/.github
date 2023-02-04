@@ -95,7 +95,7 @@ pwd
 
 ls
 
-# mv build/html "docs/build/html/${doc_target}"
+mv build/html "docs/build/html/${doc_target}"
 
 #Step 3: Build the Sphinx documentation
 # . venv/bin/activate
