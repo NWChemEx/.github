@@ -53,47 +53,47 @@ ${cmake_command} --build build --target "${doc_target}"
 
 # cd ..
 
-cd docs
-pwd
+# cd docs
+# pwd
 
-if [ -d "build" ]; then
-  rm -r build
-  mkdir build
-else
-  mkdir build
-fi
+# if [ -d "build" ]; then
+#   rm -r build
+#   mkdir build
+# else
+#   mkdir build
+# fi
+
+# # ls
+
+# cd build
+# pwd
+
+# if [ -d "html" ]; then
+#   rm -r html
+#   mkdir html
+# else
+#   mkdir html
+# fi
+
+# # ls
+
+# cd html
+# pwd
+
+# if [ -d "${doc_target}" ]; then
+#   rm -r ${doc_target}
+#   mkdir ${doc_target}
+# else
+#   mkdir ${doc_target}
+# fi
+
+# # ls
+
+# cd ../../../
+
+# pwd
 
 # ls
-
-cd build
-pwd
-
-if [ -d "html" ]; then
-  rm -r html
-  mkdir html
-else
-  mkdir html
-fi
-
-# ls
-
-cd html
-pwd
-
-if [ -d "${doc_target}" ]; then
-  rm -r ${doc_target}
-  mkdir ${doc_target}
-else
-  mkdir ${doc_target}
-fi
-
-# ls
-
-cd ../../../
-
-pwd
-
-ls
 
 # cd build
 # if [ ! -d "html" ]; then
@@ -101,7 +101,7 @@ ls
 # fi
 # cd ..
 
-# mv build/html "docs/build/html/${doc_target}"
+mv build/html "docs/build/html/${doc_target}"
 
 #Step 3: Build the Sphinx documentation
 # . venv/bin/activate
