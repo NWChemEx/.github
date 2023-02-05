@@ -36,76 +36,10 @@ doc_target="$1"
 ${cmake_command} -H. -Bbuild -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
 ${cmake_command} --build build --target "${doc_target}"
 
-# ls
-
-# cd docs/build/html
-
-# ls
 
 # Step 2: Migrate the Doxygen documentation to the docs source
 mkdir docs/build
 mkdir docs/build/html
-
-# ls
-# cd build
-# pwd
-
-# if [ -d "html" ]; then
-#   rm -r html
-#   mkdir html
-# else
-#   mkdir html
-# fi
-
-# cd ..
-
-# cd docs
-# pwd
-
-# if [ -d "build" ]; then
-#   rm -r build
-#   mkdir build
-# else
-#   mkdir build
-# fi
-
-# ls
-
-# cd build
-# pwd
-
-# if [ -d "html" ]; then
-#   rm -r html
-#   mkdir html
-# else
-#   mkdir html
-# fi
-
-# ls
-
-# cd html
-# pwd
-
-# if [ -d "${doc_target}" ]; then
-#   rm -r ${doc_target}
-#   mkdir ${doc_target}
-# else
-#   mkdir ${doc_target}
-# fi
-
-# ls
-
-# cd ../../../
-
-# pwd
-
-# ls
-
-# cd build
-# if [ ! -d "html" ]; then
-#   mkdir html
-# fi
-# cd ..
 
 mv build/html "docs/build/html/${doc_target}"
 
