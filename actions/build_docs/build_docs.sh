@@ -36,6 +36,8 @@ doc_target="$1"
 ${cmake_command} -H. -Bbuild -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
 ${cmake_command} --build build --target "${doc_target}"
 
+ls
+
 # Step 2: Migrate the Doxygen documentation to the docs source
 # mkdir docs/build
 # mkdir docs/build/html
@@ -63,7 +65,7 @@ ${cmake_command} --build build --target "${doc_target}"
 #   mkdir build
 # fi
 
-# # ls
+# ls
 
 # cd build
 # pwd
@@ -75,7 +77,7 @@ ${cmake_command} --build build --target "${doc_target}"
 #   mkdir html
 # fi
 
-# # ls
+# ls
 
 # cd html
 # pwd
@@ -87,7 +89,7 @@ ${cmake_command} --build build --target "${doc_target}"
 #   mkdir ${doc_target}
 # fi
 
-# # ls
+# ls
 
 # cd ../../../
 
@@ -101,7 +103,7 @@ ${cmake_command} --build build --target "${doc_target}"
 # fi
 # cd ..
 
-mv build/html "docs/build/${doc_target}"
+# mv build/html "docs/build/html/${doc_target}"
 
 #Step 3: Build the Sphinx documentation
 # . venv/bin/activate
