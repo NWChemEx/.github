@@ -101,7 +101,7 @@ ${cmake_command} --build build --target "${doc_target}"
 # fi
 # cd ..
 
-mv build/html "docs/build/html/${doc_target}"
+mv build/html "docs/build/${doc_target}"
 
 #Step 3: Build the Sphinx documentation
 # . venv/bin/activate
