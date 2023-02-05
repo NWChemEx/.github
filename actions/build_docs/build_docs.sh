@@ -38,6 +38,10 @@ ${cmake_command} --build build --target "${doc_target}"
 
 ls
 
+cd docs/build/html
+
+ls
+
 # Step 2: Migrate the Doxygen documentation to the docs source
 # mkdir docs/build
 # mkdir docs/build/html
