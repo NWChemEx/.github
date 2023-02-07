@@ -9,15 +9,12 @@ runs:
     - name: Give Permission
       run: chmod +x ${{github.action_path}}/get_dependencies.sh 
       shell: bash 
-    - name: cache-libint
-        if: contains(${{inputs.dependencies}}, 'libint')
-        id: cache
-        uses: actions/cache@v2
+    - name: Prepare Cache
+        env:
+          cmake_version: ${{ matrix.cmake_version }}
+        uses: NWChemEx-Project/.github/actions/handle_caches@cache2-build
         with:
-          path: |
-            libint-2.6.0/
-            install/
-          key: libint-gcc${{ matrix.gcc_version }}
+          dependencies: ${{inputs.dependencies}}
     - name: Get dependencies
       env:
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
