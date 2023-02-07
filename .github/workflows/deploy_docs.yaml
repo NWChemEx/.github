@@ -6,7 +6,7 @@ on:
 
 jobs:
   Build-Documentation:
-    uses: NWChemEx-Project/.github/.github/workflows/deploy_docs_tmpl.yaml@master
+    uses: NWChemEx-Project/.github/.github/workflows/deploy_docs_tmpl.yaml@cache-build2
     with: 
       dependencies: sphinx
       skip_doxygen: true
