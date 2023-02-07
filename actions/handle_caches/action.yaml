@@ -8,8 +8,8 @@ runs:
   steps:
   - name: Obtain Source
     uses: actions/checkout@v2
-  - if: ${{contains(inputs.dependencies, 'libint')}}
-    name: cache-libint   
+#   - if: ${{contains(inputs.dependencies, 'libint')}}
+  - name: cache-libint   
     id: cache
     uses: actions/cache@v2
     with:
