@@ -10,7 +10,7 @@ runs:
       run: chmod +x ${{github.action_path}}/get_dependencies.sh 
       shell: bash 
     - name: Prepare Cache
-      uses: NWChemEx-Project/.github/.github/workflows/handle_caches.yaml@cache-build2
+      uses: NWChemEx-Project/.github/actions/handle_caches@cache-build2
       with:
         cmake_version: ${{ matrix.cmake_version }}
         dependencies: ${{inputs.dependencies}}
