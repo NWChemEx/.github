@@ -8,9 +8,9 @@ runs:
   steps:
   - name: Obtain Source
     uses: actions/checkout@v2
-  - name: cache-libint   
+  - if: ${{contains(${{inputs.dependencies}}, 'libint')}}
+    name: cache-libint   
     id: cache
-#     if: ${{contains(${{inputs.dependencies}}, 'libint')}}
     uses: actions/cache@v2
     with:
       path: |
