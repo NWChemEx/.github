@@ -10,7 +10,7 @@ runs:
     uses: actions/checkout@v2
   - name: cache-libint   
     id: cache
-    if: ${{contains(${{inputs.dependencies}}, 'libint')}}
+#     if: ${{contains(${{inputs.dependencies}}, 'libint')}}
     uses: actions/cache@v2
     with:
       path: |
