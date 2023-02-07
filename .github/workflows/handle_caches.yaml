@@ -1,0 +1,17 @@
+name: Test Documentation
+inputs:
+  dependencies:
+    required: true
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - name: cache-libint
+        if: contains(${{inputs.dependencies}}, 'libint')
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            libint-2.6.0/
+            install/
+          key: libint-gcc${{ matrix.gcc_version }}
