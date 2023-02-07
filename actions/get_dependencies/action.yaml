@@ -12,7 +12,7 @@ runs:
     - name: Prepare Cache
         env:
           cmake_version: ${{ matrix.cmake_version }}
-        uses: NWChemEx-Project/.github/actions/handle_caches@cache2-build
+        uses: NWChemEx-Project/.github/actions/handle_caches@cache-build2
         with:
           dependencies: ${{inputs.dependencies}}
     - name: Get dependencies
