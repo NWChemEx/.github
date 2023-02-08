@@ -18,7 +18,8 @@ runs:
     uses: actions/cache@v2
     with:
       path: |
-        libint-2.6.0/
+        libint-2.6.0/**/
+        libint-2.6.0/*.*/
       key: libint-gcc${{ matrix.gcc_version }}
   - name: Generate Javadoc
     env:
