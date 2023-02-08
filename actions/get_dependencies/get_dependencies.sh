@@ -185,6 +185,8 @@ get_libint() {
 #     cd libint-2.6.0/
 #     ls build/abc/def/
     echo "relax"
+    export INSTALL_PATH=`pwd`/install
+    export Libint2_DIR="${INSTALL_PATH}/include/libint2/"
 #     ls
   fi
 }
