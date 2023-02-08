@@ -16,8 +16,6 @@ runs:
     name: cache-libint   
     id: cacheLibint
     uses: actions/cache@v2
-    env:
-      CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
     with:
       path: |
         libint-2.6.0/
