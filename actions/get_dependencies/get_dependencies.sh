@@ -163,7 +163,7 @@ get_lapacke() {
 get_libint() {
   echo "hehehe CACHE_LIBINT " "${CACHE_LIBINT}" "abc"
 #   env
-  if [[ ! $CACHE_LIBINT ]] then
+  if [[ ! $CACHE_LIBINT ]] ; then
     echo "go inside " " $CACHE_LIBINT " "abc"
     export INSTALL_PATH=`pwd`/install
 #     # check code out
