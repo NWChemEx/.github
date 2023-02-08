@@ -20,15 +20,12 @@ runs:
   - name: Generate Javadoc
     env:
       CACHE_LIBINT: ${{steps.cache.outputs.cache-hit}}
-    run: |
+    run:|
       export INSTALL_PATH=`pwd`/install
-      # check code out
       wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
       tar -zxf libint-2.6.0.tgz
       cd libint-2.6.0
       echo $CACHE_LIBINT
       echo $INSTALL_PATH
       echo "hello "  >> hello.txt
-      # make
-      # make install
     shell: bash
