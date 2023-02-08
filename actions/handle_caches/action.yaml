@@ -26,7 +26,8 @@ runs:
       wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
       tar -zxf libint-2.6.0.tgz
       cd libint-2.6.0
-      echo "hello " $CACHE_LIBINT >> hello.txt
+      echo $CACHE_LIBINT
+      echo "hello "  >> hello.txt
       # make
       # make install
     shell: bash
