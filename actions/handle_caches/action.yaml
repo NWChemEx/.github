@@ -10,10 +10,10 @@ runs:
     uses: actions/checkout@v2
   - if: ${{contains(inputs.dependencies, 'libint')}}
     name: cache-libint   
-    id: cache
+    id: cacheLibint
     uses: actions/cache@v2
     env:
-      CACHE_LIBINT: ${{steps.cache.outputs.cache-hit}}
+      CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
     with:
       path: |
         libint-2.6.0/
@@ -21,6 +21,6 @@ runs:
       key: libint-gcc${{ matrix.gcc_version }}
   - name: Generate Javadoc
     env:
-      CACHE_LIBINT: ${{steps.cache.outputs.cache-hit}}
+      CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
     run: echo "helloworld" $CACHE_LIBINT
     shell: bash
