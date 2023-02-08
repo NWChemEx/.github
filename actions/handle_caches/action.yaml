@@ -17,3 +17,9 @@ runs:
         libint-2.6.0/
         install/
       key: libint-gcc${{ matrix.gcc_version }}
+  - run: |
+      export INSTALL_PATH=`pwd`/install
+      # check code out
+      echo "hello" >> hello.txt
+      # make
+      # make install
