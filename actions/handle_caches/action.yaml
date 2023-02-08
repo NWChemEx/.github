@@ -18,10 +18,12 @@ runs:
         install/
       key: libint-gcc${{ matrix.gcc_version }}
   - name: Generate Javadoc
+    env:
+      CACHE_LIBINT: ${{steps.cache.outputs.cache-hit}}
     run: |
       export INSTALL_PATH=`pwd`/install
       # check code out
-      echo "hello" >> hello.txt
+      echo "hello " $CACHE_LIBINT >> hello.txt
       # make
       # make install
     shell: bash
