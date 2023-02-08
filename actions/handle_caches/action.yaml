@@ -18,5 +18,6 @@ runs:
         install/
         build/
       key: libint-gcc${{ matrix.gcc_version }}
-    run: |
+   - name: print cache
+     run: |
       echo "go to cache here"  
