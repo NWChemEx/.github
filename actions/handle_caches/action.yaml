@@ -27,6 +27,7 @@ runs:
       tar -zxf libint-2.6.0.tgz
       cd libint-2.6.0
       echo $CACHE_LIBINT
+      echo $INSTALL_PATH
       echo "hello "  >> hello.txt
       # make
       # make install
