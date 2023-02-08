@@ -16,5 +16,4 @@ runs:
       path: |
         libint-2.6.0/
         install/
-        build/
       key: libint-gcc${{ matrix.gcc_version }}
