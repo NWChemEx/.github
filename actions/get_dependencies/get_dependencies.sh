@@ -161,7 +161,7 @@ get_lapacke() {
 # Usage:
 #   get_libint
 get_libint() {
-  echo "hehehe CACHE_LIBINT " $CACHE_LIBINT "abc"
+  echo "hehehe CACHE_LIBINT " ${CACHE_LIBINT} "abc"
 #   if ! $CACHE_LIBINT ; then
   export INSTALL_PATH=`pwd`/install
 #     # check code out
