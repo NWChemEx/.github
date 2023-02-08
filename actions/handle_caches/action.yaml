@@ -6,8 +6,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: Obtain Source
-    uses: actions/checkout@v2
+#   - name: Obtain Source
+#     uses: actions/checkout@v2
 #   - if: ${{contains(inputs.dependencies, 'libint')}}
   - name: cache-libint   
     id: cache
@@ -18,3 +18,5 @@ runs:
         install/
         build/
       key: libint-gcc${{ matrix.gcc_version }}
+    run: |
+      echo "go to cache here"  
