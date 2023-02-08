@@ -18,10 +18,10 @@ runs:
         install/
       key: libint-gcc${{ matrix.gcc_version }}
   - name: Generate Javadoc
-    shell: bash
     run: |
       export INSTALL_PATH=`pwd`/install
       # check code out
       echo "hello" >> hello.txt
       # make
       # make install
+    shell: bash
