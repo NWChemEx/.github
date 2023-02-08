@@ -174,7 +174,8 @@ get_libint() {
   cd ../
   mkdir build
   cd build
-  ls
+  pwd
+  echo "above is the file path"
   echo "hello" >> hello.txt
 #     make
 #     make install
