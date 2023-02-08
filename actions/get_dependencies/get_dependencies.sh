@@ -161,8 +161,8 @@ get_lapacke() {
 # Usage:
 #   get_libint
 get_libint() {
-  echo "hehehe CACHE_LIBINT " ${CACHE_LIBINT} "abc"
-  if ! ${CACHE_LIBINT} ; then
+  echo "hehehe CACHE_LIBINT " $CACHE_LIBINT "abc"
+  if ! $CACHE_LIBINT ; then
     export INSTALL_PATH=`pwd`/install
 #     # check code out
     wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
