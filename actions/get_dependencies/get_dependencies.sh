@@ -171,9 +171,9 @@ get_libint() {
 #     export CXX=`which g++`
 #     export CC=`which gcc`
 #     ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
-  cd ../
-  mkdir build
-  cd build
+#   cd ../
+#   mkdir build
+#   cd build
   pwd
   echo "above is the file path"
   echo "hello" >> hello.txt
