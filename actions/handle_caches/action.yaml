@@ -3,6 +3,8 @@ inputs:
   dependencies:
     required: true
     type: string
+outputs:
+  cache-libint: ${{steps.cacheLibint.outputs.cache-hit}}
 runs:
   using: "composite"
   steps:
