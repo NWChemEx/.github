@@ -165,7 +165,7 @@ get_libint() {
   if $CACHE_LIBINT ; then
     export INSTALL_PATH=`pwd`/install
 #     # check code out
-#     wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
+    wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
     tar -zxf libint-2.6.0.tgz
     cd libint-2.6.0
 #     export CXX=`which g++`
