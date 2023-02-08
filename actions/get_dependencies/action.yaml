@@ -10,14 +10,10 @@ runs:
       run: chmod +x ${{github.action_path}}/get_dependencies.sh 
       shell: bash 
     - name: Prepare Cache
-      env:
-        CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
       uses: NWChemEx-Project/.github/actions/handle_caches@cache-build2
       with:
         cmake_version: ${{ matrix.cmake_version }}
         dependencies: ${{inputs.dependencies}}
     - name: Get dependencies
-      env:
-          CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
       run: ${{github.action_path}}/get_dependencies.sh ${{inputs.dependencies}}
       shell: bash 
