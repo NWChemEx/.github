@@ -163,17 +163,19 @@ get_lapacke() {
 get_libint() {
   echo "CACHE_LIBINT" ${CACHE_LIBINT}
   if $CACHE_LIBINT ; then
-    export INSTALL_PATH=`pwd`/install
-    # check code out
-    wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
-    tar -zxf libint-2.6.0.tgz
-    cd libint-2.6.0
-    export CXX=`which g++`
-    export CC=`which gcc`
-    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
+#     export INSTALL_PATH=`pwd`/install
+#     # check code out
+#     wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
+#     tar -zxf libint-2.6.0.tgz
+#     cd libint-2.6.0
+#     export CXX=`which g++`
+#     export CC=`which gcc`
+#     ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
+    mkdir build
     cd build
-    make
-    make install
+    echo "hello" >> hello.txt
+#     make
+#     make install
   fi
 }
 # Wraps installing ninja
