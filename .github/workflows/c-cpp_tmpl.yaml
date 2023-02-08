@@ -40,25 +40,25 @@ jobs:
         uses: NWChemEx-Project/.github/actions/get_dependencies@cache-build2
         with:
           dependencies: ${{inputs.dependencies}}
-#       - name: Build and test using Clang
-#         if: ${{inputs.clang-build == true}}
-#         env:
-#           cmake_version: ${{ matrix.cmake_version }}
-#           clang_version: ${{ matrix.clang_version }}
-#           ninja-build: ${{ inputs.ninja-build }}
-#         uses: NWChemEx-Project/.github/actions/build_and_test@master
-#         with: 
-#           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-#       - name: Build and test using GCC
-#         if: ${{inputs.gcc-build == true}}
-#         env:
-#           cmake_version: ${{ matrix.cmake_version }}
-#           gcc_version: ${{ matrix.gcc_version }}
-#           ninja_build: ${{ inputs.ninja_build }}
-#         uses: NWChemEx-Project/.github/actions/build_and_test@master
-#         with: 
-#           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-#       # - uses: codecov/codecov-action@v1
-#       #   with:
-#       #     token: ${{ secrets.CODECOV_TOKEN }}
-#       #     file: ./coverage.xml
+      - name: Build and test using Clang
+        if: ${{inputs.clang-build == true}}
+        env:
+          cmake_version: ${{ matrix.cmake_version }}
+          clang_version: ${{ matrix.clang_version }}
+          ninja-build: ${{ inputs.ninja-build }}
+        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        with: 
+          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      - name: Build and test using GCC
+        if: ${{inputs.gcc-build == true}}
+        env:
+          cmake_version: ${{ matrix.cmake_version }}
+          gcc_version: ${{ matrix.gcc_version }}
+          ninja_build: ${{ inputs.ninja_build }}
+        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        with: 
+          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      # - uses: codecov/codecov-action@v1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: ./coverage.xml
