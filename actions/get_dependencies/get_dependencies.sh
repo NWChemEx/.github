@@ -161,7 +161,7 @@ get_lapacke() {
 # Usage:
 #   get_libint
 get_libint() {
-  if [[ -z "${CACHE_LIBINT}" ]]; then
+  if [-z "${CACHE_LIBINT}"]; then
     export INSTALL_PATH=`pwd`/install
     # check code out
     wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
@@ -257,7 +257,7 @@ for depend in "$@"; do
   echo "Getting dependency: ${depend}"
   # Please use camel_case for dependency names and keep the if-statements in
   # alphabetical order.
-  if [ "${depend}" = "boost" ];then
+  if [ "${depend}" = "boost" ]; then
     get_boost
   elif [ "${depend}" = "cblas" ]; then
     get_cblas
