@@ -186,7 +186,8 @@ get_libint() {
 #     ls build/abc/def/
     echo "relax"
     export INSTALL_PATH=`pwd`/install
-    export Libint2_DIR="${INSTALL_PATH}/include/libint2/"
+    export Libint2_DIR="${INSTALL_PATH}/include/"
+    echo "relax 222 " $Libint2_DIR
 #     ls
   fi
 }
