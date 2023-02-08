@@ -20,7 +20,7 @@ runs:
   - name: Generate Javadoc
     env:
       CACHE_LIBINT: ${{steps.cache.outputs.cache-hit}}
-    run:|
+    run: |
       export INSTALL_PATH=`pwd`/install
       wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
       tar -zxf libint-2.6.0.tgz
