@@ -16,6 +16,6 @@ runs:
         dependencies: ${{inputs.dependencies}}
     - name: Get dependencies
       env:
-          CACHE_LIBINT: ${{steps.cache.outputs.cache-hit}}
+          CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
       run: ${{github.action_path}}/get_dependencies.sh ${{inputs.dependencies}}
       shell: bash 
