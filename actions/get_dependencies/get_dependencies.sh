@@ -182,8 +182,8 @@ get_libint() {
     cd build/abc/def/
     echo "hello" >> hello.txt
   else
-    cd libint-2.6.0/
-    ls build/abc/def/
+#     cd libint-2.6.0/
+#     ls build/abc/def/
     echo "relax"
 #     ls
   fi
