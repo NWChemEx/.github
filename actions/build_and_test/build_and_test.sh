@@ -25,8 +25,8 @@ cmake_root=$(pwd)/cmake-"${cmake_version}"-"${arch}"
 cmake_command=cmake #"${cmake_root}/bin/cmake"
 ctest_command=ctest #"${cmake_root}/bin/ctest"
 toolchain_file=$(pwd)/toolchain.cmake
-export Libint2_DIR=$(pwd)/install/
-echo "relect on build and test " ${Libint2_DIR}
+# export Libint2_DIR=$(pwd)/install/
+echo "Testt Libint2_DIR on build and test " ${Libint2_DIR}
 
 echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
 {
