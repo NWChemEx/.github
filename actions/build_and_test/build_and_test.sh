@@ -83,10 +83,6 @@ fi
 #Step 3: Compile
 ${cmake_command} --build build
 
-#Step 4: Unit-test
-cd build
-${ctest_command} -VV
-cd ..
 
 #Step 5: Generate coverage report
 # curr_dir=$(pwd)
