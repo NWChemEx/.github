@@ -11,7 +11,7 @@ runs:
       shell: bash 
     - name: Prepare Cache
       id: cache-prepare
-      uses: NWChemEx-Project/.github/actions/handle_caches@cache-build2
+      uses: NWChemEx-Project/.github/actions/handle_caches@master
       with:
         cmake_version: ${{ matrix.cmake_version }}
         dependencies: ${{inputs.dependencies}}
