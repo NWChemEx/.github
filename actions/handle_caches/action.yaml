@@ -19,8 +19,9 @@ runs:
     with:
       path: |
         libint-2.6.0/**/
-        install/include/libint2/**/
-        install/include/libint2.*
+        install/**/
+        # install/include/libint2/**/
+        # install/include/libint2.*
       key: libint-gcc${{ matrix.gcc_version }}
   - name: Generate Javadoc
     env:
