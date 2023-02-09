@@ -49,13 +49,17 @@ jobs:
         uses: NWChemEx-Project/.github/actions/build_and_test@separate-build-test
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-      - name: Build and test using GCC
+      - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
         uses: NWChemEx-Project/.github/actions/build_and_test@separate-build-test
+        with: 
+          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      - name: Test Application
+        uses: NWChemEx-Project/.github/actions/test@separate-build-test
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       # - uses: codecov/codecov-action@v1
