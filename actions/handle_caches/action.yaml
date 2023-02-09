@@ -20,11 +20,9 @@ runs:
       path: |
         libint-2.6.0/**/
         install/**/
-        # install/include/libint2/**/
-        # install/include/libint2.*
       key: libint-gcc${{ matrix.gcc_version }}
-  - name: Generate Javadoc
+  - name: Test Check Cache Libint
     env:
       CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
-    run: echo "helloworld" $CACHE_LIBINT
+    run: echo "helloworld " $CACHE_LIBINT
     shell: bash
