@@ -161,12 +161,8 @@ get_lapacke() {
 # Usage:
 #   get_libint
 get_libint() {
-  echo "hehehe CACHE_LIBINT " "${CACHE_LIBINT}" "abc"
-#   env
   if [ -z "${CACHE_LIBINT}" ]; then
-    echo "go inside " " $CACHE_LIBINT " "abc"
     export INSTALL_PATH=`pwd`/install
-#     # check code out
     wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
     tar -zxf libint-2.6.0.tgz
     cd libint-2.6.0
@@ -174,21 +170,10 @@ get_libint() {
     export CC=`which gcc`
     ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
     cd build
-#   pwd
-#   echo "above is the file path"
     make
     make install
-    mkdir -p build/abc/def/
-    cd build/abc/def/
-    echo "hello" >> hello.txt
   else
-#     cd libint-2.6.0/
-#     ls build/abc/def/
-    echo "relax"
-    export INSTALL_PATH=`pwd`/install
-    export Libint2_DIR="${INSTALL_PATH}/include/"
-    echo "relax 222 " $Libint2_DIR
-#     ls
+    echo "already cached libint"
   fi
 }
 # Wraps installing ninja
