@@ -40,13 +40,13 @@ jobs:
         uses: NWChemEx-Project/.github/actions/get_dependencies@separate-build-test
         with:
           dependencies: ${{inputs.dependencies}}
-      - name: Build and test using Clang
+      - name: Build using Clang
         if: ${{inputs.clang-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
           ninja-build: ${{ inputs.ninja-build }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@separate-build-test
+        uses: NWChemEx-Project/.github/actions/build@separate-build-test
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       - name: Build using GCC
@@ -55,7 +55,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@separate-build-test
+        uses: NWChemEx-Project/.github/actions/build@separate-build-test
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       - name: Test Application
