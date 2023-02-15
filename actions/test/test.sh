@@ -9,7 +9,7 @@
 #
 ################################################################################
 
-# Wraps the process for configuring, building, and testing an NWX repo
+# Wraps the process for testing an NWX repo
 #
 # Usage:
 #   test.sh
