@@ -12,15 +12,12 @@
 # Wraps the process for configuring, building, and testing an NWX repo
 #
 # Usage:
-#   build_and_test.sh
-#
-# Other variables:
-#   cmake_version: the version of cmake being used in the format x.y.z
-#
+#   test.sh
+
 
 set -e # Exit with error if any command fails
 
-ctest_command=ctest #"${cmake_root}/bin/ctest"
+ctest_command=ctest
 
 
 #Step 4: Unit-test

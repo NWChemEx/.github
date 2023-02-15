@@ -11,9 +11,6 @@ runs:
       shell: bash 
     - name: Test Application
       env:
-        # cmake_version: ${{ matrix.cmake_version }}
-        # gcc_version: ${{ matrix.gcc_version }}
-        # clang_version: ${{ matrix.clang_version }}
         CPP_GITHUB_TOKEN: ${{inputs.CPP_GITHUB_TOKEN}}
       run: ${{github.action_path}}/test.sh
       shell: bash 

@@ -22,8 +22,8 @@ set -e # Exit with error if any command fails
 
 arch=Linux-x86_64
 cmake_root=$(pwd)/cmake-"${cmake_version}"-"${arch}"
-cmake_command=cmake #"${cmake_root}/bin/cmake"
-ctest_command=ctest #"${cmake_root}/bin/ctest"
+cmake_command=cmake
+ctest_command=ctest
 toolchain_file=$(pwd)/toolchain.cmake
 
 
@@ -45,9 +45,6 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   echo 'set(BLAS_LIBRARIES   "-L${LIBDIR} -lopenblas")'
   echo 'set(LAPACK_LIBRARIES "-L${LIBDIR} -llapack ${BLAS_LIBRARIES}")'
   echo 'set(ScaLAPACK_LIBRARIES  "-L${LIBDIR} -lscalapack-openmpi ${LAPACK_LIBRARIES}")'
-  #echo 'set(blacs_LIBRARIES ${SCALAPACK_LIBRARIES})'
-  #echo 'set(scalapack_LIBRARIES ${SCALAPACK_LIBRARIES})'
-  #echo 'set(lapack_LIBRARIES ${LAPACK_LIBRARIES})'
 } >> "${toolchain_file}"
 
 # if clang_version is not empty set clang and 
@@ -57,12 +54,6 @@ then
     {
       echo "set(CMAKE_C_COMPILER /usr/bin/clang)"
       echo "set(CMAKE_CXX_COMPILER /usr/bin/clang++)"  
-      # echo 'set(OpenMP_CXX "${CMAKE_CXX_COMPILER}" CACHE STRING "" FORCE)'
-      # echo 'set(OpenMP_CXX_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument" CACHE STRING "" FORCE)'
-      # echo 'set(OpenMP_CXX_LIB_NAMES "libomp" "libgomp" "libiomp5" CACHE STRING "" FORCE)'
-      # echo 'set(OpenMP_libomp_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
-      # echo 'set(OpenMP_libgomp_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
-      # echo 'set(OpenMP_libiomp5_LIBRARY ${OpenMP_CXX_LIB_NAMES} CACHE STRING "" FORCE)'
       echo 'set(gpu_backend "none" CACHE STRING "" FORCE)'
     } >> "${toolchain_file}"
 else 
@@ -82,12 +73,3 @@ fi
 
 #Step 3: Compile
 ${cmake_command} --build build
-
-
-#Step 5: Generate coverage report
-# curr_dir=$(pwd)
-# cd ..
-# gcovr --root "${curr_dir}" \
-#       --filter "${curr_dir}" \
-#       --exclude "${curr_dir}"/tests \
-#       --xml "${curr_dir}"/coverage.xml
