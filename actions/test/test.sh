@@ -1,17 +1,4 @@
 #!/bin/sh
-################################################################################
-#
-# The master test.sh script lives at
-#
-# NWChemEx-Project/.github/actions/test/test.sh. The
-# 
-# test.sh script is used for testing all NWChemEx-Project repositories.
-# 
-# Thus making changes to the test.sh will effect all NWChemEx-Project
-# 
-# repositories.
-# 
-################################################################################
 
 # Wraps the process for testing an NWX repo
 #

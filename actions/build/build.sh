@@ -1,17 +1,4 @@
 #!/bin/sh
-################################################################################
-#
-# The master build.sh script lives at
-#
-# NWChemEx-Project/.github/actions/build/build.sh. The
-#
-# build.sh script is used for building all NWChemEx-Project repositories.
-# 
-# Thus making changes to the build.sh will effect all NWChemEx-Project
-# 
-# repositories.
-# 
-################################################################################
 
 # Wraps the process for configuring, building, and testing an NWX repo
 #
