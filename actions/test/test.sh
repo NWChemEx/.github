@@ -1,12 +1,16 @@
 #!/bin/sh
 ################################################################################
 #
-# The master build_and_test.sh script lives at
-# NWChemEx-Project/DeveloperTools/.github/workflows/scripts. The
-# build_and_test.sh script contained in all other NWChemEx-Project repositories
-# is a synchronized copy of the master script. Thus to make changes to the
-# build_and_test.sh file please make them to the master script.
+# The master test.sh script lives at
 #
+# NWChemEx-Project/.github/actions/test/test.sh. The
+# 
+# test.sh script is used for testing all NWChemEx-Project repositories.
+# 
+# Thus making changes to the test.sh will effect all NWChemEx-Project
+# 
+# repositories.
+# 
 ################################################################################
 
 # Wraps the process for testing an NWX repo

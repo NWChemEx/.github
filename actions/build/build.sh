@@ -1,12 +1,16 @@
 #!/bin/sh
 ################################################################################
 #
-# The master build_and_test.sh script lives at
-# NWChemEx-Project/DeveloperTools/.github/workflows/scripts. The
-# build_and_test.sh script contained in all other NWChemEx-Project repositories
-# is a synchronized copy of the master script. Thus to make changes to the
-# build_and_test.sh file please make them to the master script.
+# The master build.sh script lives at
 #
+# NWChemEx-Project/.github/actions/build/build.sh. The
+#
+# build.sh script is used for building all NWChemEx-Project repositories.
+# 
+# Thus making changes to the build.sh will effect all NWChemEx-Project
+# 
+# repositories.
+# 
 ################################################################################
 
 # Wraps the process for configuring, building, and testing an NWX repo
@@ -23,7 +27,6 @@ set -e # Exit with error if any command fails
 arch=Linux-x86_64
 cmake_root=$(pwd)/cmake-"${cmake_version}"-"${arch}"
 cmake_command=cmake
-ctest_command=ctest
 toolchain_file=$(pwd)/toolchain.cmake
 
 
