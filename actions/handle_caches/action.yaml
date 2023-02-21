@@ -1,4 +1,4 @@
-name: Test Documentation
+name: Handle caches
 inputs:
   dependencies:
     required: true
@@ -21,8 +21,3 @@ runs:
         libint-2.6.0/**/
         install/**/
       key: libint-gcc${{ matrix.gcc_version }}
-  - name: Test Check Cache Libint
-    env:
-      CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
-    run: echo "helloworld 22 " $CACHE_LIBINT
-    shell: bash
