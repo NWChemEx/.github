@@ -34,6 +34,8 @@ runs:
     with:
       path: |
         build/_deps/tiledarray-build/**/
+        build/_deps/tiledarray-src/**/
+        build/_deps/tiledarray-subbuild/**/
       key: cached-tiledarray
   - name: Generate Javadoc
     env:
