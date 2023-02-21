@@ -1,5 +1,8 @@
 name: Test Documentation
 inputs:
+  cached-libs:
+    required: false
+    type: string
   dependencies:
     required: true
     type: string
