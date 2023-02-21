@@ -1,0 +1,23 @@
+name: Handle caches
+inputs:
+  dependencies:
+    required: true
+    type: string
+outputs:
+  cache-libint:
+    description: "Cache libint status"
+    value: ${{ steps.cacheLibint.outputs.cache-hit }}
+runs:
+  using: "composite"
+  steps:
+  - name: Obtain Source
+    uses: actions/checkout@v2
+  - if: ${{contains(inputs.dependencies, 'libint')}}
+    name: cache-libint   
+    id: cacheLibint
+    uses: actions/cache@v2
+    with:
+      path: |
+        libint-2.6.0/**/
+        install/**/
+      key: libint-gcc${{ matrix.gcc_version }}
