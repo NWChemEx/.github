@@ -10,6 +10,9 @@ outputs:
   cache-libint:
     description: "Cache libint status"
     value: ${{ steps.cacheLibint.outputs.cache-hit }}
+  cache-tiledarray:
+    description: "Cache tiledarray status"
+    value: ${{ steps.cacheTiledarray.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
