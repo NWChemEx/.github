@@ -1,5 +1,8 @@
 name: Test Documentation
 inputs:
+  cached-libs:
+    required: false
+    type: string
   dependencies:
     required: true
     type: string
@@ -20,11 +23,18 @@ runs:
       path: |
         libint-2.6.0/**/
         install/**/
-        # install/include/libint2/**/
-        # install/include/libint2.*
       key: libint-gcc${{ matrix.gcc_version }}
+  - if: ${{contains(inputs.cached-libs, 'tiledarray')}}
+    name: cache-tiledarray   
+    id: cacheTiledarray
+    uses: actions/cache@v2
+    with:
+      path: |
+        _deps/tiledarray-build/**/
+      key: cached-tiledarray
   - name: Generate Javadoc
     env:
       CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
-    run: echo "helloworld" $CACHE_LIBINT
+      CACHE_TILEDARRAY: ${{steps.cacheTiledarray.outputs.cache-hit}}
+    run: echo "helloworld libint" $CACHE_LIBINT " and tiledarray " $CACHE_TILEDARRAY
     shell: bash
