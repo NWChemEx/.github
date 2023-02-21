@@ -37,6 +37,7 @@ runs:
         build/_deps/tiledarray-src/**/
         build/_deps/tiledarray-subbuild/**/
         include/tensorwrapper/tensor/backends/tiledarray.hpp
+        include/**/
       key: cached-tiledarray
   - name: Generate Javadoc
     env:
