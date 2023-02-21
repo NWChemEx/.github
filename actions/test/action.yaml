@@ -1,0 +1,16 @@
+name: Test
+inputs:
+  CPP_GITHUB_TOKEN:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Give Permission
+      run: chmod +x ${{github.action_path}}/test.sh 
+      shell: bash 
+    - name: Test Application
+      env:
+        CPP_GITHUB_TOKEN: ${{inputs.CPP_GITHUB_TOKEN}}
+      run: ${{github.action_path}}/test.sh
+      shell: bash 
