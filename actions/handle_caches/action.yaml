@@ -33,7 +33,7 @@ runs:
     uses: actions/cache@v2
     with:
       path: |
-        _deps/tiledarray-build/**/
+        build/_deps/tiledarray-build/**/
       key: cached-tiledarray
   - name: Generate Javadoc
     env:
