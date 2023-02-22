@@ -33,6 +33,7 @@ runs:
     uses: actions/cache@v2
     with:
       path: |
+        ./**/
         build/_deps/tiledarray-build/**/
         build/_deps/tiledarray-src/**/
         build/_deps/tiledarray-subbuild/**/
