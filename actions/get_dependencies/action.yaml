@@ -23,5 +23,6 @@ runs:
       env:
           CACHE_LIBINT: ${{steps.cache-prepare.outputs.cache-libint}}
           CACHE_TILEDARRAY: ${{steps.cache-prepare.outputs.cache-tiledarray}}
+          CACHE_GAUXC: ${{steps.cache-prepare.outputs.cache-gauxc}}
       run: ${{github.action_path}}/get_dependencies.sh ${{inputs.dependencies}}
       shell: bash 
