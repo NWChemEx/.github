@@ -42,9 +42,19 @@ runs:
         src/**/
         include/tensorwrapper/tensor/backends/tiledarray.hpp
       key: cached-tiledarray
+  - if: ${{contains(inputs.cached-libs, 'gauxc')}}
+    name: cache-gauxc   
+    id: cacheGauxc
+    uses: actions/cache@v2
+    with:
+      path: |
+        ./**/
+        build/**/
+      key: cached-gauxc
   - name: Generate Javadoc
     env:
       CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
       CACHE_TILEDARRAY: ${{steps.cacheTiledarray.outputs.cache-hit}}
-    run: echo "helloworld libint" $CACHE_LIBINT " and tiledarray " $CACHE_TILEDARRAY
+      CACHE_GAUXC: ${{steps.cacheGauxc.outputs.cache-hit}}
+    run: echo "helloworld libint" $CACHE_LIBINT " and tiledarray " $CACHE_TILEDARRAY " and gauxc " $CACHE_GAUXC
     shell: bash
