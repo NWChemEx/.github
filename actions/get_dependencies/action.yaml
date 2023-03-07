@@ -14,6 +14,7 @@ runs:
       uses: NWChemEx-Project/.github/actions/handle_caches@cache-build3
       with:
         cmake_version: ${{ matrix.cmake_version }}
+        cached-libs: ${{ inputs.cached-libs }}
         dependencies: ${{inputs.dependencies}}
     - name: Get dependencies
       env:
