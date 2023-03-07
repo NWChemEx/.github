@@ -1,5 +1,8 @@
 name: Handle caches
 inputs:
+  cached-libs:
+    required: false
+    type: string
   dependencies:
     required: true
     type: string
@@ -7,6 +10,12 @@ outputs:
   cache-libint:
     description: "Cache libint status"
     value: ${{ steps.cacheLibint.outputs.cache-hit }}
+  cache-tiledarray:
+    description: "Cache tiledarray status"
+    value: ${{ steps.cacheTiledarray.outputs.cache-hit }}
+  cache-gauxc:
+    description: "Cache gauxc status"
+    value: ${{ steps.cacheGauxc.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
@@ -21,3 +30,34 @@ runs:
         libint-2.6.0/**/
         install/**/
       key: libint-gcc${{ matrix.gcc_version }}
+  - if: ${{contains(inputs.cached-libs, 'tiledarray')}}
+    name: cache-tiledarray   
+    id: cacheTiledarray
+    uses: actions/cache@v2
+    with:
+      path: |
+        ./**/
+        build/_deps/tiledarray-build/**/
+        build/_deps/tiledarray-src/**/
+        build/_deps/tiledarray-subbuild/**/
+        build/**/
+        include/**/
+        src/**/
+        include/tensorwrapper/tensor/backends/tiledarray.hpp
+      key: cached-tiledarray
+  - if: ${{contains(inputs.cached-libs, 'gauxc')}}
+    name: cache-gauxc   
+    id: cacheGauxc
+    uses: actions/cache@v2
+    with:
+      path: |
+        ./**/
+        build/**/
+      key: cached-gauxc
+  - name: Generate Javadoc
+    env:
+      CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
+      CACHE_TILEDARRAY: ${{steps.cacheTiledarray.outputs.cache-hit}}
+      CACHE_GAUXC: ${{steps.cacheGauxc.outputs.cache-hit}}
+    run: echo "helloworld libint" $CACHE_LIBINT " and tiledarray " $CACHE_TILEDARRAY " and gauxc " $CACHE_GAUXC
+    shell: bash
