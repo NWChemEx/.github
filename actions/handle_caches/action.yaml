@@ -13,6 +13,9 @@ outputs:
   cache-tiledarray:
     description: "Cache tiledarray status"
     value: ${{ steps.cacheTiledarray.outputs.cache-hit }}
+  cache-gauxc:
+    description: "Cache gauxc status"
+    value: ${{ steps.cacheGauxc.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
