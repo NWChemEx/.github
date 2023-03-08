@@ -62,4 +62,4 @@ else
 fi
 
 #Step 3: Compile
-${cmake_command} --build build
+${cmake_command} --build build -Dgauxc_DIR="build/_deps/gauxc-build/"
