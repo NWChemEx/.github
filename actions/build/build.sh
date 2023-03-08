@@ -35,7 +35,6 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   echo 'set(BLAS_LIBRARIES   "-L${LIBDIR} -lopenblas")'
   echo 'set(LAPACK_LIBRARIES "-L${LIBDIR} -llapack ${BLAS_LIBRARIES}")'
   echo 'set(ScaLAPACK_LIBRARIES  "-L${LIBDIR} -lscalapack-openmpi ${LAPACK_LIBRARIES}")'
-  echo 'set(gauxc_DIR "build/_deps/gauxc-build/")'
 } >> "${toolchain_file}"
 
 # if clang_version is not empty set clang and 
@@ -46,11 +45,13 @@ then
       echo "set(CMAKE_C_COMPILER /usr/bin/clang)"
       echo "set(CMAKE_CXX_COMPILER /usr/bin/clang++)"  
       echo 'set(gpu_backend "none" CACHE STRING "" FORCE)'
+      echo 'set(gauxc_DIR "build/_deps/gauxc-build/")'
     } >> "${toolchain_file}"
 else 
   {
     echo "set(CMAKE_C_COMPILER /usr/bin/gcc)"
-    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"  
+    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"
+    echo 'set(gauxc_DIR "build/_deps/gauxc-build/")'
   } >> "${toolchain_file}"
 fi
 
