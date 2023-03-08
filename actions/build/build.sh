@@ -56,9 +56,9 @@ fi
 #Step 2: Configure
 
 if [ "${ninja_build}" = true ] ; then
-  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
+  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -Dgauxc_DIR="build/_deps/gauxc-build/"
 else
-  ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
+  ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -Dgauxc_DIR="build/_deps/gauxc-build/"
 fi
 
 #Step 3: Compile
