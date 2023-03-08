@@ -35,6 +35,7 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   echo 'set(BLAS_LIBRARIES   "-L${LIBDIR} -lopenblas")'
   echo 'set(LAPACK_LIBRARIES "-L${LIBDIR} -llapack ${BLAS_LIBRARIES}")'
   echo 'set(ScaLAPACK_LIBRARIES  "-L${LIBDIR} -lscalapack-openmpi ${LAPACK_LIBRARIES}")'
+  echo 'set(gauxc_DIR "build/_deps/gauxc-build/")'
 } >> "${toolchain_file}"
 
 # if clang_version is not empty set clang and 
@@ -62,4 +63,4 @@ else
 fi
 
 #Step 3: Compile
-${cmake_command} --build build -- -Dgauxc_DIR="build/_deps/gauxc-build/"
+${cmake_command} --build build
