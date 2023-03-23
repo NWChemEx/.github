@@ -180,9 +180,7 @@ submodule (for computing the four-center, electron-repulsion integrals) which is
 not part of the SCF repo. Aside from that, there’s nothing too remarkable about
 the implementation of this module.</p>
 <p>To finish off the implementation we also need to make sure <code class="docutils literal notranslate"><span class="pre">JCanonical</span></code> is
-declared in <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/include/scf/scf_modules.hpp</span></code> (this file should
-really live in <code class="docutils literal notranslate"><span class="pre">src</span></code> and may have been moved since this documentation was
-written; if it has and you’re reading this please file an issue/make a PR) and
+declared in <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/src/scf/scf_modules.hpp</span></code> and
 we need to make sure our new module is added to the module manager in
 <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/src/scf/scf_mm.cpp</span></code>. The former amounts to adding:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">DECLARE_MODULE</span><span class="p">(</span><span class="n">JCanonical</span><span class="p">);</span>

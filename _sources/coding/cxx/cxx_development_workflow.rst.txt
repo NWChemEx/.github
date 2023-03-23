@@ -94,9 +94,7 @@ not part of the SCF repo. Aside from that, there's nothing too remarkable about
 the implementation of this module.
 
 To finish off the implementation we also need to make sure ``JCanonical`` is
-declared in ``nwx_workspace/SCF/include/scf/scf_modules.hpp`` (this file should
-really live in ``src`` and may have been moved since this documentation was
-written; if it has and you're reading this please file an issue/make a PR) and
+declared in ``nwx_workspace/SCF/src/scf/scf_modules.hpp`` and
 we need to make sure our new module is added to the module manager in
 ``nwx_workspace/SCF/src/scf/scf_mm.cpp``. The former amounts to adding:
 
