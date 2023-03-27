@@ -41,5 +41,5 @@ runs:
     env:
       CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
       CACHE_LIBFORT: ${{steps.cacheLibfort.outputs.cache-hit}}
-    run: echo "helloworld libint" $CACHE_LIBINT " and tiledarray " $CACHE_LIBFORT "
+    run: echo "helloworld libint" $CACHE_LIBINT " and libfort " $CACHE_LIBFORT
     shell: bash
