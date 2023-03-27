@@ -1,5 +1,8 @@
 name: Handle caches
 inputs:
+  cached-libs:
+    required: false
+    type: string
   dependencies:
     required: true
     type: string
@@ -7,6 +10,9 @@ outputs:
   cache-libint:
     description: "Cache libint status"
     value: ${{ steps.cacheLibint.outputs.cache-hit }}
+  cache-libfort:
+    description: "Cache libfort status"
+    value: ${{ steps.cacheLibfort.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
@@ -21,3 +27,19 @@ runs:
         libint-2.6.0/**/
         install/**/
       key: libint-gcc${{ matrix.gcc_version }}
+  - if: ${{contains(inputs.cached-libs, 'libfort')}}
+    name: cache-libfort  
+    id: cacheLibfort
+    uses: actions/cache@v2
+    with:
+      path: |
+        ./**/
+        build/**/
+        build/_deps/**/
+      key: cached-libfort
+  - name: Print Info
+    env:
+      CACHE_LIBINT: ${{steps.cacheLibint.outputs.cache-hit}}
+      CACHE_LIBFORT: ${{steps.cacheLibfort.outputs.cache-hit}}
+    run: echo "helloworld libint" $CACHE_LIBINT " and tiledarray " $CACHE_LIBFORT "
+    shell: bash

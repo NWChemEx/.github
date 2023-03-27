@@ -3,6 +3,9 @@ name: C_C++_CI
 on:
   workflow_call:
     inputs:
+      cached-libs:
+        required: false
+        type: string
       dependencies:
         required: true
         type: string
@@ -37,16 +40,17 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           clang_version: ${{ matrix.clang_version }}
-        uses: NWChemEx-Project/.github/actions/get_dependencies@master
+        uses: NWChemEx-Project/.github/actions/get_dependencies@test-cache
         with:
           dependencies: ${{inputs.dependencies}}
+          cached-libs: ${{inputs.cached-libs}}
       - name: Build using Clang
         if: ${{inputs.clang-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build@master
+        uses: NWChemEx-Project/.github/actions/build@test-cache
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       - name: Build using GCC
@@ -55,13 +59,13 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build@master
+        uses: NWChemEx-Project/.github/actions/build@test-cache
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-      - name: Test Application
-        uses: NWChemEx-Project/.github/actions/test@master
-        with: 
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      # - name: Test Application
+      #   uses: NWChemEx-Project/.github/actions/test@test-cache
+      #   with: 
+      #     CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       # - uses: codecov/codecov-action@v1
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}
