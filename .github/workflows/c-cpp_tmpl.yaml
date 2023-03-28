@@ -35,6 +35,9 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
+      - name: Check Before Build
+        run: ls
+        shell: bash 
       - name: Get dependencies
         env:
           cmake_version: ${{ matrix.cmake_version }}
@@ -62,6 +65,9 @@ jobs:
         uses: NWChemEx-Project/.github/actions/build@test-cache
         with: 
           CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      - name: Check After Build
+        run: ls
+        shell: bash 
       # - name: Test Application
       #   uses: NWChemEx-Project/.github/actions/test@test-cache
       #   with: 
