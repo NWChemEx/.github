@@ -53,7 +53,7 @@ In the architecture image these workflows are pictured as ``Task{{1,2,3,4}}.yaml
 
 Each of those workflows calls their corresponding template workflows that resides in the ``.github`` repository with some input parameters. These calls are as follows: 
 
-a. ``c-cpp.yaml`` calls the ``c-cpp_tmpl.yaml`` template workflow with inputs ``dependencies`` and ``CPP_GITHUB_TOKEN``;
+a. ``c-cpp.yaml`` calls the ``c-cpp_tmpl.yaml`` template workflow with inputs ``dependencies`` and ``CMAIZE_GITHUB_TOKEN``;
 b. ``deploy_docs.yaml`` calls the ``deploy_docs_tmpl.yaml`` template workflow with inputs ``target``, ``dependencies``, and ``skip_doxygen``;
 c. ``format.yaml`` calls the ``format_tmpl.yaml`` template workflow with input ``source``; and
 d. ``test_docs.yaml`` calls the ``test_docs_tmpl.yaml`` template workflow with inputs ``target``, ``dependencies``, and ``skip_doxygen``.
@@ -73,7 +73,7 @@ The template workflows are pictured as ``Task{{1,2,3,4}}_tmpl.yaml`` in the arch
 
 These template workflows receive the input parameters from the topmost layer workflow files from which they have been called. They also use some common custom actions developed by us along with the inputs received from the caller workflows. For example:
 
-a. ``c-cpp_tmpl.yaml`` uses the custom action ``get_dependencies`` with input parameter ``dependencies`` and the custom action ``build_and_test`` with input parameter ``CPP_GITHUB_TOKEN``. 
+a. ``c-cpp_tmpl.yaml`` uses the custom action ``get_dependencies`` with input parameter ``dependencies`` and the custom action ``build_and_test`` with input parameter ``CMAIZE_GITHUB_TOKEN``. 
 b. ``deploy_docs_tmpl.yaml`` uses the custom action ``get_dependencies`` with input parameter ``dependencies`` and the custom action ``build_docs`` with input parameters ``target`` and ``skip_doxygen``.
 c. ``test_docs_tmpl.yaml`` uses the custom action ``get_dependencies`` with input parameter ``dependencies`` and the custom action ``build_docs`` with input parameters ``target`` and ``skip_doxygen``.
 
@@ -94,7 +94,7 @@ These composite actions are illustrated as ``Action{{1,2,3}}.yaml`` in the archi
 
 All these composite actions usually run some bash scripts with input parameters that are passed to it from the template workflows. For example:
 
-a. ``build_and_test`` action runs the ``build_and_test.sh`` bash scripts with input parameter ``CPP_GITHUB_TOKEN``;
+a. ``build_and_test`` action runs the ``build_and_test.sh`` bash scripts with input parameter ``CMAIZE_GITHUB_TOKEN``;
 b. ``build_docs`` action runs the ``build_docs.sh`` bash script with input parameter ``target``, if the ``doxygen`` dependency is required; otherwise it runs the ``build_sphinx_docs.sh`` bash script without any parameters;
 c. ``get_dependencies`` action runs the ``get_dependencies.sh`` bash script with input parameter ``dependencies``.
 
@@ -148,7 +148,7 @@ run the unit tests (through ctest), and finally process the coverage results. Th
              gcc_version: give_appropriate_cmake_version
            uses: NWChemEx-Project/.github/actions/build_and_test@master
            with: 
-             CPP_GITHUB_TOKEN: provide_CPP_GITHUB_TOKEN_here
+             CMAIZE_GITHUB_TOKEN: provide_CMAIZE_GITHUB_TOKEN_here
 
 An example of how to use this action in workflow file can be found in the ``.github/.github/workflows/c-cpp_tmpl.yaml`` workflow file. 
 
