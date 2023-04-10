@@ -1,6 +1,6 @@
 name: Build and Test
 inputs:
-  CPP_GITHUB_TOKEN:
+  CMAIZE_GITHUB_TOKEN:
     required: true
 
 runs:
@@ -11,6 +11,6 @@ runs:
       shell: bash 
     - name: Build Application
       env:
-        CPP_GITHUB_TOKEN: ${{inputs.CPP_GITHUB_TOKEN}}
+        CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
       run: ${{github.action_path}}/build.sh
       shell: bash

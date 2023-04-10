@@ -18,7 +18,7 @@ include_guard()
 # parent project's configure step (namely we do not want to build CMakePP's
 # unit tests).
 #]]
-function(get_cpp)
+function(get_cmaize)
 
     # Store whether we are building tests or not, then turn off the tests
     set(build_testing_old "${BUILD_TESTING}")
@@ -27,17 +27,17 @@ function(get_cpp)
     # Download CMakePP and bring it into scope
     include(FetchContent)
     FetchContent_Declare(
-            cpp
-            GIT_REPOSITORY https://github.com/CMakePP/CMakePackagingProject
+        cmaize
+        GIT_REPOSITORY https://github.com/CMakePP/CMakePackagingProject
     )
-    FetchContent_MakeAvailable(cpp)
+    FetchContent_MakeAvailable(cmaize)
 
     # Restore the previous value
     set(BUILD_TESTING "${build_testing_old}" CACHE BOOL "" FORCE)
 endfunction()
 
-# Call the function we just wrote to get CMakePP
-get_cpp()
+# Call the function we just wrote to get CMaize
+get_cmaize()
 
-# Include CMakePP
-include(cpp/cpp)
+# Include CMaize
+include(cmaize/cmaize)
