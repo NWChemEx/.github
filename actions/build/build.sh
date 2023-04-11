@@ -56,7 +56,7 @@ fi
 #Step 2: Configure
 
 if [ "${ninja_build}" = true ] ; then
-  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -cmake -DCMAKE_PREFIX_PATH="/home/runner/work/PluginPlay/PluginPlay/build/_deps/libfort-build;/home/runner/work/PluginPlay/PluginPlay/build/_deps/libfort-src;/home/runner/work/PluginPlay/PluginPlay/build/_deps/libfort-subbuild"
+  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -DCMAKE_PREFIX_PATH="/home/runner/work/PluginPlay/PluginPlay/build/_deps/libfort-build;/home/runner/work/PluginPlay/PluginPlay/build/_deps/libfort-src;/home/runner/work/PluginPlay/PluginPlay/build/_deps/libfort-subbuild"
 else
   ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
 fi
