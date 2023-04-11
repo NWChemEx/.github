@@ -29,3 +29,4 @@ conventions, to tutorials.
    doxygen_conventions
    rst_conventions
    rst_cheatsheet
+   contributing_to_documentation
