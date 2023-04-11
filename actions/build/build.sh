@@ -28,7 +28,7 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   echo 'set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOMPI_SKIP_MPICXX")'
   echo 'set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage")'
   echo 'set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs")'
-  echo 'set(CPP_GITHUB_TOKEN '${CPP_GITHUB_TOKEN}')'
+  echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')'
   echo 'set(CMAKE_BUILD_TYPE Debug)'
   echo 'set(ENABLE_SCALAPACK ON)'
   echo 'set(LIBDIR "/usr/lib/x86_64-linux-gnu")'
@@ -45,22 +45,20 @@ then
       echo "set(CMAKE_C_COMPILER /usr/bin/clang)"
       echo "set(CMAKE_CXX_COMPILER /usr/bin/clang++)"  
       echo 'set(gpu_backend "none" CACHE STRING "" FORCE)'
-      echo 'set(gauxc_DIR "build/_deps/gauxc-build/")'
     } >> "${toolchain_file}"
 else 
   {
     echo "set(CMAKE_C_COMPILER /usr/bin/gcc)"
-    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"
-    echo 'set(gauxc_DIR "build/_deps/gauxc-build/")'
+    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"  
   } >> "${toolchain_file}"
 fi
 
 #Step 2: Configure
 
 if [ "${ninja_build}" = true ] ; then
-  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -Dgauxc_DIR="build/_deps/gauxc-build/"
+  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
 else
-  ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -Dgauxc_DIR="build/_deps/gauxc-build/"
+  ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
 fi
 
 #Step 3: Compile
