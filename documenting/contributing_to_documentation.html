@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing to NWChemEx Documentation &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Developing NWChemEx" href="../coding/index.html" />
+    <link rel="prev" title="reST Cheat Sheet" href="rst_cheatsheet.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">NWChemEx Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Documenting NWChemEx</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="writing_design_documentation.html">Writing Design Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_api_documentation.html">Writing API Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_developer_documentation.html">Writing Developer Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_tutorials.html">Writing Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doxygen_conventions.html">Using Doxygen in the NWChemEx Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_conventions.html">Conventions for Writing reST Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst_cheatsheet.html">reST Cheat Sheet</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Contributing to NWChemEx Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#structure-of-nwchemex-documentation">Structure of NWChemEx Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-contribute-to-nwchemex-documentation">How to Contribute to NWChemEx Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-generate-a-local-copy-of-the-documentation">How to Generate a Local Copy of the Documentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../continuous_deployment/index.html">Continuous Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Documenting NWChemEx</a></li>
+      <li class="breadcrumb-item active">Contributing to NWChemEx Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/documenting/contributing_to_documentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="contributing-to-nwchemex-documentation">
+<span id="contributing-to-documentation"></span><h1>Contributing to NWChemEx Documentation<a class="headerlink" href="#contributing-to-nwchemex-documentation" title="Permalink to this heading"></a></h1>
+<p>In this section we explain the basic orgnization of the NWChemEx documentation
+system and present instructions on how to contribute to the documentation.</p>
+<div class="section" id="structure-of-nwchemex-documentation">
+<h2>Structure of NWChemEx Documentation<a class="headerlink" href="#structure-of-nwchemex-documentation" title="Permalink to this heading"></a></h2>
+<p>In the repo of every NWChemEx package, there is a <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory. Under
+this diretory there is a <code class="docutils literal notranslate"><span class="pre">source</span></code> subdirectory which contains all .rst
+source files of the documentation (recursive subdirectory structures may
+exist). The files <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> and <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> are for generating
+formatted files of the documentation, and will be explained below. The
+<code class="docutils literal notranslate"><span class="pre">README.md</span></code> file briefly decscribes the documentation and how to generate
+the documentation files.</p>
+</div>
+<div class="section" id="how-to-contribute-to-nwchemex-documentation">
+<h2>How to Contribute to NWChemEx Documentation<a class="headerlink" href="#how-to-contribute-to-nwchemex-documentation" title="Permalink to this heading"></a></h2>
+<p>Suppose one plans to update the documentation of the package PluginPlay.
+First, one should create a local working copy of the PluginPlay repo using
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>, then edit the existing .rst files or create new .rst files
+under the <code class="docutils literal notranslate"><span class="pre">doc</span></code> directory.
+Remember, when new .rst files are added, one needs to add the names of the
+new files into the toctree list in the <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> file under the same
+directory.
+When all editing work is done one needs to generate a local copy of the
+documentation (see below), usually in html format, and check the .html files
+in a browser to make sure everything is displayed properly. Finally one can
+open a pull request to the PluginPlay repo and merge the updated documentation
+to master.</p>
+<p>Note: the developer documentation of NWChemEx resides in the .github repo.</p>
+</div>
+<div class="section" id="how-to-generate-a-local-copy-of-the-documentation">
+<h2>How to Generate a Local Copy of the Documentation<a class="headerlink" href="#how-to-generate-a-local-copy-of-the-documentation" title="Permalink to this heading"></a></h2>
+<p>NWChemEx uses <a class="reference external" href="https://www.sphinx-doc.org/en/master/index.html">Sphinx - a Python documentation generator</a> to transform the
+source files (.rst, .md. etc) into documentation files in various formats
+(.html, .pdf, etc). One can see the content of the file <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>
+with the linux command <code class="docutils literal notranslate"><span class="pre">vi</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">docutils&lt;=0.19</span>
+<span class="go">sphinx</span>
+<span class="go">sphinx_rtd_theme</span>
+</pre></div>
+</div>
+<p>This list contains the required Python packages to install. We recommend to
+install these packags into a Python virtual environment, in order to avoid
+possible conflicts in the base environment. One can run the linux commands</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 -m venv venv</span>
+<span class="go">. venv/bin/activate</span>
+<span class="go">pip3 install -r requirements.txt</span>
+</pre></div>
+</div>
+<p>to create a virtual environment <code class="docutils literal notranslate"><span class="pre">venv</span></code>, activate it, and then install the
+required packages into it.
+Note: during the installation of the packages, one may see an error message
+like “<em>ERROR: sphinx-rtd-theme 1.2.0 has requirement docutils&lt;0.19, but you’ll
+have docutils 0.19 which is incompatible.</em>”. This is a known issue, but not
+affecting documentation generation.</p>
+<p>After all packages are successfully installed, one can run</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make html</span>
+</pre></div>
+</div>
+<p>under the directory of <code class="docutils literal notranslate"><span class="pre">docs</span></code> to generate the documentation in .html format.
+One can also choose other formats, for example, .pdf, for the generated
+documentation files by running</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make latexpdf</span>
+</pre></div>
+</div>
+<p>In this case the installation of additional packages such as <code class="docutils literal notranslate"><span class="pre">latexmk</span></code> might
+be necessary.
+After successfully running these <code class="docutils literal notranslate"><span class="pre">make</span></code> commands, a directory of <code class="docutils literal notranslate"><span class="pre">build</span></code>
+would be created under <code class="docutils literal notranslate"><span class="pre">docs</span></code>. So one can go to the subdirectories <code class="docutils literal notranslate"><span class="pre">html</span></code>
+or <code class="docutils literal notranslate"><span class="pre">latex</span></code> to check whether generated .html or .pdf files are correct or not.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rst_cheatsheet.html" class="btn btn-neutral float-left" title="reST Cheat Sheet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../coding/index.html" class="btn btn-neutral float-right" title="Developing NWChemEx" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
