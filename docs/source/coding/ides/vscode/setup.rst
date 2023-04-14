@@ -1,32 +1,13 @@
+#########################
 Setting Up VSCode for NWX
-=========================
+#########################
 
 This page focuses on how to initially setup VSCode, specifically from the
-perspective of NWX development.
+perspective of developing a module/plugin for NWChemEx.
 
-Creating a Workspace
---------------------
-
-When you first start up VSCode you will want to go to
-``files->add folder to workspace`` and provide VSCode with one of the NWChemEx
-repos in your NWX workspace, *e.g.*, `nwx_workspace/SCF` in the directory
-structure assumed in :ref:`development_preliminaries`). Once you have done this you
-should see your folder and its subdirectories in the explorer view
-(explorer view is the icon with a page overlying a square in the left toolbar).
-You can repeat this process for each of the additional NWX repos in your
-workspace. It is recommend that you then save your workspace
-(File->Save Workspace As) that way you can quickly open all of these repos
-again.
-
-.. note::
-
-   AFAIK adding each repo individually in this manner is the only way for the
-   CMake extension to properly register the root CMakeLists.txt for each repo.
-   If you try to add the workspace root it will instead look for the root
-   CMakeLists.txt there.
-
+*****************
 Adding Extensions
------------------
+*****************
 
 By default VSCode is pretty bare bones. Additional features
 are added/enabled by installing extensions. When you load up source code VSCode
@@ -37,8 +18,61 @@ minimally install:
 #. ``ms-vscode.cpptools``
 #. ``ms-vscode.cmake-tools``
 #. ``ms-python.python``
-#. ``lextudio.restructuredtext``
 
-To install an extension click on the extensions view (the icon in the left
-toolbar with a square broken into four smaller squares) and search for the
-identifiers given in the above list.
+.. _fig_click_extensions:
+
+.. figure:: assets/click_extensions.svg
+   :align: center
+
+   Location of the extensions view.
+
+To install an extension click on the extensions view (see
+:numref:`fig_click_extensions`) and search for the identifiers given in the
+above list.
+
+********************
+Creating a Workspace
+********************
+
+When you first start up VSCode you will have an empty workspace. We need to add
+content to that workspace.
+
+.. _fig_add_folder_to_workspace:
+
+.. figure:: assets/add_folder_to_workspace.png
+   :align: center
+
+   Navigate to ``files->add folder to workspace``.
+
+To do this navigate to ``files->add folder to workspace`` as shown in
+:numref:`fig_add_folder_to_workspace`. This will bring up a file explorer,
+which you should then use to navigate to the root directory of the repository
+you want to add.
+
+.. _fig_click_explorer:
+
+.. figure:: assets/click_explorer.svg
+   :align: center
+
+   The explorer icon.
+
+To see the repositories you've added so far click on the explorer icon shown
+in :numref:`fig_click_explorer`.
+
+.. _fig_explorer_open:
+
+.. figure:: assets/explorer_open.png
+   :align: center
+
+   View of VSCode with the explorer pane open.
+
+This will open the explorer pane and VSCode will look something like shown
+in :numref:`fig_explorer_open`. For developing an NWChemEx module/plugin you
+will minimally want to have the repositories for NWChemEx and your plugin in
+your workspace. Repeat adding folders for each other repository you want to
+have in your workspace.
+
+.. note::
+
+   AFAIK adding each repo individually in this manner is the only way for the
+   CMake extension to properly register the root CMakeLists.txt for each repo.
