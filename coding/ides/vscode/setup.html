@@ -102,27 +102,7 @@
   <div class="section" id="setting-up-vscode-for-nwx">
 <h1>Setting Up VSCode for NWX<a class="headerlink" href="#setting-up-vscode-for-nwx" title="Permalink to this heading"></a></h1>
 <p>This page focuses on how to initially setup VSCode, specifically from the
-perspective of NWX development.</p>
-<div class="section" id="creating-a-workspace">
-<h2>Creating a Workspace<a class="headerlink" href="#creating-a-workspace" title="Permalink to this heading"></a></h2>
-<p>When you first start up VSCode you will want to go to
-<code class="docutils literal notranslate"><span class="pre">files-&gt;add</span> <span class="pre">folder</span> <span class="pre">to</span> <span class="pre">workspace</span></code> and provide VSCode with one of the NWChemEx
-repos in your NWX workspace, <em>e.g.</em>, <cite>nwx_workspace/SCF</cite> in the directory
-structure assumed in <a class="reference internal" href="../../preliminaries.html#development-preliminaries"><span class="std std-ref">Preliminaries</span></a>). Once you have done this you
-should see your folder and its subdirectories in the explorer view
-(explorer view is the icon with a page overlying a square in the left toolbar).
-You can repeat this process for each of the additional NWX repos in your
-workspace. It is recommend that you then save your workspace
-(File-&gt;Save Workspace As) that way you can quickly open all of these repos
-again.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>AFAIK adding each repo individually in this manner is the only way for the
-CMake extension to properly register the root CMakeLists.txt for each repo.
-If you try to add the workspace root it will instead look for the root
-CMakeLists.txt there.</p>
-</div>
-</div>
+perspective of developing a module/plugin for NWChemEx.</p>
 <div class="section" id="adding-extensions">
 <h2>Adding Extensions<a class="headerlink" href="#adding-extensions" title="Permalink to this heading"></a></h2>
 <p>By default VSCode is pretty bare bones. Additional features
@@ -134,11 +114,45 @@ minimally install:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">ms-vscode.cpptools</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ms-vscode.cmake-tools</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ms-python.python</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lextudio.restructuredtext</span></code></p></li>
 </ol>
-<p>To install an extension click on the extensions view (the icon in the left
-toolbar with a square broken into four smaller squares) and search for the
-identifiers given in the above list.</p>
+<div class="figure align-center" id="id1">
+<span id="fig-click-extensions"></span><img alt="../../../_images/click_extensions.svg" src="../../../_images/click_extensions.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Location of the extensions view.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</div>
+<p>To install an extension click on the extensions view (see
+<a class="reference internal" href="#fig-click-extensions"><span class="std std-numref">Fig. 4</span></a>) and search for the identifiers given in the
+above list.</p>
+</div>
+<div class="section" id="creating-a-workspace">
+<h2>Creating a Workspace<a class="headerlink" href="#creating-a-workspace" title="Permalink to this heading"></a></h2>
+<p>When you first start up VSCode you will have an empty workspace. We need to add
+content to that workspace.</p>
+<div class="figure align-center" id="id2">
+<span id="fig-add-folder-to-workspace"></span><img alt="../../../_images/add_folder_to_workspace.png" src="../../../_images/add_folder_to_workspace.png" />
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Navigate to <code class="docutils literal notranslate"><span class="pre">files-&gt;add</span> <span class="pre">folder</span> <span class="pre">to</span> <span class="pre">workspace</span></code>.</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</div>
+<p>To do this navigate to <code class="docutils literal notranslate"><span class="pre">files-&gt;add</span> <span class="pre">folder</span> <span class="pre">to</span> <span class="pre">workspace</span></code> as shown in
+<a class="reference internal" href="#fig-add-folder-to-workspace"><span class="std std-numref">Fig. 5</span></a>. This will bring up a file explorer,
+which you should then use to navigate to the root directory of the repository
+you want to add.</p>
+<div class="figure align-center" id="id3">
+<span id="fig-click-explorer"></span><img alt="../../../_images/click_explorer.svg" src="../../../_images/click_explorer.svg" /><p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">The explorer icon.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</div>
+<p>To see the repositories you’ve added so far click on the explorer icon shown
+in <a class="reference internal" href="#fig-click-explorer"><span class="std std-numref">Fig. 6</span></a>.</p>
+<div class="figure align-center" id="id4">
+<span id="fig-explorer-open"></span><img alt="../../../_images/explorer_open.png" src="../../../_images/explorer_open.png" />
+<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">View of VSCode with the explorer pane open.</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</div>
+<p>This will open the explorer pane and VSCode will look something like shown
+in <a class="reference internal" href="#fig-explorer-open"><span class="std std-numref">Fig. 7</span></a>. For developing an NWChemEx module/plugin you
+will minimally want to have the repositories for NWChemEx and your plugin in
+your workspace. Repeat adding folders for each other repository you want to
+have in your workspace.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>AFAIK adding each repo individually in this manner is the only way for the
+CMake extension to properly register the root CMakeLists.txt for each repo.</p>
+</div>
 </div>
 </div>
 

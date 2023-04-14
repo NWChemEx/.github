@@ -62,6 +62,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#basic-text-formatting">Basic Text Formatting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#math">Math</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#code-blocks">Code Blocks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#figures">Figures</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#faqs">FAQs</a></li>
 </ul>
 </li>
@@ -222,6 +223,34 @@ highlighting you can specify the language after the <code class="docutils litera
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The current directory is: &quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="figures">
+<h2>Figures<a class="headerlink" href="#figures" title="Permalink to this heading"></a></h2>
+<p>To add a figure to a page:</p>
+<div class="highlight-rest notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_label_for_figure:</span>
+
+<span class="p">..</span> <span class="ow">figure</span><span class="p">::</span> relative/path/to/image.png
+   <span class="nc">:align:</span> center
+
+   The figure&#39;s caption goes here.
+</pre></div>
+</div>
+<p>You can refer to the figure with <code class="docutils literal notranslate"><span class="pre">:numref:`label_for_figure`</span></code>.  Note the
+underscore on the declaration of the label, which is not present when referring
+to the label.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">:numref:</span></code> role will automatically include “Fig.” in addition to the
+number.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If when you try to build the documentation you get a warning like:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/path/to/file.rst:line_number: WARNING: numfig is disabled. :numref: is ignored
+</pre></div>
+</div>
+<p>then you need to add <code class="docutils literal notranslate"><span class="pre">numfig</span> <span class="pre">=</span> <span class="pre">True</span></code> to the <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> file.</p>
 </div>
 </div>
 <div class="section" id="faqs">
