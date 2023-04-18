@@ -159,8 +159,8 @@ get_lapacke() {
 # Wraps installing libfort
 #
 # Usage:
-#   get_libint
-get_libint() {
+#   get_libfort
+get_libfort() {
   if [ -z "${CACHE_LIBFORT}" ]; then
     export INSTALL_PATH=`pwd`/install
     wget https://github.com/evaleev/libfort/releases/download/v0.4.2/libfort-0.4.2.tar.gz
