@@ -53,6 +53,8 @@ jobs:
         uses: NWChemEx-Project/.github/actions/build@cache-build3
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      - name: check-bash-before
+        run: echo "Start_Locate" | find /* -type f -name "*.cmake" | echo "End_Locate"
       - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
@@ -62,6 +64,8 @@ jobs:
         uses: NWChemEx-Project/.github/actions/build@cache-build3
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      - name: check-bash-after
+        run: echo "Start_Locate" | find /* -type f -name "*.cmake" | echo "End_Locate"
       - name: Test Application
         uses: NWChemEx-Project/.github/actions/test@cache-build3
         with: 
