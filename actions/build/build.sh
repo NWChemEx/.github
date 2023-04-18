@@ -56,7 +56,7 @@ fi
 #Step 2: Configure
 
 if [ "${ninja_build}" = true ] ; then
-  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -DCMAKE_PREFIX_PATH="/home/runner/work/SCF-cache/SCF-cache/build/_deps/gauxc-build/src/CMakeFiles/gauxc.dir/:/home/runner/work/SCF-cache/SCF-cache/build/_deps/gauxc-build/;/home/runner/work/SCF-cache/SCF-cache/build/_deps/gauxc-src;/home/runner/work/SCF-cache/SCF-cache/build/_deps/sub-build/:"
+  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -DCMAKE_PREFIX_PATH="/home/runner/work/SCF-cache/SCF-cache/build/_deps/gauxc-build/src/:/home/runner/work/SCF-cache/SCF-cache/build/_deps/gauxc-src/cmake/:/home/runner/work/SCF-cache/SCF-cache/build/_deps/gauxc-build/src/CMakeFiles/gauxc.dir/:/home/runner/work/SCF-cache/SCF-cache/build/_deps/gauxc-build/;/home/runner/work/SCF-cache/SCF-cache/build/_deps/gauxc-src;/home/runner/work/SCF-cache/SCF-cache/build/_deps/sub-build/:"
 else
   ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
 fi
