@@ -45,7 +45,7 @@ jobs:
           cached-libs: ${{inputs.cached-libs}}
           dependencies: ${{inputs.dependencies}}
       - name: check-bash-before
-        run: echo "Start_Locate" | cp -r /usr/lib/x86_64-linux-gnu/cmake/ build/_deps/cmake_copy/ | ls -lR build/_deps/cmake_copy/ | echo "End_Locate"
+        run: echo "Start_Locate" | cp -r /usr/lib/x86_64-linux-gnu/cmake/ /home/runner/work/SCF-cache/SCF-cache/build/_deps/cmake_copy/ | ls -lR /home/runner/work/SCF-cache/SCF-cache/build/_deps/cmake_copy/ | echo "End_Locate"
       - name: Build using Clang
         if: ${{inputs.clang-build == true}}
         env:
@@ -65,7 +65,7 @@ jobs:
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: check-bash-after
-        run: echo "Start_Locate" | cp -r /usr/lib/x86_64-linux-gnu/cmake/ build/_deps/cmake_copy/ | ls -lR build/_deps/cmake_copy/ | echo "End_Locate"
+        run: echo "Start_Locate" | cp -r /usr/lib/x86_64-linux-gnu/cmake/ /home/runner/work/SCF-cache/SCF-cache/build/_deps/cmake_copy/ | ls -lR /home/runner/work/SCF-cache/SCF-cache/build/_deps/cmake_copy/ | echo "End_Locate"
       - name: Test Application
         uses: NWChemEx-Project/.github/actions/test@cache-build3
         with: 
