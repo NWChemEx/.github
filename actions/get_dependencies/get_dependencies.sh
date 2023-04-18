@@ -164,14 +164,20 @@ get_libfort() {
   if [ -z "${CACHE_LIBFORT}" ]; then
     export INSTALL_PATH=`pwd`/install
     wget https://codeload.github.com/seleznevae/libfort/tar.gz/refs/tags/v0.4.2
+    echo "after download situation"
+    ls -R
     tar -zxf libfort-0.4.2.tar.gz
+    echo "after unzip situation"
+    ls -R
     cd libfort-0.4.2
-    export CXX=`which g++`
-    export CC=`which gcc`
-    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
-    cd build
-    make
-    make install
+    echo "after inside libfort-0.4.2 situation"
+    ls -R
+    # export CXX=`which g++`
+    # export CC=`which gcc`
+    # ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
+    # cd build
+    # make
+    # make install
   else
     echo "already cached libfort"
   fi

@@ -50,24 +50,24 @@ jobs:
         with:
           dependencies: ${{inputs.dependencies}}
           cached-libs: ${{inputs.cached-libs}}
-      - name: Build using Clang
-        if: ${{inputs.clang-build == true}}
-        env:
-          cmake_version: ${{ matrix.cmake_version }}
-          clang_version: ${{ matrix.clang_version }}
-          ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build@test-cache
-        with: 
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-      - name: Build using GCC
-        if: ${{inputs.gcc-build == true}}
-        env:
-          cmake_version: ${{ matrix.cmake_version }}
-          gcc_version: ${{ matrix.gcc_version }}
-          ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build@test-cache
-        with: 
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      # - name: Build using Clang
+      #   if: ${{inputs.clang-build == true}}
+      #   env:
+      #     cmake_version: ${{ matrix.cmake_version }}
+      #     clang_version: ${{ matrix.clang_version }}
+      #     ninja_build: ${{ inputs.ninja_build }}
+      #   uses: NWChemEx-Project/.github/actions/build@test-cache
+      #   with: 
+      #     CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      # - name: Build using GCC
+      #   if: ${{inputs.gcc-build == true}}
+      #   env:
+      #     cmake_version: ${{ matrix.cmake_version }}
+      #     gcc_version: ${{ matrix.gcc_version }}
+      #     ninja_build: ${{ inputs.ninja_build }}
+      #   uses: NWChemEx-Project/.github/actions/build@test-cache
+      #   with: 
+      #     CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
       - name: Check After Build
         run: ls -R
         shell: bash 
