@@ -172,12 +172,12 @@ get_libfort() {
     cd libfort-0.4.2
     echo "after inside libfort-0.4.2 situation"
     ls -R
-    # export CXX=`which g++`
-    # export CC=`which gcc`
-    # ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
-    # cd build
-    # make
-    # make install
+    export CXX=`which g++`
+    export CC=`which gcc`
+    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
+    cd build
+    make
+    make install
   else
     echo "already cached libfort"
   fi
