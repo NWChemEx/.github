@@ -51,8 +51,9 @@ runs:
     uses: actions/cache@v2
     with:
       path: |
-        ./**/
-        build/**/
+        build/_deps/gauxc-build/**/
+        build/_deps/gauxc-src/**/
+        build/_deps/gauxc-subbuild/**/
       key: cached-gauxc
   - name: Generate Javadoc
     env:
