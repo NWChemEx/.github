@@ -45,7 +45,7 @@ jobs:
           cached-libs: ${{inputs.cached-libs}}
           dependencies: ${{inputs.dependencies}}
       - name: check-bash-before
-        run: echo "Start_Locate" | sudo apt-get install mlocate | locate *.cmake | echo "End_Locate"
+        run: echo "Start_Locate" | ls -lR /usr/lib/x86_64-linux-gnu/cmake/ | echo "End_Locate"
       - name: Build using Clang
         if: ${{inputs.clang-build == true}}
         env:
