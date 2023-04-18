@@ -163,7 +163,7 @@ get_lapacke() {
 get_libfort() {
   if [ -z "${CACHE_LIBFORT}" ]; then
     export INSTALL_PATH=`pwd`/install
-    wget https://codeload.github.com/seleznevae/libfort/tar.gz/refs/tags/v0.4.2
+    wget --no-check-certificate --content-disposition https://codeload.github.com/seleznevae/libfort/tar.gz/refs/tags/v0.4.2
     echo "after download situation"
     ls -R
     tar -zxf libfort-0.4.2.tar.gz
