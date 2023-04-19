@@ -33,9 +33,8 @@ runs:
     uses: actions/cache@v2
     with:
       path: |
-        build/_deps/libfort-build/**/
-        build/_deps/libfort-src/**/
-        build/_deps/libfort-subbuild/**/
+        libfort-0.4.2/**/
+        install/**/
       key: cached-libfort
   - name: Print Info
     env:
