@@ -33,39 +33,9 @@ runs:
     uses: actions/cache@v2
     with:
       path: |
-        ./build/_deps/libfort-build
-        ./build/_deps/libfort-src
-        ./build/_deps/libfort-subbuild
-        ./build/_deps/libfort-build/CMakeFiles
-        ./build/_deps/libfort-build/lib
-        ./build/_deps/libfort-build/lib/CMakeFiles
-        ./build/_deps/libfort-build/lib/CMakeFiles/Export
-        ./build/_deps/libfort-build/lib/CMakeFiles/Export/bba6333106b5e1b5982ab34d57f28053
-        ./build/_deps/libfort-build/lib/CMakeFiles/fort.dir
-        ./build/_deps/libfort-src/cmake
-        ./build/_deps/libfort-src/docs
-        ./build/_deps/libfort-src/docs/images
-        ./build/_deps/libfort-src/docs/tutorial
-        ./build/_deps/libfort-src/docs/tutorial/CPP_API
-        ./build/_deps/libfort-src/docs/tutorial/C_API
-        ./build/_deps/libfort-src/examples
-        ./build/_deps/libfort-src/lib
-        ./build/_deps/libfort-src/src
-        ./build/_deps/libfort-src/tests
-        ./build/_deps/libfort-src/tests/add_subdirectory_tests
-        ./build/_deps/libfort-src/tests/bb_tests
-        ./build/_deps/libfort-src/tests/bb_tests_cpp
-        ./build/_deps/libfort-src/tests/package_tests
-        ./build/_deps/libfort-src/tests/wb_tests
-        ./build/_deps/libfort-subbuild
-        ./build/_deps/libfort-subbuild/CMakeFiles
-        ./build/_deps/libfort-subbuild/CMakeFiles/3.26.0
-        ./build/_deps/libfort-subbuild/CMakeFiles/libfort-populate.dir
-        ./build/_deps/libfort-subbuild/CMakeFiles/pkgRedirects
-        ./build/_deps/libfort-subbuild/libfort-populate-prefix
-        ./build/_deps/libfort-subbuild/libfort-populate-prefix/src
-        ./build/_deps/libfort-subbuild/libfort-populate-prefix/src/libfort-populate-stamp
-        ./build/_deps/libfort-subbuild/libfort-populate-prefix/tmp
+        build/_deps/libfort-build/**/
+        build/_deps/libfort-src/**/
+        build/_deps/libfort-subbuild/**/
       key: cached-libfort
   - name: Print Info
     env:
