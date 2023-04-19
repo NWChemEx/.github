@@ -22,4 +22,3 @@ Developing C++ Software
    :maxdepth: 1
 
    cxx_development_workflow
-   cxx_conventions

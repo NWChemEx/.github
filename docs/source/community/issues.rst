@@ -45,7 +45,8 @@ see :ref:`nwx_github_issues`.
 Why Do We Need Issues?
 **********************
 
-As much as we wish it weren't true, NWChemEx can always be improved. When we find something that could be better, we need to fix it. Often times
+As much as we wish it weren't true, NWChemEx can always be improved. When we
+find something that could be better, we need to fix it. Often times
 we're in the middle of something else and don't want to drop everything
 to address the problem. This is where Issues can help. Using Issues we are
 able to track tasks and make the code better.
@@ -60,7 +61,8 @@ What Do We Want to Use Issues For?
 
    - It's easy to open an issue, link it to a line of code, or type a quick
      description.
-   - "TODO" statements in PRs or other Issues get forgotten (there's GitHub integrations for turning
+   - "TODO" statements in PRs or other Issues get forgotten (there's GitHub
+     integrations for turning
      them into issues. This is very convenient for avoiding context switching
      from the code to GitHub to open the issue.).
    - Emails, Slack conversations, forum posts, etc. get lost/forgotten.
@@ -89,7 +91,8 @@ What Do We Want to Use Issues For?
 Issue Alternatives
 ******************
 
-To provide background, this section explores some of the other alternatives to GitHub Issues. This is
+To provide background, this section explores some of the other alternatives to
+GitHub Issues. This is
 far from exhaustive and just represents some other options we considered.
 
 GitHub Discussions
@@ -131,8 +134,10 @@ Jira
 
 Jira is a commercial software solution for tracking product development. At
 this point the NWChemEx project is not at a point where we would use Jira for
-anything beyond what Issues already provides. With the most recent changes and improvements
-in GitHub project boards, some of the Jira project management features are also available in
+anything beyond what Issues already provides. With the most recent changes and
+improvements
+in GitHub project boards, some of the Jira project management features are also
+available in
 a GitHub workflow. Thus it's not clear what the
 benefit would be. It's possible that with a more thorough review of Jira this
 opinion would change, but for now, the fact that Issues is free and well
