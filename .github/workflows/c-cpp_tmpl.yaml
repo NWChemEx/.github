@@ -19,7 +19,7 @@ on:
         required: true
         type: boolean
     secrets:
-      CPP_GITHUB_TOKEN:
+      CMAIZE_GITHUB_TOKEN:
         required: true
 
 jobs:
@@ -52,7 +52,7 @@ jobs:
           ninja_build: ${{ inputs.ninja_build }}
         uses: NWChemEx-Project/.github/actions/build@test-cache
         with: 
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
@@ -61,11 +61,11 @@ jobs:
           ninja_build: ${{ inputs.ninja_build }}
         uses: NWChemEx-Project/.github/actions/build@test-cache
         with: 
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       # - name: Test Application
       #   uses: NWChemEx-Project/.github/actions/test@test-cache
       #   with: 
-      #     CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+      #     CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       # - uses: codecov/codecov-action@v1
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}
