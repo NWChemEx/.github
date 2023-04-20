@@ -3,6 +3,9 @@ name: C_C++_CI
 on:
   workflow_call:
     inputs:
+      cached-libs:
+        required: false
+        type: string
       dependencies:
         required: true
         type: string
@@ -40,6 +43,7 @@ jobs:
         uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
           dependencies: ${{inputs.dependencies}}
+          cached-libs: ${{inputs.cached-libs}}
       - name: Build using Clang
         if: ${{inputs.clang-build == true}}
         env:

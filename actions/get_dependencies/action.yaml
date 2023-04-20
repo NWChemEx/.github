@@ -1,5 +1,8 @@
-name: Test Documentation
+name: Get dependencies
 inputs:
+  cached-libs:
+    required: false
+    type: string
   dependencies:
     required: true
     type: string
@@ -11,12 +14,14 @@ runs:
       shell: bash 
     - name: Prepare Cache
       id: cache-prepare
-      uses: NWChemEx-Project/.github/actions/handle_caches@master
+      uses: NWChemEx-Project/.github/actions/handle_caches@cache-libfort
       with:
         cmake_version: ${{ matrix.cmake_version }}
+        cached-libs: ${{ inputs.cached-libs }}
         dependencies: ${{inputs.dependencies}}
     - name: Get dependencies
       env:
           CACHE_LIBINT: ${{steps.cache-prepare.outputs.cache-libint}}
+          CACHE_LIBFORT: ${{steps.cache-prepare.outputs.cache-libfort}}
       run: ${{github.action_path}}/get_dependencies.sh ${{inputs.dependencies}}
       shell: bash 
