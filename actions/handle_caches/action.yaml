@@ -1,8 +1,5 @@
 name: Handle caches
 inputs:
-  cached-libs:
-    required: false
-    type: string
   dependencies:
     required: true
     type: string
@@ -27,7 +24,7 @@ runs:
         libint-2.6.0/**/
         install/**/
       key: libint-gcc${{ matrix.gcc_version }}
-  - if: ${{contains(inputs.cached-libs, 'libfort')}}
+  - if: ${{contains(inputs.dependencies, 'libfort')}}
     name: cache-libfort  
     id: cacheLibfort
     uses: actions/cache@v2
