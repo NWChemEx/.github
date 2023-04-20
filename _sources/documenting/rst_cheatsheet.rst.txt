@@ -211,3 +211,11 @@ underscores at the end like:
    See `here <https://github.com/NWChemEx-Project/DeveloperTools>`__ or
    `here <https://github.com/NWChemEx-Project/NWChemEX>`__ for a really
    cool repo.
+
+#. How do I insert line breaks into long URLs to satisfy the 80 character
+   limit?
+
+At this point I can not find a reST-based solution for this problem; however,
+a widely applicable solution to this problem is to use websites like
+`TinyURL <https://tinyurl.com/app/>`__ or `Bitly <https://bitly.com/>__` to
+shorten the URL.

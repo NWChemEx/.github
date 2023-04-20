@@ -4,23 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Python Coding Conventions &mdash; Developer Documentation 1.0.0 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
+    <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Using IDEs to Develop NWX" href="../ides/index.html" />
-    <link rel="prev" title="Python Development Workflow" href="python_development_workflow.html" /> 
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Doxygen in the NWChemEx Project" href="doxygen_conventions.html" />
+    <link rel="prev" title="C++ Coding Conventions" href="cxx_conventions.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -31,14 +31,14 @@
 
           
           
-          <a href="../../index.html" class="icon icon-home">
+          <a href="../index.html" class="icon icon-home">
             Developer Documentation
           </a>
               <div class="version">
                 1.0.0
               </div>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -47,27 +47,28 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../community/index.html">NWChemEx Community</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../design/index.html">Design Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../documenting/index.html">Documenting NWChemEx</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developing NWChemEx</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../preliminaries.html">Preliminaries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../cxx/index.html">Developing C++ Software</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="index.html">Developing Python Software</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="python_development_workflow.html">Python Development Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">NWChemEx Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documenting/index.html">Documenting NWChemEx</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">NWChemEx Organization Conventions</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#coding-conventions">Coding Conventions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cxx_conventions.html">C++ Coding Conventions</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Python Coding Conventions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#code-formatting">Code Formatting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#docstrings">Docstrings</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="doxygen_conventions.html">Using Doxygen in the NWChemEx Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst_conventions.html">Conventions for Writing reST Documentation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../ides/index.html">Using IDEs to Develop NWX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#repository-conventions">Repository Conventions</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../testing/index.html">Testing NWChemEx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../continuous_deployment/index.html">Continuous Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../resources/index.html">Additional Developer Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../continuous_deployment/index.html">Continuous Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
 </ul>
 
         </div>
@@ -76,19 +77,18 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Developer Documentation</a>
+          <a href="../index.html">Developer Documentation</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="../index.html">Developing NWChemEx</a></li>
-          <li class="breadcrumb-item"><a href="index.html">Developing Python Software</a></li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">NWChemEx Organization Conventions</a></li>
       <li class="breadcrumb-item active">Python Coding Conventions</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/coding/python/python_conventions.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/conventions/python_conventions.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -117,7 +117,7 @@ and functions, similar to the expectation that C++ code be documented
 sufficiently through Doxygen documentation blocks.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For IDE tools to help with these conventions, see <a class="reference internal" href="../ides/index.html#nwx-ide-development"><span class="std std-ref">Using IDEs to Develop NWX</span></a>.</p>
+<p>For IDE tools to help with these conventions, see <a class="reference internal" href="../coding/ides/index.html#nwx-ide-development"><span class="std std-ref">Using IDEs to Develop NWX</span></a>.</p>
 </div>
 </div>
 </div>
@@ -126,8 +126,8 @@ sufficiently through Doxygen documentation blocks.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="python_development_workflow.html" class="btn btn-neutral float-left" title="Python Development Workflow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../ides/index.html" class="btn btn-neutral float-right" title="Using IDEs to Develop NWX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cxx_conventions.html" class="btn btn-neutral float-left" title="C++ Coding Conventions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doxygen_conventions.html" class="btn btn-neutral float-right" title="Using Doxygen in the NWChemEx Project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
