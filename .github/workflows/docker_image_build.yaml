@@ -1,0 +1,22 @@
+name: Building the Docker image containing the basic tools for building ParallelZone
+on:
+  push:
+    path:
+      Docker/ParallelZone.Dockerfile
+
+jobs:
+  docker-image-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+    - uses: actions/checkout@v2
+    - name: Build the docker image and push
+      run: |
+        docker build -t ghcr.io/nwchemex-project/build_parallelzone:v1 -f Docker/ParallelZone.Dockerfile .
+        docker push ghcr.io/nwchemex-project/build_parallelzone:v1
