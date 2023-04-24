@@ -2,7 +2,7 @@ name: Building the Docker image containing the basic tools for building Parallel
 on:
   push:
     path:
-      Docker/**
+      Docker/ParallelZone.Dockerfile
 
 jobs:
   docker-image-build:
