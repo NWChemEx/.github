@@ -16,7 +16,7 @@ on:
         required: true
         type: boolean
     secrets:
-      CPP_GITHUB_TOKEN:
+      CMAIZE_GITHUB_TOKEN:
         required: true
 
 jobs:
@@ -40,24 +40,28 @@ jobs:
         uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
           dependencies: ${{inputs.dependencies}}
-      - name: Build and test using Clang
+      - name: Build using Clang
         if: ${{inputs.clang-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
-          ninja-build: ${{ inputs.ninja-build }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@master
+          ninja_build: ${{ inputs.ninja_build }}
+        uses: NWChemEx-Project/.github/actions/build@master
         with: 
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
-      - name: Build and test using GCC
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build_and_test@master
+        uses: NWChemEx-Project/.github/actions/build@master
         with: 
-          CPP_GITHUB_TOKEN: ${{ secrets.CPP_GITHUB_TOKEN }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      - name: Test Application
+        uses: NWChemEx-Project/.github/actions/test@master
+        with: 
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       # - uses: codecov/codecov-action@v1
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}

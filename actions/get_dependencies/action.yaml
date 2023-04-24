@@ -9,6 +9,14 @@ runs:
     - name: Give Permission
       run: chmod +x ${{github.action_path}}/get_dependencies.sh 
       shell: bash 
+    - name: Prepare Cache
+      id: cache-prepare
+      uses: NWChemEx-Project/.github/actions/handle_caches@master
+      with:
+        cmake_version: ${{ matrix.cmake_version }}
+        dependencies: ${{inputs.dependencies}}
     - name: Get dependencies
+      env:
+          CACHE_LIBINT: ${{steps.cache-prepare.outputs.cache-libint}}
       run: ${{github.action_path}}/get_dependencies.sh ${{inputs.dependencies}}
       shell: bash 

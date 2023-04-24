@@ -22,4 +22,3 @@ Developing Python Software
    :maxdepth: 1
 
    python_development_workflow
-   python_conventions

@@ -66,7 +66,7 @@ this is a file named ``toolchain.cmake``. Its contents are a series of CMake
 
    set(CMAKE_CXX_COMPILER /path/to/your/C++/compiler)
    set(BUILD_TESTING TRUE) # Always a good idea to enable tests when developing
-   set(CPP_GITHUB_TOKEN my_super_secret_token) # Needed to get private repos
+   set(CMAIZE_GITHUB_TOKEN my_super_secret_token) # Needed to get private repos
    set(CMAKE_BUILD_POSITION_INDEPENDENT_CODE TRUE) # Adds -fPIC to static libs
 
 For development purposes we also want to tell the build system to use our local

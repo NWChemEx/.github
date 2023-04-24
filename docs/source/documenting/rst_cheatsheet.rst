@@ -88,19 +88,19 @@ a math directive:
 .. code-block:: rest
 
    .. math::
-      
+
       \newcommand{\bra}[1]{\left\langle{#1}\right|}
       \newcommand{\ket}[1]{\left|{#1}\right\rangle}
-   
+
       \bra{\psi} = \left(\ket{\psi}\right)^\dagger
 
 which renders as:
 
 .. math::
-    
+
    \newcommand{\bra}[1]{\left\langle{#1}\right|}
    \newcommand{\ket}[1]{\left|{#1}\right\rangle}
-   
+
    \bra{\psi} = \left(\ket{\psi}\right)^\dagger
 
 Commands defind in a math directive are good for the page, so:
@@ -127,7 +127,7 @@ To make aliases for inline math the best solution I have found is to do:
 
    The :math:`\mu\nu`-th element of the fock matrix is |fock_matrix|.
 
-Which renders as:   
+Which renders as:
 
 .. |fock_matrix| replace:: :math:`f_{\mu\nu}`
 
@@ -152,7 +152,41 @@ which renders as:
 
    import os
    print("The current directory is: " + os.getcwd())
-   
+
+
+Figures
+=======
+
+To add a figure to a page:
+
+.. code-block:: rest
+
+   .. _label_for_figure:
+
+   .. figure:: relative/path/to/image.png
+      :align: center
+
+      The figure's caption goes here.
+
+You can refer to the figure with ``:numref:`label_for_figure```.  Note the
+underscore on the declaration of the label, which is not present when referring
+to the label.
+
+.. note::
+
+   The ``:numref:`` role will automatically include "Fig." in addition to the
+   number.
+
+.. note::
+
+   If when you try to build the documentation you get a warning like:
+
+   .. code-block:: text
+
+      /path/to/file.rst:line_number: WARNING: numfig is disabled. :numref: is ignored
+
+   then you need to add ``numfig = True`` to the ``conf.py`` file.
+
 FAQs
 ====
 
@@ -162,20 +196,26 @@ For example the following reST will give rise to
 the warning ``WARNING: Duplicate explicit target name: "here"``:
 
 .. code-block:: rest
-   
+
    See `here <https://github.com/NWChemEx-Project/DeveloperTools>`_ or
    `here <https://github.com/NWChemEx-Project/NWChemEX>`_ for a really
    cool repo.
 
-This problem is caused by the fact that Sphinx automatically creates a 
+This problem is caused by the fact that Sphinx automatically creates a
 target for your link based on the link text. To avoid this problem you
 can make the link have an anonymous target. This is done by using two
 underscores at the end like:
 
 .. code-block:: rest
-   
+
    See `here <https://github.com/NWChemEx-Project/DeveloperTools>`__ or
    `here <https://github.com/NWChemEx-Project/NWChemEX>`__ for a really
-   cool repo.   
+   cool repo.
 
-   
+#. How do I insert line breaks into long URLs to satisfy the 80 character
+   limit?
+
+At this point I can not find a reST-based solution for this problem; however,
+a widely applicable solution to this problem is to use websites like
+`TinyURL <https://tinyurl.com/app/>`__ or `Bitly <https://bitly.com/>__` to
+shorten the URL.
