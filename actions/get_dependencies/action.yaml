@@ -16,6 +16,7 @@ runs:
         cmake_version: ${{ matrix.cmake_version }}
         dependencies: ${{inputs.dependencies}}
         libfort_version: ${{ matrix.libfort_version }}
+        arch: ${{ matrix.arch }}
     - name: Get dependencies
       env:
           CACHE_LIBINT: ${{steps.cache-prepare.outputs.cache-libint}}
