@@ -168,7 +168,7 @@ get_libfort() {
     cd libfort-0.4.2
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-3.16.3-Linux-x86_64/bin/cmake -GNinja -H. -Bbuild
+    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild
     cd build
     make
     make install
