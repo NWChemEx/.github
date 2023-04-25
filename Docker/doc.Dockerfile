@@ -1,6 +1,6 @@
-FROM ubuntu:20.04
+FROM ubuntu:latest
 LABEL maintainer="NWChemEx-Project" \
-      description="Basic environment for building the documentation based on the ubuntu 20.04 image."
+      description="Basic environment for building the documentation based on the ubuntu-latest image."
 
 RUN    apt-get update \
         && DEBIAN_FRONTEND=noninteractive apt-get install -y \
