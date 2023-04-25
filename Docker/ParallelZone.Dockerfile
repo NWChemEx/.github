@@ -13,7 +13,7 @@
 # limitations under the License.
 
 FROM ubuntu:20.04
-LABEL maintainer="Yu Zhang <yzhang23@ameslab.gov>" \
+LABEL maintainer="NWChemEx-Project" \
       description="Basic building environment for ParallelZone based on the ubuntu 20.04 image."
 
 RUN    apt-get update \

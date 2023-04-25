@@ -1,0 +1,16 @@
+name: Build with Docker Image
+inputs:
+  CMAIZE_GITHUB_TOKEN:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Give Permission
+      run: chmod +x ${GITHUB_ACTION_PATH}/build.sh 
+      shell: bash 
+    - name: Build Application
+      env:
+        CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
+      run: ${GITHUB_ACTION_PATH}/build.sh
+      shell: bash
