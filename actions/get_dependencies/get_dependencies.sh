@@ -168,9 +168,9 @@ get_libfort() {
     cd libfort-0.4.2
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild
+    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
     cd build
-    make libfort
+    make
     make install
   else
     echo "already cached libfort"
