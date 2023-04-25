@@ -34,6 +34,7 @@ RUN    apt-get update \
 		libopenmpi-dev \
 	&& apt-get clean \
 	&& pip install gcovr \
+	&& pip install cppyy \
 	&& rm -rf /var/lib/apt/lists/*
 
 ARG CMAKE_VERSION=3.17.0
