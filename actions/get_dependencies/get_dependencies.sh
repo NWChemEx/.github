@@ -163,15 +163,15 @@ get_lapacke() {
 get_libfort() {
   if [ -z "${CACHE_LIBFORT}" ]; then
     export INSTALL_PATH=`pwd`/install
-    wget --no-check-certificate --content-disposition https://codeload.github.com/seleznevae/libfort/tar.gz/refs/tags/v0.4.2
-    tar -zxf libfort-0.4.2.tar.gz
-    cd libfort-0.4.2
+    wget --no-check-certificate --content-disposition https://codeload.github.com/seleznevae/libfort/tar.gz/refs/tags/v${libfort_version}
+    tar -zxf libfort-${libfort_version}.tar.gz
+    cd libfort-${libfort_version}
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-3.16.3-Linux-x86_64/bin/cmake -G Ninja -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
+    ../cmake-${cmake_version}-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCMAIZE_GITHUB_TOKEN=$CMAIZE_GITHUB_TOKEN
     cd build
-    ninja
-    ninja install
+    make
+    make install
   else
     echo "already cached libfort"
   fi

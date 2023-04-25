@@ -27,6 +27,7 @@ jobs:
         cmake_version: [3.16.3]
         gcc_version: [9]
         clang_version: [11]
+        libfort_version: [0.4.2]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
@@ -37,6 +38,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           clang_version: ${{ matrix.clang_version }}
+          libfort_version: ${{ matrix.libfort_version }}
         uses: NWChemEx-Project/.github/actions/get_dependencies@cache-libfort
         with:
           dependencies: ${{inputs.dependencies}}

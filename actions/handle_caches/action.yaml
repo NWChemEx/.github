@@ -30,6 +30,6 @@ runs:
     uses: actions/cache@v2
     with:
       path: |
-        libfort-0.4.2/**/
+        libfort-${{ matrix.libfort_version }}/**/
         install/**/
       key: cached-libfort
