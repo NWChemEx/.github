@@ -168,7 +168,7 @@ get_libfort() {
     cd libfort-0.4.2
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild
+    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCMAIZE_GITHUB_TOKEN=$CMAIZE_GITHUB_TOKEN
     cd build
     make
     make install
