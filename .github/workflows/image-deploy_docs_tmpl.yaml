@@ -1,0 +1,36 @@
+name: Build and Deploy Documentation with Docker Image
+on:
+  workflow_call:
+    inputs:
+      target:
+        type: string
+      skip_doxygen:
+        type: boolean
+    secrets:
+      CONTAINER_REPO_TOKEN:
+        description: 'Token passed from the caller workflow to pull the docker image'
+        required: true
+jobs:
+  Build-Documentation:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/nwchemex-project/build_doc:v1
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+    env:
+      cmake_version: 3.17.0
+      arch: Linux-x86_64
+    steps:
+      - name: Obtain Source
+        uses: actions/checkout@v2
+      - name: Build documentation
+        uses: NWChemEx-Project/.github/actions/image-build_docs@master
+        with:
+          target: ${{inputs.target}}
+          skip_doxygen: ${{inputs.skip_doxygen}}
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./docs/build/html
