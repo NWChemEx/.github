@@ -13,9 +13,6 @@
 # Enviornment Variables:
 #   cmake_version: The version of CMake used, in the format x.y.z
 #
-# Notes:
-#   - This script assumes Sphinx is installed via PIP into a virtual environment
-#     called "venv"
 
 set -e # Exit with error if any command fails
 
