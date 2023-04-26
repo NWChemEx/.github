@@ -1,8 +1,8 @@
 #!/bin/sh
 
 
-# This script encapsulates the process of building the documentation for an NWX
-# repo.
+# This script encapsulates the process of building the Doxygen documentation
+# for an NWX repo.
 #
 # Usage:
 #   build_docs.sh <doxygen_target_name>
