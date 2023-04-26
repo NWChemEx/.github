@@ -15,7 +15,6 @@
 set -e # Exit with error if any command fails
 
 arch="Linux-x86_64"
-#cmake_command=cmake-${cmake_version}-${arch}/bin/cmake
 cmake_command=cmake
 doc_target="$1"
 
