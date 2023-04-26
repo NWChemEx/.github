@@ -10,8 +10,6 @@
 # Arguments:
 #   doxygen_target_name: The name of the CMake target which controls building
 #                        the Doxygen documentation. The name of this
-# Enviornment Variables:
-#   cmake_version: The version of CMake used, in the format x.y.z
 #
 
 set -e # Exit with error if any command fails
