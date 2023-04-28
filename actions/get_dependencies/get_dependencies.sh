@@ -168,7 +168,7 @@ get_libfort() {
     cd libfort-${libfort_version}
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-${cmake_version}-${arch}/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
+    ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
     cd build
     make
     make install
