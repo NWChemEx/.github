@@ -171,6 +171,7 @@ get_libfort() {
     ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
     cd build
     ninja
+    ninja install
   else
     echo "already cached libfort"
   fi
