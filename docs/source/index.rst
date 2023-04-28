@@ -20,6 +20,7 @@ contribute.
     community/index
     design/index
     documenting/index
+    conventions/index
     coding/index
     testing/index
     continuous_deployment/index

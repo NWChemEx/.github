@@ -16,8 +16,10 @@
 Documenting NWChemEx
 ####################
 
-The topics below relate to documenting NWChemEx. These range from agreed upon
-conventions, to tutorials.
+The topics below are tutorials and best practices to follow when documenting
+NWChemEx. While writing documentation please be familiar with the
+documenation conventions for reStructuredText :ref:`rest_conventions` and
+Doxygen :ref:`doxygen_conventions`.
 
 .. toctree::
    :maxdepth: 1
@@ -26,7 +28,5 @@ conventions, to tutorials.
    writing_api_documentation
    writing_developer_documentation
    writing_tutorials
-   doxygen_conventions
-   rst_conventions
    rst_cheatsheet
    contributing_to_documentation
