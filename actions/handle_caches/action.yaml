@@ -7,6 +7,9 @@ outputs:
   cache-libint:
     description: "Cache libint status"
     value: ${{ steps.cacheLibint.outputs.cache-hit }}
+  cache-libfort:
+    description: "Cache libfort status"
+    value: ${{ steps.cacheLibfort.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
@@ -21,3 +24,12 @@ runs:
         libint-2.6.0/**/
         install/**/
       key: libint-gcc${{ matrix.gcc_version }}
+  - if: ${{contains(inputs.dependencies, 'libfort')}}
+    name: cache-libfort  
+    id: cacheLibfort
+    uses: actions/cache@v2
+    with:
+      path: |
+        libfort-${{ matrix.libfort_version }}/**/
+        install/**/
+      key: cached-libfort

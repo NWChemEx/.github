@@ -1,4 +1,4 @@
-name: Test Documentation
+name: Get dependencies
 inputs:
   dependencies:
     required: true
@@ -15,8 +15,10 @@ runs:
       with:
         cmake_version: ${{ matrix.cmake_version }}
         dependencies: ${{inputs.dependencies}}
+        libfort_version: ${{ matrix.libfort_version }}
     - name: Get dependencies
       env:
           CACHE_LIBINT: ${{steps.cache-prepare.outputs.cache-libint}}
+          CACHE_LIBFORT: ${{steps.cache-prepare.outputs.cache-libfort}}
       run: ${{github.action_path}}/get_dependencies.sh ${{inputs.dependencies}}
       shell: bash 
