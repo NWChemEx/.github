@@ -181,15 +181,13 @@ get_libfort() {
 get_libint() {
   if [ -z "${CACHE_LIBINT}" ]; then
     export INSTALL_PATH=`pwd`/install
-    wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
-    tar -zxf libint-2.6.0.tgz
-    cd libint-2.6.0
+    wget https://github.com/evaleev/libint/releases/download/v${libint_version}/libint-${libint_version}.tgz
+    tar -zxf libint-${libint_version}.tgz
+    cd libint-${libint_version}
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCMAIZE_GITHUB_TOKEN=$CMAIZE_GITHUB_TOKEN
-    cd build
-    make
-    make install
+    ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
+    ../cmake-${cmake_version}-${arch}/bin/cmake --build build --target install
   else
     echo "already cached libint"
   fi

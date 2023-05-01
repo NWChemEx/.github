@@ -21,7 +21,7 @@ runs:
     uses: actions/cache@v2
     with:
       path: |
-        libint-2.6.0/**/
+        libint-${{ matrix.libint_version }}/**/
         install/**/
       key: libint-gcc${{ matrix.gcc_version }}
   - if: ${{contains(inputs.dependencies, 'libfort')}}

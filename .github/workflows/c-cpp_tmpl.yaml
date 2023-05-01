@@ -28,6 +28,7 @@ jobs:
         gcc_version: [9]
         clang_version: [11]
         libfort_version: [0.4.2]
+        libint_version: [2.6.0]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
@@ -39,6 +40,7 @@ jobs:
           gcc_version: ${{ matrix.gcc_version }}
           clang_version: ${{ matrix.clang_version }}
           libfort_version: ${{ matrix.libfort_version }}
+          libint_version: ${{ matrix.libint_version }}
           arch: 'Linux-x86_64'
         uses: NWChemEx-Project/.github/actions/get_dependencies@master
         with:
