@@ -4,9 +4,6 @@ on:
     inputs:
       target:
         type: string
-      dependencies:
-        required: true
-        type: string
       skip_doxygen:
         type: boolean
     secrets:
