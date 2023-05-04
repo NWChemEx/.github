@@ -41,24 +41,45 @@ Different languages.
    best aligned with the specific interface.
 
 .. _pb_features:
+
 Full featured.
    We expect that C++ developers will use the full extent of the C++ language
    and that Python developers will too. We thus expect the binding solution
    to not stifle either developer's creativity.
 
 .. _pb_native_apis:
+
 Native APIs.
-   C++ APIs should be defined purely using C++ and Python bindings should be
+   C++ APIs should be defined purely using C++, and Python bindings should be
    defined purely with Python. Any conversions needed to go from one language to
    the other should happen under the hood.
 
 .. _pb_minimally_invasive:
+
 Minimally invasive.
    Ideally Python bindings should be created in the least invasive manner
    possible. The ideal solution will live organically with the existing C++
    source files or exist in Python. Namely we want to avoid solutions which
-   require us to rely on too many external tools
+   require us to rely on too many external tools, or intermediate markup
+   languages.
 
+.. _pb_maintainable:
+
+Easily maintained.
+   As NWChemEx grows we expect the API to grow as well. Python bindings will
+   need to be created for the new APIs and ideally whatever Python binding
+   solution we go with should be accessible to developers and easily extendable.
+
+.. _pb_supported:
+
+Active support.
+   Our goal is for the Python bindings of NWChemEx to live for as long as the
+   NWChemEx project does. This requires our Python binding solution to also be
+   maintained over the course of this time period. The ideal solution should be
+   well supported, not only in terms of development, but also in terms of
+   documentation and/or StackOverflow-like help.
+
+.. _pb_existing_choices:
 
 ****************
 Existing Choices
@@ -105,6 +126,13 @@ Cons:
   suggest that in order to live up to Boost's lofty standards the performance
   of the bindings suffer.
 
+C Foreign Function Interface (CFFI)
+===================================
+
+- Docs: https://cffi.readthedocs.io/en/latest/
+
+TODO: Look at CFFI
+
 .. _cppyy:
 
 Cppyy
@@ -125,9 +153,11 @@ Pros:
 - Bindings are generated automatically. No boilerplate!!
 - Use of LLVM makes it future-proof (bindings evolve with the compilers).
 - Supports packaging bindings for distribution.
+- Used by a number of high-profile projects at CERN.
 
 Cons:
 
+- Appears to have more or less a single maintainer.
 - Bindings are in ``cppyy.gbl`` namespace, leading to a slightly awkward UI.
 - Bindings learned from inspecting headers, which, especially for template
   classes/functions, have a tendency to leak a lot of low-level APIs (take a
@@ -152,6 +182,50 @@ Cons:
   `here <https://cppyy.readthedocs.io/en/latest/cmake_interface.html>`__) and
   provides a CMake solution. The CMake solution is complicated and seemingly not
   compatible with modern CMake practices (namely target-based build systems).
+
+ctypes
+======
+
+- Docs: https://docs.python.org/3.8/library/ctypes.html
+
+TODO: Look ctypes over.
+
+
+Cython
+======
+
+- Docs: https://cython.org/
+
+TODO: Look Cython over
+
+nanobind
+========
+
+- GitHub: https://github.com/wjakob/nanobind
+
+  - 27 watchers
+  - 1.4K stars
+
+- Docs: https://nanobind.readthedocs.io/en/latest/
+
+nanobind :cite:`nanobind` is from the original author of pybind11 and was
+started because he wanted to create a more streamlined, more performant python
+binding library, while not breaking support for pybind11. The API and usage of
+nanobind is largely the same as pybind11
+
+Pros:
+
+- Better performance compared to Boost.Python and pybind11.
+- Essentially a subset of pybind11 (if nanobind becomes vaporware, can easily
+  fall back to pybind11)
+
+Cons:
+
+- Same as pybind11: verbose boilerplate and manual exposure of C++.
+- Relatively new project, could turn into vaporware.
+- At present expects you to install via pip (does not easily integrate with
+  CMake).
+
 
 .. _pybind11:
 
@@ -186,37 +260,27 @@ Cons:
 - Verbose C++ boilerplate for exposing C++.
 - Exposing C++ classes and functions must be done manually.
 
-nanobind
+PyBindGen
+=========
+
+- Docs: https://pybindgen.readthedocs.io/en/latest/
+
+Shiboken
 ========
 
-- GitHub: https://github.com/wjakob/nanobind
-
-  - 27 watchers
-  - 1.4K stars
-
-- Docs: https://nanobind.readthedocs.io/en/latest/
-
-nanobind :cite:`nanobind` is from the original author of pybind11 and was
-started because he wanted to create a more streamlined, more performant python
-binding library, while not breaking support for pybind11. The API and usage of
-nanobind is largely the same as pybind11
-
-Pros:
-
-- Better performance compared to Boost.Python and pybind11.
-- Essentially a subset of pybind11 (if nanobind becomes vaporware, can easily
-  fall back to pybind11)
-
-Cons:
-
-- Same as pybind11: verbose boilerplate and manual exposure of C++.
-- Relatively new project, could turn into vaporware.
+- Docs: https://doc.qt.io/qtforpython-6/shiboken6/index.html
 
 SIP
 ===
 
 - Docs: https://www.riverbankcomputing.com/static/Docs/sip/introduction.html
 
+TODO: Better look at SIP
+
+SWIG
+====
+
+- Website: https://swig.org/
 
 ********************************
 NWChemEx Python Binding Strategy
@@ -259,15 +323,15 @@ some of the other cons:
 - interacting with the complicated CMake-based infrastructure, and
 - limited team expertise on how Cppyy works
 
-the decision was made to switch back to pybind11 (actually nanobind which is
-the C++17-based slimmed down variant). While the bindings require writing
-boilerplate, that boilerplate is relatively straightforward to write.
+the decision was made to switch back to pybind11. While the bindings require
+writing boilerplate, that boilerplate is relatively straightforward to write.
 Furthermore, the compatibility layer is written in C++ and is part of the C++
 library, facilitating encapsulation/packaging without needing to rely heavily
-on CMake (beyond normal CMake C++ packaging).
+on CMake (beyond normal CMake C++ packaging). When/if nanobind is more stable
+we may want to switch to that.
 
 Architecture
-==============
+============
 
 As described above, the original intent was to use pybind11 for Python bindings.
 Consequently, the overall NWChemEx architecture was designed in a manner to
@@ -278,4 +342,5 @@ References and Additional Resources
 ***********************************
 
 - `This <https://realpython.com/python-bindings-overview/>`__ tutorial covers
-  some of the other options available in more detail.
+  some of the other options available in more detail and was used to partially
+  populate the list in :ref:`pb_existing_choices`.
