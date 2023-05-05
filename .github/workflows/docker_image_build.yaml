@@ -1,5 +1,5 @@
 # Docker images are re-built only when the corrsponding docker files under Docker/ are changed
-name: Building the Docker images containing the basic tools for building repos
+name: Build base Docker images
 on:
   push:
     paths: 
