@@ -1,7 +1,7 @@
 # Docker images are re-built only when the corrsponding docker files under Docker/ are changed
 # setting branches is to omit this action when tagging
 #
-name: Building the Docker images containing the basic tools for building repos
+name: Building the Docker images
 on:
   push:
     paths: 
