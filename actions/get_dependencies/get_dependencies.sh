@@ -156,6 +156,24 @@ get_lapacke() {
   ${APT_COMMAND} update
   ${APT_GET_COMMAND} install liblapacke liblapacke-dev
 }
+# Wraps installing libfort
+#
+# Usage:
+#   get_libfort
+get_libfort() {
+  if [ -z "${CACHE_LIBFORT}" ]; then
+    export INSTALL_PATH=`pwd`/install
+    wget --no-check-certificate --content-disposition https://codeload.github.com/seleznevae/libfort/tar.gz/refs/tags/v${libfort_version}
+    tar -zxf libfort-${libfort_version}.tar.gz
+    cd libfort-${libfort_version}
+    export CXX=`which g++`
+    export CC=`which gcc`
+    ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
+    ../cmake-${cmake_version}-${arch}/bin/cmake --build build --target install
+  else
+    echo "already cached libfort"
+  fi
+}
 # Wraps installing libint
 #
 # Usage:
@@ -163,15 +181,13 @@ get_lapacke() {
 get_libint() {
   if [ -z "${CACHE_LIBINT}" ]; then
     export INSTALL_PATH=`pwd`/install
-    wget https://github.com/evaleev/libint/releases/download/v2.6.0/libint-2.6.0.tgz
-    tar -zxf libint-2.6.0.tgz
-    cd libint-2.6.0
+    wget https://github.com/evaleev/libint/releases/download/v${libint_version}/libint-${libint_version}.tgz
+    tar -zxf libint-${libint_version}.tgz
+    cd libint-${libint_version}
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-3.16.3-Linux-x86_64/bin/cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_C_COMPILER=${CC} -DCMAKE_CXX_FLAGS="-std=c++17" -DBUILD_SHARED_LIBS=ON -DCPP_GITHUB_TOKEN=$CPP_GITHUB_TOKEN
-    cd build
-    make
-    make install
+    ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
+    ../cmake-${cmake_version}-${arch}/bin/cmake --build build --target install
   else
     echo "already cached libint"
   fi
@@ -282,6 +298,8 @@ for depend in "$@"; do
     get_graphviz
   elif [ "${depend}" = "lapacke" ]; then
     get_lapacke
+  elif [ "${depend}" = "libfort" ]; then
+    get_libfort
   elif [ "${depend}" = "libint" ]; then
     get_libint
   elif [ "${depend}" = "ninja" ]; then
