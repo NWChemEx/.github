@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: Repo_name_lowcase
     container:
-            image: ghcr.io/nwchemex-project/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1
+      image: ghcr.io/nwchemex-project/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
