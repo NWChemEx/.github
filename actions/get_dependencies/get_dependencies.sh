@@ -168,7 +168,7 @@ get_libfort() {
     cd libfort-${libfort_version}
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DBUILD_SHARED_LIBS=ON -DCMAIZE_GITHUB_TOKEN=$CMAIZE_GITHUB_TOKEN -DCMAKE_CXX_FLAGS="-std=c++17"
+    ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
     ../cmake-${cmake_version}-${arch}/bin/cmake --build build --target install
   else
     echo "already cached libfort"
@@ -186,7 +186,7 @@ get_libint() {
     cd libint-${libint_version}
     export CXX=`which g++`
     export CC=`which gcc`
-    ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
+    ../cmake-${cmake_version}-${arch}/bin/cmake -GNinja -H. -Bbuild -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH} -DBUILD_SHARED_LIBS=ON
     ../cmake-${cmake_version}-${arch}/bin/cmake --build build --target install
   else
     echo "already cached libint"
