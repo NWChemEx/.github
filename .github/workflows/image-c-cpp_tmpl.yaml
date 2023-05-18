@@ -77,32 +77,20 @@ jobs:
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Login to GitHub Container Registry
-<<<<<<< HEAD
         if: ${{inputs.gcc-build == true}} && ${{inputs.install == true}}
-=======
-        if: ${{inputs.gcc-build == true}}
->>>>>>> bea7115a1627e31995e2ed2cba2aa4ea0c491f7f
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.CONTAINER_REPO_TOKEN }}
       - name: Extract metadata (tags, labels) for Docker
-<<<<<<< HEAD
         if: ${{inputs.gcc-build == true}}  && ${{inputs.install == true}}
-=======
-        if: ${{inputs.gcc-build == true}}
->>>>>>> bea7115a1627e31995e2ed2cba2aa4ea0c491f7f
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
       - name: Build the image and push
-<<<<<<< HEAD
         if: ${{inputs.gcc-build == true}}  && ${{inputs.install == true}}
-=======
-        if: ${{inputs.gcc-build == true}}
->>>>>>> bea7115a1627e31995e2ed2cba2aa4ea0c491f7f
         uses: docker/build-push-action@v4
         with:
           context: .
