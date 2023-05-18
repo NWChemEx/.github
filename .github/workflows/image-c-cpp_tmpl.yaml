@@ -15,6 +15,12 @@ on:
       ninja_build:
         required: true
         type: boolean
+      test:
+        required: true
+        type: boolean
+      install:
+        required: true
+        type: boolean
     secrets:
       CMAIZE_GITHUB_TOKEN:
         required: true
@@ -22,11 +28,21 @@ on:
         required: true
 
 jobs:
+  Repo_name_lowcase:
+    runs-on: ubuntu-latest
+    outputs:
+      lowcase_repo_name: ${{ steps.output-repo-name.outputs.repo_name }}
+    steps:
+    - name: Output repo name in lowcase
+      id: output-repo-name
+      run: |
+        name=${{ inputs.repo }}
+        echo "repo_name=${name,,}" >> "$GITHUB_OUTPUT"
   Build:
     runs-on: ubuntu-latest
+    needs: Repo_name_lowcase
     container:
-      # will make the image choosing automatical later. Now it is hardwired
-      image: ghcr.io/nwchemex-project/build_parallelzone:v1
+      image: ghcr.io/nwchemex-project/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
@@ -44,6 +60,7 @@ jobs:
         uses: NWChemEx-Project/.github/actions/image-build@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          INSTALL: ${{ inputs.install }}
       - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
@@ -53,7 +70,30 @@ jobs:
         uses: NWChemEx-Project/.github/actions/image-build@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          INSTALL: ${{ inputs.install }}
       - name: Test Application
+        if: ${{inputs.test == true}}
         uses: NWChemEx-Project/.github/actions/image-test@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        if: ${{inputs.gcc-build == true}} && ${{inputs.install == true}}
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        if: ${{inputs.gcc-build == true}}  && ${{inputs.install == true}}
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
+      - name: Build the image and push
+        if: ${{inputs.gcc-build == true}}  && ${{inputs.install == true}}
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
