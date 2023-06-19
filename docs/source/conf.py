@@ -14,9 +14,9 @@ project = u'Developer Documentation'
 copyright = u'2020, NWChemEx Team'
 author = u'NWChemEx Team'
 
-# Get the version from version.txt
-with open('../../version.txt', 'r') as file:
-    version = file.read().replace('\n', '')
+# TODO: get version from git
+version = '1.0.0'
+
 # The full version, including alpha/beta/rc tags
 release = version
 
@@ -40,7 +40,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
-    'sphinx.ext.githubpages'
+    'sphinxcontrib.bibtex'
 ]
 dir_path = os.path.dirname(os.path.realpath(__file__))
 doc_path = os.path.dirname(dir_path)
@@ -130,33 +130,6 @@ latex_elements = {
     # 'figure_align': 'htbp',
 }
 
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (master_doc, project + '.tex',project + ' Documentation', author, 'manual'),
-]
-
-
-# -- Options for manual page output ------------------------------------------
-
-# One entry per manual page. List of tuples
-# (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, project.lower(), project + ' Documentation', [author], 1)
-]
-
-
-# -- Options for Texinfo output ----------------------------------------------
-
-# Grouping the document tree into Texinfo files. List of tuples
-# (source start file, target name, title, author,
-#  dir menu entry, description, category)
-texinfo_documents = [
-    (master_doc, project, project + ' Documentation',
-     author, project, 'One line description of project.', 'Miscellaneous'),
-]
-
 
 # -- Extension configuration -------------------------------------------------
 
@@ -169,3 +142,12 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+
+# -- Options for bibtex --------------------------------------------------------
+
+bibtex_bibfiles = [
+    'bibliography/software.bib'
+]
+bibtex_reference_style = 'super'
+bibtex_default_style = 'plain'

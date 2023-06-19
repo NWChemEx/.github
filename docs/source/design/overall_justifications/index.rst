@@ -14,6 +14,7 @@ the way they were, feel free to skip these sections.
    will_this_perform
    why_cxx
    why_python
+   py_bindings
    one_repo_vs_many
    why_pluginplay
    why_simde
