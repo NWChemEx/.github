@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design of the Python Binding Architecture &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Why not Just Have One Giant Repo?" href="one_repo_vs_many.html" />
+    <link rel="prev" title="Why is the NWChemEx API Written in Python?" href="why_python.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../community/index.html">NWChemEx Community</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Design Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../philosophy.html">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nwx_ecosystem.html">NWChemEx Ecosystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overall_design.html">Overall Design</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Overall Design Justification</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="why_oop.html">Why Object-Oriented Programming?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="will_this_perform.html">Sure it Looks Pretty, But is it Going to Scale?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_cxx.html">Why is C++ the Primary Language of NWChemEx?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_python.html">Why is the NWChemEx API Written in Python?</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Design of the Python Binding Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-python-bindings">What are Python bindings?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#why-do-we-need-python-bindings">Why do we need Python bindings?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python-binding-considerations">Python Binding Considerations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#existing-choices">Existing Choices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nwchemex-python-binding-strategy">NWChemEx Python Binding Strategy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references-and-additional-resources">References and Additional Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="one_repo_vs_many.html">Why not Just Have One Giant Repo?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_pluginplay.html">Why Do We Need PluginPlay?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_simde.html">Why Do We Need SimDE?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_chemcache.html">Why Do We Need ChemCache?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_mokup.html">Why Do We Need Mokup?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_this_partitioning.html">Why are the Repositories Partitioned this Way?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="why_two_tensor_libraries.html">Why Does NWChemEx Rely on Two Tensor Libraries?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../energy_workflow.html">Energy Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faqs.html">FAQs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../documenting/index.html">Documenting NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../conventions/index.html">NWChemEx Organization Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../continuous_deployment/index.html">Continuous Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../resources/index.html">Additional Developer Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bibliography/bibliography.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Design Documentation</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Overall Design Justification</a></li>
+      <li class="breadcrumb-item active">Design of the Python Binding Architecture</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/design/overall_justifications/py_bindings.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="design-of-the-python-binding-architecture">
+<h1>Design of the Python Binding Architecture<a class="headerlink" href="#design-of-the-python-binding-architecture" title="Permalink to this heading"></a></h1>
+<p>Section <a class="reference internal" href="why_python.html#why-is-the-nwchemex-api-written-in-python"><span class="std std-ref">Why is the NWChemEx API Written in Python?</span></a> discusses why we want
+a Python API for NWChemEx. This page records the decisions which went into
+designing NWChemEx’s Python bindings.</p>
+<div class="section" id="what-are-python-bindings">
+<h2>What are Python bindings?<a class="headerlink" href="#what-are-python-bindings" title="Permalink to this heading"></a></h2>
+<p>Presently, by “Python bindings” we are specifically referring to code forming
+an interoperability layer between C/C++ code and Python. This layer allows
+Python objects, functions, data, etc. to seamlessly interact with C++ objects,
+functions, data, etc. and vice versa.</p>
+</div>
+<div class="section" id="why-do-we-need-python-bindings">
+<h2>Why do we need Python bindings?<a class="headerlink" href="#why-do-we-need-python-bindings" title="Permalink to this heading"></a></h2>
+<p>Following from the design discussion in
+<a class="reference internal" href="why_python.html#why-is-the-nwchemex-api-written-in-python"><span class="std std-ref">Why is the NWChemEx API Written in Python?</span></a>, NWChemEx’s high-level API is
+assumed to be Python-based, but the guts of NWChemEx are written in C++. Hence,
+to expose the C++ guts to Python we will need to write Python bindings.</p>
+</div>
+<div class="section" id="python-binding-considerations">
+<span id="pb-considerations"></span><h2>Python Binding Considerations<a class="headerlink" href="#python-binding-considerations" title="Permalink to this heading"></a></h2>
+<p>In creating our Python bindings, and choosing the library to help us create the
+bindings, we have identified the following considerations:</p>
+<dl class="simple" id="pb-diff-lang">
+<dt>Different languages</dt><dd><p>Fundamentally Python and C++ are different coding languages. They rely on
+different assumptions, have different designs, are fundamentally
+implemented different, and embrace different coding paradigms. The point is
+there is no perfect one-to-one mapping between C++ and Python and the
+developer may need to step in to ensure the conversion happens in the manner
+best aligned with the specific interface.</p>
+<ul class="simple">
+<li><p>While Python and C++ have no one-to-one mapping, the reality is that there
+is a “pretty obvious” mapping for many of the features. Our solution should
+be easy to apply, if not automatic, for such features.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple" id="pb-features">
+<dt>Full featured</dt><dd><p>We expect that C++ developers will use the full extent of the C++ language
+and that Python developers will too. We thus reject solutions which require
+the developer to limit the features they use throughout the code.</p>
+<ul class="simple">
+<li><p>Combined with <a class="reference internal" href="#pb-diff-lang"><span class="std std-ref">Different languages</span></a> we must also acknowledge that at the
+C++/Python API we may need to limit language features in order to perform
+the handoff. Once the handoff is accomplished, solutions which satisfy
+<a class="reference internal" href="#pb-features"><span class="std std-ref">Full featured</span></a> will allow users to resume using the full feature set
+of the respective language.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple" id="pb-native-apis">
+<dt>Native APIs</dt><dd><p>C++ APIs should be defined purely using C++, and Python bindings should be
+defined purely with Python. Any conversions needed to go from one language to
+the other should happen under the hood.</p>
+<ul class="simple">
+<li><p>In practical terms, this means that Python users should not need to worry
+about pointers, templates, references, etc. and C++ users should not
+have to worry about the GIL (Python’s global interpreter lock), garbage
+collection (on the Python side), etc.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple" id="pb-minimally-invasive">
+<dt>Minimally invasive</dt><dd><p>Ideally Python bindings should be created in the least invasive manner
+possible. The ideal solution will live organically with the existing C++
+source files or exist in Python. Namely we want to avoid solutions which
+require us to rely on too many external tools, or intermediate markup
+languages.</p>
+<ul class="simple">
+<li><p>We particularly want to avoid source-to-source translators as they have a
+tendency to have underwhelming performance and limited feature sets.</p></li>
+<li><p>As a corollary, it is fine if the tool internally uses an intermediate
+representation; <a class="reference internal" href="#pb-minimally-invasive"><span class="std std-ref">Minimally invasive</span></a> is really focused on avoiding
+making the developer produce a representation of the code in a language
+other than C++ or Python.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple" id="pb-maintainable">
+<dt>Easily maintained</dt><dd><p>As NWChemEx grows we expect the API to grow as well. Python bindings will
+need to be created for the new APIs and ideally whatever Python binding
+solution we go with should be accessible to developers and easily extendable.</p>
+</dd>
+</dl>
+<dl class="simple" id="pb-supported">
+<dt>Active support</dt><dd><p>Our goal is for the Python bindings of NWChemEx to live for as long as the
+NWChemEx project does. This requires our Python binding solution to also be
+maintained over the course of this time period. The ideal solution should be
+well supported, not only in terms of development, but also in terms of
+documentation and/or StackOverflow-like help.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="existing-choices">
+<span id="pb-existing-choices"></span><h2>Existing Choices<a class="headerlink" href="#existing-choices" title="Permalink to this heading"></a></h2>
+<p>Writing bindings directly with Python’s C API is a tedious task. For that
+reason, a variety of software libraries/packages have been created with the
+intent of aiding in generating Python bindings. They are listed below (in
+alphabetical order) along with brief summaries.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Obligatory disclaimer. We are NOT experts in all of the packages listed in
+this section. The summaries have been assembled based on documentation and
+examples provided by the packages. We have done our best to accurately
+reflect the state of these packages, but it is possible that what we have
+inferred does not actually represent the state of the packages. We also
+acknowledge that the descriptions for packages we have used are heavily
+biased based on our experiences with those packages.</p>
+</div>
+<div class="section" id="boost-python">
+<h3>Boost.Python<a class="headerlink" href="#boost-python" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>GitHub: <a class="reference external" href="https://github.com/boostorg/python">https://github.com/boostorg/python</a></p>
+<ul>
+<li><p>28 watchers</p></li>
+<li><p>396 stars</p></li>
+</ul>
+</li>
+<li><p>Docs: <a class="reference external" href="http://boostorg.github.io/python/doc/html/index.html">http://boostorg.github.io/python/doc/html/index.html</a></p></li>
+</ul>
+<p>Boost.Python was one of the “OG” binding libraries to rely on template meta-
+programming to dramatically simplify the process of binding C++ code. Its
+inclusion in the Boost libraries makes it a very heavy dependency (if your code
+does not already use Boost). At this point in time, the C++ community
+overwhelming seems to prefer <a class="reference internal" href="#pybind11"><span class="std std-ref">pybind11</span></a> over Boost.Python, but Boost.Python
+continues to be maintained largely for backwards compatibility.</p>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Part of the Boost libraries (not going anywhere any time soon).</p></li>
+<li><p>Very robust library.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Part of the Boost libraries (heavy dependency).</p></li>
+<li><p>Performance. <a class="reference internal" href="#pybind11"><span class="std std-ref">pybind11</span></a> (an admittedly very biased source) seems to
+suggest that in order to live up to Boost’s lofty standards the performance
+of the bindings suffer.</p></li>
+</ul>
+</div>
+<div class="section" id="c-foreign-function-interface-cffi">
+<h3>C Foreign Function Interface (CFFI)<a class="headerlink" href="#c-foreign-function-interface-cffi" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Docs: <a class="reference external" href="https://cffi.readthedocs.io/en/latest/">https://cffi.readthedocs.io/en/latest/</a></p></li>
+</ul>
+<p>TODO: Look at CFFI</p>
+</div>
+<div class="section" id="cppyy">
+<span id="id1"></span><h3>Cppyy<a class="headerlink" href="#cppyy" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>GitHub: <a class="reference external" href="https://github.com/wlav/cppyy">https://github.com/wlav/cppyy</a></p>
+<ul>
+<li><p>9 watchers</p></li>
+<li><p>255 stars</p></li>
+</ul>
+</li>
+<li><p>Docs: <a class="reference external" href="https://cppyy.readthedocs.io/en/latest/index.html">https://cppyy.readthedocs.io/en/latest/index.html</a></p></li>
+</ul>
+<p>Cppyy <span id="id2"><sup><a class="reference internal" href="../../bibliography/bibliography.html#id2" title="Wim T. L. P. Lavrijsen and Aditi Dutta. High-performance python-C++ bindings with PyPy and Cling. In Proceedings of the 6th Workshop on Python for High-Performance and Scientific Computing, PyHPC '16, 27–35. IEEE Press, 2016.">3</a></sup></span> piggybacks off of the LLVM suite of tools to fully
+automate the creation of dynamic Python bindings. In practice, the automatic
+bindings are created using Cppyy’s own one-to-one mapping between C++ and
+Python. It is worth noting, that because of <a class="reference internal" href="#pb-diff-lang"><span class="std std-ref">Different languages</span></a>, this one-to-one
+mapping is not unique and represents the preferences of the Cppyy maintainers.</p>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Bindings are generated automatically. No boilerplate!!</p></li>
+<li><p>Use of LLVM makes it future-proof (bindings evolve with the compilers).</p></li>
+<li><p>Supports packaging bindings for distribution.</p></li>
+<li><p>Used by a number of high-profile projects at CERN.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Appears to have more or less a single maintainer.</p></li>
+<li><p>Tied to LLVM. If underlying C++ is not compiled with LLVM, you are forced
+to mix compilers.</p></li>
+<li><p>Automatically generated bindings are not Pythonic.</p>
+<ul>
+<li><p>Bindings are in <code class="docutils literal notranslate"><span class="pre">cppyy.gbl</span></code> namespace, not the package’s namespace. Must
+be extracted as part of the package’s initialization.</p></li>
+<li><p>Leaks purely C++ concepts like pointers, references, and templates into
+Python. Package maintainers must write Python wrappers around the bindings
+to avoid leaking these concepts to the user.</p></li>
+</ul>
+</li>
+<li><p>Bindings learned from inspecting headers, which, especially for template
+classes/functions, have a tendency to leak a lot of low-level APIs (take a
+look at how much code is included just by doing <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;vector&gt;</span></code>).</p></li>
+<li><p>The exact process of how Cppyy forms its one-to-one mapping between C++ and
+Python is not easily grasped without familiarity with LLVM’s internal
+representation.</p>
+<ul>
+<li><p>As a corollary, determining when Cppyy’s binding decisions need to be
+overridden is tricky for most package maintainers and in practice requires
+extensive unit, integration, and acceptance testing of the generated
+bindings in order to determine when expectations differ.</p></li>
+</ul>
+</li>
+<li><p>Choosing what gets exposed needs to be done on a per file basis, <em>i.e.</em>, if
+you don’t want the contents of a file to be exposed to Python, don’t let
+Cppyy process that file. This may require refactoring C++ source code in
+order to hide files.</p></li>
+<li><p>Packaging bindings, so they do not need to be generated on-the-fly each run
+and can be reliably distributed is complicated and somewhat poorly documented.</p>
+<ul>
+<li><p>It appears to require using rootcling (a seemingly niche tool), or genreflex
+(which appears to be a wrapper around rootcling). This process is somehow
+related to “Dictionaries” (not in the Python sense), XML selection files,
+and rootmap files. How this all comes together is not really clear.</p></li>
+</ul>
+</li>
+<li><p>Cppyy seems to acknowledge the packaging problems (see
+<a class="reference external" href="https://cppyy.readthedocs.io/en/latest/cmake_interface.html">here</a>) and
+provides a CMake solution; however, it is not compatible with modern
+CMake practices (namely target-based build systems).</p></li>
+</ul>
+</div>
+<div class="section" id="ctypes">
+<h3>ctypes<a class="headerlink" href="#ctypes" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Docs: <a class="reference external" href="https://docs.python.org/3.8/library/ctypes.html">https://docs.python.org/3.8/library/ctypes.html</a></p></li>
+</ul>
+<p>TODO: Look ctypes over.</p>
+</div>
+<div class="section" id="cython">
+<h3>Cython<a class="headerlink" href="#cython" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Docs: <a class="reference external" href="https://cython.org/">https://cython.org/</a></p></li>
+</ul>
+<p>TODO: Look Cython over</p>
+</div>
+<div class="section" id="nanobind">
+<h3>nanobind<a class="headerlink" href="#nanobind" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>GitHub: <a class="reference external" href="https://github.com/wjakob/nanobind">https://github.com/wjakob/nanobind</a></p>
+<ul>
+<li><p>27 watchers</p></li>
+<li><p>1.4K stars</p></li>
+</ul>
+</li>
+<li><p>Docs: <a class="reference external" href="https://nanobind.readthedocs.io/en/latest/">https://nanobind.readthedocs.io/en/latest/</a></p></li>
+</ul>
+<p>nanobind <span id="id3"><sup><a class="reference internal" href="../../bibliography/bibliography.html#id4" title="Wenzel Jakob. Nanobind: tiny and efficient c++/python bindings. 2022. https://github.com/wjakob/nanobind.">1</a></sup></span> is from the original author of pybind11 and was
+started because he wanted to create a more streamlined, more performant python
+binding library, while still supporting pybind11. The API and usage of
+nanobind is largely the same as pybind11</p>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Better performance compared to Boost.Python and pybind11.</p></li>
+<li><p>Essentially a subset of pybind11 (if nanobind becomes vaporware, can easily
+fall back to pybind11)</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Same as pybind11: verbose boilerplate and manual exposure of C++.</p></li>
+<li><p>Relatively new project, could turn into vaporware.</p></li>
+<li><p>At present expects you to install via pip (does not easily integrate with
+CMake).</p></li>
+</ul>
+</div>
+<div class="section" id="pybind11">
+<span id="id4"></span><h3>pybind11<a class="headerlink" href="#pybind11" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>GitHub: <a class="reference external" href="https://github.com/pybind/pybind11">https://github.com/pybind/pybind11</a></p>
+<ul>
+<li><p>244 watchers</p></li>
+<li><p>12.6K stars</p></li>
+</ul>
+</li>
+<li><p>Docs: <a class="reference external" href="https://pybind11.readthedocs.io/en/stable/">https://pybind11.readthedocs.io/en/stable/</a></p></li>
+</ul>
+<p>pybind11 <span id="id5"><sup><a class="reference internal" href="../../bibliography/bibliography.html#id3" title="Wenzel Jakob, Jason Rhinelander, and Dean Moldovan. Pybind11 – seamless operability between c++11 and python. 2017. https://github.com/pybind/pybind11.">2</a></sup></span> has largely replaced Boost.Python as the predominant
+mechanism for exposing C/C++ code to Python. The API of pybind11 is modeled
+after that of Boost.Python, but is significantly simpler on account of pybind11
+requiring minimum C++11 (Boost.Python is based on C++03). More specifically,
+using C pre-processor macros, users register the C++ classes and functions they
+want to expose to Python. pybind11 then creates the Python bindings based
+on the information provided during the registration process.</p>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Heavily used, widely supported.</p></li>
+<li><p>Used in Tensorflow and PyTorch.</p></li>
+<li><p>More lightweight than Boost.Python.</p></li>
+<li><p>Header-only.</p></li>
+<li><p>Bindings are rolled into C++ library for easy packaging.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Verbose C++ boilerplate for exposing C++.</p></li>
+<li><p>Exposing C++ classes and functions must be done manually.</p></li>
+<li><p>Template-based API may be off putting to inexperienced C++ developers.</p></li>
+</ul>
+</div>
+<div class="section" id="pybindgen">
+<h3>PyBindGen<a class="headerlink" href="#pybindgen" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Docs: <a class="reference external" href="https://pybindgen.readthedocs.io/en/latest/">https://pybindgen.readthedocs.io/en/latest/</a></p></li>
+</ul>
+<p>TODO: Analyze</p>
+</div>
+<div class="section" id="shiboken">
+<h3>Shiboken<a class="headerlink" href="#shiboken" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Docs: <a class="reference external" href="https://doc.qt.io/qtforpython-6/shiboken6/index.html">https://doc.qt.io/qtforpython-6/shiboken6/index.html</a></p></li>
+</ul>
+<p>TODO: Analyze.</p>
+</div>
+<div class="section" id="sip">
+<h3>SIP<a class="headerlink" href="#sip" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Docs: <a class="reference external" href="https://www.riverbankcomputing.com/static/Docs/sip/introduction.html">https://www.riverbankcomputing.com/static/Docs/sip/introduction.html</a></p></li>
+</ul>
+<p>TODO: Take a better look at SIP</p>
+</div>
+<div class="section" id="swig">
+<h3>SWIG<a class="headerlink" href="#swig" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Website: <a class="reference external" href="https://swig.org/">https://swig.org/</a></p></li>
+</ul>
+<p>TODO: Look into SWIG.</p>
+</div>
+</div>
+<div class="section" id="nwchemex-python-binding-strategy">
+<h2>NWChemEx Python Binding Strategy<a class="headerlink" href="#nwchemex-python-binding-strategy" title="Permalink to this heading"></a></h2>
+<p>This section describes the evolution of the NWChemEx design strategy for Python
+bindings.</p>
+<div class="section" id="original-design">
+<h3>Original Design<a class="headerlink" href="#original-design" title="Permalink to this heading"></a></h3>
+<p>pybind11 was the original choice and was preferred to Boost.Python on account
+of the fact that, at the time, the NWChemEx team was trying to avoid
+adding Boost to the stack. A number of team members, had had previous
+experience with pybind11 which facilitated the decision.</p>
+</div>
+<div class="section" id="migration-to-cppyy">
+<h3>Migration to Cppyy<a class="headerlink" href="#migration-to-cppyy" title="Permalink to this heading"></a></h3>
+<p>After work had begun on the initial bindings, the existence of Cppyy was noted
+and the decision was then made to switch to Cppyy to take advantage of its
+automatic bindings. The initial design was relatively simple, a CMake module
+was written that takes as input a target to expose. The CMake module then
+traverses the include tree discovering the C++ API of the library, and generates
+a <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file for the library. A simple Python <code class="docutils literal notranslate"><span class="pre">import</span></code> statement
+is then all that is necessary to use the library from Python.</p>
+</div>
+<div class="section" id="combined-pybind11-cppyy">
+<h3>Combined Pybind11/Cppyy<a class="headerlink" href="#combined-pybind11-cppyy" title="Permalink to this heading"></a></h3>
+<p>In practice, trying to manage Cppyy through a generated <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file
+led to a somewhat substantial amount of CMake infrastructure aimed at performing
+introspection of the C++ project. Furthermore, despite several years of
+development, this CMake infrastructure still did not satisfy all of the
+considerations raised in <a class="reference internal" href="#pb-considerations"><span class="std std-ref">Python Binding Considerations</span></a>. Notably, the CMake
+infrastructure did not satisfy  <a class="reference internal" href="#pb-native-apis"><span class="std std-ref">Native APIs</span></a>. In practice, Cppyy
+suggests two mechanisms for  addressing <a class="reference internal" href="#pb-native-apis"><span class="std std-ref">Native APIs</span></a>: pythonizations
+and writing a wrapper layer. Neither of these solutions are CMake-based
+(pythonizations are C++-based and the wrapper layer is Python-based).</p>
+<p>The need to write C++-based, or Python-based, binding code somewhat negates the
+main benefits of Cppyy over projects like pybind11. Combined with the NWChemEx
+team’s poor understanding of the LLVM stack, and tools like rootcling, it was
+decided that to make progress in a timely manner we would adopt a two-tiered
+solution to Python bindings. For the parts of the stack where Cppyy would need
+to be wrapped (either by pythonizations or by a Python wrapper layer) we
+instead opted to expose those parts with pybind11 (which we were already
+familiar with). For the remainder of the stack we will continue to use Cppyy.
+This is summarized below.</p>
+<div class="section" id="simde-bindings">
+<h4>SimDE Bindings<a class="headerlink" href="#simde-bindings" title="Permalink to this heading"></a></h4>
+<div class="figure align-center" id="id6">
+<span id="fig-simde-exposure"></span><img alt="../../_images/simde_exposure.png" src="../../_images/simde_exposure.png" />
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Current status of pybind11 Python bindings for SimDE.</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</div>
+<p><a class="reference internal" href="#fig-simde-exposure"><span class="std std-numref">Fig. 3</span></a> summarizes the binding status of SimDE as of this
+writing. At the lowest level of the stack, ParallelZone, Python users are able
+to see
+the available hardware resources, get/set an MPI communicator, and access the
+logger. All other ParallelZone operations, such as using the object-oriented
+MPI bindings and the task scheduler are currently restricted to the C++ side of
+things (it is assumed at present that Python users will want to use MPI4Py for
+their Python MPI needs, which handles many of the nuances of HPC Python).
+At the PluginPlay level we have exposed <code class="docutils literal notranslate"><span class="pre">ModuleBase</span></code> (and thus the
+ability to create modules from Python), the fields (the inputs/results to the
+module), the <code class="docutils literal notranslate"><span class="pre">ModuleManager</span></code>, and the API for loading plugins. At the Chemist
+level we have right now only exposed the classes related to the chemical
+system (<code class="docutils literal notranslate"><span class="pre">Atom</span></code>, <code class="docutils literal notranslate"><span class="pre">Nucleus</span></code>, <code class="docutils literal notranslate"><span class="pre">Molecule</span></code>, <code class="docutils literal notranslate"><span class="pre">Nuclei</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">ChemicalSystem</span></code>). The plan is to eventually expose all classes in Chemist to
+Python. Finally, in SimDE we expose each property type. It is worth noting that
+exposing a property type can be largely automated and PluginPlay provides a
+macro to automate this process; in order to work, the macro only needs the C++
+type of the property type (assuming the types comprising the property type’s
+API are already exposed, which they will be if they are in Chemist).</p>
+</div>
+<div class="section" id="plugin-bindings">
+<h4>Plugin Bindings<a class="headerlink" href="#plugin-bindings" title="Permalink to this heading"></a></h4>
+<div class="figure align-center" id="id7">
+<span id="fig-plugin-exposure"></span><img alt="../../_images/plugin_exposure.png" src="../../_images/plugin_exposure.png" />
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Summary of how plugins are exposed to Python/C++.</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</div>
+<p><a class="reference internal" href="#fig-plugin-exposure"><span class="std std-numref">Fig. 4</span></a> shows the proposed mechanism for exposing plugins
+based on SimDE. C++/Python plugins are interoperable with Python/C++ via the
+plugin API PluginPlay exposes. This API amounts to a single line of code that
+the plugin must call in order for the plugin’s API to be exposed to both C++
+and Python. As for the modules in the plugin, PluginPlay only interacts
+with a module through <code class="docutils literal notranslate"><span class="pre">ModuleBase</span></code> and the property type the module satisfies.
+Given that <code class="docutils literal notranslate"><span class="pre">ModuleBase</span></code> has been exposed to Python already, this means that
+as long as the property type has been exposed to Python (which in turn requires
+exposing the classes defining the API), the module is callable from Python or
+C++ regardless of what language it is written in. In summary, for many C++
+plugins Python bindings can be automatically generated with a single line of
+code.</p>
+</div>
+<div class="section" id="user-api">
+<h4>User API<a class="headerlink" href="#user-api" title="Permalink to this heading"></a></h4>
+<div class="figure align-center" id="id8">
+<span id="fig-user-api"></span><img alt="../../_images/user_api.png" src="../../_images/user_api.png" />
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Summary of user API interactions with Python bindings.</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</div>
+<p>PluginPlay, and the plugins built on it, are meant as a developer/power-user
+API. The module system gives the user full control over the computation. For
+many use cases, this level of control is very daunting, and it is in NWChemEx’s
+best interest to provide an end-user-friendly API which hides the full
+complexity of PluginPlay. The full details of the UI are beyond the scope of
+this page, here what we focus on is how that UI will interact with the rest of
+NWChemEx.</p>
+<p>The core of NWChemEx interacts with the UI according to <a class="reference internal" href="#fig-user-api"><span class="std std-ref">Summary of user API interactions with Python bindings.</span></a>.
+Here the UI is simply labeled as driver, but it need not actually be a driver
+in the classical sense. As <a class="reference internal" href="#fig-user-api"><span class="std std-ref">Summary of user API interactions with Python bindings.</span></a> shows the UI is envisioned as
+being written entirely in Python. It therefore can only interact with the rest
+of NWChemEx through the Python bindings. Relevant to the UI, the Python bindings
+of SimDE will expose: <code class="docutils literal notranslate"><span class="pre">ModuleBase</span></code>, <code class="docutils literal notranslate"><span class="pre">ModuleManager</span></code>, and property types for
+commonly requested quantities. The UI is thus responsible for going from
+traditional inputs (think cartesian coordinates, atomic basis set, and some
+basic parameters), to a call graph, to the result of executing the call graph.
+The UI could then conceivably be used to power an instance of MolSSI’s QCEngine.
+An alternative would be to use QCEngine as the UI and not write the driver at
+all.</p>
+</div>
+</div>
+</div>
+<div class="section" id="references-and-additional-resources">
+<h2>References and Additional Resources<a class="headerlink" href="#references-and-additional-resources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://realpython.com/python-bindings-overview/">This</a> tutorial covers
+some of the other options available in more detail and was used to partially
+populate the list in <a class="reference internal" href="#pb-existing-choices"><span class="std std-ref">Existing Choices</span></a>.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="why_python.html" class="btn btn-neutral float-left" title="Why is the NWChemEx API Written in Python?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="one_repo_vs_many.html" class="btn btn-neutral float-right" title="Why not Just Have One Giant Repo?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
