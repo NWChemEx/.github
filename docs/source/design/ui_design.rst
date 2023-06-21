@@ -38,10 +38,10 @@ PySCF.
 
 .. code-block:: python
 
-    >>> from pyscf import gto, scf
-    >>> mol = gto.M(atom='O 0 0 0; H 0 1 0; H 0 0 1', basis='sto-3g')
-    >>> rhf = scf.RHF(mol)
-    >>> energy = rhf.kernel()
+    from pyscf import gto, scf
+    mol = gto.M(atom='O 0 0 0; H 0 1 0; H 0 0 1', basis='sto-3g')
+    rhf = scf.RHF(mol)
+    energy = rhf.kernel()
 
 Here, mol is the object (type ``pyscf.gto.mole.Mole``) representing the molecule
 and integrals with the given basis set and rhf is the object (type
@@ -60,9 +60,9 @@ calculation for a hydrogen molecule using the PsiAPI mode.
 
 .. code-block:: python
 
-    >>> import psi4
-    >>> mol = psi4.geometry('H 0. 0. 0. \n H 0. 0. 1.')
-    >>> energy= psi4.energy('scf/sto-3g')    
+    import psi4
+    mol = psi4.geometry('H 0. 0. 0. \n H 0. 0. 1.')
+    energy= psi4.energy('scf/sto-3g')    
 
 Here, mol is the molecule object, which is created using the ``psi4.geometry()``
 function and the energy is computed using the ``psi4.energy()`` function, which
@@ -85,11 +85,11 @@ QCEngine.
 
 .. code-block:: python
 
-    >>> import qcengine as qcng
-    >>> import qcelemental as qcel
-    >>> mol = qcel.models.Molecule.from_data('H 0. 0. 0. \n H 0. 0. 1.')
-    >>> out = qcng.compute({"molecule": mol, "driver": "energy", "model": {"method": "SCF", "basis": "sto-3g"}})
-    >>> energy = out.return_result
+    import qcengine as qcng
+    import qcelemental as qcel
+    mol = qcel.models.Molecule.from_data('H 0. 0. 0. \n H 0. 0. 1.')
+    out = qcng.compute({"molecule": mol, "driver": "energy", "model": {"method": "SCF", "basis": "sto-3g"}})
+    energy = out.return_result
 
 Here, mol is the molecule object (type
 ``qcelemental.models.molecule.Molecule``), which is created using the
@@ -107,9 +107,10 @@ through the use of a Python function with named arguments, as shown below.
 
 .. code-block:: python
 
-    import nwchemex as nwx energy = nwx.calculate_scf_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', basis = 'sto-3g')
+    import nwchemex as nwx 
+    energy = nwx.calculate_scf_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', basis = 'sto-3g')
 
-While the example shows two options for the ``nwx.calculate_scf_energy``
+While the example shows two options for the ``nwx.calculate_scf_energy()``
 function, the whole function signature is given below: 
 
 .. code-block:: python
@@ -122,10 +123,10 @@ function, the whole function signature is given below:
 In this function, the only required argument is ``molecule``, which can either
 be a Python ``string`` or a ``chemist.Molecule`` object. Optional ``basis``
 argument can either be a a Python ``string`` or a ``simde.type.ao_space``, with
-the minimal basis set "sto-3g" is chosen as the default value. Additional SCF
+the minimal basis set "sto-3g" chosen as the default value. Additional SCF
 related options are also explicitly defined in the function with reasonable
 default values. ``module_manager`` option is reserved for power users, who would
-like to provide their own set of modules. While the number of options are
+like to provide an existing module_manager object. While the number of options are
 limited for SCF, for correlated methods more options may need to be defined on
 top of SCF options. One solution to avoid a long list of arguments is to provide
 additional options through ``**kwargs`` option at the end. However, this would
