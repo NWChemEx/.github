@@ -124,15 +124,19 @@ be a Python ``string`` or a ``chemist.Molecule`` object. Optional ``basis``
 argument can either be a a Python ``string`` or a ``simde.type.ao_space``, with
 the minimal basis set "sto-3g" is chosen as the default value. Additional SCF
 related options are also explicitly defined in the function with reasonable
-default values. While the number of options are limited for SCF, for correlated
-methods more options may need to be defined on top of SCF options. One solution
-to avoid a long list of arguments is to provide additional options through
-``**kwargs`` option at the end. However, this would require users to know the
-correct keywords. To help our users to figure out the available keywords, we also
-provide the ``options`` argument, which is a Python dataclass holding all the
-possible options with reasonable default values. Our users can grab this data
-structure and figure out the available options and their default values and
-modify them as they wish.
+default values. ``module_manager`` option is reserved for power users, who would
+like to provide their own set of modules. While the number of options are
+limited for SCF, for correlated methods more options may need to be defined on
+top of SCF options. One solution to avoid a long list of arguments is to provide
+additional options through ``**kwargs`` option at the end. However, this would
+require users to know the correct keywords. To help our users to figure out the
+available keywords, we also provide the ``options`` argument, which is a Python
+dataclass holding all the possible options with reasonable default values. Our
+users can grab this data structure and figure out the available options and
+their default values and modify them as they wish. With ``options`` set
+explicitly, users can also call a more general ``nwx.calculate_energy``
+function, where the method is specified as an option.
+
 
 .. code-block:: python
 
@@ -143,4 +147,4 @@ modify them as they wish.
     options.scf_max_iterations = 15 
     options.scf_thresh = 1e-10
     options.int_thresh = 1e-12
-    energy = nwx.calculate_scf_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', options = options)
+    energy = nwx.calculate_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', options = options)
