@@ -19,4 +19,5 @@ the individual components for details pertaining to their respective designs.
    overall_design
    overall_justifications/index
    energy_workflow
+   ui_design
    faqs
