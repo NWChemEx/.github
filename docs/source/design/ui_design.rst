@@ -120,32 +120,24 @@ function, the whole function signature is given below:
     thresh: float = 1e-10, module_manager: PlugingPlay.ModuleManager = None, 
     options: Union[Dict, dataclass] = None, **kwargs) -> float:
 
-In this function, the only required argument is ``molecule``, which can either
-be a Python ``string`` or a ``chemist.Molecule`` object. Optional ``basis``
-argument can either be a a Python ``string`` or a ``simde.type.ao_space``, with
-the minimal basis set "sto-3g" chosen as the default value. Additional SCF
+In this function, the only required arguments are ``molecule``, which can either
+be a Python ``string`` or a ``chemist.Molecule`` object and ``basis``, which can
+either be a a Python ``string`` or a ``simde.type.ao_space``. Additional SCF
 related options are also explicitly defined in the function with reasonable
-default values. ``module_manager`` option is reserved for power users, who would
-like to provide an existing module_manager object. While the number of options are
-limited for SCF, for correlated methods more options may need to be defined on
-top of SCF options. One solution to avoid a long list of arguments is to provide
-additional options through ``**kwargs`` option at the end. However, this would
-require users to know the correct keywords. To help our users to figure out the
-available keywords, we also provide the ``options`` argument, which is a Python
-dataclass holding all the possible options with reasonable default values. Our
-users can grab this data structure and figure out the available options and
-their default values and modify them as they wish. With ``options`` set
-explicitly, users can also call a more general ``nwx.calculate_energy``
+default values. While the number of options are limited for SCF, for correlated methods more options may need to be defined
+on top of the SCF related options. One solution to avoid a long list of arguments is to
+provide additional options through ``**kwargs`` argument at the end. However, this
+would require users to know the correct keywords. To help our users to figure
+out the available keywords, we also provide the ``options`` argument, which is
+an object that holds all the possible options with reasonable default
+values. Our users can grab this object and figure out the available
+options and their default values and modify them as they wish. With ``options``
+set explicitly, users can also call a more general ``nwx.calculate_energy``
 function, where the method is specified as an option.
 
 
 .. code-block:: python
 
     import nwchemex as nwx 
-    options = nwx.get_options() 
-    options.basis = 'sto-3g' 
-    options.method = 'scf' 
-    options.scf_max_iterations = 15 
-    options.scf_thresh = 1e-10
-    options.int_thresh = 1e-12
-    energy = nwx.calculate_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', options = options)
+    energy = nwx.calculate_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', method
+    = 'scf', basis = 'sto-3g', options = options)
