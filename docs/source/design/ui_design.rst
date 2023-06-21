@@ -79,11 +79,33 @@ defined by QCElemental.
 NWChemEx
 ========
 
-In NWChemEx, running an SCF calculation for a hydrogen molecule is made easy through the use of a simple Python with named arguments, as shown below.
+In NWChemEx, running an SCF calculation for a hydrogen molecule is made easy through the use of a Python function with named arguments, as shown below.
 
 .. code-block:: python
 
     import nwchemex as nwx
-    energy = nwx.calculate_scf_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', basis = "sto-3g")
+    energy = nwx.calculate_scf_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', basis = 'sto-3g')
 
+While the example shows two options for the ``nwx.calculate_scf_energy`` function, the whole function signature is given below:
+.. code-block:: python
 
+    def calculate_scf_energy(molecule: Union[str, chemist.Molecule], basis: Union[str, simde.type.ao_space], spin: int = 1, max_iterations: int = 50, thresh: float = 1e-10) -> float:
+
+In this function, ``molecule`` can either be a Python ``string`` or a ``chemist.Molecule`` object, similarly the basis can either be a a Python ``string`` or a ``simde.type.ao_space``.
+Additional options are also explicitly defined in the function with reasonable default arguments. An alternative to provide additional options is through ``**kwargs``; however,
+this would require users to read the documentation to provide the keywords correctly.
+While the number of options are limited for SCF, for correlated methods more options may need to be defined on top of SCF options. Should we continue adding 
+named arguments, or switch to ``**kwargs``. 
+
+Alternatively, the users can create an input data structure (a Python dictionary or a dataclass) and call the ``run()`` function:
+
+.. code-block:: python
+
+    import nwchemex as nwx
+    inp = nwx.get_input()
+    inp.molecule = 'H 0. 0. 0. \n H 0. 0. 1.'
+    inp.basis = 'sto-3g'
+    inp.method = 'scf'
+    inp.scf_max_iterations = 15
+    inp.scf_thresh = 1e-10
+    energy = nwx.run(inp)
