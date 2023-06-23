@@ -8,7 +8,6 @@ intuitive interface that enables users to carry out a variety of quantum
 chemistry calculations seamlessly. However, please note that a graphical user
 interface (GUI) is not part of the current design.
 
-
 The UI should enable users to conduct commonly used quantum chemistry
 calculations such as single-point energies and geometry optimizations in as few
 steps as possible. It should also be flexible enough to allow for more complex
@@ -16,6 +15,46 @@ workflows using the helper/driver functions and PluginPlay modules. Users can
 execute these calculations either via Python scripts or interactively using
 Jupyter notebooks. For those who desire a fine-grained control of their
 workflow, they can utilize the Python and/or C++ API.
+
+Common Quantum Chemistry Calculations
+=======================================
+
+1. **Single Point Calculations**
+   
+   In these calculations the geometry of the molecule (arrangement of atomic
+   nuclei) is fixed. The user can be interested in the energy, wavefunction,
+   gradients (first order partial derivative of the energy with respect to nuclear
+   coordinates), or other properties (dipole moment, electron density, etc.) for
+   this specific geometry. 
+
+2. **Geometry Optimization**
+   
+   This is a procedure to find the arrangement of atomic nuclei that corresponds
+   to a stationary point in the potential energy surface. This procedure
+   generally requires the calculation of the gradients and Hessian (second order partial
+   derivative of the energy with respect to nuclear coordinates) at many
+   different geometries. 
+
+3. **Vibrational Frequency Calculation**
+   
+   These calculations provide the vibrational modes of a molecule and their
+   corresponding frequencies. The procedure requires Hessian calculation at the
+   equilibrium  geometry.
+
+4. **Molecular Dynamics Simulation**
+   
+   These calculations allow for the study of the trajectory of atoms and
+   molecules over time using classical dynamics. They are used to simulate
+   phenomena such as diffusion, reactions, and conformational changes.
+   Electronic structure calculations can be used to compute the forces acting on
+   the atoms.
+
+We will initially focus on the UX design of the "single point calculations" in
+this document since these are the basis of all the other types of calculations.
+Moreover, other types of calculations (geometry optimization, vibrational
+frequency calculation, etc.) can be performed through external codes rather
+easily as long as the UX for "single point calculations" provides the
+appropriate support. 
 
 Before we delve into the specifics of the NWChemEx UX, we provide examples of
 SCF/sto-3g energy calculations for a hydrogen molecule using two widely used
@@ -110,7 +149,7 @@ through the use of a Python function with named arguments, as shown below.
     import nwchemex as nwx 
     energy = nwx.calculate_scf_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', basis = 'sto-3g')
 
-While the example shows two options for the ``nwx.calculate_scf_energy()``
+While the example shows two arguments for the ``nwx.calculate_scf_energy()``
 function, the whole function signature is given below: 
 
 .. code-block:: python
