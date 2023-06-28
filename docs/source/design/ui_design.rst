@@ -47,8 +47,8 @@ rather than directly by a user. Therefore, our UI needs to avoid assuming that
 it is the top layer in order to better integrate into external tools.
 
 The ability to take an MPI communicator is one particularly important UI design
-element implied by this combined with the performance consideration. Pythonic
-interface is also important to support many Python-based external tools.
+element implied by this combined with the performance consideration. Python-based
+interface is also useful to support many external tools easily.
 
 Minimal I/O
 ------------
@@ -285,19 +285,19 @@ Parallel calculations
 
 NWChemEx also provides a simple interface to run calculations in parallel. Here,
 we provide an example where the user wants to run a potential energy surface
-scan, which is basically running single point energy calculations at different
-geometries, which is basically an embarrassingly parallel workflow. The user can
-run this workflow in two different ways:
+scan, which is basically an embarrassingly parallel workflow composed of single
+point energy calculations at different geometries. The user can run this
+workflow in two different ways:
 
 .. code-block:: python
-    # Initialize the parallel environment and split communicator with mpi4py
+    # Initialize the parallel environment with mpi4py
     from mpi4py import MPI
-    comm = MPI.COMM_WORLD
-    sub_comm = split_comm(comm) # Split the communicator into sub-communicators
+    # Use MPI.COMM_SELF as the sub-communicator (1 rank per sub-communicator)
+    sub_comm = MPI.COMM_SELF
     # Alternative 1
-    # Initialize NWChemEx runtime with the sub-communicator
+    # Initialize NWChemEx runtime with  
     nwx_comm = nwx.initialize(sub_comm)
-    d = 1. + nwx_comm.rank * 0.1 # Define the displacement
+    d = 1. + nwx_comm.mpi_rank() * 0.1 # Define the displacement
     energy = nwx.calculate_scf_energy(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', basis = 'sto-3g')
     print(f'Energy at {d} is {energy}')
     # Alternative 2
