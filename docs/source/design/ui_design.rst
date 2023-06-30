@@ -9,12 +9,12 @@ chemistry calculations seamlessly. Please note that a graphical user interface
 (GUI) is not part of the current UI design. Other possible UI elements that are
 not part of the current design are noted here :ref:`not-in-scope`.
 
-
+******************
 Design Principles
-=================
+******************
 
 Pythonic
----------
+=========
 While NWChemEx is mainly written in C++ for performance, the UI is designed for
 and implemented in Python, which is arguably one of the most intuitive and
 widely-used programming languages in scientific computing. This removes the
@@ -26,10 +26,10 @@ interface. Adhering to the Pythonic style of programming is preferred due to its
 emphasis on code readability and simplicity, as described in the Zen of Python
 (PEP 20) <https://peps.python.org/pep-0020/>_. A more in depth discussion of the
 implementation language choices can be found in
-:ref:`_why_is_the_nwchemex_api_written_in_python`.
+:ref:`why_is_the_nwchemex_api_written_in_python`.
 
 Performant
------------
+==========
 Performance is critical for NWChemEx with kernels supporting optimized MPI
 parallelization and GPU offloading. The UI is designed to uphold this
 performance standard and to provide the user with critical control elements to
@@ -38,7 +38,7 @@ possible by avoiding unnecessary copies or data movements and enabling user to
 access and modify the MPI communicator and GPU offloading as needed.
 
 Light weight
-------------
+============
 Following from performance, the UI should shuttle data into C++ as quickly as
 possible.For user convenience some conversions may be necessary (*e.g.*, our
 `Molecule` class is never going to do string parsing), but the set of such
@@ -46,14 +46,14 @@ conversions should be minimal, or limited to those supported by some other
 library (which we agree to take on as a dependency).
  
 User-friendly
--------------
+=============
 We aim to make our UI intuitive and simple particularly for the most common use
 cases to minimize the learning curve for beginners. The UI is also designed to
 provide user-friendly error handling, offering clear and actionable feedback
 when something goes wrong, guiding users to resolve issues effectively. 
 
 Tool-friendly
--------------
+=============
 In some workflows, NWChemEx can be used as a library driven by another code,
 rather than directly by a user. Therefore, our UI needs to avoid assuming that
 it is the top layer in order to better integrate into external tools.
@@ -63,7 +63,7 @@ element implied by this combined with the performance consideration. Python-base
 interface is also useful to support many external tools easily.
 
 Minimal I/O
-------------
+===========
 Many quantum chemistry codes are designed to use input/output (I/O) files as
 their primary (sometimes only) user interface. Users are expected to provide
 input files in certain format and parse output files to extract the information
@@ -75,7 +75,7 @@ This enables better interactivity and allows for more efficient use of the code
 as a library.
 
 Interactive
-------------
+============
 The UI should support interactivity, allowing users to run the code in a Jupyter
 notebook or IPython shell. This is particularly important for beginners who are
 not familiar with the code and want to explore its capabilities and for
@@ -83,7 +83,7 @@ education. It is also important for visualization and for workflows supporting
 machine learning applications.
 
 Limited results
----------------
+===============
 In theory, there's a very large set of results a user could want. Thankfully
 most users target the same quantities. The UI should focus on those quantities.
 
@@ -92,7 +92,7 @@ gradients, vibrational frequencies, and geometries (including minimum energy,
 transition states, reaction paths, etc.).
 
 Limited inputs
---------------
+==============
 Generally speaking the inputs required for the aforementioned results tend to be
 the molecule, level of theory (method plus basis set), and method parameters.
 While the set of potential parameters is huge, again there are only a handful of
@@ -102,26 +102,30 @@ Primary targets are: algorithm variations (e.g. density fitting), number of
 iterations, and convergence criteria.
 
 Focus on common tasks
------------------------
-The UI targets the most common use cases, but should try to be flexible. At some
-point, harnessing the full power of the code requires forgoing the UI and
-dropping down to PluginPlay's API.
+=====================
+The UI targets the most common use cases (see :ref:`common-tasks`), but should
+try to be flexible. At some point, harnessing the full power of the code
+requires forgoing the UI and dropping down to PluginPlay's API. 
 
 Minimal dependencies
---------------------
+====================
 The UI is designed to be a thin-layer on top of the NWChemEx API and should
 have minimum number of dependencies. This improves maintainability and reduces
 the risk of breaking the code due to changes in the dependencies.
 
 Archiving and reproducibility
------------------------------
+=============================
 The UI should support archiving and reproducibility by providing the user with a
 way to save the input and output data for each calculation. This not only serves
 as a tool for managing and organizing data but also plays an integral role in
 facilitating reproducibility.
 
+.. _common-tasks:
+
+*************************************
 Common Quantum Chemistry Calculations
-=======================================
+************************************* 
+
 As described in the design principles, the UI should enable users to conduct
 commonly used quantum chemistry calculations such as single-point energies and
 geometry optimizations in as few steps as possible. It should also be flexible
@@ -168,6 +172,10 @@ Before we delve into the specifics of the NWChemEx UX, we provide examples of
 SCF/sto-3g energy calculations for a hydrogen molecule using PySCF, PSI4, and
 MolSSI QCEngine. Finally, we will provide an NWChemEx example and discuss about
 the choices made.
+
+**************************
+Existing Python-based UIs
+**************************
 
 PySCF
 ======
@@ -243,8 +251,9 @@ energy is computed using the ``qcng.compute()`` function, from QCEngine
 package. Note that, the input for the ``qcng.compute`` function is a Python
 dictionary with a schema defined by QCElemental.
 
-NWChemEx
-========
+********************
+Current NWChemEx UI
+********************
 
 In NWChemEx, running an SCF calculation for a hydrogen molecule is made easy
 through the use of a Python function with named arguments, as shown below.
@@ -298,6 +307,7 @@ Using this function, a user can run any method and request different return
 types either using ``options`` or by setting these arguments explicitly.
 
 .. code-block:: python
+    
     # Set arguments using options
     import nwchemex as nwx
     options = nwx.options(method = 'scf', basis = 'sto-3g', return_gradients=True)
@@ -319,6 +329,7 @@ point energy calculations at different geometries. The user can run this
 workflow in two different ways:
 
 .. code-block:: python
+    
     # Initialize the parallel environment with mpi4py
     from mpi4py import MPI
     # Use MPI.COMM_SELF as the sub-communicator (1 rank per sub-communicator)
@@ -337,8 +348,9 @@ workflow in two different ways:
 
 .. _not-in-scope:
 
+*************
 Not In Scope
-============
+*************
 
 **Graphical user interface (GUI)** 
 
