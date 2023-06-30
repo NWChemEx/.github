@@ -131,7 +131,7 @@ API.
    molecules over time using classical dynamics. Gradient calculations are
    required to compute the forces acting on the atoms.
 
-We will initially focus on the UX design of the "single point energy"
+We will initially focus on the UI design of the "single point energy"
 calculations in this document since other types of calculations (geometry
 optimization, vibrational frequency calculation, etc.) can be performed through
 external codes rather easily as long as the UX for "single point calculations"
