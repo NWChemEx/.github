@@ -269,22 +269,22 @@ function, the whole function signature is given below:
 .. code-block:: python
 
     def calculate_scf_energy(molecule: Union[str, chemist.Molecule], basis:
-    Union[str, simde.type.ao_space], spin: int = 1, max_iterations: int = 50,
+    Union[str, chemist.AOBasisSet, simde.type.ao_space], spin: int = 1, max_iterations: int = 50,
     scf_thresh: float = 1e-10, options: Union[Dict, dataclass] = None, **kwargs) -> float:
 
 In this function, the only required arguments are ``molecule``, which can either
 be a Python ``string`` or a ``chemist.Molecule`` object and ``basis``, which can
-either be a a Python ``string`` or a ``simde.type.ao_space``. Additional SCF
-related options are also explicitly defined in the function with reasonable
-default values. While the number of options are limited for SCF, for correlated
-methods more options may need to be defined on top of the SCF related options.
-One solution to avoid a long list of arguments is to provide additional options
-through ``**kwargs`` argument at the end. However, this would require users to
-know the correct keywords. To help our users to figure out the available
-keywords, we also provide the ``options`` argument, which is an object that
-holds all the possible options with reasonable default values. Our users can
-grab this object and figure out the available options and their default values
-and modify them as they wish. 
+either be a a Python ``string`` or a ``chemist.AOBasisSet`` or a
+``simde.type.ao_space``. Additional SCF related options are also explicitly
+defined in the function with reasonable default values. While the number of
+options are limited for SCF, for correlated methods more options may need to be
+defined on top of the SCF related options. One solution to avoid a long list of
+arguments is to provide additional options through ``**kwargs`` argument at the
+end. However, this would require users to know the correct keywords. To help our
+users to figure out the available keywords, we also provide the ``options``
+argument, which is an object that holds all the possible options with reasonable
+default values. Our users can grab this object and figure out the available
+options and their default values and modify them as they wish. 
 
 Similarly, ``calculate_X_energy`` functions will also be provided for all other
 quantum chemistry methods supported by NWChemEx. Users may also request other
