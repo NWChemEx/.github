@@ -133,9 +133,7 @@ API.
 
 We will initially focus on the UI design of the "single point energy"
 calculations in this document since other types of calculations (geometry
-optimization, vibrational frequency calculation, etc.) can be performed through
-external codes rather easily as long as the UX for "single point calculations"
-provides the appropriate support. 
+optimization, vibrational frequency calculation, etc.) require similar inputs.
 
 Before we delve into the specifics of the NWChemEx UX, we provide examples of
 SCF/sto-3g energy calculations for a hydrogen molecule using PySCF, PSI4, and
