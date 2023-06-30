@@ -5,7 +5,9 @@ User Interface Design
 This document outlines the design principles and guidelines for the user
 interface (UI) of NWChemEx. Our main goal is to provide a user-friendly and
 intuitive interface that enables users to carry out a variety of quantum
-chemistry calculations seamlessly. 
+chemistry calculations seamlessly. Please note that a graphical user interface
+(GUI) is not part of the current UI design. Other possible UI elements that are
+not part of the current design are noted here :ref:`not-in-scope`.
 
 
 Design Principles
@@ -34,6 +36,14 @@ performance standard and to provide the user with critical control elements to
 achieve high performance. This requires keeping the overhead of UI as minimal as
 possible by avoiding unnecessary copies or data movements and enabling user to
 access and modify the MPI communicator and GPU offloading as needed.
+
+Light weight
+------------
+Following from performance, the UI should shuttle data into C++ as quickly as
+possible.For user convenience some conversions may be necessary (*e.g.*, our
+`Molecule` class is never going to do string parsing), but the set of such
+conversions should be minimal, or limited to those supported by some other
+library (which we agree to take on as a dependency).
  
 User-friendly
 -------------
@@ -90,6 +100,25 @@ commonly used parameters.
 
 Primary targets are: algorithm variations (e.g. density fitting), number of
 iterations, and convergence criteria.
+
+Focus on common tasks
+-----------------------
+The UI targets the most common use cases, but should try to be flexible. At some
+point, harnessing the full power of the code requires forgoing the UI and
+dropping down to PluginPlay's API.
+
+Minimal dependencies
+--------------------
+The UI is designed to be a thin-layer on top of the NWChemEx API and should
+have minimum number of dependencies. This improves maintainability and reduces
+the risk of breaking the code due to changes in the dependencies.
+
+Archiving and reproducibility
+-----------------------------
+The UI should support archiving and reproducibility by providing the user with a
+way to save the input and output data for each calculation. This not only serves
+as a tool for managing and organizing data but also plays an integral role in
+facilitating reproducibility.
 
 Common Quantum Chemistry Calculations
 =======================================
@@ -305,6 +334,8 @@ workflow in two different ways:
     d = 1. + nwx_comm.rank * 0.1 # Define the displacement
     energy = nwx.calculate_scf_energy(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', basis = 'sto-3g', communicator = sub_comm)
     print(f'Energy at {d} is {energy}')
+
+.. _not-in-scope:
 
 Not In Scope
 ============
