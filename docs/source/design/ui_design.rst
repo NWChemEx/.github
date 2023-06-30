@@ -11,9 +11,23 @@ chemistry calculations seamlessly.
 Design Principles
 =================
 
+Pythonic
+---------
+While NWChemEx is mainly written in C++ for performance, the UI is designed for
+and implemented in Python, which is arguably one of the most intuitive and
+widely-used programming languages in scientific computing. This removes the
+burden from our users to learn a special syntax, a new domain specific language,
+or dealing with customized parsers for extracting data. Moreover, Python's
+extensive ecosystem and user-friendly syntax allow for quicker prototyping and
+easier integration with external tools, making it an ideal choice for this
+interface. Adhering to the Pythonic style of programming is preferred due to its
+emphasis on code readability and simplicity, as described in the Zen of Python
+(PEP 20) <https://peps.python.org/pep-0020/>_. A more in depth discussion of the
+implementation language choices can be found in
+:ref:`_why_is_the_nwchemex_api_written_in_python`.
+
 Performant
 -----------
-
 Performance is critical for NWChemEx with kernels supporting optimized MPI
 parallelization and GPU offloading. The UI is designed to uphold this
 performance standard and to provide the user with critical control elements to
@@ -21,18 +35,6 @@ achieve high performance. This requires keeping the overhead of UI as minimal as
 possible by avoiding unnecessary copies or data movements and enabling user to
 access and modify the MPI communicator and GPU offloading as needed.
  
-Pythonic
----------
-
-While NWChemEx is mainly written in C++, the UI is designed for and implemented
-in Python, which is arguably one of the most intuitive and widely-used
-programming languages in scientific computing. Its extensive ecosystem and
-user-friendly syntax allow for quicker prototyping and easier integration with
-external tools, making it an ideal choice for this interface. Adhering to the
-Pythonic style of programming is preferred due to its emphasis on code
-readability and simplicity, as described in the Zen of Python (PEP 20)
-<https://peps.python.org/pep-0020/>_.
-
 User-friendly
 -------------
 We aim to make our UI intuitive and simple particularly for the most common use
