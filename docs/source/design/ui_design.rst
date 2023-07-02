@@ -255,69 +255,85 @@ dictionary with a schema defined by QCElemental.
 Current NWChemEx UI
 ********************
 
-In NWChemEx, running an SCF calculation for a hydrogen molecule is made easy
-through the use of a Python function with named arguments, as shown below.
+The main function in the current NWChemEx UI is the `calculate()` function with
+the signature given below.
+
+.. code-block:: python
+
+    def calculate(molecule: Union[str, Dict[str, Any], chemist.Molecule],
+    method: str, basis: Union[str, chemist.AOBasisSet, simde.type.ao_space],
+    return_energy: Bool = True, return_gradients: Bool = False, options:
+    Union[Dict, nwx.Options] = None, **kwargs) -> Union[float,
+    simde::type::tensor, Tuple[float, simde::type::tensor]]:
+
+In this function, there are three required arguments. First one is the molecule,
+which can be given as a Python string or a dictionary that contains the
+information required to create a ``chemist.Molecule`` object or the user can
+pass a ``chemist.Molecule`` object directly. The second required argument is the
+``method``, which is a Python string that corresponds to one of the quantum
+chemistry methods implemented in NWChemEx. The third required argument is the
+``basis``, which can be given as a Python string or a ``chemist.AOBasisSet``
+object or a ``simde.type.ao_space`` object. The return type of the function is
+set by the user by the ``return_energy`` and ``return_gradients`` arguments.
+Based on these choices, the return type can be a Python float, a
+``simde.type.tensor`` object or a tuple of a Python float and a
+``simde.type.tensor`` object. Additional options can be specified either as
+keyword arguments or by using the ``options`` argument, which is an object that
+holds all the possible options with reasonable default values. Users can
+grab this object and figure out the available options and their default values
+and modify them as they wish.
+
+With the ``calculate()`` function, a user can run the H2 scf/sto-3g example by
+specifying only the required arguments as shown below.
 
 .. code-block:: python
 
     import nwchemex as nwx 
-    energy = nwx.calculate_scf_energy(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', basis = 'sto-3g')
+    energy = nwx.calculate(molecule = 'H 0. 0. 0. \n H 0., 0. 1.', method='scf', basis = 'sto-3g')
 
-While the example shows only the two required arguments for the ``nwx.calculate_scf_energy()``
-function, the whole function signature is given below: 
-
-.. code-block:: python
-
-    def calculate_scf_energy(molecule: Union[str, chemist.Molecule], basis:
-    Union[str, chemist.AOBasisSet, simde.type.ao_space], spin: int = 1, max_iterations: int = 50,
-    scf_thresh: float = 1e-10, options: Union[Dict, dataclass] = None, **kwargs) -> float:
-
-In this function, the only required arguments are ``molecule``, which can either
-be a Python ``string`` or a ``chemist.Molecule`` object and ``basis``, which can
-either be a a Python ``string`` or a ``chemist.AOBasisSet`` or a
-``simde.type.ao_space``. Additional SCF related options are also explicitly
-defined in the function with reasonable default values. While the number of
-options are limited for SCF, for correlated methods more options may need to be
-defined on top of the SCF related options. One solution to avoid a long list of
-arguments is to provide additional options through ``**kwargs`` argument at the
-end. However, this would require users to know the correct keywords. To help our
-users to figure out the available keywords, we also provide the ``options``
-argument, which is an object that holds all the possible options with reasonable
-default values. Our users can grab this object and figure out the available
-options and their default values and modify them as they wish. 
-
-Similarly, ``calculate_X_energy`` functions will also be provided for all other
-quantum chemistry methods supported by NWChemEx. Users may also request other
-properties such as the gradients and the wave function using any of the methods. 
-These can be obtained by ``calculate_X_gradients`` and
-``calculate_X_wavefunction``. It should be noted that, caching mechanism of
-NWChemEx avoids any recomputation if the requested quantity is already calculated.
-
-Our UI also provides a more general ``nwx.calculate`` function, where the method
-and the return types can be specified in the ``options`` explicitly or provided
-as key-value arguments in the function call.
+While this function can be enough for most common tasks, the flexibility of this
+function is limited particularly for the additional outputs that a user might be
+interested in, such as the wavefunction, density matrix, or intermediate outputs
+such as the data related to the convergence or timings of the SCF iterations. To
+address this issue, we provide a more flexible ``run()`` function with the
+following signature.
 
 .. code-block:: python
 
-    def calculate(molecule: Union[str, chemist.Molecule], method: str, basis:
-    Union[str, simde.type.ao_space], return_energy: Bool = True, options:
-    Union[Dict, dataclass] = None, **kwargs):
+    def run(simulation: nwx.Simulation, **kwargs) -> nwx.Simulation:
 
-Using this function, a user can run any method and request different return
-types either using ``options`` or by setting these arguments explicitly.
+In this function, the complexity of all the input arguments and return types is
+buried under the ``nwx.Simulation`` object. The user can create a
+``nwx.Simulation`` object and set the required attributes and then pass this
+object to the ``run()`` function or use this function similar to the
+``calculate()`` function by using keyword arguments. The return type of the
+``run()`` function is also a ``nwx.Simulation`` object, which contains all the
+input provided by the user and all the outputs generated by the calculation.
 
 .. code-block:: python
-    
-    # Set arguments using options
+
     import nwchemex as nwx
-    options = nwx.options(method = 'scf', basis = 'sto-3g', return_gradients=True)
-    energy, gradients = nwx.calculate(molecule = 'H 0. 0. 0. \n H 0. 0. 1.', options = options)
-    
-    # Set arguments explicitly
-    import nwchemex as nwx 
-    energy, gradients = nwx.calculate(molecule = 'H 0. 0. 0. \n H 0. 0. 1.',
-    method = 'scf', basis = 'sto-3g', return_gradients=True)
+    sim = nwx.Simulation()
+    sim.molecule = 'H 0. 0. 0. \n H 0. 0. 1.'
+    sim.method = 'scf'
+    sim.basis = 'sto-3g'
+    sim.return_gradients = True
+    sim.return_wavefunction = True
+    sim = nwx.run(sim)
+    energy = sim.energy
+    gradients = sim.gradients
+    wavefunction = sim.wavefunction
 
+Alternatively with keyword arguments:
+.. code-block:: python
+
+    import nwchemex as nwx 
+    sim = nwx.run(nwx.Simulation(), molecule = 'H 0. 0. 0. \n H 0. 0. 1.',
+    method='scf', basis = 'sto-3g', return_gradients = True, return_wavefunction
+    = True)
+
+For the scenarios where the user needs even more flexibility, we recommend using
+PluginPlay API directly.
 
 Parallel calculations
 =====================
