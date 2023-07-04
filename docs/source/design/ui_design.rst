@@ -35,7 +35,7 @@ parallelization and GPU offloading. The UI is designed to uphold this
 performance standard and to provide the user with critical control elements to
 achieve high performance. This requires keeping the overhead of UI as minimal as
 possible by avoiding unnecessary copies or data movements and enabling user to
-access and modify the MPI communicator and GPU offloading as needed.
+access and modify the MPI communicator and toggle between CPU-based/GPU-offloaded algorithms.
 
 Light weight
 ============
