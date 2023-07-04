@@ -268,15 +268,19 @@ with a very simple interface. The signature of this function is given below.
 In this function, there are three required arguments. First one is the molecule,
 which can be given as a Python string or a dictionary-like object (composed of
 key-value pairs) that contains the information required to create a
-``chemist.Molecule`` object. The user can also pass a ``chemist.Molecule`` object
-directly. The second required argument is the ``method``, which is a Python
-string that corresponds to one of the quantum chemistry methods implemented in
-NWChemEx. The third required argument is the ``basis``, which can be given as a
-Python string or a ``chemist.AOBasisSet`` object or a ``simde.type.ao_space``
-object. The ``calculate()`` function also taken an optional argument named
-``options``. This argument enables users to specify any other options to
-customize how the calculation is done and the values that needs to be returned
-to the user. 
+``chemist.Molecule`` object. The user can also pass a ``chemist.Molecule``
+object directly. The second required argument is the ``method``, which is a
+Python string that corresponds to one of the quantum chemistry methods
+implemented in NWChemEx. The third required argument is the ``basis``, which can
+be given as a Python string or a ``chemist.AOBasisSet`` object or a
+``simde.type.ao_space`` object. The ``calculate()`` function also takes an
+optional argument named ``options``. At this point, it is an opaque type, (to be designed
+later in coordination with PluginPlay `#308
+<https://github.com/NWChemEx-Project/PluginPlay/issues/308>`_) which is capable
+of holding key/value pairs for inputs similar to a Python dictionary. The
+``options`` argument enables users to customize the calculation and specify the
+values to be calculated. The return type of the ``calculate()`` function is also an
+opaque type that can hold key/value pairs.
 
 With the ``calculate()`` function, a user can run the H2 scf/sto-3g example by
 specifying only the required arguments as shown below.
