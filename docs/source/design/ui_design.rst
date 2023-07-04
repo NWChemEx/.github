@@ -109,7 +109,7 @@ requires forgoing the UI and dropping down to PluginPlay's API.
 
 Minimal dependencies
 ====================
-The UI is designed to be a thin-layer on top of the NWChemEx API and should
+The UI is designed to be a thin-layer on top of the PluginPlay API and should
 have minimum number of dependencies. This improves maintainability and reduces
 the risk of breaking the code due to changes in the dependencies.
 
