@@ -312,19 +312,25 @@ workflow in two different ways:
     
     # Initialize the parallel environment with mpi4py
     from mpi4py import MPI
-    # Use MPI.COMM_SELF as the sub-communicator (1 rank per sub-communicator)
-    sub_comm = MPI.COMM_SELF
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+
+    # Use one rank per sub-communicator
+    sub_comm = comm.Split(rank)
+    # Define the distance between atoms based on the global rank
+    d = 1. + rank * 0.1 
+
     # Alternative 1
-    # Initialize NWChemEx runtime with  
+    # Initialize NWChemEx runtime with the sub-communicator  
     nwx_comm = nwx.initialize(sub_comm)
-    d = 1. + nwx_comm.mpi_rank() * 0.1 # Define the displacement
-    energy = nwx.calculate_scf_energy(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', basis = 'sto-3g')
-    print(f'Energy at {d} is {energy}')
+    result = nwx.calculate(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', method = 'scf', basis = 'sto-3g')
+    print(f'Energy calculated by rank: {rank} for distance: {d} is {result.scf_energy}')
+    
     # Alternative 2
-    # Pass the sub-communicator directly (initialize NWChemEx runtime inside the function call)
-    d = 1. + nwx_comm.rank * 0.1 # Define the displacement
-    energy = nwx.calculate_scf_energy(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', basis = 'sto-3g', communicator = sub_comm)
-    print(f'Energy at {d} is {energy}')
+    # Initialize NWChemEx runtime inside the function call
+    # Sub-communicator can be passed directly or through the options argument
+    result = nwx.calculate(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', method = 'scf', basis = 'sto-3g', communicator = sub_comm)
+    print(f'Energy calculated by rank: {rank} for distance: {d} is {result.scf_energy}')
 
 .. _not-in-scope:
 
