@@ -169,9 +169,9 @@ calculations in this document since other types of calculations (geometry
 optimization, vibrational frequency calculation, etc.) require similar inputs.
 
 Before we delve into the specifics of the NWChemEx UX, we provide examples of
-SCF/sto-3g energy calculations for a hydrogen molecule using PySCF, PSI4, and
-MolSSI QCEngine. Finally, we will provide an NWChemEx example and discuss about
-the choices made.
+restricted Hartree--Fock (RHF) energy calculations for a hydrogen molecule using
+PySCF, PSI4, and MolSSI QCEngine. Finally, we will provide an NWChemEx example
+and discuss about the choices made.
 
 **************************
 Existing Python-based UIs
@@ -186,7 +186,7 @@ are pure (exceptions are named with a suffix underscore) and functional
 programming is preferred over object oriented style as described in their `code
 standard <https://pyscf.org/code-rule.html>`_.
 
-Below you can find how to run an restricted Hartree--Fock calculation for a hydrogen molecule using
+Below you can find how to run an RHF calculation for a hydrogen molecule using
 PySCF.
 
 .. code-block:: python
@@ -208,7 +208,7 @@ under the LGPL3 license. PSI4 provides two different types of UI referred to as
 Psithon and PsiAPI modes. In the Psithon mode, the user writes an input file in
 a domain specific language similar to Python. In the PsiAPI mode, the user can
 write a pure Python script that interacts with PSI4 as a Python module. Since
-the latter is more relevant to our design, we show below how to run an SCF
+the latter is more relevant to our design, we show below how to run an RHF
 calculation for a hydrogen molecule using the PsiAPI mode.
 
 .. code-block:: python
@@ -232,7 +232,7 @@ QCEngine is a general purpose quantum chemistry program interface. It is a
 Python library that provides a common API for quantum chemistry programs.
 QCEngine is an open-source package distributed under the Apache License 2.0.
 
-Below you can find how to run an SCF calculation for a hydrogen molecule using
+Below you can find how to run an RHF calculation for a hydrogen molecule using
 QCEngine.
 
 .. code-block:: python
@@ -246,10 +246,10 @@ QCEngine.
 
 Here, mol is the molecule object (type
 ``qcelemental.models.molecule.Molecule``), which is created using the
-``qcel.models.Molecule.from_data()`` function from QCElemental package. The SCF
-energy is computed using the ``qcng.compute()`` function, from QCEngine
-package. Note that, the input for the ``qcng.compute`` function is a Python
-dictionary with a schema defined by QCElemental.
+``qcel.models.Molecule.from_data()`` function from QCElemental package. The RHF
+energy is computed using the ``qcng.compute()`` function, from QCEngine package.
+Note that, the input for the ``qcng.compute`` function is a Python dictionary
+with a schema defined by QCElemental.
 
 ********************
 Current NWChemEx UI
@@ -287,7 +287,7 @@ dictionary. Alternatively, key/value pairs can be passed directly to the
 function call as ``kwargs``. The return type of the ``calculate()`` function is
 also an opaque type that can hold key/value pairs.  
 
-With the ``calculate()`` function, a user can run the restricted Hartree--Fock example by
+With the ``calculate()`` function, a user can run the RHF example by
 specifying only the required arguments as shown below.
 
 .. code-block:: python
@@ -295,9 +295,9 @@ specifying only the required arguments as shown below.
     import nwchemex as nwx 
     result = nwx.calculate(molecule = 'H 0. 0. 0. \n H 0., 0. 1.', method='scf', basis = 'sto-3g')
 
-Here, ``method = 'scf'`` will default to the restricted Hartree--Fock (RHF) energy
-calculation since the molecule is a closed-shell system and default value for
-the ``task`` is a single point energy calculation. 
+Here, ``method = 'scf'`` will default to the RHF energy calculation since the
+molecule is a closed-shell system and default value for the ``task`` is a single
+point energy calculation.
 
 Parallel calculations
 =====================
