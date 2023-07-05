@@ -186,7 +186,7 @@ are pure (exceptions are named with a suffix underscore) and functional
 programming is preferred over object oriented style as described in their `code
 standard <https://pyscf.org/code-rule.html>`_.
 
-Below you can find how to run an SCF calculation for a hydrogen molecule using
+Below you can find how to run an restricted Hartree--Fock calculation for a hydrogen molecule using
 PySCF.
 
 .. code-block:: python
@@ -263,7 +263,8 @@ with a very simple interface. The signature of this function is given below.
 
     def calculate(molecule: Union[str, Dict[str, Any], chemist.Molecule],
     method: str, basis: Union[str, chemist.AOBasisSet, simde.type.ao_space],
-    options: Dict[str, Any] = None, **kwargs) -> Dict[str, Any]:
+    task: Literal["energy", "gradient", "wavefunction"] = "energy", options: Dict[str,
+    Any] = None, **kwargs) -> Dict[str, Any]:
 
 In this function, there are three required arguments. First one is the molecule,
 which can be given as a Python string or a dictionary-like object (composed of
@@ -273,16 +274,20 @@ object directly. The second required argument is the ``method``, which is a
 Python string that corresponds to one of the quantum chemistry methods
 implemented in NWChemEx. The third required argument is the ``basis``, which can
 be given as a Python string or a ``chemist.AOBasisSet`` object or a
-``simde.type.ao_space`` object. The ``calculate()`` function also takes an
-optional argument named ``options``. At this point, it is an opaque type, (to be designed
-later in coordination with PluginPlay `#308
-<https://github.com/NWChemEx-Project/PluginPlay/issues/308>`_) which is capable
-of holding key/value pairs for inputs similar to a Python dictionary. The
-``options`` argument enables users to customize the calculation and specify the
-values to be calculated. The return type of the ``calculate()`` function is also an
-opaque type that can hold key/value pairs.
+``simde.type.ao_space`` object. The ``calculate()`` function also takes optional
+arguments. ``task`` argument enables users to choose the type of calculation,
+which can be ``energy`` (default), ``gradient``, or ``wavefunction`` currently,
+but this list is expected to grow as more functionalities are added to NWChemEx.
+``options`` argument enables users to customize the calculation further by
+modifying different parameters related to the selected ``method`` and ``task``. At
+this point, it is an opaque type (to be designed later in coordination with
+PluginPlay `#308 <https://github.com/NWChemEx-Project/PluginPlay/issues/308>`_),
+which is capable of holding key/value pairs for inputs similar to a Python
+dictionary. Alternatively, key/value pairs can be passed directly to the
+function call as ``kwargs``. The return type of the ``calculate()`` function is
+also an opaque type that can hold key/value pairs.  
 
-With the ``calculate()`` function, a user can run the H2 scf/sto-3g example by
+With the ``calculate()`` function, a user can run the restricted Hartree--Fock example by
 specifying only the required arguments as shown below.
 
 .. code-block:: python
@@ -290,6 +295,9 @@ specifying only the required arguments as shown below.
     import nwchemex as nwx 
     result = nwx.calculate(molecule = 'H 0. 0. 0. \n H 0., 0. 1.', method='scf', basis = 'sto-3g')
 
+Here, ``method = 'scf'`` will default to the restricted Hartree--Fock (RHF) energy
+calculation since the molecule is a closed-shell system and default value for
+the ``task`` is a single point energy calculation. 
 
 Parallel calculations
 =====================
