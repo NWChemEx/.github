@@ -169,9 +169,9 @@ calculations in this document since other types of calculations (geometry
 optimization, vibrational frequency calculation, etc.) require similar inputs.
 
 Before we delve into the specifics of the NWChemEx UX, we provide examples of
-SCF/sto-3g energy calculations for a hydrogen molecule using PySCF, PSI4, and
-MolSSI QCEngine. Finally, we will provide an NWChemEx example and discuss about
-the choices made.
+restricted Hartree--Fock (RHF) energy calculations for a hydrogen molecule using
+PySCF, PSI4, and MolSSI QCEngine. Finally, we will provide an NWChemEx example
+and discuss about the choices made.
 
 **************************
 Existing Python-based UIs
@@ -186,7 +186,7 @@ are pure (exceptions are named with a suffix underscore) and functional
 programming is preferred over object oriented style as described in their `code
 standard <https://pyscf.org/code-rule.html>`_.
 
-Below you can find how to run an SCF calculation for a hydrogen molecule using
+Below you can find how to run an RHF calculation for a hydrogen molecule using
 PySCF.
 
 .. code-block:: python
@@ -208,7 +208,7 @@ under the LGPL3 license. PSI4 provides two different types of UI referred to as
 Psithon and PsiAPI modes. In the Psithon mode, the user writes an input file in
 a domain specific language similar to Python. In the PsiAPI mode, the user can
 write a pure Python script that interacts with PSI4 as a Python module. Since
-the latter is more relevant to our design, we show below how to run an SCF
+the latter is more relevant to our design, we show below how to run an RHF
 calculation for a hydrogen molecule using the PsiAPI mode.
 
 .. code-block:: python
@@ -232,7 +232,7 @@ QCEngine is a general purpose quantum chemistry program interface. It is a
 Python library that provides a common API for quantum chemistry programs.
 QCEngine is an open-source package distributed under the Apache License 2.0.
 
-Below you can find how to run an SCF calculation for a hydrogen molecule using
+Below you can find how to run an RHF calculation for a hydrogen molecule using
 QCEngine.
 
 .. code-block:: python
@@ -246,10 +246,10 @@ QCEngine.
 
 Here, mol is the molecule object (type
 ``qcelemental.models.molecule.Molecule``), which is created using the
-``qcel.models.Molecule.from_data()`` function from QCElemental package. The SCF
-energy is computed using the ``qcng.compute()`` function, from QCEngine
-package. Note that, the input for the ``qcng.compute`` function is a Python
-dictionary with a schema defined by QCElemental.
+``qcel.models.Molecule.from_data()`` function from QCElemental package. The RHF
+energy is computed using the ``qcng.compute()`` function, from QCEngine package.
+Note that, the input for the ``qcng.compute`` function is a Python dictionary
+with a schema defined by QCElemental.
 
 ********************
 Current NWChemEx UI
@@ -263,7 +263,8 @@ with a very simple interface. The signature of this function is given below.
 
     def calculate(molecule: Union[str, Dict[str, Any], chemist.Molecule],
     method: str, basis: Union[str, chemist.AOBasisSet, simde.type.ao_space],
-    options: Dict[str, Any] = None, **kwargs) -> Dict[str, Any]:
+    task: Literal["energy", "gradient", "wavefunction"] = "energy", options: Dict[str,
+    Any] = None, **kwargs) -> Dict[str, Any]:
 
 In this function, there are three required arguments. First one is the molecule,
 which can be given as a Python string or a dictionary-like object (composed of
@@ -273,16 +274,20 @@ object directly. The second required argument is the ``method``, which is a
 Python string that corresponds to one of the quantum chemistry methods
 implemented in NWChemEx. The third required argument is the ``basis``, which can
 be given as a Python string or a ``chemist.AOBasisSet`` object or a
-``simde.type.ao_space`` object. The ``calculate()`` function also takes an
-optional argument named ``options``. At this point, it is an opaque type, (to be designed
-later in coordination with PluginPlay `#308
-<https://github.com/NWChemEx-Project/PluginPlay/issues/308>`_) which is capable
-of holding key/value pairs for inputs similar to a Python dictionary. The
-``options`` argument enables users to customize the calculation and specify the
-values to be calculated. The return type of the ``calculate()`` function is also an
-opaque type that can hold key/value pairs.
+``simde.type.ao_space`` object. The ``calculate()`` function also takes optional
+arguments. ``task`` argument enables users to choose the type of calculation,
+which can be ``energy`` (default), ``gradient``, or ``wavefunction`` currently,
+but this list is expected to grow as more functionalities are added to NWChemEx.
+``options`` argument enables users to customize the calculation further by
+modifying different parameters related to the selected ``method`` and ``task``. At
+this point, it is an opaque type (to be designed later in coordination with
+PluginPlay `#308 <https://github.com/NWChemEx-Project/PluginPlay/issues/308>`_),
+which is capable of holding key/value pairs for inputs similar to a Python
+dictionary. Alternatively, key/value pairs can be passed directly to the
+function call as ``kwargs``. The return type of the ``calculate()`` function is
+also an opaque type that can hold key/value pairs.  
 
-With the ``calculate()`` function, a user can run the H2 scf/sto-3g example by
+With the ``calculate()`` function, a user can run the RHF example by
 specifying only the required arguments as shown below.
 
 .. code-block:: python
@@ -290,6 +295,9 @@ specifying only the required arguments as shown below.
     import nwchemex as nwx 
     result = nwx.calculate(molecule = 'H 0. 0. 0. \n H 0., 0. 1.', method='scf', basis = 'sto-3g')
 
+Here, ``method = 'scf'`` will default to the RHF energy calculation since the
+molecule is a closed-shell system and default value for the ``task`` is a single
+point energy calculation.
 
 Parallel calculations
 =====================
@@ -304,19 +312,25 @@ workflow in two different ways:
     
     # Initialize the parallel environment with mpi4py
     from mpi4py import MPI
-    # Use MPI.COMM_SELF as the sub-communicator (1 rank per sub-communicator)
-    sub_comm = MPI.COMM_SELF
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+
+    # Use one rank per sub-communicator
+    sub_comm = comm.Split(rank)
+    # Define the distance between atoms based on the global rank
+    d = 1. + rank * 0.1 
+
     # Alternative 1
-    # Initialize NWChemEx runtime with  
+    # Initialize NWChemEx runtime with the sub-communicator  
     nwx_comm = nwx.initialize(sub_comm)
-    d = 1. + nwx_comm.mpi_rank() * 0.1 # Define the displacement
-    energy = nwx.calculate_scf_energy(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', basis = 'sto-3g')
-    print(f'Energy at {d} is {energy}')
+    result = nwx.calculate(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', method = 'scf', basis = 'sto-3g')
+    print(f'Energy calculated by rank: {rank} for distance: {d} is {result.scf_energy}')
+    
     # Alternative 2
-    # Pass the sub-communicator directly (initialize NWChemEx runtime inside the function call)
-    d = 1. + nwx_comm.rank * 0.1 # Define the displacement
-    energy = nwx.calculate_scf_energy(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', basis = 'sto-3g', communicator = sub_comm)
-    print(f'Energy at {d} is {energy}')
+    # Initialize NWChemEx runtime inside the function call
+    # Sub-communicator can be passed directly or through the options argument
+    result = nwx.calculate(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', method = 'scf', basis = 'sto-3g', communicator = sub_comm)
+    print(f'Energy calculated by rank: {rank} for distance: {d} is {result.scf_energy}')
 
 .. _not-in-scope:
 
