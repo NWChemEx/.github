@@ -1,0 +1,138 @@
+name: Build test release
+
+on:
+  workflow_call:
+    inputs:
+      repo:
+        required: true
+        type: string
+      clang-build:
+        required: true
+        type: boolean
+      gcc-build:
+        required: true
+        type: boolean
+      ninja_build:
+        required: true
+        type: boolean
+      test:
+        required: true
+        type: boolean
+      integration_test:
+        required: true
+        type: boolean
+      install:
+        required: true
+        type: boolean
+      build_image_tag:
+        required: true
+        type: string
+      ref:
+        required: false
+        type: string
+        default: ${{ github.ref }}
+      cmake_version: 
+        required: false
+        type: string
+        default: 3.17.0
+      gcc_version:
+        required: false
+        type: string
+        default: 9
+      clang_version:
+        required: false
+        type: string
+        default: 11
+      libfort_version:
+        required: false
+        type: string
+        default: 0.4.2
+      libint_version: 
+        required: false
+        type: string
+        default: 2.6.0
+    secrets:
+      CMAIZE_GITHUB_TOKEN:
+        required: true
+      CONTAINER_REPO_TOKEN:
+        required: true
+
+jobs:
+  Repo_name_lowcase:
+    runs-on: ubuntu-latest
+    outputs:
+      lowcase_repo_name: ${{ steps.output-repo-name.outputs.repo_name }}
+    steps:
+    - name: Output repo name in lowcase
+      id: output-repo-name
+      run: |
+        name=${{ inputs.repo }}
+        echo "repo_name=${name,,}" >> "$GITHUB_OUTPUT"
+
+  build-test-release:
+    runs-on: ubuntu-latest
+    needs: Repo_name_lowcase
+    strategy:
+      matrix:
+        cmake_version: [${{inputs.cmake_version}}]
+        gcc_version: [${{inputs.gcc_version}}]
+        clang_version: [${{inputs.clang_version}}]
+        libfort_version: [${{inputs.libfort_version}}]
+        libint_version: [${{inputs.libint_version}}]
+    container:
+      image: ghcr.io/nwchemex-project/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:${{inputs.build_image_tag}}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - name: Build using Clang
+        if: ${{inputs.clang-build == true}}
+        env:
+          cmake_version: ${{ matrix.cmake_version }}
+          clang_version: ${{ matrix.clang_version }}
+          ninja_build: ${{ inputs.ninja_build }}
+        uses: NWChemEx-Project/.github/actions/image-build@master
+        with:
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          INSTALL: ${{ inputs.install }}
+      - name: Build using GCC
+        if: ${{inputs.gcc-build == true}}
+        env:
+          cmake_version: ${{ matrix.cmake_version }}
+          gcc_version: ${{ matrix.gcc_version }}
+          ninja_build: ${{ inputs.ninja_build }}
+        uses: NWChemEx-Project/.github/actions/image-build@master
+        with:
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          INSTALL: ${{ inputs.install }}
+      - name: Test Application
+        if: ${{inputs.test == true}}
+        uses: NWChemEx-Project/.github/actions/image-test@master
+        with:
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          integration_test: ${{ inputs.integration_test }}
+      - name: Login to GitHub Container Registry
+        if: ${{(inputs.gcc-build == true || inputs.clang-build == true) && inputs.install == true}}
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+      - name: Build the gcc release image and push
+        if: ${{inputs.gcc-build == true && inputs.install == true}}
+        run: |
+          cp -r /install ./
+          docker build -t ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-test -f release.Dockerfile .
+          docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-test
+      - name: Build the clang release image and push
+        if: ${{inputs.clang-build == true && inputs.install == true}}
+        run: |
+          cp -r /install ./
+          docker build -t ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:clang-latest -f release.Dockerfile .
+          docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:clang-latest

@@ -2,6 +2,8 @@ name: Test with Docker Image
 inputs:
   CMAIZE_GITHUB_TOKEN:
     required: true
+  integration_test:
+    required: true
 
 runs:
   using: "composite"
@@ -12,5 +14,6 @@ runs:
     - name: Test Application
       env:
         CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
+        int_test: ${{ inputs.integration_test }}
       run: ${GITHUB_ACTION_PATH}/test.sh
       shell: bash 

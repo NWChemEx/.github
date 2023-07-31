@@ -2,6 +2,8 @@ name: Build with Docker Image
 inputs:
   CMAIZE_GITHUB_TOKEN:
     required: true
+  INSTALL:
+    required: true
 
 runs:
   using: "composite"
@@ -12,5 +14,6 @@ runs:
     - name: Build Application
       env:
         CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
+        INSTALL: ${{ inputs.INSTALL }}
       run: ${GITHUB_ACTION_PATH}/build.sh
       shell: bash
