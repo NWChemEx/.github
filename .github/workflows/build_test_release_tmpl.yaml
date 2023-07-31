@@ -74,11 +74,11 @@ jobs:
     needs: Repo_name_lowcase
     strategy:
       matrix:
-        cmake_version: [${{inputs.cmake_version}}]
-        gcc_version: [${{inputs.gcc_version}}]
-        clang_version: [${{inputs.clang_version}}]
-        libfort_version: [${{inputs.libfort_version}}]
-        libint_version: [${{inputs.libint_version}}]
+        cmake_version: [ ${{inputs.cmake_version}} ]
+        gcc_version: [ ${{inputs.gcc_version}} ]
+        clang_version: [ ${{inputs.clang_version}} ]
+        libfort_version: [ ${{inputs.libfort_version}} ]
+        libint_version: [ ${{inputs.libint_version}} ]
     container:
       image: ghcr.io/nwchemex-project/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:${{inputs.build_image_tag}}
       credentials:
