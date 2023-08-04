@@ -123,8 +123,8 @@ jobs:
         if: ${{inputs.gcc-build == true && inputs.install == true}}
         run: |
           cp -r /install ./
-          docker build -t ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-test -f release.Dockerfile .
-          docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-test
+          docker build -t ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-latest -f release.Dockerfile .
+          docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-latest
       - name: Build the clang release image and push
         if: ${{inputs.clang-build == true && inputs.install == true}}
         run: |
