@@ -72,13 +72,6 @@ jobs:
   build-test-release:
     runs-on: ubuntu-latest
     needs: Repo_name_lowcase
-    strategy:
-      matrix:
-        cmake_version: [ ${{inputs.cmake_version}} ]
-        gcc_version: [ ${{inputs.gcc_version}} ]
-        clang_version: [ ${{inputs.clang_version}} ]
-        libfort_version: [ ${{inputs.libfort_version}} ]
-        libint_version: [ ${{inputs.libint_version}} ]
     container:
       image: ghcr.io/nwchemex-project/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:${{inputs.build_image_tag}}
       credentials:
@@ -94,8 +87,8 @@ jobs:
       - name: Build using Clang
         if: ${{inputs.clang-build == true}}
         env:
-          cmake_version: ${{ matrix.cmake_version }}
-          clang_version: ${{ matrix.clang_version }}
+          cmake_version: ${{ inputs.cmake_version }}
+          clang_version: ${{ inputs.clang_version }}
           ninja_build: ${{ inputs.ninja_build }}
         uses: NWChemEx-Project/.github/actions/image-build@master
         with:
@@ -104,8 +97,8 @@ jobs:
       - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
-          cmake_version: ${{ matrix.cmake_version }}
-          gcc_version: ${{ matrix.gcc_version }}
+          cmake_version: ${{ inputs.cmake_version }}
+          gcc_version: ${{ inputs.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
         uses: NWChemEx-Project/.github/actions/image-build@master
         with:
