@@ -37,19 +37,22 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   echo 'set(ScaLAPACK_LIBRARIES  "-L${LIBDIR} -lscalapack-openmpi ${LAPACK_LIBRARIES}")'
 } >> "${toolchain_file}"
 
-# if clang_version is not empty set clang and 
+# if clang_build is true set clang and 
 # clang++ as default c and cxx compiler
-if [ ! -z "$clang_version" ]
+# otherwise set gcc as default
+# clang and gcc version controlled by defaults
+# or inputs
+if [  "${clang_build}" = true ]
 then
     {
-      echo "set(CMAKE_C_COMPILER /usr/bin/clang)"
-      echo "set(CMAKE_CXX_COMPILER /usr/bin/clang++)"  
+      echo "set(CMAKE_C_COMPILER /usr/bin/clang-${clang_version})"
+      echo "set(CMAKE_CXX_COMPILER /usr/bin/clang++-${clang_version})"  
       echo 'set(gpu_backend "none" CACHE STRING "" FORCE)'
     } >> "${toolchain_file}"
 else 
   {
-    echo "set(CMAKE_C_COMPILER /usr/bin/gcc)"
-    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++)"  
+    echo "set(CMAKE_C_COMPILER /usr/bin/gcc-${gcc_version})"
+    echo "set(CMAKE_CXX_COMPILER /usr/bin/g++-${gcc_version})"  
   } >> "${toolchain_file}"
 fi
 
