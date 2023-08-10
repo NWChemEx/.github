@@ -63,3 +63,25 @@ fi
 
 #Step 3: Compile
 ${cmake_command} --build build
+
+cd build
+
+echo "import sys" > "test-document-modules.py"
+{
+  echo "sys.path.append('build/_deps/pluginplay-build')"
+  echo "from pathlib import Path"
+  echo "import pluginplay"
+  echo "import integrals"
+
+  echo "mm = pluginplay.ModuleManager()"
+  echo "integrals.load_modules(mm)"
+
+  echo "docs_path = Path('docs')"
+
+  echo "pluginplay.document_modules(mm, docs_path)"
+
+  echo "print('successfully done')"
+
+} >> "test-document-modules.py"
+
+python3 test-document-modules.py

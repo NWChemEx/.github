@@ -42,7 +42,7 @@ jobs:
           libfort_version: ${{ matrix.libfort_version }}
           libint_version: ${{ matrix.libint_version }}
           arch: 'Linux-x86_64'
-        uses: NWChemEx-Project/.github/actions/get_dependencies@master
+        uses: NWChemEx-Project/.github/actions/get_dependencies@integrals-test
         with:
           dependencies: ${{inputs.dependencies}}
       - name: Build using Clang
@@ -51,7 +51,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build@master
+        uses: NWChemEx-Project/.github/actions/build@integrals-test
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Build using GCC
@@ -60,12 +60,22 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build@master
+        uses: NWChemEx-Project/.github/actions/build@integrals-test
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      - name: Build documentation
+        uses: NWChemEx-Project/.github/actions/build_docs@integrals-test
+        with:
+          target: ${{inputs.target}}
+          skip_doxygen: ${{inputs.skip_doxygen}}
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./docs/build/html
       - name: Test Application
-        uses: NWChemEx-Project/.github/actions/test@master
-        with: 
+        uses: NWChemEx-Project/.github/actions/test@integrals-test
+        with:
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       # - uses: codecov/codecov-action@v1
       #   with:
