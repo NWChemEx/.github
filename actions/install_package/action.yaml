@@ -1,0 +1,61 @@
+name: Install package
+inputs:
+  cmake_version:
+    type: string
+    required: false
+    default: 3.17.0
+  gcc_version:
+    type: string
+    required: false
+    default: 9
+  clang_version:
+    type: string
+    required: false
+    default: 11
+  ubuntu_version:
+    type: string
+    required: false
+    default: 20.04
+  madness_version:
+    type: string
+    required: false
+    default: 997e8b458c4234fb6c8c2781a5df59cb14b7e700
+  catch2_version:
+    type: string
+    required: false
+    default: 2.13.8
+  spdlog_version:
+    type: string
+    required: false
+    default: ad0e89cbfb4d0c1ce4d097e134eb7be67baebb36
+  cereal_version:
+    type: string
+    required: false
+    default: 1.3.0
+  package_name:
+    type: string
+    required: required
+  parent_image_name:
+    type: string
+    required: required
+
+runs:
+  using: "composite"
+  steps:
+    - name: Give Permission
+      run: chmod +x ${GITHUB_ACTION_PATH}/install_package.sh 
+      shell: bash 
+    - name: Build Application
+      env:
+        gcc_version: ${{ inputs.gcc_version }}
+        clang_version: ${{ inputs.clang_version }}
+        ubuntu_version: ${{ inputs.ubuntu_version }}
+        cmake_version: ${{ inputs.cmake_version }}
+        madness_version: ${{ inputs.madness_version }}
+        catch2_version: ${{ inputs.catch2_version }}
+        spdlog_version: ${{ inputs.spdlog_version }}
+        cereal_version: ${{ inputs.cereal_version }}
+        package_name: ${{ inputs.package_name }}
+        parent_image_name: ${{ inputs.parent_image_name }}
+      run: ${GITHUB_ACTION_PATH}/install_package.sh
+      shell: bash
