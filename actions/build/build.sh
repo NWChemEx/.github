@@ -66,6 +66,12 @@ ${cmake_command} --build build
 
 cd build
 
+echo 'this is the path'
+
+pwd
+
+ls
+
 echo "import sys" > "test-document-modules.py"
 {
   echo "sys.path.append('build/_deps/pluginplay-build')"
