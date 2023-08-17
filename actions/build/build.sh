@@ -75,6 +75,8 @@ ls
 echo "import sys" > "test-document-modules.py"
 {
   echo "sys.path.append('/home/runner/work/Integrals/Integrals/build/_deps/pluginplay-build')"
+  echo "sys.path.append('/home/runner/work/Integrals/Integrals/build/_deps/pluginplay-subbuild')"
+  echo "sys.path.append('/home/runner/work/Integrals/Integrals/build/_deps/pluginplay-src')"
   echo "from pathlib import Path"
   echo "import pluginplay"
   echo "import integrals"
