@@ -64,7 +64,7 @@ fi
 #Step 3: Compile
 ${cmake_command} --build build
 
-cd build/_deps/
+cd build
 
 echo 'this is the path'
 
