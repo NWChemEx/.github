@@ -31,14 +31,14 @@ jobs:
           ubuntu_version: ${{ inputs.ubuntu_version }}
           package_name: gcc-clang
           parent_image_name: " "
-          path_to_dockerfile: .github/Dockerfile/base-gcc-clang.Dockerfile
+          path_to_dockerfile: Dockerfile/base-gcc-clang.Dockerfile
       - name: Install cmake
         uses: NWChemEx-Project/.github/actions/install_package@master
         with:
           cmake_version: ${{ inputs.cmake_version }}
           package_name: cmake
           parent_image_name: base-gcc-clang
-          path_to_dockerfile: .github/Dockerfile/base-cmake.Dockerfile
+          path_to_dockerfile: Dockerfile/base-cmake.Dockerfile
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
