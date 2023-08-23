@@ -38,6 +38,9 @@ inputs:
   parent_image_name:
     type: string
     required: required
+  path_to_dockerfile:
+    type: string
+    required: required
 
 runs:
   using: "composite"
@@ -57,5 +60,6 @@ runs:
         cereal_version: ${{ inputs.cereal_version }}
         package_name: ${{ inputs.package_name }}
         parent_image_name: ${{ inputs.parent_image_name }}
+        path_to_dockerfile: ${{ inputs.path_to_dockerfile }}
       run: ${GITHUB_ACTION_PATH}/install_package.sh
       shell: bash
