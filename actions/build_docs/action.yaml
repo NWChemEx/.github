@@ -4,6 +4,10 @@ inputs:
     type: string
   skip_doxygen:
     type: boolean
+  generate_modules_docs:
+    type: boolean
+  CMAIZE_GITHUB_TOKEN:
+    type: string
 runs:
   using: "composite"
   steps:
@@ -13,6 +17,25 @@ runs:
     - name: Build Documentation
       if: ${{ inputs.skip_doxygen == 'false' }} 
       run: ${{github.action_path}}/build_docs.sh ${{inputs.target}}
+      shell: bash
+    - name: Generate Module Documentation
+      if: ${{ inputs.skip_doxygen == 'true' }}
+      env:
+        CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
+      run:  |
+        # First, we need to build the full application
+        chmod +x ${{github.action_path}}/../build/build.sh
+        ${{github.action_path}}/../build/build.sh
+
+        # Next, we generate the module docs
+        . venv/bin/activate
+        PYTHONPATH="${PYTHONPATH}:/build"
+        if [ -d "./build/_deps/pluginplay-build" ]; then
+          PYTHONPATH="${PYTHONPATH}:/build/_deps/pluginplay-build"
+        fi
+        python ${{github.action_path}}/generate_module_dox.py ${{inputs.target}}
+        deactivate
+
       shell: bash
     - name: Give Permission to build_sphinx_docs.sh
       run: chmod +x ${{github.action_path}}/build_sphinx_docs.sh 

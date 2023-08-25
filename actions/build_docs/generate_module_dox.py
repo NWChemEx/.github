@@ -24,23 +24,18 @@ if __name__ == "__main__":
     # Exit if more than a single argument is passed
     if len(sys.argv) != 2:
         sys.exit()
+    target = sys.argv[1].replace("_cxx_api", "")
 
-    # Can we find pluginplay? If not, exit
+    # Exit on any exception
     try:
         pluginplay = importlib.import_module("pluginplay")
+        library = importlib.import_module(target)
+        # If this library is a plugin, try to print the dox.
+        if hasattr(library, "load_modules"):
+            mm = pluginplay.ModuleManager()
+            library.load_modules(mm)
+            # This is no-op if docs/source/module_api doesn't exist
+            pluginplay.document_modules(mm, "docs/source/module_api")
     except Exception:
         sys.exit()
-
-    # Can we find the library to document? If not, exit
-    try:
-        library = importlib.import_module(sys.argv[1])
-    except Exception:
-        sys.exit()
-
-    # If this library is a plugin, print the dox
-    if hasattr(library, "load_modules"):
-        mm = pluginplay.ModuleManager()
-        library.load_modules(mm)
-        # This is no-op if docs/source/module_api doesn't exist
-        pluginplay.document_modules(mm, "docs/source/module_api")
 

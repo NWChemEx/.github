@@ -9,6 +9,11 @@ on:
         type: string
       skip_doxygen:
         type: boolean
+      generate_modules_docs:
+        type: boolean
+    secrets:
+      CMAIZE_GITHUB_TOKEN:
+        type: string
       
 jobs:
   build-documentation:
@@ -32,3 +37,5 @@ jobs:
       with:
         target: ${{inputs.target}}
         skip_doxygen: ${{inputs.skip_doxygen}}
+        generate_modules_docs: ${{inputs.generate_modules_docs}}
+        CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}

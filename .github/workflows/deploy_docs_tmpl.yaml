@@ -9,6 +9,11 @@ on:
         type: string
       skip_doxygen:
         type: boolean
+      generate_modules_docs:
+        type: boolean
+    secrets:
+      CMAIZE_GITHUB_TOKEN:
+        type: string
 jobs:
   Build-Documentation:
     runs-on: ubuntu-latest
@@ -27,6 +32,8 @@ jobs:
         with:
           target: ${{inputs.target}}
           skip_doxygen: ${{inputs.skip_doxygen}}
+          generate_modules_docs: ${{inputs.generate_modules_docs}}
+          CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
