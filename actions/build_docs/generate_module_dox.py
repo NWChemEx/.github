@@ -36,6 +36,7 @@ if __name__ == "__main__":
             library.load_modules(mm)
             # This is no-op if docs/source/module_api doesn't exist
             pluginplay.document_modules(mm, "docs/source/module_api")
-    except Exception:
+    except Exception as e:
+        print(f"An exception caught: {e}")
         sys.exit()
 
