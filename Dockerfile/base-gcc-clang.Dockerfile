@@ -23,7 +23,7 @@ RUN    apt-get update \
                 docker.io \
         && apt-get clean \
         && pip install gcovr \
-        && pip install cppyy \
+        && pip install pybind11 \
         && rm -rf /var/lib/apt/lists/*
 
 LABEL maintainer="NWChemEx-Project" \
