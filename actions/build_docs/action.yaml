@@ -27,6 +27,13 @@ runs:
         chmod +x ${{github.action_path}}/../build/build.sh
         ${{github.action_path}}/../build/build.sh
 
+        #Debugging
+        ls $(pwd)/build/chemcache.so
+        ls $(pwd)/build/_deps/pluginplay-build/pluginplay.so
+        cd build
+        ctest -VV
+        cd ..
+
         # Next, we generate the module docs
         . venv/bin/activate
         PYTHONPATH="${PYTHONPATH}:$(pwd)/build"
