@@ -36,6 +36,7 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   echo 'set(LAPACK_LIBRARIES "-L${LIBDIR} -llapack ${BLAS_LIBRARIES}")'
   echo 'set(ScaLAPACK_LIBRARIES  "-L${LIBDIR} -lscalapack-openmpi ${LAPACK_LIBRARIES}")'
   echo 'set(BUILD_PYBIND11_PYBINDINGS ON)'
+  echo 'set(Python_EXECUTABLE $(pwd)/venv/bin/python3)'
   echo 'set(NWX_MODULE_DIRECTORY "./NWX_PyModules")'
 } >> "${toolchain_file}"
 
