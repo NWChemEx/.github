@@ -19,7 +19,7 @@ runs:
       run: ${{github.action_path}}/build_docs.sh ${{inputs.target}}
       shell: bash
     - name: Generate Module Documentation
-      if: ${{ inputs.skip_doxygen == 'true' }}
+      if: ${{ inputs.generate_modules_docs == 'true' }}
       env:
         CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
       run:  |
