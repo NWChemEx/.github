@@ -27,19 +27,8 @@ runs:
         chmod +x ${{github.action_path}}/../build/build.sh
         ${{github.action_path}}/../build/build.sh
 
-        # Check testing
-        cd build
-        ctest -VV
-        cd ..
-
         # Next, we generate the module docs
         . venv/bin/activate
-        PYTHONPATH="${PYTHONPATH}:$(pwd)/build"
-        if [ -d "$(pwd)/build/_deps/pluginplay-build" ]; then
-          PYTHONPATH="${PYTHONPATH}:$(pwd)/build/_deps/pluginplay-build"
-        fi
-        echo $PYTHONPATH
-        which python3
         python3 ${{github.action_path}}/generate_module_dox.py ${{inputs.target}}
         deactivate
 

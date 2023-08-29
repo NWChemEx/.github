@@ -1,3 +1,4 @@
+import os
 import sys
 import importlib
 
@@ -26,9 +27,15 @@ if __name__ == "__main__":
         sys.exit()
     target = sys.argv[1].replace("_cxx_api", "")
 
+    # Add paths to libraries
+    cwd = os.getcwd()
+    build_dir = os.path.join(cwd, "build")
+    pluginplay_dir = os.path.join(cwd, "build", "_deps", "pluginplay-build")
+    sys.path.append(build_dir)
+    sys.path.append(pluginplay_dir)
+
     # Exit on any exception
     try:
-        print('\n'.join(sys.path))
         pluginplay = importlib.import_module("pluginplay")
         library = importlib.import_module(target)
         # If this library is a plugin, try to print the dox.
