@@ -35,6 +35,9 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   echo 'set(BLAS_LIBRARIES   "-L${LIBDIR} -lopenblas")'
   echo 'set(LAPACK_LIBRARIES "-L${LIBDIR} -llapack ${BLAS_LIBRARIES}")'
   echo 'set(ScaLAPACK_LIBRARIES  "-L${LIBDIR} -lscalapack-openmpi ${LAPACK_LIBRARIES}")'
+  echo 'set(BUILD_PYBIND11_PYBINDINGS ON)'
+  echo 'set(Python_EXECUTABLE $(pwd)/venv/bin/python3)'
+  echo 'set(NWX_MODULE_DIRECTORY "./NWX_PyModules")'
 } >> "${toolchain_file}"
 
 # if clang_version is not empty set clang and 
