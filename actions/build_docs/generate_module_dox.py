@@ -28,6 +28,7 @@ if __name__ == "__main__":
 
     # Exit on any exception
     try:
+        print('\n'.join(sys.path))
         pluginplay = importlib.import_module("pluginplay")
         library = importlib.import_module(target)
         # If this library is a plugin, try to print the dox.
