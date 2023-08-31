@@ -40,6 +40,34 @@ inputs:
     type: string
     required: false
     default: 1.71.0
+  tiledarray_version:
+    type: string
+    required: false
+    default: fab5dc31fc10d88d381e8421d868d2185f164667
+  openblas_version:
+    type: string
+    required: false
+    default: 0.3.8
+  cblas_version:
+    type: string
+    required: false
+    default: 3.9.0
+  lapacke_version:
+    type: string
+    required: false
+    default: 3.9.0
+  scalapack_version:
+    type: string
+    required: false
+    default: 2.1.0
+  eigen3_version:
+    type: string
+    required: false
+    default: 3.3.7
+  openmpi_version:
+    type: string
+    required: false
+    default: 4.0.3
   package_name:
     type: string
     required: required
@@ -54,7 +82,7 @@ runs:
   using: "composite"
   steps:
     - name: Give Permission
-      run: chmod +x ${GITHUB_ACTION_PATH}/install_package.sh 
+      run: chmod +x ${GITHUB_ACTION_PATH}/image-install_package.sh 
       shell: bash 
     - name: Build Application
       env:
@@ -71,5 +99,12 @@ runs:
         path_to_dockerfile: ${{ inputs.path_to_dockerfile }}
         libfort_version: ${{ inputs.libfort_version }}
         libboost_version: ${{ inputs.libboost_version }}
-      run: ${GITHUB_ACTION_PATH}/install_package.sh
+        tiledarray_version: ${{ inputs.tiledarray_version }}
+        openblas_version: ${{ inputs.openblas_version }}
+        cblas_version: ${{ inputs.cblas_version }}
+        lapacke_version: ${{ inputs.lapacke_version }}
+        scalapack_version: ${{ inputs.scalapack_version }}
+        eigen3_version: ${{ inputs.eigen3_version }}
+        openmpi_version: ${{ inputs.openmpi_version }}
+      run: ${GITHUB_ACTION_PATH}/image-install_package.sh
       shell: bash
