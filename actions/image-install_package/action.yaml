@@ -82,7 +82,7 @@ runs:
   using: "composite"
   steps:
     - name: Give Permission
-      run: chmod +x ${GITHUB_ACTION_PATH}/install_package.sh 
+      run: chmod +x ${GITHUB_ACTION_PATH}/image-install_package.sh 
       shell: bash 
     - name: Build Application
       env:
@@ -106,5 +106,5 @@ runs:
         scalapack_version: ${{ inputs.scalapack_version }}
         eigen3_version: ${{ inputs.eigen3_version }}
         openmpi_version: ${{ inputs.openmpi_version }}
-      run: ${GITHUB_ACTION_PATH}/install_package.sh
+      run: ${GITHUB_ACTION_PATH}/image-install_package.sh
       shell: bash

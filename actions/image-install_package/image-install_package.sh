@@ -4,7 +4,7 @@
 # Keep adding more package version options to cover all repos.
 #
 # Usage:
-#   install_package.sh
+#   image-install_package.sh
 #
 # Other variables:
 #   gcc_version: the major version of gcc being used
