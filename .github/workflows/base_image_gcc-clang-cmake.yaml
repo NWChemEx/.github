@@ -24,7 +24,7 @@ jobs:
         with:
           repository: NWChemEx-Project/.github
       - name: Install gcc and clang
-        uses: NWChemEx-Project/.github/actions/install_package@master
+        uses: NWChemEx-Project/.github/actions/image-install_package@master
         with:
           gcc_version: ${{ inputs.gcc_version }}
           clang_version: ${{ inputs.clang_version }}
@@ -33,7 +33,7 @@ jobs:
           parent_image_name: " "
           path_to_dockerfile: Dockerfile/base-gcc-clang.Dockerfile
       - name: Install cmake
-        uses: NWChemEx-Project/.github/actions/install_package@master
+        uses: NWChemEx-Project/.github/actions/image-install_package@master
         with:
           cmake_version: ${{ inputs.cmake_version }}
           package_name: cmake
