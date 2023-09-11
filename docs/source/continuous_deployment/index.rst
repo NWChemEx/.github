@@ -13,4 +13,5 @@ deploying the master branch (continuous deployment).
    :caption: Contents:
 
    ci_maintainer_notes
+   ci_image
    documentation
