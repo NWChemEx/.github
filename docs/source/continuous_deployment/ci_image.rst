@@ -78,7 +78,7 @@ considerations have been adopted in the design:
 
 .. figure:: ./repo_dep.png
 
-   Dependency Relations of NWChemEx Repositories
+   Dependency Relations of NWChemEx Repositories (not all are shown)
 
 6. In daily CI tasks triggered by opening a pull request, only the "latest" 
    versions of the base and the release images would be updated after the 
