@@ -3,7 +3,7 @@ Docker-image-based Continuous Integration (CI) of NWChemEx
 **********************************************************
 
 Overview
-================
+========
 
 NWChemEx uses GitHub Actions to run the CI workflows. Here are a few useful 
 tutorials on workflows in GitHub:
@@ -95,9 +95,10 @@ The Details of the Workflows
 ============================
 
 To build the base images first, the workflow ``base_image_gcc-clang-cmake.yaml``
-has been added into the ``.github`` repository and the workflow ``build_base.yaml``
-has also been added into each working repository. In the workflow ``build_test_release.yaml``
-in each repository the building/testing/releasing tasks are done. The workflow 
+has been added into the ``.github`` repository and the workflow 
+``build_base.yaml`` has also been added into each working repository. In the 
+workflow ``build_test_release.yaml`` in each repository the 
+building/testing/releasing tasks are done. The workflow 
 ``build_test_release-manual.yaml`` is to update the stable images manually. The
 details of these workflows can be explained as the following:
 
@@ -151,26 +152,28 @@ d. ``build_test_release-gcc`` and ``build_test_release-clang``.
    pushed into the GitHub registry. All building/testing/releasing tasks are 
    done in docker containers.
    
-   The key step of these jobs is calling the container action ``container-build_test_release``
-   under the directory ``.github/actions`` in each repository. Since the 
-   official GitHub container actions do not support controlling how to build 
-   the image, on which the container is based, with building arguments, writing
-   a container action to acomplish all building/testing/releasing tasks is 
-   challenging. Finally we adopted the idea of `Javier Zolotarchuk <https://github.com/JavierZolotarchuk/parameterizable-docker-action-example>`__
+   The key step of these jobs is calling the container action 
+   ``container-build_test_release`` under the directory ``.github/actions`` in
+   each repository. Since the official GitHub container actions do not support 
+   controlling how to build the image, on which the container is based, with 
+   building arguments, writing a container action to acomplish all 
+   building/testing/releasing tasks is challenging. Finally we adopted the idea
+   of `Javier Zolotarchuk <https://github.com/JavierZolotarchuk/parameterizable-docker-action-example>`__
    and developed a "docker-in-docker"-like container action. In this action an
    outer container is built simply to pass the building arguments to the inner
    container and run it. It is the inner container in which the actual work of 
    building/testing is done. In the docker file of the inner container, the base
    image of the corresponding NWChemEx repository and the possible dependent 
    release images of other NWChemEx repositories are pulled and a transient 
-   building image of this repository is constructed. Moreover, in the ``build_test.sh`` 
-   script (as the entrypoint script) of the inner container, all 
-   building/testing work is done. In order to pass variables into ``build_test.sh``, 
-   all building arguments passed from the outer container should be assigned
-   as environment variables. We want to note since the docker daemon cannot be
-   accessed in the inner container, we copy out the installation director from 
-   the inner container and release the installed repository as an docker image 
-   in the last lines of the ``entrypoint.sh`` script of the outer container.
+   building image of this repository is constructed. Moreover, in the 
+   ``build_test.sh`` script (as the entrypoint script) of the inner container, 
+   all building/testing work is done. In order to pass variables into 
+   ``build_test.sh``, all building arguments passed from the outer container 
+   should be assigned as environment variables. We want to note since the docker
+   daemon cannot be accessed in the inner container, we copy out the 
+   installation director from the inner container and release the installed 
+   repository as an docker image in the last lines of the ``entrypoint.sh`` 
+   script of the outer container.
 
 4. ``build_test_release-manual.yaml``
 -------------------------------------
@@ -189,7 +192,8 @@ Open Questions
 1. dev/master model implementation
 ----------------------------------
 
-The dev/master model, which had been `discussed <https://github.com/NWChemEx-Project/ParallelZone/issues/108>`__,
+The dev/master model, which had been 
+`discussed <https://github.com/NWChemEx-Project/ParallelZone/issues/108>`__,
 has not been implemented at this time. However, the corresponding workflows 
 have been developed and could be checked in if we finally decide to move to 
 this model. Combining docker images with this model, we may use the "latest" 
@@ -209,6 +213,7 @@ by passing a new building argument on the building mode to the container action.
 ----------------------------------
 
 Now for simplicity all package version no.s are hardwired in the workflows. 
-This information should be retrieved from some files, e. g., ``https://github.com/NWChemEx-Project/NWXCMake/blob/master/cmake/nwx_versions.cmake``.
+This information should be retrieved from some files, e. g., 
+``https://github.com/NWChemEx-Project/NWXCMake/blob/master/cmake/nwx_versions.cmake``.
 Actions will be written for such tasks.
 
