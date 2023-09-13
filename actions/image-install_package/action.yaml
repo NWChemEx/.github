@@ -3,71 +3,83 @@ inputs:
   cmake_version:
     type: string
     required: false
-    default: 3.17.0
+    default: ''
   gcc_version:
     type: string
     required: false
-    default: 9
+    default: ''
   clang_version:
     type: string
     required: false
-    default: 11
+    default: ''
   ubuntu_version:
     type: string
     required: false
-    default: 20.04
+    default: ''
   madness_version:
     type: string
     required: false
-    default: 997e8b458c4234fb6c8c2781a5df59cb14b7e700
+    default: ''
   catch2_version:
     type: string
     required: false
-    default: 2.13.8
+    default: ''
   spdlog_version:
     type: string
     required: false
-    default: ad0e89cbfb4d0c1ce4d097e134eb7be67baebb36
+    default: ''
   cereal_version:
     type: string
     required: false
-    default: 1.3.0
+    default: ''
   libfort_version:
     type: string
     required: false
-    default: 0.4.2
+    default: ''
   libboost_version:
     type: string
     required: false
-    default: 1.71.0
+    default: ''
   tiledarray_version:
     type: string
     required: false
-    default: fab5dc31fc10d88d381e8421d868d2185f164667
+    default: ''
   openblas_version:
     type: string
     required: false
-    default: 0.3.8
+    default: ''
   cblas_version:
     type: string
     required: false
-    default: 3.9.0
+    default: ''
   lapacke_version:
     type: string
     required: false
-    default: 3.9.0
+    default: ''
   scalapack_version:
     type: string
     required: false
-    default: 2.1.0
+    default: ''
   eigen3_version:
     type: string
     required: false
-    default: 3.3.7
+    default: ''
   openmpi_version:
     type: string
     required: false
-    default: 4.0.3
+    default: ''
+  numpy_version:
+    type: string
+    required: false
+    default: ''
+  gauxc_version:
+    type: string
+    required: false
+    default: ''
+  libintx_version:
+    type: string
+    required: false
+    default: ''
   package_name:
     type: string
     required: required
@@ -106,5 +118,8 @@ runs:
         scalapack_version: ${{ inputs.scalapack_version }}
         eigen3_version: ${{ inputs.eigen3_version }}
         openmpi_version: ${{ inputs.openmpi_version }}
+        numpy_version: ${{ inputs.numpy_version }}
+        gauxc_version: ${{ inputs.gauxc_version }}
+        libintx_version: ${{ inputs.libintx_version }}
       run: ${GITHUB_ACTION_PATH}/image-install_package.sh
       shell: bash
