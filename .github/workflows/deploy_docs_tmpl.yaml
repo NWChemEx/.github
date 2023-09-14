@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       cmake_version: 3.16.3
+      gcc_version: 9
+      clang_version: 11
+      libfort_version: 0.4.2
+      libint_version: 2.6.0
       arch: Linux-x86_64
     steps:
       - name: Obtain Source
