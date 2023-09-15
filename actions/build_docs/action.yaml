@@ -24,6 +24,7 @@ runs:
         CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
       run:  |
         # First, we need to build the full application
+        rm -rf ./build/
         chmod +x ${{github.action_path}}/../build/build.sh
         ${{github.action_path}}/../build/build.sh
 
