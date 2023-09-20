@@ -80,6 +80,10 @@ inputs:
     type: string
     required: false
     default: ''
+  libint_version:
+    type: string
+    required: false
+    default: ''
   package_name:
     type: string
     required: required
@@ -121,5 +125,6 @@ runs:
         numpy_version: ${{ inputs.numpy_version }}
         gauxc_version: ${{ inputs.gauxc_version }}
         libintx_version: ${{ inputs.libintx_version }}
+        libint_version: ${{ inputs.libint_version }}
       run: ${GITHUB_ACTION_PATH}/image-install_package.sh
       shell: bash
