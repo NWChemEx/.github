@@ -1,0 +1,60 @@
+# Copyright 2023 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Add License and Format
+
+inputs:
+  config_file:
+    description: "The configuration file for SkyWalking Eyes"
+    type: string
+    required: false
+    default: .licenserc.yaml
+  source_dir:
+    description: "Space seperated list of directories to apply formatting to"
+    type: string
+    required: false
+    default: 'include src tests'
+  GITHUB_TOKEN:
+    description: "Token used to push commits"
+    required: true
+outputs:
+  commited:
+    description: "Whether or not a commit was made"
+    value: ${{steps.commit-changes.outputs.commited}}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Add license
+      uses: apache/skywalking-eyes@v0.4.0
+        with:
+          config: ${{ inputs.config_file }}
+          mode: fix
+    - name: Apply formatting
+      uses: DoozyX/clang-format-lint-action@v0.12
+      with:
+        source: ${{ inputs.source_dir }}
+        extensions: 'hpp,cpp,ipp,h,c'
+        clangFormatVersion: 12
+        inplace: True
+    - name: Commit any changes
+      id: commit-changes
+      uses: EndBug/add-and-commit@v5
+      with:
+        author_name: github-actions[bot]
+        author_email: github-actions[bot]@users.noreply.github.com
+        message: 'Committing clang-format changes'
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
