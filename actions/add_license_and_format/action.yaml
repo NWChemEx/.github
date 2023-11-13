@@ -19,20 +19,18 @@ inputs:
   config_file:
     description: "The configuration file for SkyWalking Eyes"
     type: string
-    required: false
-    default: .licenserc.yaml
+    required: true
   source_dir:
     description: "Space seperated list of directories to apply formatting to"
     type: string
-    required: false
-    default: 'include src tests'
+    required: true
   GITHUB_TOKEN:
     description: "Token used to push commits"
     required: true
 outputs:
-  commited:
-    description: "Whether or not a commit was made"
-    value: ${{steps.commit-changes.outputs.commited}}
+  pushed:
+    description: "Whether or not a push was made"
+    value: ${{steps.commit-changes.outputs.pushed}}
 
 runs:
   using: "composite"

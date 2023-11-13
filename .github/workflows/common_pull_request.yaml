@@ -1,0 +1,155 @@
+# Copyright 2023 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Common Pull Request Workflow
+
+on:
+  workflow_call:
+    inputs:
+      compilers:
+        description: ""
+        required: true
+      doc_target:
+        description: "The name of the documentation target"
+        required: true
+      config_file:
+        description: "The configuration file for SkyWalking Eyes"
+        type: string
+        required: false
+        default: .licenserc.yaml
+      source_dir:
+        description: "Space seperated list of dirs to apply formatting to"
+        type: string
+        required: false
+        default: 'include src tests'
+      build_module_docs:
+        description: "Whether or not to build PluginPlay module documentation"
+        type: boolean
+        required: false
+        default: false
+    secrets:
+      CMAIZE_GITHUB_TOKEN:
+        required: false
+
+jobs:
+  license_and_format:
+    run-ons: ubuntu-latest
+    outputs:
+      made_changes: ${{ steps.add_license_and_format.outputs.pushed }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply License and Formatting
+        id: add_license_and_format
+        uses: NWChemEx-Project/.github/actions/add_license_and_format@master
+          with:
+            config_file: ${{ inputs.config_file }}
+            source_dir: ${{ inputs.source_dir }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test_library:
+    needs: license_and_format # Only run if no new changes were made
+    if: needs.license_and_format.outputs.made_changes == false
+    runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/nwchemex-project/nwx_buildenv:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        env:
+          CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
+        run:  |
+          # Add CMAIZE_GITHUB_TOKEN to toolchain
+          toolchain=/toolchains/nwx_${{ compiler }}.cmake
+          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
+
+          # CMake Configure
+          cmake cmake -Bbuild -H. -GNinja \
+          -DCMAKE_INSTALL_PREFIX=./install \
+          -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
+
+          # CMake Build
+          cmake --build build --parallel
+
+        shell: bash
+      - name: Test
+        run:  |
+          # Run CTest
+          cd build
+          ctest --VV
+
+        shell: bash
+
+  test_build_docs:
+    needs: license_and_format # Only run if no new changes were made
+    if: needs.license_and_format.outputs.made_changes == false
+    runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/nwchemex-project/nwx_buildenv:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Doxygen Docs
+        run:  |
+          # CMake Configure
+          cmake cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
+          -DCMAKE_INSTALL_PREFIX=./install \
+          -DCMAKE_TOOLCHAIN_FILE=/toolchains/nwx_gcc11.cmake
+
+          # CMake Build
+          cmake --build build --target ${{ inputs.doc_target }} --parallel
+
+          # Migrate the Doxygen documentation to the docs source
+          mkdir docs/build
+          mkdir docs/build/html
+          mv build/html "docs/build/html/${{ inputs.doc_target }}"
+
+        shell: bash
+      - name: Generate Module Documentation
+        if: ${{ inputs.build_module_docs == 'true' }}
+        env:
+          CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
+        run:  |
+          # First, we need to build the full application
+          rm -rf ./build/
+
+          # Add CMAIZE_GITHUB_TOKEN to toolchain
+          toolchain=/toolchains/nwx_${{ compiler }}.cmake
+          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
+
+          # CMake Configure
+          cmake cmake -Bbuild -H. -GNinja \
+          -DCMAKE_INSTALL_PREFIX=./install \
+          -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
+
+          # CMake Build
+          cmake --build build --parallel
+
+          # Next, we generate the module docs
+          python3 ${{github.action_path}}/generate_module_dox.py ${{ inputs.doc_target }}
+
+        shell: bash
+      - name: Build Sphinx Documentation
+        run:  |
+          cd docs
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+          make html
+          

@@ -4,7 +4,9 @@ RUN apt-get update \
     && apt-get install -y gcc-9 g++-9 \
     gcc-11 g++-11 \
     clang-11 libc++-11-dev libc++abi-11-dev \
-    python3-dev pip \
+    doxygen \
+    graphviz \
+    python3-dev python3-pip python3-sphinx\
     cmake \
     ninja-build \
     git \
