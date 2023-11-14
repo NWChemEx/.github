@@ -18,12 +18,6 @@ name: Common Pull Request Workflow
 on:
   workflow_call:
     inputs:
-      compilers:
-        description: ""
-        required: true
-      doc_target:
-        description: "The name of the documentation target"
-        required: true
       config_file:
         description: "The configuration file for SkyWalking Eyes"
         type: string
@@ -34,68 +28,92 @@ on:
         type: string
         required: false
         default: 'include src tests'
-      build_module_docs:
-        description: "Whether or not to build PluginPlay module documentation"
+      compilers:
+        description: "String of a JSON list of compilers to test"
+        type: string
+        required: false
+        default: ''
+      skip_doxygen:
+        description: "Whether or not to attempt to build Doxygen docs"
         type: boolean
         required: false
         default: false
+      doc_target:
+        description: "The name of the documentation target"
+        required: false
+        default: ''
     secrets:
       CMAIZE_GITHUB_TOKEN:
+        description: "Token passed to CMaize"
         required: false
 
 jobs:
   license_and_format:
     run-ons: ubuntu-latest
     outputs:
-      made_changes: ${{ steps.add_license_and_format.outputs.pushed }}
+      made_changes: ${{ steps.commit-changes.outputs.pushed }}
     steps:
       - uses: actions/checkout@v4
-      - name: Apply License and Formatting
-        id: add_license_and_format
-        uses: NWChemEx-Project/.github/actions/add_license_and_format@master
+        with: 
+          # Need non-default token so changes trigger additional CI
+          token: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      - name: Add license
+        uses: apache/skywalking-eyes@v0.4.0
           with:
-            config_file: ${{ inputs.config_file }}
-            source_dir: ${{ inputs.source_dir }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            config: ${{ inputs.config_file }}
+            mode: fix
+      - name: Apply formatting
+        uses: DoozyX/clang-format-lint-action@v0.12
+        with:
+          source: ${{ inputs.source_dir }}
+          extensions: 'hpp,cpp,ipp,h,c'
+          clangFormatVersion: 12
+          inplace: True
+      - name: Commit any changes
+        id: commit-changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: github-actions[bot]
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: 'Committing clang-format changes'
 
   test_library:
-    needs: license_and_format # Only run if no new changes were made
-    if: needs.license_and_format.outputs.made_changes == false
+    needs: license_and_format 
+    # Only run if no new changes were made above and if compilers isn't empty
+    if: |
+      needs.license_and_format.outputs.made_changes == false &&
+      inputs.compilers != '' && toJson(fromJson(inputs.compilers)) != '[]'
     runs-on: ubuntu-latest
     container: 
       image: ghcr.io/nwchemex-project/nwx_buildenv:latest
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
+    strategy:
+      matrix:
+        compiler: ${{ fromJSON(inputs.compilers) }}
     steps:
       - uses: actions/checkout@v4
-      - name: Build
+      - name: Build and Test
         env:
           CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
         run:  |
-          # Add CMAIZE_GITHUB_TOKEN to toolchain
-          toolchain=/toolchains/nwx_${{ compiler }}.cmake
+          toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
           echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
 
-          # CMake Configure
-          cmake cmake -Bbuild -H. -GNinja \
+          cmake -Bbuild -H. -GNinja \
           -DCMAKE_INSTALL_PREFIX=./install \
           -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
-
-          # CMake Build
+       
           cmake --build build --parallel
-
-        shell: bash
-      - name: Test
-        run:  |
-          # Run CTest
+        
           cd build
           ctest --VV
-
         shell: bash
 
   test_build_docs:
-    needs: license_and_format # Only run if no new changes were made
+    needs: license_and_format 
+    # Only run if no new changes were made above
     if: needs.license_and_format.outputs.made_changes == false
     runs-on: ubuntu-latest
     container: 
@@ -105,51 +123,23 @@ jobs:
         password: ${{ secrets.github_token }}
     steps:
       - uses: actions/checkout@v4
-      - name: Build Doxygen Docs
+      - name: Doxygen Docs
+        if: ${{ inputs.skip_doxygen == 'false' }}
         run:  |
-          # CMake Configure
-          cmake cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
-          -DCMAKE_INSTALL_PREFIX=./install \
-          -DCMAKE_TOOLCHAIN_FILE=/toolchains/nwx_gcc11.cmake
-
-          # CMake Build
+          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
           cmake --build build --target ${{ inputs.doc_target }} --parallel
 
           # Migrate the Doxygen documentation to the docs source
           mkdir docs/build
           mkdir docs/build/html
           mv build/html "docs/build/html/${{ inputs.doc_target }}"
-
         shell: bash
-      - name: Generate Module Documentation
-        if: ${{ inputs.build_module_docs == 'true' }}
-        env:
-          CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
-        run:  |
-          # First, we need to build the full application
-          rm -rf ./build/
-
-          # Add CMAIZE_GITHUB_TOKEN to toolchain
-          toolchain=/toolchains/nwx_${{ compiler }}.cmake
-          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
-
-          # CMake Configure
-          cmake cmake -Bbuild -H. -GNinja \
-          -DCMAKE_INSTALL_PREFIX=./install \
-          -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
-
-          # CMake Build
-          cmake --build build --parallel
-
-          # Next, we generate the module docs
-          python3 ${{github.action_path}}/generate_module_dox.py ${{ inputs.doc_target }}
-
-        shell: bash
-      - name: Build Sphinx Documentation
+      - name: Sphinx Docs
         run:  |
           cd docs
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
           make html
+        shell: bash
           

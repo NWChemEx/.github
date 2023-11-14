@@ -18,11 +18,68 @@ name: Common Merge Workflow
 on:
   workflow_call:
     inputs:
+      skip_doxygen:
+        description: "Whether or not to attempt to build Doxygen docs"
+        type: boolean
+        required: false
+        default: false
+      doc_target:
+        description: "The name of the documentation target"
+        type: string
+        required: false
+        default: ''
     secrets:
       CMAIZE_GITHUB_TOKEN:
+        description: "Token passed to CMaize"
         required: false
+      TAG_TOKEN:
+        description: "Token used to bump the version tag"
+        required: true
 
 jobs:
   deploy_docs:
+    runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/nwchemex-project/nwx_buildenv:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Doxygen Docs
+        if: ${{ inputs.skip_doxygen == 'false' }}
+        run:  |
+          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
+          cmake --build build --target ${{ inputs.doc_target }} --parallel
 
-  tag_and_release:
+          # Migrate the Doxygen documentation to the docs source
+          mkdir docs/build
+          mkdir docs/build/html
+          mv build/html "docs/build/html/${{ inputs.doc_target }}"
+        shell: bash
+      - name: Module Docs
+        run: echo "Write me"
+      - name: Sphinx Docs
+        run:  |
+          cd docs
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+          make html
+        shell: bash
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./docs/build/html
+
+  bump_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: haya14busa/action-bumpr@v1
+        with:
+          default_bump_level: patch
+          github_token: ${{ secrets.TAG_TOKEN }}
+          tag_as_user: .github[bot]
+          tag_as_email: .github[bot]@github.com
