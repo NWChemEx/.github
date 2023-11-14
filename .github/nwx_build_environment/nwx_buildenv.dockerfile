@@ -1,7 +1,8 @@
 FROM ubuntu:latest
 
 RUN apt-get update \
-    && apt-get install -y gcc-9 g++-9 \
+    && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
+    gcc-9 g++-9 \
     gcc-11 g++-11 \
     clang-11 libc++-11-dev libc++abi-11-dev \
     doxygen \
