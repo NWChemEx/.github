@@ -73,7 +73,7 @@ jobs:
         env:
           CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
         run: |
-          toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
+          toolchain=/toolchains/nwx_gcc-11.cmake
           echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
 
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON \
@@ -93,17 +93,7 @@ jobs:
       # Build the C++ Library if building module docs
       - name: Build Library
         if: inputs.generate_module_docs == true
-        env:
-          CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
-        run: |
-          toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
-          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
-
-          cmake -Bbuild -H. -GNinja \
-          -DCMAKE_INSTALL_PREFIX=./install \
-          -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
-       
-          cmake --build build --parallel
+        run: cmake --build build --parallel
         shell: bash
       # Generate the module docs source files
       - name: Generate Module Docs
