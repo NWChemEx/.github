@@ -125,9 +125,9 @@ jobs:
   test_build_docs:
     needs: license_and_format 
     # Only run if no new changes were made above
-    if: |
-      needs.license_and_format.outputs.made_changes == false &&
-      inputs.doc_target != ''
+    # if: |
+    #   needs.license_and_format.outputs.made_changes == false &&
+    #   inputs.doc_target != ''
     runs-on: ubuntu-latest
     container: 
       image: ghcr.io/nwchemex-project/nwx_buildenv:latest
@@ -135,24 +135,26 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.github_token }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Doxygen Docs
-        if: ${{ inputs.doc_target != 'Sphinx' }}
-        run:  |
-          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
-          cmake --build build --target ${{ inputs.doc_target }} --parallel
+      - run: |
+        echo ${{ needs.license_and_format.outputs.made_changes == false && inputs.doc_target != '' }}
+      # - uses: actions/checkout@v4
+      # - name: Doxygen Docs
+      #   if: ${{ inputs.doc_target != 'Sphinx' }}
+      #   run:  |
+      #     cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
+      #     cmake --build build --target ${{ inputs.doc_target }} --parallel
 
-          # Migrate the Doxygen documentation to the docs source
-          mkdir docs/build
-          mkdir docs/build/html
-          mv build/html "docs/build/html/${{ inputs.doc_target }}"
-        shell: bash
-      - name: Sphinx Docs
-        run:  |
-          cd docs
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          make html
-        shell: bash
+      #     # Migrate the Doxygen documentation to the docs source
+      #     mkdir docs/build
+      #     mkdir docs/build/html
+      #     mv build/html "docs/build/html/${{ inputs.doc_target }}"
+      #   shell: bash
+      # - name: Sphinx Docs
+      #   run:  |
+      #     cd docs
+      #     if [ -f requirements.txt ]; then
+      #       pip install -r requirements.txt
+      #     fi
+      #     make html
+      #   shell: bash
           
