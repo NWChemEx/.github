@@ -14,20 +14,22 @@
 #
 
 name: Common Merge Workflow
+# Collects common Merge related jobs for the NWX stack, specifically
+# 1. Deploying updated documentation
+# 2. Bumping version tags
 
 on:
   workflow_call:
     inputs:
-      skip_doxygen:
-        description: "Whether or not to attempt to build Doxygen docs"
-        type: boolean
-        required: false
-        default: false
       doc_target:
-        description: "The name of the documentation target"
+        description: "The name of the documentation target. Set to 'Sphinx' to skip doxygen"
         type: string
         required: false
-        default: ''
+        default: 'Sphinx'
+      generate_module_docs:
+        description: "Whether or not to generate PluginPlay Module documentation"
+        type: boolean
+        default: false
     secrets:
       CMAIZE_GITHUB_TOKEN:
         description: "Token passed to CMaize"
@@ -37,6 +39,7 @@ on:
         required: true
 
 jobs:
+  # Deploy updated documentation
   deploy_docs:
     runs-on: ubuntu-latest
     container: 
@@ -46,10 +49,26 @@ jobs:
         password: ${{ secrets.github_token }}
     steps:
       - uses: actions/checkout@v4
-      - name: Doxygen Docs
-        if: ${{ inputs.skip_doxygen == 'false' }}
-        run:  |
-          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
+      - name: Build Only Docs
+        if: |
+          inputs.generate_module_docs == false && inputs.doc_target != 'Sphinx'
+        run: |
+          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
+        shell: bash
+      - name: Build Library
+        if: inputs.generate_module_docs == true
+        env:
+          CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
+        run: |
+          toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
+          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
+
+          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON \
+          -DCMAKE_INSTALL_PREFIX=./install \
+          -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
+      - name: Build Doxygen Docs
+        if: ${{ inputs.doc_target != 'Sphinx' }}
+        run: |
           cmake --build build --target ${{ inputs.doc_target }} --parallel
 
           # Migrate the Doxygen documentation to the docs source
@@ -57,10 +76,25 @@ jobs:
           mkdir docs/build/html
           mv build/html "docs/build/html/${{ inputs.doc_target }}"
         shell: bash
-      - name: Module Docs
-        run: echo "Write me"
+      - name: Build Library
+        if: inputs.generate_module_docs == true
+        env:
+          CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
+        run: |
+          toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
+          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
+
+          cmake -Bbuild -H. -GNinja \
+          -DCMAKE_INSTALL_PREFIX=./install \
+          -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
+       
+          cmake --build build --parallel
+        shell: bash
+      - name: Generate Module Docs
+        if: inputs.generate_module_docs == true
+        uses: NWChemEx-Project/.github/actions/generate_module_docs@master
       - name: Sphinx Docs
-        run:  |
+        run: |
           cd docs
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
@@ -73,6 +107,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           publish_dir: ./docs/build/html
 
+  # Bump the version tag
   bump_tag:
     runs-on: ubuntu-latest
     steps:

@@ -14,15 +14,22 @@
 #
 
 name: Common Pull Request Workflow
+# Collects common Pull Request related jobs for the NWX stack, specifically
+# 1. Apply licensing
+# 2. Apply formatting
+# 2. Build and test C++ libraries
+# 3. Test building the documentation
+# Each step can be skipped by setting the corresponding input variable as 
+# an empty string ''.
 
 on:
   workflow_call:
     inputs:
       config_file:
-        description: "The configuration file for SkyWalking Eyes"
+        description: "The license configuration file for SkyWalking Eyes"
         type: string
         required: false
-        default: .licenserc.yaml
+        default: '.licenserc.yaml'
       source_dir:
         description: "Space seperated list of dirs to apply formatting to"
         type: string
@@ -33,13 +40,9 @@ on:
         type: string
         required: false
         default: ''
-      skip_doxygen:
-        description: "Whether or not to attempt to build Doxygen docs"
-        type: boolean
-        required: false
-        default: false
       doc_target:
-        description: "The name of the documentation target"
+        description: "The name of the documentation target. Set to 'Sphinx' to skip doxygen"
+        type: string
         required: false
         default: ''
     secrets:
@@ -48,6 +51,9 @@ on:
         required: false
 
 jobs:
+  # Apply licensing and formatting, then push changes.
+  # If changes are made, the workflow should end and be re-triggered by the
+  # new commit to ensure that the changes don't break anything.
   license_and_format:
     run-ons: ubuntu-latest
     outputs:
@@ -58,11 +64,13 @@ jobs:
           # Need non-default token so changes trigger additional CI
           token: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Add license
+        if: inputs.config_file != ''
         uses: apache/skywalking-eyes@v0.4.0
         with:
           config: ${{ inputs.config_file }}
           mode: fix
       - name: Apply formatting
+        if: inputs.source_dir != ''
         uses: DoozyX/clang-format-lint-action@v0.12
         with:
           source: ${{ inputs.source_dir }}
@@ -77,6 +85,8 @@ jobs:
           author_email: github-actions[bot]@users.noreply.github.com
           message: 'Committing clang-format changes'
 
+  # Build and test C++ libraries.
+  # Runs in a container built on the NWX Build Environment image.
   test_library:
     needs: license_and_format 
     # Only run if no new changes were made above and if compilers isn't empty
@@ -111,10 +121,13 @@ jobs:
           ctest --VV
         shell: bash
 
+  # Test building the documentation.
   test_build_docs:
     needs: license_and_format 
     # Only run if no new changes were made above
-    if: needs.license_and_format.outputs.made_changes == false
+    if: |
+      needs.license_and_format.outputs.made_changes == false &&
+      inputs.doc_target != ''
     runs-on: ubuntu-latest
     container: 
       image: ghcr.io/nwchemex-project/nwx_buildenv:latest
@@ -124,7 +137,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Doxygen Docs
-        if: ${{ inputs.skip_doxygen == 'false' }}
+        if: ${{ inputs.doc_target != 'Sphinx' }}
         run:  |
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
           cmake --build build --target ${{ inputs.doc_target }} --parallel
