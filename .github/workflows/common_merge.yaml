@@ -15,8 +15,8 @@
 
 name: Common Merge Workflow
 # Collects common Merge related jobs for the NWX stack, specifically
-# 1. Deploying updated documentation
-# 2. Bumping version tags
+# 1. Bumping version tags
+# 2. Deploying updated documentation
 
 on:
   workflow_call:
@@ -39,6 +39,18 @@ on:
         required: true
 
 jobs:
+  # Bump the version tag
+  bump_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: haya14busa/action-bumpr@v1
+        with:
+          default_bump_level: patch
+          github_token: ${{ secrets.TAG_TOKEN }}
+          tag_as_user: .github[bot]
+          tag_as_email: .github[bot]@github.com
+
   # Deploy updated documentation
   deploy_docs:
     runs-on: ubuntu-latest
@@ -49,6 +61,7 @@ jobs:
         password: ${{ secrets.github_token }}
     steps:
       - uses: actions/checkout@v4
+      # These next two steps will configure CMake if required
       - name: Build Only Docs
         if: |
           inputs.generate_module_docs == false && inputs.doc_target != 'Sphinx'
@@ -66,6 +79,7 @@ jobs:
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON \
           -DCMAKE_INSTALL_PREFIX=./install \
           -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
+      # Build the Doxygen docs
       - name: Build Doxygen Docs
         if: ${{ inputs.doc_target != 'Sphinx' }}
         run: |
@@ -76,6 +90,7 @@ jobs:
           mkdir docs/build/html
           mv build/html "docs/build/html/${{ inputs.doc_target }}"
         shell: bash
+      # Build the C++ Library if building module docs
       - name: Build Library
         if: inputs.generate_module_docs == true
         env:
@@ -90,9 +105,13 @@ jobs:
        
           cmake --build build --parallel
         shell: bash
+      # Generate the module docs source files
       - name: Generate Module Docs
         if: inputs.generate_module_docs == true
         uses: NWChemEx-Project/.github/actions/generate_module_docs@master
+        with:
+          doc_target: $${{ inputs.doc_target }}
+      # Build the Sphinx docs and then deploy
       - name: Sphinx Docs
         run: |
           cd docs
@@ -105,16 +124,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          publish_dir: ./docs/build/html
-
-  # Bump the version tag
-  bump_tag:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: haya14busa/action-bumpr@v1
-        with:
-          default_bump_level: patch
-          github_token: ${{ secrets.TAG_TOKEN }}
-          tag_as_user: .github[bot]
-          tag_as_email: .github[bot]@github.com
+          publish_dir: ./docs/build/html  
