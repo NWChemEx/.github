@@ -22,7 +22,7 @@ on:
 
 jobs:
   Common-Merge:
-    uses: ./.github/.github/workflows/common_merge.yaml
+    uses: ./.github/workflows/common_merge.yaml
     with:
       doc_target: 'Sphinx'
       generate_module_docs: false
