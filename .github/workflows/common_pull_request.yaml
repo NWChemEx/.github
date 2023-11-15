@@ -136,7 +136,8 @@ jobs:
         password: ${{ secrets.github_token }}
     steps:
       - run: |
-        echo ${{ needs.license_and_format.outputs.made_changes == false }}
+          echo ${{ needs.license_and_format.outputs.made_changes == false && inputs.doc_target != ''}}
+        shell: bash
       # - uses: actions/checkout@v4
       # - name: Doxygen Docs
       #   if: ${{ inputs.doc_target != 'Sphinx' }}
