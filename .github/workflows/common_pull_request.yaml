@@ -55,7 +55,7 @@ jobs:
   # If changes are made, the workflow should end and be re-triggered by the
   # new commit to ensure that the changes don't break anything.
   license_and_format:
-    run-ons: ubuntu-latest
+    runs-on: ubuntu-latest
     outputs:
       made_changes: ${{ steps.commit-changes.outputs.pushed }}
     steps:
