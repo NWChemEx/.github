@@ -73,7 +73,7 @@ workflows can be added in each repo. Here's an example of a repo-specific
       Unique-Job:
         # Other steps unique to the individual repos can be added as Jobs
 
-Generally, these workflows are expected to call to the corresponding reuable
+Generally, these workflows are expected to call to the corresponding reusable
 workflow to handle the reoccurring task and then locally implement any unique
 automations.
 

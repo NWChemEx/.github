@@ -17,8 +17,8 @@ Usage
 
 This script checks that only one library name is passed and that it can import
 pluginplay and the library specified. If the library is a plugin, a module
-manager if constructed and the modules of the library are loaded into it.
-The document_modules is called on the manager.
+manager is constructed and the modules of the library are loaded into it.
+The document_modules function is called on the manager.
 """
 
 if __name__ == "__main__":
