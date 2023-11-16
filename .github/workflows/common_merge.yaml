@@ -37,6 +37,9 @@ on:
       TAG_TOKEN:
         description: "Token used to bump the version tag"
         required: true
+      CONTAINER_REPO_TOKEN:
+        description: "Token to access Github Image Registry"
+        required: true
 
 jobs:
   # Bump the version tag
@@ -58,7 +61,7 @@ jobs:
       image: ghcr.io/nwchemex-project/nwx_buildenv:latest
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.github_token }}
+        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       # These next two steps will configure CMake if required

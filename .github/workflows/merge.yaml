@@ -26,5 +26,4 @@ jobs:
     with:
       doc_target: 'Sphinx'
       generate_module_docs: false
-    secrets:
-      TAG_TOKEN: ${{ secrets.TAG_TOKEN }}
+    secrets: inherit

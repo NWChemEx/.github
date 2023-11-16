@@ -28,5 +28,4 @@ jobs:
       source_dir: ''
       compilers: ''
       doc_target: 'Sphinx'
-    secrets:
-      CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+    secrets: inherit
