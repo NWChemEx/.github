@@ -105,3 +105,15 @@ Common Merge Workflow
 The common workflow for merging a successful pull request applies the correct
 version tag to the resulting commit and deployes the repo's documentation to
 GitHub Pages.
+
+NWX Build Environment Image
+===========================
+
+To avoid rebuilding costly dependencies for the various repos in the NWX stack,
+the building and testing steps in the common workflows run in containers built
+on the image ``ghcr.io/nwchemex-project/nwx_buildenv:latest``. This image 
+defines an Ubuntu based environment where the various dependencies of the stack
+(such as compilers, math libraries, MPI, and other C++ libraries outside) have
+been pre-installed. The files used to build this image are found in
+``NWChemEx-Project/.github/nwx_build_environment``, along side the 
+``buildenv.sh`` script which builds the image through consecutive Docker calls.
