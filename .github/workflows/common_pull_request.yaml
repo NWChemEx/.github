@@ -112,7 +112,7 @@ jobs:
           CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
         run:  |
           toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
-          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> toolchain
+          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> $toolchain
 
           cmake -Bbuild -H. -GNinja \
           -DCMAKE_INSTALL_PREFIX=./install \
