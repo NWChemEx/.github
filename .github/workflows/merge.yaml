@@ -1,4 +1,4 @@
-# Copyright 2021 NWChemEx
+# Copyright 2023 NWChemEx-Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-name: Tag and Release
+
+name: .github Merge Workflow
 
 on:
   push:
@@ -20,7 +21,9 @@ on:
       - master
 
 jobs:
-  tag:
-    uses: NWChemEx-Project/.github/.github/workflows/tag_and_release_master.yaml@master
-    secrets:
-      token: ${{ secrets.TAG_TOKEN }}
+  Common-Merge:
+    uses: ./.github/workflows/common_merge.yaml
+    with:
+      doc_target: 'Sphinx'
+      generate_module_docs: false
+    secrets: inherit

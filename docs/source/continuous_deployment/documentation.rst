@@ -69,21 +69,3 @@ provided in ``CMakeLists.txt``, in lowercase. It can be linked to in your main
 (substituting in the project name for the first ``x``. When Sphinx is run the
 index of the resulting documentation will be located at
 ``docs/build/html/index.html``.
-
-Documentation
-=============
-
-Deployment of documentation to GitHub pages assumes that each repo's
-documentation is written as outlined in previous section. Additionally:
-
-#. Each repo must have the ``build_docs.sh`` workflow script in it's ``.github``
-   directory.
-#. Repositories should include two YAML files: ``test_docs.yaml`` and
-   ``deploy_docs.yaml`` which can be copy/pasted from this repo's versions and
-   modified appropriately.
-#. With 1 and 2 satisfied, when a user submits a PR ``test_docs.yaml`` will
-   ensure the documentation builds.
-#. Once the PR is merged into master ``deploy_docs.yaml`` will build the
-   documentation and push it to the repo's ``gh-pages`` branch.
-#. GitHub will automatically publish the contents of the ``gh-pages`` branch as
-   a GitHub pages website, which can be linked to like any other website.
