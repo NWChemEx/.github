@@ -142,7 +142,7 @@ jobs:
       - name: Doxygen Docs
         if: ${{ inputs.doc_target != 'Sphinx' }}
         run:  |
-          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON \
+          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
           cmake --build build --target ${{ inputs.doc_target }} --parallel
 
           # Migrate the Doxygen documentation to the docs source
