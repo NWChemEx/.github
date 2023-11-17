@@ -42,17 +42,17 @@ on:
         required: true
 
 jobs:
-  # # Bump the version tag
-  # bump_tag:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: haya14busa/action-bumpr@v1
-  #       with:
-  #         default_bump_level: patch
-  #         github_token: ${{ secrets.TAG_TOKEN }}
-  #         tag_as_user: .github[bot]
-  #         tag_as_email: .github[bot]@github.com
+  # Bump the version tag
+  bump_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: haya14busa/action-bumpr@v1
+        with:
+          default_bump_level: patch
+          github_token: ${{ secrets.TAG_TOKEN }}
+          tag_as_user: .github[bot]
+          tag_as_email: .github[bot]@github.com
 
   # Deploy updated documentation
   deploy_docs:
