@@ -13,9 +13,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -100,13 +98,13 @@
            <div itemprop="articleBody">
              
   <div class="section" id="git-and-github-procedures">
-<span id="id1"></span><h1>Git and GitHub Procedures<a class="headerlink" href="#git-and-github-procedures" title="Permalink to this heading"></a></h1>
+<span id="id1"></span><h1>Git and GitHub Procedures<a class="headerlink" href="#git-and-github-procedures" title="Permalink to this headline"></a></h1>
 <p>The purpose of this page is to document typical Git and GitHub workflows and to
 serve as a cheat sheet for remembering the commands.  This page only covers the
 basic aspects related to Git version control and how one uses GitHub to
 contribute code.</p>
 <div class="section" id="git-and-github-background">
-<h2>Git and GitHub Background<a class="headerlink" href="#git-and-github-background" title="Permalink to this heading"></a></h2>
+<h2>Git and GitHub Background<a class="headerlink" href="#git-and-github-background" title="Permalink to this headline"></a></h2>
 <p>As a code base evolves it will have existed in many versions.  Almost all modern
 codes use some form of what is termed “version control” (VC) to manage these
 versions.  Rather than attempting to do VC manually, most developers typically
@@ -168,13 +166,13 @@ integration and code-review).  The following sections detail common Git
 commands and the typical GitHub workflow purposed for the NWChemEx project.</p>
 </div>
 <div class="section" id="common-git-commands">
-<h2>Common Git Commands<a class="headerlink" href="#common-git-commands" title="Permalink to this heading"></a></h2>
+<h2>Common Git Commands<a class="headerlink" href="#common-git-commands" title="Permalink to this headline"></a></h2>
 <p>For the purposes of this tutorial we’ll assume that you’re working with an
 existing Git repo (if you’re not, the easiest way to make a repo is to do so on
 GitHub and then follow GitHub’s prompts).  Once you know which repo you want
 to work on, the first step is to get your own copy (the copy is termed a clone
 in Git lingo).  The command to clone a repo is:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>&lt;path_to_repo&gt;<span class="w"> </span><span class="o">[</span>&lt;where_to_put_repo&gt;<span class="o">]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone &lt;path_to_repo&gt; <span class="o">[</span>&lt;where_to_put_repo&gt;<span class="o">]</span>
 </pre></div>
 </div>
 <p>This will checkout a repo that is located at <code class="docutils literal notranslate"><span class="pre">path_to_repo</span></code> and optionally
@@ -196,7 +194,7 @@ and be relatively bug-free).  This convention is easy to meet if we always
 keep this branch clean (<em>i.e.</em> don’t make your changes to it) and we keep it
 up to date. In an effort to keep the master branch clean the first
 thing you should do is thus make a new branch.  This is done by:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>&lt;branch_name&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout -b &lt;branch_name&gt;
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">branch_name</span></code> is the name of the branch you’ll be working on.  The
@@ -211,7 +209,7 @@ As time goes by and you write more and more code, you’ll reach a point where
 you’ll want to save the branch’s state with Git so that you can revert if
 something goes horribly wrong.  To do this, first you have to tell Git what
 files you want to save:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>&lt;files_to_save&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git add &lt;files_to_save&gt;
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">files_to_save</span></code> is one or more files to save (Linux wild cards work,
@@ -221,14 +219,14 @@ typically referred to as staged).  The staging phase makes it easier for you to
 fine tune what gets saved and what doesn’t.  You can run <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> as many
 times as you want and keep amassing files to save.  It’s useful to note that
 you can get a wealth of information about the current repo’s state via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>status
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git status
 </pre></div>
 </div>
 <p>Among other things, this command will tell you which files are not versioned,
 which versioned files are changed, but not staged, and which versioned files
 are staged. Once you’re happy with the set of staged files, you “commit” them
 via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;&lt;message&gt;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git commit -m <span class="s2">&quot;&lt;message&gt;&quot;</span>
 </pre></div>
 </div>
 <p>This command will save all staged files to your branch and log the commit
@@ -252,7 +250,7 @@ doesn’t have this branch yet, <em>i.e.</em> your commit will make it, skip thi
 as with most things Git will yell at you if you attempt to synchronize with a
 non-existent branch or if that branch is ahead of yours). The command to “pull”
 the other branch’s changes is:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>&lt;branch_name&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git pull origin &lt;branch_name&gt;
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">origin</span></code> is an alias Git automatically defines for you, which points to the
@@ -272,7 +270,7 @@ other repo’s changes (bottom half).  To fix the conflict, you’ll need to del
 the delimiters and manually merge the changes.  Once you’ve done that you
 stage and then commit the file.  Finally, once all conflicts are fixed (if any
 existed) you “push” your changes to the other repo:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>&lt;branch_name&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git push origin &lt;branch_name&gt;
 </pre></div>
 </div>
 <p>While it’s essential to keep the master branch of your repo clean, it’s also
@@ -281,18 +279,18 @@ get to why in a moment).  Synchronization of the the master branch is akin to
 the first half of the procedure we just outlined.  First (assuming you’re
 on your development branch and not the master branch) change to your master
 branch:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>master
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git checkout master
 </pre></div>
 </div>
 <p>then pull the original repo’s master branch via:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>master
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git pull origin master
 </pre></div>
 </div>
 <p>Since you’re following this tutorial there’ll be no problems with the merge
 and everything will go swimmingly.  With your master branch up-to-date you’ll
 want to merge those changes into your active development branch. To do this,
 check-out your development branch and run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>merge<span class="w"> </span>master
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git merge master
 </pre></div>
 </div>
 <p>This will merge the contents of your repo’s master branch into your current
@@ -300,7 +298,7 @@ branch.  Depending on how master has changed conflicts may occur; if they do,
 you simply deal with them as we did above.</p>
 </div>
 <div class="section" id="github-workflow">
-<h2>GitHub Workflow<a class="headerlink" href="#github-workflow" title="Permalink to this heading"></a></h2>
+<h2>GitHub Workflow<a class="headerlink" href="#github-workflow" title="Permalink to this headline"></a></h2>
 <p>The commands from the previous section are complemented by several GitHub
 extensions.  We explain these extensions in this section.  For the purposes
 of this tutorial, let’s say you want to contribute to a very creatively named
@@ -323,7 +321,7 @@ fork, on “GitHubRepo“‘s GitHub page just click the fork button at the top.
 master.  To save yourself some typing later you’ll want to define an alias for
 “GitHubRepo” (origin will be set to “GitHubFork”).  Typically this alias is
 called “upstream”.  To make this alias the command is:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>&lt;path_to_original_repo&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git remote add upstream &lt;path_to_original_repo&gt;
 </pre></div>
 </div>
 <p>It is polite at this point to notify the maintainers of “GitHubRepo” that you’re
@@ -354,13 +352,13 @@ pull command from the last section.  Hence, in order for you to stay
 up-to-date with “GitHubRepo” you’ll need to pull changes from its master
 branch into your local master branch.  The command is similar (and the reason
 we defined the “upstream” alias):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>pull<span class="w"> </span>upstream<span class="w"> </span>master
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git pull upstream master
 </pre></div>
 </div>
 <p>With your local master branch synched, you’ll then want to synch
 “GitHubFork“‘s master branch.  To do this you’ll push the local changes to
 “GitHubFork”.  The command is:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>master
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git push origin master
 </pre></div>
 </div>
 <p>Although not strictly necessary, this step makes it easier for you to recover
@@ -368,7 +366,7 @@ should anything go wrong.  In particular let’s say you accidentally modify you
 local master branch.  By ensuring your “GitHubFork” master branch is a clean
 copy of the “GitHubRepo“‘s at some point in its history you can run (on your
 master branch):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>reset<span class="w"> </span>--hard<span class="w"> </span>origin/master
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git reset --hard origin/master
 </pre></div>
 </div>
 <p>This command will delete all changes made to your current master branch, and
@@ -397,7 +395,7 @@ own computer (or other computers you are using).</p>
 <img alt="../../_images/github_workflow.png" src="../../_images/github_workflow.png" />
 </div>
 <div class="section" id="further-information">
-<h2>Further Information<a class="headerlink" href="#further-information" title="Permalink to this heading"></a></h2>
+<h2>Further Information<a class="headerlink" href="#further-information" title="Permalink to this headline"></a></h2>
 <p>There is much more to both GitHub and Git itself.  The following is a collection
 of tutorials offering additional information on certain topics.</p>
 <ul class="simple">

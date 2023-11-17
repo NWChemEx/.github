@@ -13,9 +13,7 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -102,7 +100,7 @@
            <div itemprop="articleBody">
              
   <div class="section" id="building-nwx-with-vscode">
-<h1>Building NWX with VSCode<a class="headerlink" href="#building-nwx-with-vscode" title="Permalink to this heading"></a></h1>
+<h1>Building NWX with VSCode<a class="headerlink" href="#building-nwx-with-vscode" title="Permalink to this headline"></a></h1>
 <p>Once you’ve minimally added the C++ and CMake extensions it’s time to start
 setting up your build process. For the purposes of this tutorial we assume you
 are using a toolchain file with all of your CMake options. For sake of arguement
@@ -118,7 +116,7 @@ specific we recommend you click on either “Workspace” or folder. The CMake
 settings are then accessed by expanding the “Extensions” settings and navigating
 to “CMake configuration”.</p>
 <div class="section" id="configuring-the-build">
-<h2>Configuring the Build<a class="headerlink" href="#configuring-the-build" title="Permalink to this heading"></a></h2>
+<h2>Configuring the Build<a class="headerlink" href="#configuring-the-build" title="Permalink to this headline"></a></h2>
 <p>The first step is to set the paths of the CMake executables. If the <code class="docutils literal notranslate"><span class="pre">cmake</span></code>
 and <code class="docutils literal notranslate"><span class="pre">ctest</span></code> executables are in your path feel free to skip this step.
 Otherwise set “CMake Path” to the full path to your CMake executable. VSCode
@@ -136,7 +134,7 @@ the underlying build tool, typically <code class="docutils literal notranslate">
 <p>substituting in your toolchain’s path.</p>
 </div>
 <div class="section" id="configuring-the-project-i-e-running-cmake">
-<h2>Configuring the Project (i.e., running CMake)<a class="headerlink" href="#configuring-the-project-i-e-running-cmake" title="Permalink to this heading"></a></h2>
+<h2>Configuring the Project (i.e., running CMake)<a class="headerlink" href="#configuring-the-project-i-e-running-cmake" title="Permalink to this headline"></a></h2>
 <p>Once you’ve setup the options it’s time to actually configure the project. To
 configure say SCF, click on a C++ file or a CMake file in the <code class="docutils literal notranslate"><span class="pre">SCF</span></code> directory.
 The bottom toolbar should show a folder icon with <code class="docutils literal notranslate"><span class="pre">SCF</span></code> next to it; this is
@@ -147,25 +145,25 @@ let CMake detect the kit for you (it’ll end-up using your toolchain file). The
 pick the build type you want (Debug for normal development). After this you
 should see the normal CMake configuration dialog fly by in the terminal. You’ll
 know it’s configured successfully if you get a line like</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--<span class="w"> </span>Build<span class="w"> </span>files<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>written<span class="w"> </span>to:<span class="w"> </span>&lt;your/build/directory/path&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-- Build files have been written to: &lt;your/build/directory/path&gt;
 </pre></div>
 </div>
 </div>
 <div class="section" id="building-the-project">
-<h2>Building the Project<a class="headerlink" href="#building-the-project" title="Permalink to this heading"></a></h2>
+<h2>Building the Project<a class="headerlink" href="#building-the-project" title="Permalink to this headline"></a></h2>
 <p>Once the project has been configured you simply click the word “Build” in the
 toolbar at the bottom. Akin to the configure step, you should see the usual
 build dialog fly by on the terminal.</p>
 </div>
 <div class="section" id="testing-the-project">
-<h2>Testing the Project<a class="headerlink" href="#testing-the-project" title="Permalink to this heading"></a></h2>
+<h2>Testing the Project<a class="headerlink" href="#testing-the-project" title="Permalink to this headline"></a></h2>
 <p>After a successful build you should be able to click the play arrow
 (right-facing triangle) in the bottom toolbar to run the resulting executable
 (assuming you enabled testing by putting <code class="docutils literal notranslate"><span class="pre">BUILD_TESTING=TRUE</span></code> in your
 toolchain file). Again the normal testing output will fly by in the terminal.</p>
 </div>
 <div class="section" id="building-sphinx-documentation">
-<h2>Building Sphinx Documentation<a class="headerlink" href="#building-sphinx-documentation" title="Permalink to this heading"></a></h2>
+<h2>Building Sphinx Documentation<a class="headerlink" href="#building-sphinx-documentation" title="Permalink to this headline"></a></h2>
 <p>As a preliminary step you will need to install the documentation dependencies.
 Each repo should contain instructions on how to do this, which amount to
 something like:</p>

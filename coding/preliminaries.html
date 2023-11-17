@@ -13,9 +13,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -95,11 +93,11 @@
            <div itemprop="articleBody">
              
   <div class="section" id="preliminaries">
-<span id="development-preliminaries"></span><h1>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this heading"></a></h1>
+<span id="development-preliminaries"></span><h1>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline"></a></h1>
 <p>NWChemEx modules are written in C++ and a large part of the setup for developing
 for NWChemEx pertains to setting up a good C++ development environment.</p>
 <div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h2>
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline"></a></h2>
 <p>The NWChemEx build system can build a lot of dependencies for you; however, it
 can’t build everything. You’ll need to get:</p>
 <ul class="simple">
@@ -113,7 +111,7 @@ can’t build everything. You’ll need to get:</p>
 common things.</p>
 </div>
 <div class="section" id="directory-structure">
-<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading"></a></h2>
+<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline"></a></h2>
 <p>Once you have your dependencies you’ll need to get the NWChemEx source code. The
 source code for NWChemEx is spread out over a series of repos. It is strongly
 recommended that you create a folder named something like <code class="docutils literal notranslate"><span class="pre">nwx_workspace</span></code> and
@@ -139,7 +137,7 @@ that to do development in the SCF repo this a complete NWChemEx workspace, you
 don’t need to clone any other repo.</p>
 </div>
 <div class="section" id="toolchain-file">
-<h2>Toolchain File<a class="headerlink" href="#toolchain-file" title="Permalink to this heading"></a></h2>
+<h2>Toolchain File<a class="headerlink" href="#toolchain-file" title="Permalink to this headline"></a></h2>
 <p>The last piece of the preliminary set-up is the toolchain file. By convention
 this is a file named <code class="docutils literal notranslate"><span class="pre">toolchain.cmake</span></code>. Its contents are a series of CMake
 <code class="docutils literal notranslate"><span class="pre">set</span></code> commands like:</p>

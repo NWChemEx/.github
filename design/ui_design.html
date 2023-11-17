@@ -13,9 +13,7 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -122,7 +120,7 @@
            <div itemprop="articleBody">
              
   <div class="section" id="user-interface-design">
-<h1>User Interface Design<a class="headerlink" href="#user-interface-design" title="Permalink to this heading"></a></h1>
+<h1>User Interface Design<a class="headerlink" href="#user-interface-design" title="Permalink to this headline"></a></h1>
 <p>This document outlines the design principles and guidelines for the user
 interface (UI) of NWChemEx. Our main goal is to provide a user-friendly and
 intuitive interface that enables users to carry out a variety of quantum
@@ -130,9 +128,9 @@ chemistry calculations seamlessly. Please note that a graphical user interface
 (GUI) is not part of the current UI design. Other possible UI elements that are
 not part of the current design are noted here <a class="reference internal" href="#not-in-scope"><span class="std std-ref">Not In Scope</span></a>.</p>
 <div class="section" id="design-principles">
-<h2>Design Principles<a class="headerlink" href="#design-principles" title="Permalink to this heading"></a></h2>
+<h2>Design Principles<a class="headerlink" href="#design-principles" title="Permalink to this headline"></a></h2>
 <div class="section" id="pythonic">
-<h3>Pythonic<a class="headerlink" href="#pythonic" title="Permalink to this heading"></a></h3>
+<h3>Pythonic<a class="headerlink" href="#pythonic" title="Permalink to this headline"></a></h3>
 <p>While NWChemEx is mainly written in C++ for performance, the UI is designed for
 and implemented in Python, which is arguably one of the most intuitive and
 widely-used programming languages in scientific computing. This removes the
@@ -147,7 +145,7 @@ implementation language choices can be found in
 <a class="reference internal" href="overall_justifications/why_python.html#why-is-the-nwchemex-api-written-in-python"><span class="std std-ref">Why is the NWChemEx API Written in Python?</span></a>.</p>
 </div>
 <div class="section" id="performant">
-<h3>Performant<a class="headerlink" href="#performant" title="Permalink to this heading"></a></h3>
+<h3>Performant<a class="headerlink" href="#performant" title="Permalink to this headline"></a></h3>
 <p>Performance is critical for NWChemEx with kernels supporting optimized MPI
 parallelization and GPU offloading. The UI is designed to uphold this
 performance standard and to provide the user with critical control elements to
@@ -156,7 +154,7 @@ possible by avoiding unnecessary copies or data movements and enabling user to
 access and modify the MPI communicator and toggle between CPU-based/GPU-offloaded algorithms.</p>
 </div>
 <div class="section" id="light-weight">
-<h3>Light weight<a class="headerlink" href="#light-weight" title="Permalink to this heading"></a></h3>
+<h3>Light weight<a class="headerlink" href="#light-weight" title="Permalink to this headline"></a></h3>
 <p>Following from performance, the UI should shuttle data into C++ as quickly as
 possible.For user convenience some conversions may be necessary (<em>e.g.</em>, our
 <cite>Molecule</cite> class is never going to do string parsing), but the set of such
@@ -164,14 +162,14 @@ conversions should be minimal, or limited to those supported by some other
 library (which we agree to take on as a dependency).</p>
 </div>
 <div class="section" id="user-friendly">
-<h3>User-friendly<a class="headerlink" href="#user-friendly" title="Permalink to this heading"></a></h3>
+<h3>User-friendly<a class="headerlink" href="#user-friendly" title="Permalink to this headline"></a></h3>
 <p>We aim to make our UI intuitive and simple particularly for the most common use
 cases to minimize the learning curve for beginners. The UI is also designed to
 provide user-friendly error handling, offering clear and actionable feedback
 when something goes wrong, guiding users to resolve issues effectively.</p>
 </div>
 <div class="section" id="tool-friendly">
-<h3>Tool-friendly<a class="headerlink" href="#tool-friendly" title="Permalink to this heading"></a></h3>
+<h3>Tool-friendly<a class="headerlink" href="#tool-friendly" title="Permalink to this headline"></a></h3>
 <p>In some workflows, NWChemEx can be used as a library driven by another code,
 rather than directly by a user. Therefore, our UI needs to avoid assuming that
 it is the top layer in order to better integrate into external tools.</p>
@@ -180,7 +178,7 @@ element implied by this combined with the performance consideration. Python-base
 interface is also useful to support many external tools easily.</p>
 </div>
 <div class="section" id="minimal-i-o">
-<h3>Minimal I/O<a class="headerlink" href="#minimal-i-o" title="Permalink to this heading"></a></h3>
+<h3>Minimal I/O<a class="headerlink" href="#minimal-i-o" title="Permalink to this headline"></a></h3>
 <p>Many quantum chemistry codes are designed to use input/output (I/O) files as
 their primary (sometimes only) user interface. Users are expected to provide
 input files in certain format and parse output files to extract the information
@@ -192,7 +190,7 @@ This enables better interactivity and allows for more efficient use of the code
 as a library.</p>
 </div>
 <div class="section" id="interactive">
-<h3>Interactive<a class="headerlink" href="#interactive" title="Permalink to this heading"></a></h3>
+<h3>Interactive<a class="headerlink" href="#interactive" title="Permalink to this headline"></a></h3>
 <p>The UI should support interactivity, allowing users to run the code in a Jupyter
 notebook or IPython shell. This is particularly important for beginners who are
 not familiar with the code and want to explore its capabilities and for
@@ -200,7 +198,7 @@ education. It is also important for visualization and for workflows supporting
 machine learning applications.</p>
 </div>
 <div class="section" id="limited-results">
-<h3>Limited results<a class="headerlink" href="#limited-results" title="Permalink to this heading"></a></h3>
+<h3>Limited results<a class="headerlink" href="#limited-results" title="Permalink to this headline"></a></h3>
 <p>In theory, there’s a very large set of results a user could want. Thankfully
 most users target the same quantities. The UI should focus on those quantities.</p>
 <p>The most common quantities are: energy, molecular-orbital coefficients,
@@ -208,7 +206,7 @@ gradients, vibrational frequencies, and geometries (including minimum energy,
 transition states, reaction paths, etc.).</p>
 </div>
 <div class="section" id="limited-inputs">
-<h3>Limited inputs<a class="headerlink" href="#limited-inputs" title="Permalink to this heading"></a></h3>
+<h3>Limited inputs<a class="headerlink" href="#limited-inputs" title="Permalink to this headline"></a></h3>
 <p>Generally speaking the inputs required for the aforementioned results tend to be
 the molecule, level of theory (method plus basis set), and method parameters.
 While the set of potential parameters is huge, again there are only a handful of
@@ -217,19 +215,19 @@ commonly used parameters.</p>
 iterations, and convergence criteria.</p>
 </div>
 <div class="section" id="focus-on-common-tasks">
-<h3>Focus on common tasks<a class="headerlink" href="#focus-on-common-tasks" title="Permalink to this heading"></a></h3>
+<h3>Focus on common tasks<a class="headerlink" href="#focus-on-common-tasks" title="Permalink to this headline"></a></h3>
 <p>The UI targets the most common use cases (see <a class="reference internal" href="#common-tasks"><span class="std std-ref">Common Quantum Chemistry Calculations</span></a>), but should
 try to be flexible. At some point, harnessing the full power of the code
 requires forgoing the UI and dropping down to PluginPlay’s API.</p>
 </div>
 <div class="section" id="minimal-dependencies">
-<h3>Minimal dependencies<a class="headerlink" href="#minimal-dependencies" title="Permalink to this heading"></a></h3>
+<h3>Minimal dependencies<a class="headerlink" href="#minimal-dependencies" title="Permalink to this headline"></a></h3>
 <p>The UI is designed to be a thin-layer on top of the PluginPlay API and should
 have minimum number of dependencies. This improves maintainability and reduces
 the risk of breaking the code due to changes in the dependencies.</p>
 </div>
 <div class="section" id="archiving-and-reproducibility">
-<h3>Archiving and reproducibility<a class="headerlink" href="#archiving-and-reproducibility" title="Permalink to this heading"></a></h3>
+<h3>Archiving and reproducibility<a class="headerlink" href="#archiving-and-reproducibility" title="Permalink to this headline"></a></h3>
 <p>The UI should support archiving and reproducibility by providing the user with a
 way to save the input and output data for each calculation. This not only serves
 as a tool for managing and organizing data but also plays an integral role in
@@ -237,7 +235,7 @@ facilitating reproducibility.</p>
 </div>
 </div>
 <div class="section" id="common-quantum-chemistry-calculations">
-<span id="common-tasks"></span><h2>Common Quantum Chemistry Calculations<a class="headerlink" href="#common-quantum-chemistry-calculations" title="Permalink to this heading"></a></h2>
+<span id="common-tasks"></span><h2>Common Quantum Chemistry Calculations<a class="headerlink" href="#common-quantum-chemistry-calculations" title="Permalink to this headline"></a></h2>
 <p>As described in the design principles, the UI should enable users to conduct
 commonly used quantum chemistry calculations such as single-point energies and
 geometry optimizations in as few steps as possible. It should also be flexible
@@ -282,9 +280,9 @@ PySCF, PSI4, and MolSSI QCEngine. Finally, we will provide an NWChemEx example
 and discuss about the choices made.</p>
 </div>
 <div class="section" id="existing-python-based-uis">
-<h2>Existing Python-based UIs<a class="headerlink" href="#existing-python-based-uis" title="Permalink to this heading"></a></h2>
+<h2>Existing Python-based UIs<a class="headerlink" href="#existing-python-based-uis" title="Permalink to this headline"></a></h2>
 <div class="section" id="pyscf">
-<h3>PySCF<a class="headerlink" href="#pyscf" title="Permalink to this heading"></a></h3>
+<h3>PySCF<a class="headerlink" href="#pyscf" title="Permalink to this headline"></a></h3>
 <p>PySCF is a Python-based open-source quantum chemistry package distributed under
 the Apache License 2.0. The code is written mostly in Python (~90%), while
 computational hot spots are written in C following C89 standard. Most functions
@@ -305,7 +303,7 @@ and integrals with the given basis set and rhf is the object (type
 computed using the <code class="docutils literal notranslate"><span class="pre">kernel()</span></code> function.</p>
 </div>
 <div class="section" id="psi4">
-<h3>PSI4<a class="headerlink" href="#psi4" title="Permalink to this heading"></a></h3>
+<h3>PSI4<a class="headerlink" href="#psi4" title="Permalink to this headline"></a></h3>
 <p>PSI4 is a C++/Python (70%/30%) open-source quantum chemistry package distributed
 under the LGPL3 license. PSI4 provides two different types of UI referred to as
 Psithon and PsiAPI modes. In the Psithon mode, the user writes an input file in
@@ -328,7 +326,7 @@ default energy is computed for the last molecule defined with the
 argument.</p>
 </div>
 <div class="section" id="qcengine">
-<h3>QCEngine<a class="headerlink" href="#qcengine" title="Permalink to this heading"></a></h3>
+<h3>QCEngine<a class="headerlink" href="#qcengine" title="Permalink to this headline"></a></h3>
 <p>QCEngine is a general purpose quantum chemistry program interface. It is a
 Python library that provides a common API for quantum chemistry programs.
 QCEngine is an open-source package distributed under the Apache License 2.0.</p>
@@ -351,7 +349,7 @@ with a schema defined by QCElemental.</p>
 </div>
 </div>
 <div class="section" id="current-nwchemex-ui">
-<h2>Current NWChemEx UI<a class="headerlink" href="#current-nwchemex-ui" title="Permalink to this heading"></a></h2>
+<h2>Current NWChemEx UI<a class="headerlink" href="#current-nwchemex-ui" title="Permalink to this headline"></a></h2>
 <p>The backbone of the current NWChemEx UI is the <cite>calculate()</cite> function. This
 function enables users to run quantum chemistry methods implemented in NWChemEx,
 with a very simple interface. The signature of this function is given below.</p>
@@ -391,7 +389,7 @@ specifying only the required arguments as shown below.</p>
 molecule is a closed-shell system and default value for the <code class="docutils literal notranslate"><span class="pre">task</span></code> is a single
 point energy calculation.</p>
 <div class="section" id="parallel-calculations">
-<h3>Parallel calculations<a class="headerlink" href="#parallel-calculations" title="Permalink to this heading"></a></h3>
+<h3>Parallel calculations<a class="headerlink" href="#parallel-calculations" title="Permalink to this headline"></a></h3>
 <p>NWChemEx also provides a simple interface to run calculations in parallel. Here,
 we provide an example where the user wants to run a potential energy surface
 scan, which is basically an embarrassingly parallel workflow composed of single
@@ -423,7 +421,7 @@ workflow in two different ways:</p>
 </div>
 </div>
 <div class="section" id="not-in-scope">
-<span id="id2"></span><h2>Not In Scope<a class="headerlink" href="#not-in-scope" title="Permalink to this heading"></a></h2>
+<span id="id2"></span><h2>Not In Scope<a class="headerlink" href="#not-in-scope" title="Permalink to this headline"></a></h2>
 <p><strong>Graphical user interface (GUI)</strong></p>
 <p>Arguably a GUI represents the pinnacle of UX; however, we presently are focused
 on a programmatic UI. Implementing a GUI is an orthogonal task that can benefit

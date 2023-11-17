@@ -13,9 +13,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -100,7 +98,7 @@
            <div itemprop="articleBody">
              
   <div class="section" id="python-development-workflow">
-<span id="development-python-development-workflow"></span><h1>Python Development Workflow<a class="headerlink" href="#python-development-workflow" title="Permalink to this heading"></a></h1>
+<span id="development-python-development-workflow"></span><h1>Python Development Workflow<a class="headerlink" href="#python-development-workflow" title="Permalink to this headline"></a></h1>
 <p>This page is intended to get you up and running so that you can develop for
 NWX from Python. These instructions walk you through getting to a point
 where you can do <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">nwchemex</span></code> in Python.</p>
@@ -110,17 +108,17 @@ where you can do <code class="docutils literal notranslate"><span class="pre">im
 instructions with the build instructions in the NWChemEx repo.</p>
 </div>
 <div class="section" id="step-0-preliminaries">
-<h2>Step 0: Preliminaries<a class="headerlink" href="#step-0-preliminaries" title="Permalink to this heading"></a></h2>
+<h2>Step 0: Preliminaries<a class="headerlink" href="#step-0-preliminaries" title="Permalink to this headline"></a></h2>
 <p>The Python workflow builds off of the <a class="reference internal" href="../preliminaries.html#development-preliminaries"><span class="std std-ref">Preliminaries</span></a> setup.</p>
 </div>
 <div class="section" id="step-1-python-setup">
-<h2>Step 1: Python Setup<a class="headerlink" href="#step-1-python-setup" title="Permalink to this heading"></a></h2>
+<h2>Step 1: Python Setup<a class="headerlink" href="#step-1-python-setup" title="Permalink to this headline"></a></h2>
 <p>When doing Python development it’s always a good idea to do so in a virtual
 environment. Assuming you completed the preliminary step, run these commands
 in the NWChemEx workspace directory you created:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>&lt;virtual_environment_name&gt;
-<span class="nb">source</span><span class="w"> </span>&lt;virtual_environment_name&gt;/bin/activate
-pip<span class="w"> </span>install<span class="w"> </span>cppyy
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m venv &lt;virtual_environment_name&gt;
+<span class="nb">source</span> &lt;virtual_environment_name&gt;/bin/activate
+pip install cppyy
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">&lt;virtual_environment_name&gt;</span></code> should be replaced with whatever you want to call
@@ -146,14 +144,14 @@ you can add:</p>
 <a class="reference external" href="https://github.com/NWChemEx-Project/.github/issues/27">issue</a>.</p>
 </div>
 <div class="section" id="step-2-build-nwchemex">
-<h2>Step 2: Build NWChemEx<a class="headerlink" href="#step-2-build-nwchemex" title="Permalink to this heading"></a></h2>
+<h2>Step 2: Build NWChemEx<a class="headerlink" href="#step-2-build-nwchemex" title="Permalink to this headline"></a></h2>
 <p>Instructions for building NWChemEx can be found
 <a class="reference external" href="https://nwchemex-project.github.io/NWChemEx/installation/building.html">here</a>.</p>
 <p>For the sake of this tutorial we’ll assume that <code class="docutils literal notranslate"><span class="pre">${BUILD_DIR}</span></code> is the build
 directory where NWChemEx was built.</p>
 </div>
 <div class="section" id="step-3-python-path">
-<h2>Step 3: Python Path<a class="headerlink" href="#step-3-python-path" title="Permalink to this heading"></a></h2>
+<h2>Step 3: Python Path<a class="headerlink" href="#step-3-python-path" title="Permalink to this headline"></a></h2>
 <p>After Step 2, the NWChemEx Python modules will reside at
 <code class="docutils literal notranslate"><span class="pre">${BUILD_DIR}/Python</span></code> so assuming you have a Python script <code class="docutils literal notranslate"><span class="pre">test.py</span></code> which
 contains:</p>
@@ -163,7 +161,7 @@ contains:</p>
 </pre></div>
 </div>
 <p>You’ll have to run <code class="docutils literal notranslate"><span class="pre">test.py</span></code> like:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="si">${</span><span class="nv">BUILD_DIR</span><span class="si">}</span>/Python<span class="w"> </span>python3<span class="w"> </span>test.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="si">${</span><span class="nv">BUILD_DIR</span><span class="si">}</span>/Python python3 test.py
 </pre></div>
 </div>
 <p>(or similarly correctly set up the Python path).</p>

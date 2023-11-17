@@ -13,9 +13,7 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -116,26 +114,26 @@
            <div itemprop="articleBody">
              
   <div class="section" id="design-of-the-python-binding-architecture">
-<h1>Design of the Python Binding Architecture<a class="headerlink" href="#design-of-the-python-binding-architecture" title="Permalink to this heading"></a></h1>
+<h1>Design of the Python Binding Architecture<a class="headerlink" href="#design-of-the-python-binding-architecture" title="Permalink to this headline"></a></h1>
 <p>Section <a class="reference internal" href="why_python.html#why-is-the-nwchemex-api-written-in-python"><span class="std std-ref">Why is the NWChemEx API Written in Python?</span></a> discusses why we want
 a Python API for NWChemEx. This page records the decisions which went into
 designing NWChemEx’s Python bindings.</p>
 <div class="section" id="what-are-python-bindings">
-<h2>What are Python bindings?<a class="headerlink" href="#what-are-python-bindings" title="Permalink to this heading"></a></h2>
+<h2>What are Python bindings?<a class="headerlink" href="#what-are-python-bindings" title="Permalink to this headline"></a></h2>
 <p>Presently, by “Python bindings” we are specifically referring to code forming
 an interoperability layer between C/C++ code and Python. This layer allows
 Python objects, functions, data, etc. to seamlessly interact with C++ objects,
 functions, data, etc. and vice versa.</p>
 </div>
 <div class="section" id="why-do-we-need-python-bindings">
-<h2>Why do we need Python bindings?<a class="headerlink" href="#why-do-we-need-python-bindings" title="Permalink to this heading"></a></h2>
+<h2>Why do we need Python bindings?<a class="headerlink" href="#why-do-we-need-python-bindings" title="Permalink to this headline"></a></h2>
 <p>Following from the design discussion in
 <a class="reference internal" href="why_python.html#why-is-the-nwchemex-api-written-in-python"><span class="std std-ref">Why is the NWChemEx API Written in Python?</span></a>, NWChemEx’s high-level API is
 assumed to be Python-based, but the guts of NWChemEx are written in C++. Hence,
 to expose the C++ guts to Python we will need to write Python bindings.</p>
 </div>
 <div class="section" id="python-binding-considerations">
-<span id="pb-considerations"></span><h2>Python Binding Considerations<a class="headerlink" href="#python-binding-considerations" title="Permalink to this heading"></a></h2>
+<span id="pb-considerations"></span><h2>Python Binding Considerations<a class="headerlink" href="#python-binding-considerations" title="Permalink to this headline"></a></h2>
 <p>In creating our Python bindings, and choosing the library to help us create the
 bindings, we have identified the following considerations:</p>
 <dl class="simple" id="pb-diff-lang">
@@ -157,10 +155,10 @@ be easy to apply, if not automatic, for such features.</p></li>
 and that Python developers will too. We thus reject solutions which require
 the developer to limit the features they use throughout the code.</p>
 <ul class="simple">
-<li><p>Combined with <a class="reference internal" href="#pb-diff-lang"><span class="std std-ref">Different languages</span></a> we must also acknowledge that at the
+<li><p>Combined with <span class="xref std std-ref">pb_diff_lang</span> we must also acknowledge that at the
 C++/Python API we may need to limit language features in order to perform
 the handoff. Once the handoff is accomplished, solutions which satisfy
-<a class="reference internal" href="#pb-features"><span class="std std-ref">Full featured</span></a> will allow users to resume using the full feature set
+<span class="xref std std-ref">pb_features</span> will allow users to resume using the full feature set
 of the respective language.</p></li>
 </ul>
 </dd>
@@ -187,7 +185,7 @@ languages.</p>
 <li><p>We particularly want to avoid source-to-source translators as they have a
 tendency to have underwhelming performance and limited feature sets.</p></li>
 <li><p>As a corollary, it is fine if the tool internally uses an intermediate
-representation; <a class="reference internal" href="#pb-minimally-invasive"><span class="std std-ref">Minimally invasive</span></a> is really focused on avoiding
+representation; <span class="xref std std-ref">pb_minimally_invasive</span> is really focused on avoiding
 making the developer produce a representation of the code in a language
 other than C++ or Python.</p></li>
 </ul>
@@ -209,7 +207,7 @@ documentation and/or StackOverflow-like help.</p>
 </dl>
 </div>
 <div class="section" id="existing-choices">
-<span id="pb-existing-choices"></span><h2>Existing Choices<a class="headerlink" href="#existing-choices" title="Permalink to this heading"></a></h2>
+<span id="pb-existing-choices"></span><h2>Existing Choices<a class="headerlink" href="#existing-choices" title="Permalink to this headline"></a></h2>
 <p>Writing bindings directly with Python’s C API is a tedious task. For that
 reason, a variety of software libraries/packages have been created with the
 intent of aiding in generating Python bindings. They are listed below (in
@@ -225,7 +223,7 @@ acknowledge that the descriptions for packages we have used are heavily
 biased based on our experiences with those packages.</p>
 </div>
 <div class="section" id="boost-python">
-<h3>Boost.Python<a class="headerlink" href="#boost-python" title="Permalink to this heading"></a></h3>
+<h3>Boost.Python<a class="headerlink" href="#boost-python" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>GitHub: <a class="reference external" href="https://github.com/boostorg/python">https://github.com/boostorg/python</a></p>
 <ul>
@@ -255,14 +253,14 @@ of the bindings suffer.</p></li>
 </ul>
 </div>
 <div class="section" id="c-foreign-function-interface-cffi">
-<h3>C Foreign Function Interface (CFFI)<a class="headerlink" href="#c-foreign-function-interface-cffi" title="Permalink to this heading"></a></h3>
+<h3>C Foreign Function Interface (CFFI)<a class="headerlink" href="#c-foreign-function-interface-cffi" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Docs: <a class="reference external" href="https://cffi.readthedocs.io/en/latest/">https://cffi.readthedocs.io/en/latest/</a></p></li>
 </ul>
 <p>TODO: Look at CFFI</p>
 </div>
 <div class="section" id="cppyy">
-<span id="id1"></span><h3>Cppyy<a class="headerlink" href="#cppyy" title="Permalink to this heading"></a></h3>
+<span id="id1"></span><h3>Cppyy<a class="headerlink" href="#cppyy" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>GitHub: <a class="reference external" href="https://github.com/wlav/cppyy">https://github.com/wlav/cppyy</a></p>
 <ul>
@@ -275,7 +273,7 @@ of the bindings suffer.</p></li>
 <p>Cppyy <span id="id2"><sup><a class="reference internal" href="../../bibliography/bibliography.html#id2" title="Wim T. L. P. Lavrijsen and Aditi Dutta. High-performance python-C++ bindings with PyPy and Cling. In Proceedings of the 6th Workshop on Python for High-Performance and Scientific Computing, PyHPC '16, 27–35. IEEE Press, 2016.">3</a></sup></span> piggybacks off of the LLVM suite of tools to fully
 automate the creation of dynamic Python bindings. In practice, the automatic
 bindings are created using Cppyy’s own one-to-one mapping between C++ and
-Python. It is worth noting, that because of <a class="reference internal" href="#pb-diff-lang"><span class="std std-ref">Different languages</span></a>, this one-to-one
+Python. It is worth noting, that because of <span class="xref std std-ref">pb_diff_lang</span>, this one-to-one
 mapping is not unique and represents the preferences of the Cppyy maintainers.</p>
 <p>Pros:</p>
 <ul class="simple">
@@ -331,21 +329,21 @@ CMake practices (namely target-based build systems).</p></li>
 </ul>
 </div>
 <div class="section" id="ctypes">
-<h3>ctypes<a class="headerlink" href="#ctypes" title="Permalink to this heading"></a></h3>
+<h3>ctypes<a class="headerlink" href="#ctypes" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Docs: <a class="reference external" href="https://docs.python.org/3.8/library/ctypes.html">https://docs.python.org/3.8/library/ctypes.html</a></p></li>
 </ul>
 <p>TODO: Look ctypes over.</p>
 </div>
 <div class="section" id="cython">
-<h3>Cython<a class="headerlink" href="#cython" title="Permalink to this heading"></a></h3>
+<h3>Cython<a class="headerlink" href="#cython" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Docs: <a class="reference external" href="https://cython.org/">https://cython.org/</a></p></li>
 </ul>
 <p>TODO: Look Cython over</p>
 </div>
 <div class="section" id="nanobind">
-<h3>nanobind<a class="headerlink" href="#nanobind" title="Permalink to this heading"></a></h3>
+<h3>nanobind<a class="headerlink" href="#nanobind" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>GitHub: <a class="reference external" href="https://github.com/wjakob/nanobind">https://github.com/wjakob/nanobind</a></p>
 <ul>
@@ -374,7 +372,7 @@ CMake).</p></li>
 </ul>
 </div>
 <div class="section" id="pybind11">
-<span id="id4"></span><h3>pybind11<a class="headerlink" href="#pybind11" title="Permalink to this heading"></a></h3>
+<span id="id4"></span><h3>pybind11<a class="headerlink" href="#pybind11" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>GitHub: <a class="reference external" href="https://github.com/pybind/pybind11">https://github.com/pybind/pybind11</a></p>
 <ul>
@@ -407,28 +405,28 @@ on the information provided during the registration process.</p>
 </ul>
 </div>
 <div class="section" id="pybindgen">
-<h3>PyBindGen<a class="headerlink" href="#pybindgen" title="Permalink to this heading"></a></h3>
+<h3>PyBindGen<a class="headerlink" href="#pybindgen" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Docs: <a class="reference external" href="https://pybindgen.readthedocs.io/en/latest/">https://pybindgen.readthedocs.io/en/latest/</a></p></li>
 </ul>
 <p>TODO: Analyze</p>
 </div>
 <div class="section" id="shiboken">
-<h3>Shiboken<a class="headerlink" href="#shiboken" title="Permalink to this heading"></a></h3>
+<h3>Shiboken<a class="headerlink" href="#shiboken" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Docs: <a class="reference external" href="https://doc.qt.io/qtforpython-6/shiboken6/index.html">https://doc.qt.io/qtforpython-6/shiboken6/index.html</a></p></li>
 </ul>
 <p>TODO: Analyze.</p>
 </div>
 <div class="section" id="sip">
-<h3>SIP<a class="headerlink" href="#sip" title="Permalink to this heading"></a></h3>
+<h3>SIP<a class="headerlink" href="#sip" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Docs: <a class="reference external" href="https://www.riverbankcomputing.com/static/Docs/sip/introduction.html">https://www.riverbankcomputing.com/static/Docs/sip/introduction.html</a></p></li>
 </ul>
 <p>TODO: Take a better look at SIP</p>
 </div>
 <div class="section" id="swig">
-<h3>SWIG<a class="headerlink" href="#swig" title="Permalink to this heading"></a></h3>
+<h3>SWIG<a class="headerlink" href="#swig" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>Website: <a class="reference external" href="https://swig.org/">https://swig.org/</a></p></li>
 </ul>
@@ -436,18 +434,18 @@ on the information provided during the registration process.</p>
 </div>
 </div>
 <div class="section" id="nwchemex-python-binding-strategy">
-<h2>NWChemEx Python Binding Strategy<a class="headerlink" href="#nwchemex-python-binding-strategy" title="Permalink to this heading"></a></h2>
+<h2>NWChemEx Python Binding Strategy<a class="headerlink" href="#nwchemex-python-binding-strategy" title="Permalink to this headline"></a></h2>
 <p>This section describes the evolution of the NWChemEx design strategy for Python
 bindings.</p>
 <div class="section" id="original-design">
-<h3>Original Design<a class="headerlink" href="#original-design" title="Permalink to this heading"></a></h3>
+<h3>Original Design<a class="headerlink" href="#original-design" title="Permalink to this headline"></a></h3>
 <p>pybind11 was the original choice and was preferred to Boost.Python on account
 of the fact that, at the time, the NWChemEx team was trying to avoid
 adding Boost to the stack. A number of team members, had had previous
 experience with pybind11 which facilitated the decision.</p>
 </div>
 <div class="section" id="migration-to-cppyy">
-<h3>Migration to Cppyy<a class="headerlink" href="#migration-to-cppyy" title="Permalink to this heading"></a></h3>
+<h3>Migration to Cppyy<a class="headerlink" href="#migration-to-cppyy" title="Permalink to this headline"></a></h3>
 <p>After work had begun on the initial bindings, the existence of Cppyy was noted
 and the decision was then made to switch to Cppyy to take advantage of its
 automatic bindings. The initial design was relatively simple, a CMake module
@@ -457,14 +455,14 @@ a <code class="docutils literal notranslate"><span class="pre">__init__.py</span
 is then all that is necessary to use the library from Python.</p>
 </div>
 <div class="section" id="combined-pybind11-cppyy">
-<h3>Combined Pybind11/Cppyy<a class="headerlink" href="#combined-pybind11-cppyy" title="Permalink to this heading"></a></h3>
+<h3>Combined Pybind11/Cppyy<a class="headerlink" href="#combined-pybind11-cppyy" title="Permalink to this headline"></a></h3>
 <p>In practice, trying to manage Cppyy through a generated <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> file
 led to a somewhat substantial amount of CMake infrastructure aimed at performing
 introspection of the C++ project. Furthermore, despite several years of
 development, this CMake infrastructure still did not satisfy all of the
 considerations raised in <a class="reference internal" href="#pb-considerations"><span class="std std-ref">Python Binding Considerations</span></a>. Notably, the CMake
-infrastructure did not satisfy  <a class="reference internal" href="#pb-native-apis"><span class="std std-ref">Native APIs</span></a>. In practice, Cppyy
-suggests two mechanisms for  addressing <a class="reference internal" href="#pb-native-apis"><span class="std std-ref">Native APIs</span></a>: pythonizations
+infrastructure did not satisfy  <span class="xref std std-ref">pb_native_apis</span>. In practice, Cppyy
+suggests two mechanisms for  addressing <span class="xref std std-ref">pb_native_apis</span>: pythonizations
 and writing a wrapper layer. Neither of these solutions are CMake-based
 (pythonizations are C++-based and the wrapper layer is Python-based).</p>
 <p>The need to write C++-based, or Python-based, binding code somewhat negates the
@@ -477,7 +475,7 @@ instead opted to expose those parts with pybind11 (which we were already
 familiar with). For the remainder of the stack we will continue to use Cppyy.
 This is summarized below.</p>
 <div class="section" id="simde-bindings">
-<h4>SimDE Bindings<a class="headerlink" href="#simde-bindings" title="Permalink to this heading"></a></h4>
+<h4>SimDE Bindings<a class="headerlink" href="#simde-bindings" title="Permalink to this headline"></a></h4>
 <div class="figure align-center" id="id6">
 <span id="fig-simde-exposure"></span><img alt="../../_images/simde_exposure.png" src="../../_images/simde_exposure.png" />
 <p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Current status of pybind11 Python bindings for SimDE.</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
@@ -503,7 +501,7 @@ type of the property type (assuming the types comprising the property type’s
 API are already exposed, which they will be if they are in Chemist).</p>
 </div>
 <div class="section" id="plugin-bindings">
-<h4>Plugin Bindings<a class="headerlink" href="#plugin-bindings" title="Permalink to this heading"></a></h4>
+<h4>Plugin Bindings<a class="headerlink" href="#plugin-bindings" title="Permalink to this headline"></a></h4>
 <div class="figure align-center" id="id7">
 <span id="fig-plugin-exposure"></span><img alt="../../_images/plugin_exposure.png" src="../../_images/plugin_exposure.png" />
 <p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Summary of how plugins are exposed to Python/C++.</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
@@ -522,7 +520,7 @@ plugins Python bindings can be automatically generated with a single line of
 code.</p>
 </div>
 <div class="section" id="user-api">
-<h4>User API<a class="headerlink" href="#user-api" title="Permalink to this heading"></a></h4>
+<h4>User API<a class="headerlink" href="#user-api" title="Permalink to this headline"></a></h4>
 <div class="figure align-center" id="id8">
 <span id="fig-user-api"></span><img alt="../../_images/user_api.png" src="../../_images/user_api.png" />
 <p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Summary of user API interactions with Python bindings.</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
@@ -550,7 +548,7 @@ all.</p>
 </div>
 </div>
 <div class="section" id="references-and-additional-resources">
-<h2>References and Additional Resources<a class="headerlink" href="#references-and-additional-resources" title="Permalink to this heading"></a></h2>
+<h2>References and Additional Resources<a class="headerlink" href="#references-and-additional-resources" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://realpython.com/python-bindings-overview/">This</a> tutorial covers
 some of the other options available in more detail and was used to partially
