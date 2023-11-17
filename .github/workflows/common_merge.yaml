@@ -64,23 +64,16 @@ jobs:
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - name: Check inputs and expressions
-        run: |
-          echo ${{ inputs.generate_module_docs }}
-          echo ${{ inputs.generate_module_docs == false }}
-          echo ${{ inputs.doc_target }}
-          echo ${{ inputs.doc_target != 'Sphinx' }}
-        shell: bash
       # These next two steps will configure CMake if required
       - name: Configure Only Docs
         if: |
-          inputs.generate_module_docs == 'false' && 
+          inputs.generate_module_docs == false && 
           inputs.doc_target != 'Sphinx'
         run: |
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
         shell: bash
       - name: Configure Library
-        if: inputs.generate_module_docs == 'true'
+        if: inputs.generate_module_docs == true
         env:
           CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
         run: |
