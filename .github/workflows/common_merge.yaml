@@ -70,6 +70,7 @@ jobs:
           echo ${{ inputs.generate_module_docs == 'false' }}
           echo ${{ inputs.doc_target }}
           echo ${{ inputs.doc_target != 'Sphinx' }}
+        shell: bash
       # These next two steps will configure CMake if required
       - name: Configure Only Docs
         if: |
