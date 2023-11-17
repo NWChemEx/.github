@@ -64,6 +64,12 @@ jobs:
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+      - name: Check inputs and expressions
+        run: |
+          echo ${{ inputs.generate_module_docs }}
+          echo ${{ inputs.generate_module_docs == 'false' }}
+          echo ${{ inputs.doc_target }}
+          echo ${{ inputs.doc_target != 'Sphinx' }}
       # These next two steps will configure CMake if required
       - name: Configure Only Docs
         if: |
