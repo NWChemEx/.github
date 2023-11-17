@@ -42,17 +42,17 @@ on:
         required: true
 
 jobs:
-  # Bump the version tag
-  bump_tag:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: haya14busa/action-bumpr@v1
-        with:
-          default_bump_level: patch
-          github_token: ${{ secrets.TAG_TOKEN }}
-          tag_as_user: .github[bot]
-          tag_as_email: .github[bot]@github.com
+  # # Bump the version tag
+  # bump_tag:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: haya14busa/action-bumpr@v1
+  #       with:
+  #         default_bump_level: patch
+  #         github_token: ${{ secrets.TAG_TOKEN }}
+  #         tag_as_user: .github[bot]
+  #         tag_as_email: .github[bot]@github.com
 
   # Deploy updated documentation
   deploy_docs:
@@ -65,14 +65,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       # These next two steps will configure CMake if required
-      - name: Build Only Docs
+      - name: Configure Only Docs
         if: |
-          inputs.generate_module_docs == 'false' && inputs.doc_target != 'Sphinx'
+          inputs.generate_module_docs == 'false' && 
+          inputs.doc_target != 'Sphinx'
         run: |
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
         shell: bash
-      - name: Build Library
-        if: inputs.generate_module_docs == true
+      - name: Configure Library
+        if: inputs.generate_module_docs == 'true'
         env:
           CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
         run: |
