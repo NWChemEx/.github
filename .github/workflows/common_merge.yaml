@@ -65,13 +65,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       # These next two steps will configure CMake if required
-      - name: Build Only Docs
+      - name: Configure Only Docs
         if: |
-          inputs.generate_module_docs == 'false' && inputs.doc_target != 'Sphinx'
+          inputs.generate_module_docs == false && 
+          inputs.doc_target != 'Sphinx'
         run: |
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
         shell: bash
-      - name: Build Library
+      - name: Configure Library
         if: inputs.generate_module_docs == true
         env:
           CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
