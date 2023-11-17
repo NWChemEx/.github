@@ -67,7 +67,7 @@ jobs:
       - name: Check inputs and expressions
         run: |
           echo ${{ inputs.generate_module_docs }}
-          echo ${{ inputs.generate_module_docs == 'false' }}
+          echo ${{ inputs.generate_module_docs == false }}
           echo ${{ inputs.doc_target }}
           echo ${{ inputs.doc_target != 'Sphinx' }}
         shell: bash
