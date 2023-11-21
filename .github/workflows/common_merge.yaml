@@ -96,12 +96,12 @@ jobs:
         shell: bash
       # Build the C++ Library if building module docs
       - name: Build Library
-        if: inputs.generate_module_docs == 'true'
+        if: inputs.generate_module_docs == true
         run: cmake --build build --parallel
         shell: bash
       # Generate the module docs source files
       - name: Generate Module Docs
-        if: inputs.generate_module_docs == 'true'
+        if: inputs.generate_module_docs == true
         uses: NWChemEx-Project/.github/actions/generate_module_docs@master
         with:
           doc_target: $${{ inputs.doc_target }}
