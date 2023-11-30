@@ -40,6 +40,11 @@ on:
         type: string
         required: false
         default: ''
+      repo_toolchain:
+        description: "A CMake toolchain for repo specific settings"
+        type: string
+        required: false
+        default: ''
       doc_target:
         description: "The name of the documentation target. Set to 'Sphinx' to skip doxygen"
         type: string
@@ -109,6 +114,12 @@ jobs:
         compiler: ${{ fromJSON(inputs.compilers) }}
     steps:
       - uses: actions/checkout@v4
+      - name: Append Repo Settings to CMake Toolchain
+        if: repo_toolchain != ''
+        run:  |
+          toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
+          echo 'include(${{ inputs.repo_toolchain }})' >> $toolchain
+        shell: bash
       - name: Build and Test
         env:
           CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
