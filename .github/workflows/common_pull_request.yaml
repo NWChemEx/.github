@@ -41,7 +41,7 @@ on:
         required: false
         default: ''
       repo_toolchain:
-        description: "A CMake toolchain for repo specific settings"
+        description: "Path (from repo root) to a CMake toolchain for repo specific settings"
         type: string
         required: false
         default: ''
@@ -118,7 +118,7 @@ jobs:
         if: repo_toolchain != ''
         run:  |
           toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
-          echo 'include(${{ inputs.repo_toolchain }})' >> $toolchain
+          echo 'include('${PWD}'/${{ inputs.repo_toolchain }})' >> $toolchain
         shell: bash
       - name: Build and Test
         env:
