@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contributing to NWChemEx Documentation &mdash; Developer Documentation 1.0.0 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -13,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -95,11 +99,11 @@
            <div itemprop="articleBody">
              
   <div class="section" id="contributing-to-nwchemex-documentation">
-<span id="contributing-to-documentation"></span><h1>Contributing to NWChemEx Documentation<a class="headerlink" href="#contributing-to-nwchemex-documentation" title="Permalink to this headline"></a></h1>
+<span id="contributing-to-documentation"></span><h1>Contributing to NWChemEx Documentation<a class="headerlink" href="#contributing-to-nwchemex-documentation" title="Permalink to this heading"></a></h1>
 <p>In this section we explain the basic orgnization of the NWChemEx documentation
 system and present instructions on how to contribute to the documentation.</p>
 <div class="section" id="structure-of-nwchemex-documentation">
-<h2>Structure of NWChemEx Documentation<a class="headerlink" href="#structure-of-nwchemex-documentation" title="Permalink to this headline"></a></h2>
+<h2>Structure of NWChemEx Documentation<a class="headerlink" href="#structure-of-nwchemex-documentation" title="Permalink to this heading"></a></h2>
 <p>In the repo of every NWChemEx package, there is a <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory. Under
 this diretory there is a <code class="docutils literal notranslate"><span class="pre">source</span></code> subdirectory which contains all .rst
 source files of the documentation (recursive subdirectory structures may
@@ -109,7 +113,7 @@ formatted files of the documentation, and will be explained below. The
 the documentation files.</p>
 </div>
 <div class="section" id="how-to-contribute-to-nwchemex-documentation">
-<h2>How to Contribute to NWChemEx Documentation<a class="headerlink" href="#how-to-contribute-to-nwchemex-documentation" title="Permalink to this headline"></a></h2>
+<h2>How to Contribute to NWChemEx Documentation<a class="headerlink" href="#how-to-contribute-to-nwchemex-documentation" title="Permalink to this heading"></a></h2>
 <p>Suppose one plans to update the documentation of the package PluginPlay.
 First, one should create a local working copy of the PluginPlay repo using
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>, then edit the existing .rst files or create new .rst files
@@ -125,7 +129,7 @@ to master.</p>
 <p>Note: the developer documentation of NWChemEx resides in the .github repo.</p>
 </div>
 <div class="section" id="how-to-generate-a-local-copy-of-the-documentation">
-<h2>How to Generate a Local Copy of the Documentation<a class="headerlink" href="#how-to-generate-a-local-copy-of-the-documentation" title="Permalink to this headline"></a></h2>
+<h2>How to Generate a Local Copy of the Documentation<a class="headerlink" href="#how-to-generate-a-local-copy-of-the-documentation" title="Permalink to this heading"></a></h2>
 <p>NWChemEx uses <a class="reference external" href="https://www.sphinx-doc.org/en/master/index.html">Sphinx - a Python documentation generator</a> to transform the
 source files (.rst, .md. etc) into documentation files in various formats
 (.html, .pdf, etc). One can see the content of the file <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>

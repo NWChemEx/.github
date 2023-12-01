@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>C++ Development Workflow &mdash; Developer Documentation 1.0.0 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -13,7 +15,9 @@
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -96,7 +100,7 @@
            <div itemprop="articleBody">
              
   <div class="section" id="c-development-workflow">
-<h1>C++ Development Workflow<a class="headerlink" href="#c-development-workflow" title="Permalink to this headline"></a></h1>
+<h1>C++ Development Workflow<a class="headerlink" href="#c-development-workflow" title="Permalink to this heading"></a></h1>
 <p>This page assumes you have already read
 <a class="reference internal" href="../preliminaries.html#development-preliminaries"><span class="std std-ref">Preliminaries</span></a> and that you are adding a module to a repo
 which is considered part of NWChemEx</p>
@@ -121,7 +125,7 @@ the submodule will happen at runtime.</p>
 <p>Module development looks a little different depending on whether your module
 needs to call a submodule or not. The former is the easier scenario</p>
 <div class="section" id="developing-a-module-without-submodules">
-<h2>Developing a Module without Submodules<a class="headerlink" href="#developing-a-module-without-submodules" title="Permalink to this headline"></a></h2>
+<h2>Developing a Module without Submodules<a class="headerlink" href="#developing-a-module-without-submodules" title="Permalink to this heading"></a></h2>
 <p>This can be done largely as you would expect. You add your source code to the
 repo, add a unit test for your module’s source code, and then make sure the unit
 test works.</p>
@@ -131,45 +135,45 @@ test works.</p>
 </div>
 </div>
 <div class="section" id="developing-a-module-with-submodule-s">
-<h2>Developing a Module with Submodule(s)<a class="headerlink" href="#developing-a-module-with-submodule-s" title="Permalink to this headline"></a></h2>
+<h2>Developing a Module with Submodule(s)<a class="headerlink" href="#developing-a-module-with-submodule-s" title="Permalink to this heading"></a></h2>
 <p>Development gets a bit more hairy when your module depends on a submodule (and
 those submodules are not part of the current repo). For concreteness let’s
 assume we are writing a module called <code class="docutils literal notranslate"><span class="pre">JCanonical</span></code> which does a naive
 canonical J build. The source file for such a module will live in the SCF repo
 and will have the path <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/src/scf/j_canonical.cpp</span></code>. The
 contents of this source file could be something like:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scf/property_types.hpp&quot;</span><span class="c1"> // List of property types used in SCF repo</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scf/scf_modules.hpp&quot;</span><span class="c1"> // Declarations of SCF modules, including ours</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scf/types.hpp&quot;</span><span class="c1">       // types of objects used in SCF repo</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scf/property_types.hpp&quot;</span><span class="c1"> // List of property types used in SCF repo</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scf/scf_modules.hpp&quot;</span><span class="c1"> // Declarations of SCF modules, including ours</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scf/types.hpp&quot;</span><span class="c1">       // types of objects used in SCF repo</span>
 
-<span class="k">namespace</span><span class="w"> </span><span class="nn">scf</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">scf</span><span class="w"> </span><span class="p">{</span>
 
 
-<span class="w"> </span><span class="n">MODULE_CTOR</span><span class="p">(</span><span class="n">JCanonical</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w"> </span><span class="n">MODULE_CTOR</span><span class="p">(</span><span class="n">JCanonical</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">     </span><span class="c1">// Our module knows how to compute J</span>
-<span class="w">     </span><span class="k">using</span><span class="w"> </span><span class="n">j_prop_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">coulomb</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">::</span><span class="n">derived_space_t</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w"></span>
-<span class="w">     </span><span class="n">satisfies_property_type</span><span class="o">&lt;</span><span class="n">j_prop_type</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">     </span><span class="k">using</span><span class="w"> </span><span class="n">j_prop_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">coulomb</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">::</span><span class="n">derived_space_t</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="w">     </span><span class="n">satisfies_property_type</span><span class="o">&lt;</span><span class="n">j_prop_type</span><span class="o">&gt;</span><span class="p">();</span>
 
-<span class="w">     </span><span class="n">add_submodule</span><span class="o">&lt;</span><span class="n">pt</span><span class="o">::</span><span class="n">eri4c</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;ERI Builder&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span><span class="s">&quot;Computes 4C ERI integrals&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">     </span><span class="n">add_submodule</span><span class="o">&lt;</span><span class="n">pt</span><span class="o">::</span><span class="n">eri4c</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">&quot;ERI Builder&quot;</span><span class="p">)</span>
+<span class="w">     </span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span><span class="s">&quot;Computes 4C ERI integrals&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
 
-<span class="w"> </span><span class="n">MODULE_RUN</span><span class="p">(</span><span class="n">JCanonical</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">     </span><span class="k">using</span><span class="w"> </span><span class="n">j_prop_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">coulomb</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">::</span><span class="n">derived_space_t</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w"></span>
-<span class="w">     </span><span class="k">auto</span><span class="w"> </span><span class="p">[</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="n">MOs</span><span class="p">,</span><span class="w"> </span><span class="n">bra</span><span class="p">,</span><span class="w"> </span><span class="n">ket</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j_prop_type</span><span class="o">::</span><span class="n">unwrap_inputs</span><span class="p">(</span><span class="n">inputs</span><span class="p">);</span><span class="w"></span>
+<span class="w"> </span><span class="n">MODULE_RUN</span><span class="p">(</span><span class="n">JCanonical</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="k">using</span><span class="w"> </span><span class="n">j_prop_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">coulomb</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">::</span><span class="n">derived_space_t</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="w">     </span><span class="k">auto</span><span class="w"> </span><span class="p">[</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="n">MOs</span><span class="p">,</span><span class="w"> </span><span class="n">bra</span><span class="p">,</span><span class="w"> </span><span class="n">ket</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j_prop_type</span><span class="o">::</span><span class="n">unwrap_inputs</span><span class="p">(</span><span class="n">inputs</span><span class="p">);</span>
 
-<span class="w">     </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">eri_mod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submods</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;ERI Builder&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">     </span><span class="k">auto</span><span class="w"> </span><span class="p">[</span><span class="n">ERI4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eri_mod</span><span class="p">.</span><span class="n">run_as</span><span class="o">&lt;</span><span class="n">pt</span><span class="o">::</span><span class="n">eri4c</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span><span class="w"> </span><span class="n">bra</span><span class="p">,</span><span class="w"> </span><span class="n">ket</span><span class="p">,</span><span class="w"> </span><span class="n">ket</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">eri_mod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submods</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;ERI Builder&quot;</span><span class="p">);</span>
+<span class="w">     </span><span class="k">auto</span><span class="w"> </span><span class="p">[</span><span class="n">ERI4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eri_mod</span><span class="p">.</span><span class="n">run_as</span><span class="o">&lt;</span><span class="n">pt</span><span class="o">::</span><span class="n">eri4c</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span><span class="w"> </span><span class="n">bra</span><span class="p">,</span><span class="w"> </span><span class="n">ket</span><span class="p">,</span><span class="w"> </span><span class="n">ket</span><span class="p">);</span>
 
-<span class="w">     </span><span class="n">type</span><span class="o">::</span><span class="n">tensor</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">J</span><span class="p">;</span><span class="w"></span>
-<span class="w">     </span><span class="n">type</span><span class="o">::</span><span class="n">tensor</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">rho</span><span class="p">;</span><span class="w"></span>
-<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MOs</span><span class="p">.</span><span class="n">C</span><span class="p">();</span><span class="w"></span>
-<span class="w">     </span><span class="n">rho</span><span class="p">(</span><span class="s">&quot;mu,nu&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="s">&quot;mu,i&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="s">&quot;nu,i&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">     </span><span class="n">J</span><span class="p">(</span><span class="s">&quot;mu, nu&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rho</span><span class="p">(</span><span class="s">&quot;lambda, sigma&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ERI4</span><span class="p">(</span><span class="s">&quot;lambda, sigma, mu, nu&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="n">type</span><span class="o">::</span><span class="n">tensor</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">J</span><span class="p">;</span>
+<span class="w">     </span><span class="n">type</span><span class="o">::</span><span class="n">tensor</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">rho</span><span class="p">;</span>
+<span class="w">     </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MOs</span><span class="p">.</span><span class="n">C</span><span class="p">();</span>
+<span class="w">     </span><span class="n">rho</span><span class="p">(</span><span class="s">&quot;mu,nu&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="s">&quot;mu,i&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C</span><span class="p">(</span><span class="s">&quot;nu,i&quot;</span><span class="p">);</span>
+<span class="w">     </span><span class="n">J</span><span class="p">(</span><span class="s">&quot;mu, nu&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rho</span><span class="p">(</span><span class="s">&quot;lambda, sigma&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ERI4</span><span class="p">(</span><span class="s">&quot;lambda, sigma, mu, nu&quot;</span><span class="p">);</span>
 
-<span class="w">     </span><span class="k">auto</span><span class="w"> </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">results</span><span class="p">();</span><span class="w"></span>
-<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="n">j_prop_type</span><span class="o">::</span><span class="n">wrap_results</span><span class="p">(</span><span class="n">rv</span><span class="p">,</span><span class="w"> </span><span class="n">J</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">     </span><span class="k">auto</span><span class="w"> </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">results</span><span class="p">();</span>
+<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="n">j_prop_type</span><span class="o">::</span><span class="n">wrap_results</span><span class="p">(</span><span class="n">rv</span><span class="p">,</span><span class="w"> </span><span class="n">J</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
 
 <span class="p">}</span><span class="w"> </span><span class="c1">// namespace scf</span>
 </pre></div>
@@ -182,17 +186,17 @@ the implementation of this module.</p>
 declared in <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/src/scf/scf_modules.hpp</span></code> and
 we need to make sure our new module is added to the module manager in
 <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/src/scf/scf_mm.cpp</span></code>. The former amounts to adding:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">DECLARE_MODULE</span><span class="p">(</span><span class="n">JCanonical</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">DECLARE_MODULE</span><span class="p">(</span><span class="n">JCanonical</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>to <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/include/scf/scf_modules.hpp</span></code> and the latter requires
 adding:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">mm</span><span class="p">.</span><span class="n">add_module</span><span class="o">&lt;</span><span class="n">JCanonical</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A key users will use to request your module&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">mm</span><span class="p">.</span><span class="n">add_module</span><span class="o">&lt;</span><span class="n">JCanonical</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;A key users will use to request your module&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>to <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/src/scf/scf_mm.cpp</span></code>.</p>
 <div class="section" id="running-the-module">
-<h3>Running the Module<a class="headerlink" href="#running-the-module" title="Permalink to this headline"></a></h3>
+<h3>Running the Module<a class="headerlink" href="#running-the-module" title="Permalink to this heading"></a></h3>
 <p>Now that we wrote the module we need to test/run it. Since our module needs
 integrals, and integrals are not provided by the SCF repo, we can’t simply add a
 unit test to <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/tests</span></code> which calls our module (we’ll get to
@@ -202,7 +206,7 @@ script to run the calculation or if you insist on the entire development
 (including running the calculation) occurring in C++ (the former is preferred
 and the latter will likely be deprecated at some point).</p>
 <div class="section" id="running-the-module-from-python">
-<h4>Running the module from Python<a class="headerlink" href="#running-the-module-from-python" title="Permalink to this headline"></a></h4>
+<h4>Running the module from Python<a class="headerlink" href="#running-the-module-from-python" title="Permalink to this heading"></a></h4>
 <p>In theory you write a Python script which looks like:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nwchemex</span> <span class="k">as</span> <span class="nn">nwx</span>
 
@@ -236,37 +240,37 @@ take care of all of the dynamic linking etc.</p>
 </div>
 </div>
 <div class="section" id="running-the-module-from-c">
-<h4>Running the module from C++<a class="headerlink" href="#running-the-module-from-c" title="Permalink to this headline"></a></h4>
+<h4>Running the module from C++<a class="headerlink" href="#running-the-module-from-c" title="Permalink to this heading"></a></h4>
 <p>To run our module from C++ the eaiest way is to add a validation test to the
 NWChemEx repo, say <code class="docutils literal notranslate"><span class="pre">nwx_workspace/NWChemEx/tests/j_canonical.cpp</span></code>. The
 contents of this validation test look something like:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;catch2/catch.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;nwchemex/load_modules.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/property_types.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/types.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;catch2/catch.hpp&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;nwchemex/load_modules.hpp&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/property_types.hpp&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/types.hpp&gt;</span>
 
-<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">scf</span><span class="p">;</span><span class="w"></span>
-<span class="k">using</span><span class="w"> </span><span class="n">j_prop_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">coulomb</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">::</span><span class="n">derived_space_t</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">scf</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">j_prop_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">coulomb</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">::</span><span class="n">derived_space_t</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">;</span>
 
-<span class="n">TEST_CASE</span><span class="p">(</span><span class="s">&quot;Canonical J&quot;</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="n">sde</span><span class="o">::</span><span class="n">ModuleManager</span><span class="w"> </span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">nwx</span><span class="o">::</span><span class="n">load_modules</span><span class="p">(</span><span class="n">mm</span><span class="p">);</span><span class="w"></span>
+<span class="n">TEST_CASE</span><span class="p">(</span><span class="s">&quot;Canonical J&quot;</span><span class="p">){</span>
+<span class="w">    </span><span class="n">sde</span><span class="o">::</span><span class="n">ModuleManager</span><span class="w"> </span><span class="n">mm</span><span class="p">;</span>
+<span class="w">    </span><span class="n">nwx</span><span class="o">::</span><span class="n">load_modules</span><span class="p">(</span><span class="n">mm</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// We need to tell our module which ERIs to use</span>
-<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">key</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;whatever key you used in SCF for your module&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">key</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;whatever key you used in SCF for your module&quot;</span><span class="p">;</span>
 <span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">eri_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;ERI4&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// or whatever 4-center ERIs you want</span>
-<span class="w">    </span><span class="n">mm</span><span class="p">.</span><span class="n">change_submod</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ERI Builder&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eri_key</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">mm</span><span class="p">.</span><span class="n">change_submod</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ERI Builder&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">eri_key</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// Make the input for our module</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">mol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">;</span><span class="c1">// Make a Molecule</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">aos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libchemist</span><span class="o">::</span><span class="n">apply_basis</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sto-3g&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">aos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libchemist</span><span class="o">::</span><span class="n">apply_basis</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sto-3g&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">mos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">;</span><span class="c1">// get MOs from somewhere</span>
 
 <span class="w">    </span><span class="c1">// Call our module and bask in the result</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">mod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mm</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;the key you put your module under&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="p">[</span><span class="n">J</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mod</span><span class="p">.</span><span class="n">run_as</span><span class="o">&lt;</span><span class="n">j_prop_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="n">mos</span><span class="p">,</span><span class="w"> </span><span class="n">aos</span><span class="p">,</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">J</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">mod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mm</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;the key you put your module under&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="p">[</span><span class="n">J</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mod</span><span class="p">.</span><span class="n">run_as</span><span class="o">&lt;</span><span class="n">j_prop_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="n">mos</span><span class="p">,</span><span class="w"> </span><span class="n">aos</span><span class="p">,</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">J</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>With this validation test written, we then compile <code class="docutils literal notranslate"><span class="pre">nwx_workspace/NWChemEx</span></code>,
@@ -282,7 +286,7 @@ ready to be used outside of just the validation test.</p>
 </div>
 </div>
 <div class="section" id="unit-testing-the-module">
-<h3>Unit Testing the Module<a class="headerlink" href="#unit-testing-the-module" title="Permalink to this headline"></a></h3>
+<h3>Unit Testing the Module<a class="headerlink" href="#unit-testing-the-module" title="Permalink to this heading"></a></h3>
 <p>It’s sometimes easier to get a module working using “real” data, which is what
 the previous section focused on. That said the unit test for our module should
 live in the SCF repo and not be coupled to the module used to get the integrals,
@@ -291,49 +295,49 @@ module’s unit test too. To avoid this coupling in our module’s unit test we 
 a lambda module, which wraps some hard-coded data.</p>
 <p>To start with we create a source file <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF/tests/jcanonical.cpp</span></code>
 with the contents:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;catch2/catch.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/scf_mm.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/property_types.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/types.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sde/lambda_module.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;catch2/catch.hpp&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/scf_mm.hpp&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/property_types.hpp&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;scf/types.hpp&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sde/lambda_module.hpp&gt;</span>
 
-<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">scf</span><span class="p">;</span><span class="w"></span>
-<span class="k">using</span><span class="w"> </span><span class="n">j_prop_type</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">coulomb</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">::</span><span class="n">derived_space_t</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">;</span><span class="w"></span>
-<span class="k">using</span><span class="w"> </span><span class="n">eri_prop_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">eri4c</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">scf</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">j_prop_type</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">coulomb</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">::</span><span class="n">derived_space_t</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">eri_prop_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pt</span><span class="o">::</span><span class="n">eri4c</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">;</span>
 
-<span class="n">TEST_CASE</span><span class="p">(</span><span class="s">&quot;Canonical J&quot;</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="n">sde</span><span class="o">::</span><span class="n">ModuleManager</span><span class="w"> </span><span class="n">mm</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">scf</span><span class="o">::</span><span class="n">load_modules</span><span class="p">(</span><span class="n">mm</span><span class="p">);</span><span class="w"></span>
+<span class="n">TEST_CASE</span><span class="p">(</span><span class="s">&quot;Canonical J&quot;</span><span class="p">){</span>
+<span class="w">    </span><span class="n">sde</span><span class="o">::</span><span class="n">ModuleManager</span><span class="w"> </span><span class="n">mm</span><span class="p">;</span>
+<span class="w">    </span><span class="n">scf</span><span class="o">::</span><span class="n">load_modules</span><span class="p">(</span><span class="n">mm</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// Make the input for our module</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">mol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">;</span><span class="c1">// Make a Molecule</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">aos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libchemist</span><span class="o">::</span><span class="n">apply_basis</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sto-3g&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">aos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">libchemist</span><span class="o">::</span><span class="n">apply_basis</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sto-3g&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">mos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">;</span><span class="c1">// get MOs from somewhere</span>
 
 <span class="w">    </span><span class="c1">// Make the lambda module which will serve as the submodule</span>
 <span class="w">    </span><span class="n">type</span><span class="o">::</span><span class="n">tensor</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">eris</span><span class="p">;</span><span class="w"> </span><span class="c1">// hard-coded ERIS, in practice need state</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bra1</span><span class="p">,</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bra2</span><span class="p">,</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ket1</span><span class="p">,</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ket2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">=</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bra1</span><span class="p">,</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">bra2</span><span class="p">,</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ket1</span><span class="p">,</span><span class="w"> </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ket2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// Make sure our module passes the right info to the submodule</span>
-<span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">bra1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">bra2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">ket1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">ket2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">bra1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span>
+<span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">bra2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span>
+<span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">ket1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span>
+<span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">ket2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// It did so return the hard coded result</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">eris</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">};</span><span class="w"></span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">submod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sde</span><span class="o">::</span><span class="n">make_lambda</span><span class="o">&lt;</span><span class="n">eri_prop_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">l</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">eris</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">submod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sde</span><span class="o">::</span><span class="n">make_lambda</span><span class="o">&lt;</span><span class="n">eri_prop_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">l</span><span class="p">);</span>
 
 
 <span class="w">    </span><span class="c1">// Tell our module to use the lambda module</span>
-<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">key</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;whatever key you used in SCF for your module&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">mod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mm</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">key</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">mod</span><span class="p">.</span><span class="n">change_submod</span><span class="p">(</span><span class="s">&quot;ERI Builder&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">submod</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">key</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;whatever key you used in SCF for your module&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">mod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mm</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+<span class="w">    </span><span class="n">mod</span><span class="p">.</span><span class="n">change_submod</span><span class="p">(</span><span class="s">&quot;ERI Builder&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">submod</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// Call our module and compare J to the correct value</span>
-<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="p">[</span><span class="n">J</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mod</span><span class="p">.</span><span class="n">run_as</span><span class="o">&lt;</span><span class="n">j_prop_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="n">mos</span><span class="p">,</span><span class="w"> </span><span class="n">aos</span><span class="p">,</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">J</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="p">[</span><span class="n">J</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mod</span><span class="p">.</span><span class="n">run_as</span><span class="o">&lt;</span><span class="n">j_prop_type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span><span class="w"> </span><span class="n">mos</span><span class="p">,</span><span class="w"> </span><span class="n">aos</span><span class="p">,</span><span class="w"> </span><span class="n">aos</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">J</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>We now build <code class="docutils literal notranslate"><span class="pre">nwx_workspace/SCF</span></code> and run its tests to ensure our module works

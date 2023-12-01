@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Overall Design &mdash; Developer Documentation 1.0.0 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -13,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -99,11 +103,11 @@
            <div itemprop="articleBody">
              
   <div class="section" id="overall-design">
-<h1>Overall Design<a class="headerlink" href="#overall-design" title="Permalink to this headline"></a></h1>
+<h1>Overall Design<a class="headerlink" href="#overall-design" title="Permalink to this heading"></a></h1>
 <p>The point of this page is to explain the philosophy, organization, and overall
 design of the NWChemEx software stack.</p>
 <div class="section" id="nwchemex-organization-overview">
-<h2>NWChemEx Organization Overview<a class="headerlink" href="#nwchemex-organization-overview" title="Permalink to this headline"></a></h2>
+<h2>NWChemEx Organization Overview<a class="headerlink" href="#nwchemex-organization-overview" title="Permalink to this heading"></a></h2>
 <p>The NWChemEx organization manages a lot of repositories. Generally speaking
 those repositories fall into one of two groups: the framework known as the
 simulation development environment, or SimDE for short, and the NWChemEx
@@ -127,7 +131,7 @@ repo.</p></li>
 NWChemEx repos. The following subsections describe the SimDE and NWChemEx groups
 of repos in more detail.</p>
 <div class="section" id="simde">
-<h3>SimDE<a class="headerlink" href="#simde" title="Permalink to this headline"></a></h3>
+<h3>SimDE<a class="headerlink" href="#simde" title="Permalink to this heading"></a></h3>
 <p>SimDE encapsulates the infrastructure required to:
 - interact with the hardware,
 - manage and run modules,
@@ -183,7 +187,7 @@ workflows can always directly access SimDE for finer-grained control.</p>
 </table>
 </div>
 <div class="section" id="nwchemex">
-<h3>NWChemEx<a class="headerlink" href="#nwchemex" title="Permalink to this headline"></a></h3>
+<h3>NWChemEx<a class="headerlink" href="#nwchemex" title="Permalink to this heading"></a></h3>
 <p>The NWChemEx electronic structure theory package is itself made up of two main
 components: a series of modules for use with SimDE and a user-friendly API for
 running those modules. If we continue the smartphone analogy, the modules
@@ -239,7 +243,7 @@ NWChemEx.</p>
 </table>
 </div>
 <div class="section" id="miscellaneous-repositories">
-<h3>Miscellaneous Repositories<a class="headerlink" href="#miscellaneous-repositories" title="Permalink to this headline"></a></h3>
+<h3>Miscellaneous Repositories<a class="headerlink" href="#miscellaneous-repositories" title="Permalink to this heading"></a></h3>
 <p>The NWChemEx-Project organization contains a number of additional “meta”
 repositories that are not directly required for building NWChemEx. These repos
 are typically associated with a particular research project, provide CI

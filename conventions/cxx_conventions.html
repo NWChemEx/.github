@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>C++ Coding Conventions &mdash; Developer Documentation 1.0.0 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -13,7 +15,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -95,7 +99,7 @@
            <div itemprop="articleBody">
              
   <div class="section" id="c-coding-conventions">
-<span id="cxx-conventions"></span><h1>C++ Coding Conventions<a class="headerlink" href="#c-coding-conventions" title="Permalink to this headline"></a></h1>
+<span id="cxx-conventions"></span><h1>C++ Coding Conventions<a class="headerlink" href="#c-coding-conventions" title="Permalink to this heading"></a></h1>
 <p>This page introduces the NWX team’s coding conventions for writing C++. All pull
 requests are expected to adhere to these conventions. When possible
 <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> will be used to enforce them; however, it is not possible to
@@ -104,7 +108,7 @@ at conventions which you must manually adhere to, while <code class="docutils li
 the linting file used and should be consulted for the conventions which will be
 automatically enforced.</p>
 <div class="section" id="capitalization">
-<h2>Capitalization<a class="headerlink" href="#capitalization" title="Permalink to this headline"></a></h2>
+<h2>Capitalization<a class="headerlink" href="#capitalization" title="Permalink to this heading"></a></h2>
 <p>C++ is a case-sensitive language. For this reason it is extremely useful for all
 coders on a project to use the same capitalization conventions, doing so avoids
 needing to remember how a method, file, <em>etc.</em> is capitalized.</p>

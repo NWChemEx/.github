@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Developing NWX with VSCode &mdash; Developer Documentation 1.0.0 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -13,7 +15,9 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -100,12 +104,12 @@
            <div itemprop="articleBody">
              
   <div class="section" id="developing-nwx-with-vscode">
-<h1>Developing NWX with VSCode<a class="headerlink" href="#developing-nwx-with-vscode" title="Permalink to this headline"></a></h1>
+<h1>Developing NWX with VSCode<a class="headerlink" href="#developing-nwx-with-vscode" title="Permalink to this heading"></a></h1>
 <p>Once you’ve got the build working you’re ready to start developing. The
 following subsections provide some basic advice on how to go about doing
 common development tasks.</p>
 <div class="section" id="version-control">
-<h2>Version Control<a class="headerlink" href="#version-control" title="Permalink to this headline"></a></h2>
+<h2>Version Control<a class="headerlink" href="#version-control" title="Permalink to this heading"></a></h2>
 <p>It’s strongly recommended that you do your development on a new branch and not
 on “master” (the bottom toolbar should show your current branch next to the
 version control icon, three circles in a V-like pattern). Clicking on the branch
@@ -122,24 +126,24 @@ commit message in the provided box). Finally For the ellipses (three dots) will
 bring up a menu with common git commands like push and pull.</p>
 </div>
 <div class="section" id="code-formatting">
-<h2>Code Formatting<a class="headerlink" href="#code-formatting" title="Permalink to this headline"></a></h2>
+<h2>Code Formatting<a class="headerlink" href="#code-formatting" title="Permalink to this heading"></a></h2>
 <div class="section" id="c">
-<h3>C++<a class="headerlink" href="#c" title="Permalink to this headline"></a></h3>
+<h3>C++<a class="headerlink" href="#c" title="Permalink to this heading"></a></h3>
 <p>Todo!</p>
 </div>
 <div class="section" id="python">
-<span id="vscode-python-yapf"></span><h3>Python<a class="headerlink" href="#python" title="Permalink to this headline"></a></h3>
+<span id="vscode-python-yapf"></span><h3>Python<a class="headerlink" href="#python" title="Permalink to this heading"></a></h3>
 <p>VSCode can use <code class="docutils literal notranslate"><span class="pre">yapf</span></code> to automatically format Python code through the
 <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">official Microsoft Python extension</a>.</p>
 <ol class="arabic simple">
 <li><p>Install <code class="docutils literal notranslate"><span class="pre">yapf</span></code> by running:</p></li>
 </ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Highly recommended, but optional virtual environment</span>
-$ python -m venv venv
-$ . venv/bin/activate
+$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+$<span class="w"> </span>.<span class="w"> </span>venv/bin/activate
 
 <span class="c1"># Install yapf</span>
-$ pip install yapf
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>yapf
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
@@ -152,13 +156,13 @@ $ pip install yapf
 </div>
 </div>
 <div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline"></a></h2>
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
 <div class="section" id="c-doxygen">
-<h3>C++ (Doxygen)<a class="headerlink" href="#c-doxygen" title="Permalink to this headline"></a></h3>
+<h3>C++ (Doxygen)<a class="headerlink" href="#c-doxygen" title="Permalink to this heading"></a></h3>
 <p>Todo!</p>
 </div>
 <div class="section" id="python-docstrings">
-<span id="vscode-docstring-gen"></span><h3>Python (Docstrings)<a class="headerlink" href="#python-docstrings" title="Permalink to this headline"></a></h3>
+<span id="vscode-docstring-gen"></span><h3>Python (Docstrings)<a class="headerlink" href="#python-docstrings" title="Permalink to this heading"></a></h3>
 <p>Sphinx-style docstrings can be autogenerated for fully-defined functions/classes
 in VSCode using the <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring">Python Docstring</a> extension. Once the extension is
 installed, set the <code class="docutils literal notranslate"><span class="pre">autoDocstring.docstringFormat</span></code> setting to “sphinx” to
@@ -170,7 +174,7 @@ match current NWX team <a class="reference internal" href="../../../conventions/
 </div>
 </div>
 <div class="section" id="debugging">
-<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline"></a></h2>
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this heading"></a></h2>
 <p>Debugging is one of the main reasons to use an IDE. To debug an executable,
 click on the play-arrow with a bug on it in the left toolbar. If you have no
 debug configurations set up yet there will be a big “Run and Debug” button
@@ -194,7 +198,7 @@ in the current source file, enter the function on the current line, go up one
 call in the stack, restart execution, or stop execution.</p>
 </div>
 <div class="section" id="profiling">
-<h2>Profiling<a class="headerlink" href="#profiling" title="Permalink to this headline"></a></h2>
+<h2>Profiling<a class="headerlink" href="#profiling" title="Permalink to this heading"></a></h2>
 <p>TODO: Write Me!!!!</p>
 </div>
 </div>
