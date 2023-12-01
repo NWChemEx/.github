@@ -115,7 +115,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Append Repo Settings to CMake Toolchain
-        if: repo_toolchain != ''
+        if: inputs.repo_toolchain != ''
         run:  |
           toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
           echo 'include('${PWD}'/${{ inputs.repo_toolchain }})' >> $toolchain
