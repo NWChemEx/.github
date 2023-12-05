@@ -1,4 +1,4 @@
-.. Copyright 2022 NWChemEx-Project
+.. Copyright 2022 NWChemEx
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ Maintainers of the branch then determine whether or not they want to pull your
 changes into the branch. Often this is an iterative process where the branch
 maintainers request changes to the PR before they will merge it.
 
-A full tutorial on PRs, tailored to the NWChemEx-Project organization, is
+A full tutorial on PRs, tailored to the NWChemEx organization, is
 given in the :ref:`nwx_github_pull_requests` section.
 
 *******************

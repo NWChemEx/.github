@@ -1,4 +1,4 @@
-.. Copyright 2022 NWChemEx-Project
+.. Copyright 2022 NWChemEx
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 NWChemEx Community
 ##################
 
-Topics in this section go over governance of the NWChemEx-Project and explain
+Topics in this section go over governance of the NWChemEx and explain
 decisions we've made regarding community interactions (*i.e.*, how we landed on
 our PR and issue templates etc.)
 

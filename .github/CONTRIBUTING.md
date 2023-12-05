@@ -1,11 +1,11 @@
-# Contributing to the NWChemEx-Project
+# Contributing to the NWChemEx
 
 First, thank you for your interest in contributing to the NWChemEx project! We
 strive to be a welcoming community. If you are a newcomer to the project, or just
 want to make some small contributions to the project, this page is for you. If you are going to
 contribute a large feature, or do extensive development, we instead ask that
 you become familiar with our more formal developer documentation located
-[here](https://nwchemex-project.github.io/.github/).
+[here](https://nwchemex.github.io/.github/).
 
 ## Asking Questions
 
@@ -14,7 +14,7 @@ to have all the answers. If you have a question, please search the
 documentation and the GitHub issues for answers. If you cannot find the
 answer then feel free to open a GitHub issue with the question, using the
 "Question" template. If you need help opening an issue, see
-[this](https://nwchemex-project.github.io/.github/resources/github/issue.html)
+[this](https://nwchemex.github.io/.github/resources/github/issue.html)
 tutorial.
 
 ## Ways to Contribute
@@ -60,7 +60,7 @@ There's three main ways to contribute:
 
     Also if you're just committing a small change, no need to run it by us. Just open the (non-draft) PR with the change!
 
-    For help on creating a pull request see [this](https://nwchemex-project.github.io/.github/resources/github/pull_request.html) tutorial.
+    For help on creating a pull request see [this](https://nwchemex.github.io/.github/resources/github/pull_request.html) tutorial.
 
 ## Contributor License Agreement (CLA)
 

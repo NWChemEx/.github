@@ -18,7 +18,7 @@ Here are a few useful tutorials on workflows in GitHub:
 - `GitHub Actions Tutorial, From Zero to Hero in 90 minutes 
   <https://www.youtube.com/watch?v=TLB5MY9BBa4>`__
 
-Currently the following repositories in ``NWChemEx-Project`` follow the methods
+Currently the following repositories in ``NWChemEx`` follow the methods
 outlined here:
 
 1. ``ChemCache``
@@ -37,7 +37,7 @@ outlined here:
 Common and Repo-Specific Workflows
 ==================================
 
-The ``.github/workflow`` directory in the ``NWChemEx-Project/.github`` repo
+The ``.github/workflow`` directory in the ``NWChemEx/.github`` repo
 houses both the set of workflows specific to the ``.github`` repo and the set 
 of reusable workflows that should be used throughout the NWX stack. Generally,
 these reusable workflows should be named as ``common_{trigger event}.yaml``,
@@ -62,7 +62,7 @@ workflows can be added in each repo. Here's an example of a repo-specific
   
     jobs:
       Common-Pull-Request:
-        uses: NWChemEx-Project/.github/.github/workflows/common_pull_request.yaml@master
+        uses: NWChemEx/.github/.github/workflows/common_pull_request.yaml@master
         with:
           config_file: ''
           source_dir: ''
@@ -111,9 +111,9 @@ NWX Build Environment Image
 
 To avoid rebuilding costly dependencies for the various repos in the NWX stack,
 the building and testing steps in the common workflows run in containers built
-on the image ``ghcr.io/nwchemex-project/nwx_buildenv:latest``. This image 
+on the image ``ghcr.io/nwchemex/nwx_buildenv:latest``. This image 
 defines an Ubuntu based environment where the various dependencies of the stack
 (such as compilers, math libraries, MPI, and other C++ libraries outside) have
 been pre-installed. The files used to build this image are found in
-``NWChemEx-Project/.github/nwx_build_environment``, along side the 
+``NWChemEx/.github/nwx_build_environment``, along side the 
 ``buildenv.sh`` script which builds the image through consecutive Docker calls.

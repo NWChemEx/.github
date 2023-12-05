@@ -1,4 +1,4 @@
-# Copyright 2023 NWChemEx-Project
+# Copyright 2023 NWChemEx
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -105,7 +105,7 @@ jobs:
       inputs.compilers != '' && toJson(fromJson(inputs.compilers)) != '[]'
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/nwchemex-project/nwx_buildenv:latest
+      image: ghcr.io/nwchemex/nwx_buildenv:latest
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
@@ -146,7 +146,7 @@ jobs:
       inputs.doc_target != ''
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/nwchemex-project/nwx_buildenv:latest
+      image: ghcr.io/nwchemex/nwx_buildenv:latest
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}

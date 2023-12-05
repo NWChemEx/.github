@@ -1,7 +1,7 @@
 <!---
     This is a comment. So are other lines like it. No need to delete them
     before submitting your PR. If you need help on submitting a PR please
-    see our tutorial at https://nwchemex-project.github.io/.github/resources/github/pull_request.html
+    see our tutorial at https://nwchemex.github.io/.github/resources/github/pull_request.html
 --->
 
 <!---
@@ -62,22 +62,22 @@
 **PR Checklist**
 
 <!---
-    This checklist is meant for developers who are part of the NWChemEx-Project
+    This checklist is meant for developers who are part of the NWChemEx
     organization. If you are an outside collaborator, who only occasionally
     contributes little tweaks, we're just happy to get your contribution. The
     reviewers will happily make any changes needed to bring your contribution
     up to snuff.
 
-    For developers who are part of the organization, and outside collaborators making frequent or large contributions, know that the NWChemEx-Project
+    For developers who are part of the organization, and outside collaborators making frequent or large contributions, know that the NWChemEx
     organization strives to be an exemplar of code quality. Unless you have
     advance approval, your PR will not be merged until all relevant items on the
     checklist have been addressed. That said, if you're new, we're certainly
     willing to help out, answer questions, and point you to the right resources.
 --->
 
-- [ ] [Is documented](https://nwchemex-project.github.io/.github/documenting/index.html)
-- [ ] [Is tested](https://nwchemex-project.github.io/.github/testing/index.html)
-- [ ] [Adheres to applicable organization standards](https://nwchemex-project.github.io/.github/conventions/index.html)
+- [ ] [Is documented](https://nwchemex.github.io/.github/documenting/index.html)
+- [ ] [Is tested](https://nwchemex.github.io/.github/testing/index.html)
+- [ ] [Adheres to applicable organization standards](https://nwchemex.github.io/.github/conventions/index.html)
 
 <!---
     Draft PRs Only

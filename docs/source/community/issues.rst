@@ -1,4 +1,4 @@
-.. Copyright 2022 NWChemEx-Project
+.. Copyright 2022 NWChemEx
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ documentation to answer a question you have, you open an issue. If you're a
 developer, you can then use Issues as a task list. If you're a user, you can
 use Issues to give feedback to the code developers.
 
-For a tutorial on using GitHub issues within the NWChemEx-Project organization
+For a tutorial on using GitHub issues within the NWChemEx organization
 see :ref:`nwx_github_issues`.
 
 **********************
@@ -170,7 +170,7 @@ Using Issues in the NWChemEx Project
 Ultimately because of how well Issues integrates with GitHub, the decision has
 been made to use Issues. To address the considerations in
 :ref:`issues_use_cases` we rely on Issue templates. The Issue templates for the
-NWChemEx-Project organization are kept in the ``.github`` repository in the
+NWChemEx organization are kept in the ``.github`` repository in the
 ``.github/ISSUE_TEMPLATES`` directory. We presently have three templates:
 
 #. Bug reports

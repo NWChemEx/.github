@@ -1,4 +1,4 @@
-.. Copyright 2022 NWChemEx-Project
+.. Copyright 2022 NWChemEx
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ Root Level
    Project organization look at the root level.
 
 At the root level, most (although it should ideally be all) repositories in the
-NWChemEx-Project organization conform to the layout shown in
+NWChemEx organization conform to the layout shown in
 :numref:`fig_root_level_files`. As a quick internet search will show (see for
 example `here <tinyurl.com/4h95tudm>`__) this layout is fairly standard, albeit
 universal. We note that using our layout, the only files residing at the
@@ -85,11 +85,11 @@ emphasize they apply repository wide (*e.g.*, ``LICENSE``).
 .. figure:: assets/github_files.png
    :align: center
 
-   Basic structure of the ``root/.github/`` directory in most NWChemEx-Project
+   Basic structure of the ``root/.github/`` directory in most NWChemEx
    repositories.
 
 :numref:`fig_github_files` shows the layout of the ``.github/`` directory in
-nearly every repository owned by the NWChemEx-Project organization. The layout
+nearly every repository owned by the NWChemEx organization. The layout
 and naming conventions are dictated by GitHub and are thus commonly found in
 most GitHub projects.
 
@@ -101,7 +101,7 @@ docs/ Directory
 .. figure:: assets/docs_files.png
    :align: center
 
-   Basic structure of the ``root/docs/`` directory in most NWChemEx-Project
+   Basic structure of the ``root/docs/`` directory in most NWChemEx
    repositories.
 
 The set-up of the directory is driven by Sphinx, which by default assumes all

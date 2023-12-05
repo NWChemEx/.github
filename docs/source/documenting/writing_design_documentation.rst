@@ -1,4 +1,4 @@
-.. Copyright 2022 NWChemEx-Project
+.. Copyright 2022 NWChemEx
 ..
 .. Licensed under the Apache License, Version 2.0 (the "License");
 .. you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ Why Do We Need Design Documentation?
 The NWChemEx project is a massive undertaking and involves a large number of
 developers. One of the primary reasons we need design documentation is to
 outline the software infrastructure. This includes outlining the overall project
-(design documents in this repo) and each sub-project (design documents in the
+(design documents in this repo) and each sub (design documents in the
 respective sub-repo). In theory, a new developer (or an established developer
 who needs refreshers) should be able to start from the design documentation in
 this repo and find their way to the source code component of interest purely

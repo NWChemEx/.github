@@ -1,4 +1,4 @@
-# Copyright 2023 NWChemEx-Project
+# Copyright 2023 NWChemEx
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ jobs:
         shell: bash
       - name: Push Image
         run: |
-          docker tag nwx_buildenv:latest ghcr.io/nwchemex-project/nwx_buildenv:latest
-          docker push ghcr.io/nwchemex-project/nwx_buildenv:latest
+          docker tag nwx_buildenv:latest ghcr.io/nwchemex/nwx_buildenv:latest
+          docker push ghcr.io/nwchemex/nwx_buildenv:latest
         shell: bash
       

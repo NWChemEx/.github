@@ -33,11 +33,11 @@ recommended that you create a folder named something like ``nwx_workspace`` and
 check out each repo you intend to develop for into this directory. We'll term
 this directory your NWChemEx workspace.
 
-As a bare minimum you'll want the ``NWChemEx-Project/NWChemEx`` repo in your
+As a bare minimum you'll want the ``NWChemEx/NWChemEx`` repo in your
 NWChemEx workspace. More than likely you will need to clone at least one
 additional repository, namely the repo where your module/code will live. For
 example if you are writing a module that will live in the SCF repo, you'll
-also need to clone the ``NWChemEx-Project/SCF``. For this example your NWChemEx
+also need to clone the ``NWChemEx/SCF``. For this example your NWChemEx
 workspace will look like:
 
 .. code-block::

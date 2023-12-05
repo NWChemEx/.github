@@ -1,8 +1,8 @@
 ################################################################################
 #
 # The master version of this file lives at
-# NWChemEx-Project/DeveloperTools/cmake/nwx_cxx_api_docs.cmake. The version
-# contained in all other NWChemEx-Project repositories  is a synchronized copy
+# NWChemEx/DeveloperTools/cmake/nwx_cxx_api_docs.cmake. The version
+# contained in all other NWChemEx repositories  is a synchronized copy
 # of the master version. Any changes made to the non-master version will be lost
 # the next time the master version is updated. To make changes please make them
 # to the master version.
