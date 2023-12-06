@@ -281,7 +281,7 @@ but this list is expected to grow as more functionalities are added to NWChemEx.
 ``options`` argument enables users to customize the calculation further by
 modifying different parameters related to the selected ``method`` and ``task``. At
 this point, it is an opaque type (to be designed later in coordination with
-PluginPlay `#308 <https://github.com/NWChemEx-Project/PluginPlay/issues/308>`_),
+PluginPlay `#308 <https://github.com/NWChemEx/PluginPlay/issues/308>`_),
 which is capable of holding key/value pairs for inputs similar to a Python
 dictionary. Alternatively, key/value pairs can be passed directly to the
 function call as ``kwargs``. The return type of the ``calculate()`` function is
