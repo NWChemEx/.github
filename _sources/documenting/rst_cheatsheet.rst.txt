@@ -197,8 +197,8 @@ the warning ``WARNING: Duplicate explicit target name: "here"``:
 
 .. code-block:: rest
 
-   See `here <https://github.com/NWChemEx-Project/DeveloperTools>`_ or
-   `here <https://github.com/NWChemEx-Project/NWChemEX>`_ for a really
+   See `here <https://github.com/NWChemEx/DeveloperTools>`_ or
+   `here <https://github.com/NWChemEx/NWChemEX>`_ for a really
    cool repo.
 
 This problem is caused by the fact that Sphinx automatically creates a
@@ -208,8 +208,8 @@ underscores at the end like:
 
 .. code-block:: rest
 
-   See `here <https://github.com/NWChemEx-Project/DeveloperTools>`__ or
-   `here <https://github.com/NWChemEx-Project/NWChemEX>`__ for a really
+   See `here <https://github.com/NWChemEx/DeveloperTools>`__ or
+   `here <https://github.com/NWChemEx/NWChemEX>`__ for a really
    cool repo.
 
 #. How do I insert line breaks into long URLs to satisfy the 80 character

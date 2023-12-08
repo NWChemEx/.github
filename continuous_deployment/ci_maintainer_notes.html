@@ -90,7 +90,7 @@
           <li class="breadcrumb-item"><a href="index.html">Continuous Deployment</a></li>
       <li class="breadcrumb-item active">How NWX’s Continuous Integration (CI) Works</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/NWChemEx-Project/.github/edit/master/docs/source/continuous_deployment/ci_maintainer_notes.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/NWChemEx/.github/edit/master/docs/source/continuous_deployment/ci_maintainer_notes.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -111,7 +111,7 @@ maximum re-use of CI components across multiple repositories.</p>
 <li><p><a class="reference external" href="https://docs.github.com/en/actions/quickstart">Quickstart for GitHub Actions</a></p></li>
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=TLB5MY9BBa4">GitHub Actions Tutorial, From Zero to Hero in 90 minutes</a></p></li>
 </ul>
-<p>Currently the following repositories in <code class="docutils literal notranslate"><span class="pre">NWChemEx-Project</span></code> follow the methods
+<p>Currently the following repositories in <code class="docutils literal notranslate"><span class="pre">NWChemEx</span></code> follow the methods
 outlined here:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ChemCache</span></code></p></li>
@@ -129,7 +129,7 @@ outlined here:</p>
 </ol>
 <div class="section" id="common-and-repo-specific-workflows">
 <h2>Common and Repo-Specific Workflows<a class="headerlink" href="#common-and-repo-specific-workflows" title="Permalink to this heading"></a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">.github/workflow</span></code> directory in the <code class="docutils literal notranslate"><span class="pre">NWChemEx-Project/.github</span></code> repo
+<p>The <code class="docutils literal notranslate"><span class="pre">.github/workflow</span></code> directory in the <code class="docutils literal notranslate"><span class="pre">NWChemEx/.github</span></code> repo
 houses both the set of workflows specific to the <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo and the set
 of reusable workflows that should be used throughout the NWX stack. Generally,
 these reusable workflows should be named as <code class="docutils literal notranslate"><span class="pre">common_{trigger</span> <span class="pre">event}.yaml</span></code>,
@@ -150,7 +150,7 @@ workflows can be added in each repo. Here’s an example of a repo-specific
 
 <span class="nt">jobs</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">Common-Pull-Request</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NWChemEx-Project/.github/.github/workflows/common_pull_request.yaml@master</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NWChemEx/.github/.github/workflows/common_pull_request.yaml@master</span>
 <span class="w">    </span><span class="nt">with</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">config_file</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
 <span class="w">      </span><span class="nt">source_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
@@ -195,11 +195,11 @@ GitHub Pages.</p>
 <h2>NWX Build Environment Image<a class="headerlink" href="#nwx-build-environment-image" title="Permalink to this heading"></a></h2>
 <p>To avoid rebuilding costly dependencies for the various repos in the NWX stack,
 the building and testing steps in the common workflows run in containers built
-on the image <code class="docutils literal notranslate"><span class="pre">ghcr.io/nwchemex-project/nwx_buildenv:latest</span></code>. This image
+on the image <code class="docutils literal notranslate"><span class="pre">ghcr.io/nwchemex/nwx_buildenv:latest</span></code>. This image
 defines an Ubuntu based environment where the various dependencies of the stack
 (such as compilers, math libraries, MPI, and other C++ libraries outside) have
 been pre-installed. The files used to build this image are found in
-<code class="docutils literal notranslate"><span class="pre">NWChemEx-Project/.github/nwx_build_environment</span></code>, along side the
+<code class="docutils literal notranslate"><span class="pre">NWChemEx/.github/nwx_build_environment</span></code>, along side the
 <code class="docutils literal notranslate"><span class="pre">buildenv.sh</span></code> script which builds the image through consecutive Docker calls.</p>
 </div>
 </div>

@@ -43,7 +43,7 @@ to help ensure that Cppyy is built with the correct compiler.
 .. note::
 
    There is a known
-   `issue <https://github.com/NWChemEx-Project/.github/issues/29>`__ with
+   `issue <https://github.com/NWChemEx/.github/issues/29>`__ with
    Cppyy, NWChemEx, and GCC 9. It is thus strongly recommended you use GCC 11
    (or newer).
 
@@ -56,14 +56,14 @@ you can add:
    set(Python3_EXECUTABLE <path_to_your_virtual_environment>/bin/python3)
 
 to your toolchain (obviously substituting the actual path). This is a known
-`issue <https://github.com/NWChemEx-Project/.github/issues/27>`__.
+`issue <https://github.com/NWChemEx/.github/issues/27>`__.
 
 **********************
 Step 2: Build NWChemEx
 **********************
 
 Instructions for building NWChemEx can be found
-`here <https://nwchemex-project.github.io/NWChemEx/installation/building.html>`__.
+`here <https://nwchemex.github.io/NWChemEx/installation/building.html>`__.
 
 For the sake of this tutorial we'll assume that ``${BUILD_DIR}`` is the build
 directory where NWChemEx was built.
