@@ -56,9 +56,10 @@ jobs:
 
   # Deploy updated documentation
   deploy_docs:
+    if: inputs.doc_target != ''
     runs-on: ubuntu-latest
     container: 
-      image: ghcr.io/nwchemex-project/nwx_buildenv:latest
+      image: ghcr.io/nwchemex/nwx_buildenv:latest
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}

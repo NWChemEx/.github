@@ -16,7 +16,7 @@
 NWChemEx Community
 ##################
 
-Topics in this section go over governance of the NWChemEx-Project and explain
+Topics in this section go over governance of the NWChemEx Community and explain
 decisions we've made regarding community interactions (*i.e.*, how we landed on
 our PR and issue templates etc.)
 

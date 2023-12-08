@@ -109,7 +109,7 @@ html_theme_options = {
 # Allows the edit on GitHub button to make editing the docs easier.
 html_context = {
   'display_github': True,
-  'github_user': 'NWChemEx-Project',
+  'github_user': 'NWChemEx',
   'github_repo': '.github',
   'github_version': 'master/docs/source/',
 }

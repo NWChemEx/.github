@@ -119,7 +119,7 @@ NWChemEx       The top-level repo which provides the user-friendly API
 Miscellaneous Repositories
 ==========================
 
-The NWChemEx-Project organization contains a number of additional "meta"
+The NWChemEx organization contains a number of additional "meta"
 repositories that are not directly required for building NWChemEx. These repos
 are typically associated with a particular research project, provide CI
 infrastructure, or in some other way support the project without being source

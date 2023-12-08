@@ -274,8 +274,8 @@ only fail if the implementation of our module changes (ignoring infrastructure
 breaks).
 
 Neding hard-coded data for unit tests is very common which is why we made the
-``NWChemEx-Project/testing`` repo
-(https://github.com/NWChemEx-Project/testing). You are encouraged to use that
+``NWChemEx/testing`` repo
+(https://github.com/NWChemEx/testing). You are encouraged to use that
 data when it makes sense.
 
 .. note::
