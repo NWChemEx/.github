@@ -114,6 +114,12 @@ jobs:
         compiler: ${{ fromJSON(inputs.compilers) }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set ownership
+        run: |
+          # Fix for git not liking owner of the checkout dir
+          chown -R $(id -u):$(id -g) $PWD
       - name: Append Repo Settings to CMake Toolchain
         if: inputs.repo_toolchain != ''
         run:  |
@@ -152,6 +158,12 @@ jobs:
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set ownership
+        run: |
+          # Fix for git not liking owner of the checkout dir
+          chown -R $(id -u):$(id -g) $PWD
       - name: Doxygen Docs
         if: ${{ inputs.doc_target != 'Sphinx' }}
         run:  |
