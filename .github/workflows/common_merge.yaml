@@ -65,6 +65,12 @@ jobs:
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set ownership
+        run: |
+          # Fix for git not liking owner of the checkout dir
+          chown -R $(id -u):$(id -g) $PWD
       # These next two steps will configure CMake if required
       - name: Configure Only Docs
         if: |
