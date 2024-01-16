@@ -15,6 +15,7 @@ the individual components for details pertaining to their respective designs.
    :caption: Contents:
 
    philosophy
+   vision
    nwx_ecosystem
    overall_design
    overall_justifications/index

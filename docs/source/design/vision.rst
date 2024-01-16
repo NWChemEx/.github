@@ -1,13 +1,10 @@
-###############
-NWChemEx Vision
-###############
+################
+NWChemEx Visions
+################
 
-NWChemEx (the software) is envisioned as being:
-
-- the primier high-performance quantum chemistry package,
-- focused on accurate simulation of large chemical systems,
-- user and developer friendly, and
-- an exemplar of modular, sustainable scientific software engineering.
+The overall philosophy/motivation of the NWChemEx software package was 
+discussed in the :ref:`philosophy` section. That philosophy is ultimately a 
+lofty, moving target. 
 
 **********
 1.0 Vision

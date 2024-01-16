@@ -1,11 +1,27 @@
-#################
-Design Philosophy
-#################
+.. _philosophy:
 
-As an organization NWChemEx's driving goal is performance. Our implementations
-need to be fast, and scalable. We want our code to be the *de facto* choice for
-running the biggest, baddest, simulations in the field. In between those runs,
-we want our code to be highly competitive with other codes, so that NWChemEx is
+###################
+NWChemEx Philosophy
+###################
+
+NWChemEx, the software package, strives to be the *de facto* choice for running 
+high-performance quantum chemistry calculations on hardware ranging from laptops
+to the world's largest supercomputers. This requires a software package which 
+is:
+
+- highly competitive with other electronic structure packages,
+- user and developer friendly,
+
+
+
+- best in class implementations,
+- architecturally aware algorithms
+- parallel algorithms
+-
+
+ We do not want NWChemEx
+to only be limited to heroic runs, rather we want all NWChemEx methods to be
+highly competitive with other codes at similar scales. , so that NWChemEx is
 as close to a one-stop shop as possible.
 
 To accomplish this goal, NWChemEx's overall design has adopted two philosophies:
