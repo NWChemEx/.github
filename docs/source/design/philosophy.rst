@@ -4,27 +4,18 @@
 NWChemEx Philosophy
 ###################
 
-NWChemEx, the software package, strives to be the *de facto* choice for running 
-high-performance quantum chemistry calculations on hardware ranging from laptops
-to the world's largest supercomputers. This requires a software package which 
-is:
+NWChemEx, the software package, strives to be the *de facto* choice for running
+high-performance quantum chemistry calculations on platforms ranging from
+laptops to the world's largest supercomputers. This requires a software package
+which is:
 
-- highly competitive with other electronic structure packages,
+- portable,
 - user and developer friendly,
+- and above all else performant.
 
-
-
-- best in class implementations,
-- architecturally aware algorithms
-- parallel algorithms
--
-
- We do not want NWChemEx
-to only be limited to heroic runs, rather we want all NWChemEx methods to be
-highly competitive with other codes at similar scales. , so that NWChemEx is
-as close to a one-stop shop as possible.
-
-To accomplish this goal, NWChemEx's overall design has adopted two philosophies:
+The above will not happen by accident and require careful planning and community
+efforts. To accomplish this goal, NWChemEx's overall design has adopted two
+philosophies:
 
 - Separation-of-concerns: We strive to decouple pieces to the extent possible.
 - Top-down: APIs at each level are designed to only expose what that level
@@ -54,6 +45,3 @@ developers, leaving the more novice developers to use the objects like a domain
 specific language. In this scenario everybody wins; developers wanting to test
 out new chemistry can do that easily, whereas developers wanting to improve
 performance can do so without impacting the chemistry development.
-
-To summarize our design philosophy prioritizes a separation of concerns with an
-emphasis on the end-user's experience (top-down approach).
