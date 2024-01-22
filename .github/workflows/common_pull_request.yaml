@@ -191,6 +191,7 @@ jobs:
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
+          echo ${SPHINX_OPTS}
           make html SPHINXOPTS="${SPHINX_OPTS}"
         shell: bash
           
