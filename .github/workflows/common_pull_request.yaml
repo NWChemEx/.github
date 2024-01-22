@@ -50,6 +50,11 @@ on:
         type: string
         required: false
         default: ''
+      sphinx_fail_on_warning:
+        description: "Whether or not the Sphinx docs should fail due to warnings"
+        type: boolean
+        required: false
+        default: true
     secrets:
       CMAIZE_GITHUB_TOKEN:
         description: "Token passed to CMaize"
@@ -175,12 +180,17 @@ jobs:
           mkdir docs/build/html
           mv build/html "docs/build/html/${{ inputs.doc_target }}"
         shell: bash
+      - name: Set Fail on Warnings
+        if: inputs.sphinx_fail_on_warning == true
+        run:  |
+          echo "SPHINX_OPTS=\"-W --keep-going -n\"" >> $GITHUB_ENV
+        shell: bash
       - name: Sphinx Docs
         run:  |
           cd docs
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
-          make html
+          make html SPHINXOPTS="${SPHINX_OPTS}"
         shell: bash
           
