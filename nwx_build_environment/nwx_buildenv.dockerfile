@@ -23,7 +23,7 @@ RUN apt-get update \
     libxml2-dev \
     libxslt-dev \
     nwchem \
-    && pip install gcovr numpy \
+    && pip install gcovr numpy qcelemental qcengine networkx \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY toolchains /toolchains
