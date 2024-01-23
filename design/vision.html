@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Energy Workflow &mdash; Developer Documentation 1.0.0 documentation</title>
+  <title>NWChemEx Visions &mdash; Developer Documentation 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="User Interface Design" href="ui_design.html" />
-    <link rel="prev" title="Why Does NWChemEx Rely on Two Tensor Libraries?" href="overall_justifications/why_two_tensor_libraries.html" /> 
+    <link rel="next" title="NWChemEx Ecosystem" href="nwx_ecosystem.html" />
+    <link rel="prev" title="NWChemEx Philosophy" href="philosophy.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,11 +52,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../community/index.html">NWChemEx Community</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Design Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="philosophy.html">NWChemEx Philosophy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vision.html">NWChemEx Visions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NWChemEx Visions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vision-for-1-0">Vision for 1.0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vision-for-end-of-2024">Vision for End of 2024</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="nwx_ecosystem.html">NWChemEx Ecosystem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overall_design.html">Overall Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overall_justifications/index.html">Overall Design Justification</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Energy Workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="energy_workflow.html">Energy Workflow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ui_design.html">User Interface Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">FAQs</a></li>
 </ul>
@@ -85,9 +89,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Design Documentation</a></li>
-      <li class="breadcrumb-item active">Energy Workflow</li>
+      <li class="breadcrumb-item active">NWChemEx Visions</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/NWChemEx/.github/edit/master/docs/source/design/energy_workflow.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/NWChemEx/.github/edit/master/docs/source/design/vision.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -95,14 +99,61 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="energy-workflow">
-<h1>Energy Workflow<a class="headerlink" href="#energy-workflow" title="Permalink to this heading"></a></h1>
-<p>Arguably the most common calculation performed in an electronic structure
-package is the computation of a chemical system’s energy. The point of this
-page is to discuss the design of how NWChemEx handles the energy workflow.</p>
-<div class="figure align-center" id="id1" style="width: 100%">
-<img alt="../_images/energy_workflow.png" src="../_images/energy_workflow.png" />
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Schematic of how NWChemEx computes an energy.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+  <div class="section" id="nwchemex-visions">
+<h1>NWChemEx Visions<a class="headerlink" href="#nwchemex-visions" title="Permalink to this heading"></a></h1>
+<p>The overall philosophy/motivation of the NWChemEx software package was
+discussed in the <a class="reference internal" href="philosophy.html#philosophy"><span class="std std-ref">NWChemEx Philosophy</span></a> section. Achieving and adhering to that
+philosophy is ultimately a lofty, moving target. To facilitate development of
+NWChemEx in a direction consistent with the project’s philosophy, the NWChemEx
+board, in coordination with the overall NWChemEx community, will maintains a
+shared vision. Unlike traditional milestones/goals, “visions” are intentionally
+more vague and less SMART (specific, measurable, achievable, relevant, and
+time-bound) so as to only define the scope of work, not the objectives of the
+work.</p>
+<p>This page is envisioned as collecting the visions of the NWChemEx project over
+its lifetime.</p>
+<div class="section" id="vision-for-1-0">
+<h2>Vision for 1.0<a class="headerlink" href="#vision-for-1-0" title="Permalink to this heading"></a></h2>
+<p>At the end of DOE’s Exascale Computing Project (ECP) the NWChemEx community had
+developed:</p>
+<ul class="simple">
+<li><p>infrastructure for writing modular scientific software,</p></li>
+<li><p>a performant tensor library, and</p></li>
+<li><p>performant implementations of fundamental computational chemistry methods.</p></li>
+</ul>
+<p>These three pieces remain somewhat disconnected. The vision for the initial
+release of NWChemEx, i.e., the 1.0 is to connect these three pieces in a unified
+manner. This requires:</p>
+<ul class="simple">
+<li><p>1.0 releases of all infrastructure (i.e., ParallelZone, PluginPlay, Chemist,
+SimDE, and ChemCache).</p></li>
+<li><p>Modularization of fundamental computational chemistry methods.</p></li>
+<li><p>Reliance on stable SimDE-based user APIs.</p></li>
+<li><p>1.0 of FriendZone.</p></li>
+</ul>
+<p>The reliance on stable SimDE-based APIs means that we will focus on minimal
+inputs (i.e., chemical systems, basis sets, and classes needed to implement the
+chemical system and basis sets). Modularity will be coarse-grained and limited
+to data-exchange using stable Chemist types. Of note this means we will not
+expose the tensor library at the 1.0 stage, and instead consider it an
+“under-the-hood” implementation detail. The 1.0 of FriendZone is included to
+round out NWChemEx’s functionality, as ECP development primarily focused on DFT
+and coupled cluster.</p>
+</div>
+<div class="section" id="vision-for-end-of-2024">
+<h2>Vision for End of 2024<a class="headerlink" href="#vision-for-end-of-2024" title="Permalink to this heading"></a></h2>
+<p>TODO: Determine if this time frame is right.</p>
+<p>The vision for post-1.0 release has not been discussed yet and will not be
+discussed until the 1.0 release has happened. However, the 1.0 vision leaves
+some obvious directions which we list here so that people know they have not
+been forgotten.</p>
+<ul class="simple">
+<li><p>exposure of tensors</p></li>
+<li><p>more Chemist classes (e.g., operators, vector spaces, and wavefunctions)</p></li>
+<li><p>more fine-grained modularization (using types from chemist)</p></li>
+<li><p>more user-friendly API.</p></li>
+<li><p>interfaces to other packages.</p></li>
+</ul>
 </div>
 </div>
 
@@ -110,8 +161,8 @@ page is to discuss the design of how NWChemEx handles the energy workflow.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="overall_justifications/why_two_tensor_libraries.html" class="btn btn-neutral float-left" title="Why Does NWChemEx Rely on Two Tensor Libraries?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="ui_design.html" class="btn btn-neutral float-right" title="User Interface Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="philosophy.html" class="btn btn-neutral float-left" title="NWChemEx Philosophy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="nwx_ecosystem.html" class="btn btn-neutral float-right" title="NWChemEx Ecosystem" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

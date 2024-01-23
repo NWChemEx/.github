@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Design Philosophy &mdash; Developer Documentation 1.0.0 documentation</title>
+  <title>NWChemEx Philosophy &mdash; Developer Documentation 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="NWChemEx Ecosystem" href="nwx_ecosystem.html" />
+    <link rel="next" title="NWChemEx Visions" href="vision.html" />
     <link rel="prev" title="Design Documentation" href="index.html" /> 
 </head>
 
@@ -51,7 +51,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../community/index.html">NWChemEx Community</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Design Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Design Philosophy</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NWChemEx Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vision.html">NWChemEx Visions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nwx_ecosystem.html">NWChemEx Ecosystem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overall_design.html">Overall Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overall_justifications/index.html">Overall Design Justification</a></li>
@@ -84,7 +85,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="index.html">Design Documentation</a></li>
-      <li class="breadcrumb-item active">Design Philosophy</li>
+      <li class="breadcrumb-item active">NWChemEx Philosophy</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/NWChemEx/.github/edit/master/docs/source/design/philosophy.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -94,14 +95,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="design-philosophy">
-<h1>Design Philosophy<a class="headerlink" href="#design-philosophy" title="Permalink to this heading"></a></h1>
-<p>As an organization NWChemEx’s driving goal is performance. Our implementations
-need to be fast, and scalable. We want our code to be the <em>de facto</em> choice for
-running the biggest, baddest, simulations in the field. In between those runs,
-we want our code to be highly competitive with other codes, so that NWChemEx is
-as close to a one-stop shop as possible.</p>
-<p>To accomplish this goal, NWChemEx’s overall design has adopted two philosophies:</p>
+  <div class="section" id="nwchemex-philosophy">
+<span id="philosophy"></span><h1>NWChemEx Philosophy<a class="headerlink" href="#nwchemex-philosophy" title="Permalink to this heading"></a></h1>
+<p>NWChemEx, the software package, strives to be the <em>de facto</em> choice for running
+high-performance quantum chemistry calculations on platforms ranging from
+laptops to the world’s largest supercomputers. This requires a software package
+which is:</p>
+<ul class="simple">
+<li><p>portable,</p></li>
+<li><p>user and developer friendly,</p></li>
+<li><p>and above all else performant.</p></li>
+</ul>
+<p>The above will not happen by accident and require careful planning and community
+efforts. To accomplish this goal, NWChemEx’s overall design has adopted two
+philosophies:</p>
 <ul class="simple">
 <li><p>Separation-of-concerns: We strive to decouple pieces to the extent possible.</p></li>
 <li><p>Top-down: APIs at each level are designed to only expose what that level
@@ -131,8 +138,6 @@ developers, leaving the more novice developers to use the objects like a domain
 specific language. In this scenario everybody wins; developers wanting to test
 out new chemistry can do that easily, whereas developers wanting to improve
 performance can do so without impacting the chemistry development.</p>
-<p>To summarize our design philosophy prioritizes a separation of concerns with an
-emphasis on the end-user’s experience (top-down approach).</p>
 </div>
 
 
@@ -140,7 +145,7 @@ emphasis on the end-user’s experience (top-down approach).</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Design Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="nwx_ecosystem.html" class="btn btn-neutral float-right" title="NWChemEx Ecosystem" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="vision.html" class="btn btn-neutral float-right" title="NWChemEx Visions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
