@@ -21,6 +21,11 @@ name: Common Merge Workflow
 on:
   workflow_call:
     inputs:
+      bump_tag:
+        description: "Whether or not to bump the tag of the commit"
+        type: booolean
+        required: false
+        default: true
       doc_target:
         description: "The name of the documentation target. Set to 'Sphinx' to skip doxygen"
         type: string
@@ -44,6 +49,7 @@ on:
 jobs:
   # Bump the version tag
   bump_tag:
+    if: inputs.bump_tag == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
