@@ -1,7 +1,7 @@
 import os
+import glob
 import sys
 import importlib
-
 """This script will generate the module api documentation for a plugin library.
 
 Usage
@@ -30,9 +30,15 @@ if __name__ == "__main__":
     # Add paths to libraries
     cwd = os.getcwd()
     build_dir = os.path.join(cwd, "build")
-    pluginplay_dir = os.path.join(cwd, "build", "_deps", "pluginplay-build")
     sys.path.append(build_dir)
-    sys.path.append(pluginplay_dir)
+
+    pythonsrc_dir = os.path.join(cwd, "src", "python")
+    sys.path.append(pythonsrc_dir)
+
+    deps_dir = os.path.join(cwd, "build", "_deps")
+    deps_builds = glob.glob("*-build/", root_dir=deps_dir)
+    for build in deps_builds:
+        sys.path.append(os.path.join(deps_dir, build))
 
     # Exit on any exception
     try:
@@ -47,4 +53,3 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"An exception caught: {e}")
         sys.exit()
-
