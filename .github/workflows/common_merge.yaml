@@ -48,7 +48,7 @@ on:
 
 jobs:
   # Bump the version tag
-  bump_tag:
+  increment_tag:
     if: inputs.bump_tag == true
     runs-on: ubuntu-latest
     steps:
