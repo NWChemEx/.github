@@ -23,7 +23,7 @@ on:
     inputs:
       bump_tag:
         description: "Whether or not to bump the tag of the commit"
-        type: booolean
+        type: boolean
         required: false
         default: true
       doc_target:
