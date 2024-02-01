@@ -29,13 +29,13 @@ if __name__ == "__main__":
 
     # Add paths to libraries
     cwd = os.getcwd()
-    build_dir = os.path.join(cwd, "build-vscode")
+    build_dir = os.path.join(cwd, "build")
     sys.path.append(build_dir)
 
     pythonsrc_dir = os.path.join(cwd, "src", "python")
     sys.path.append(pythonsrc_dir)
 
-    deps_dir = os.path.join(cwd, "build-vscode", "_deps")
+    deps_dir = os.path.join(cwd, "build", "_deps")
     deps_builds = glob.glob("*-build/", root_dir=deps_dir)
     for build in deps_builds:
         sys.path.append(os.path.join(deps_dir, build))
