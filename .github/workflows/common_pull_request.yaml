@@ -31,7 +31,7 @@ on:
         required: false
         default: '.licenserc.yaml'
       source_dir:
-        description: "Space seperated list of dirs to apply formatting to"
+        description: "Space seperated list of dirs to apply clang-format to"
         type: string
         required: false
         default: 'include src tests'
@@ -52,6 +52,11 @@ on:
         default: ''
       sphinx_fail_on_warning:
         description: "Whether or not the Sphinx docs should fail due to warnings"
+        type: boolean
+        required: false
+        default: true
+      format_python:
+        description: "Whether or not to format python files"
         type: boolean
         required: false
         default: true
@@ -78,6 +83,10 @@ jobs:
           token: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
+      - uses: actions/setup-python@v2
+        if: inputs.format_python == true
+        with:
+          python-version: '3.x'
       - name: Add license
         if: inputs.config_file != ''
         uses: apache/skywalking-eyes@v0.4.0
@@ -92,6 +101,12 @@ jobs:
           extensions: 'hpp,cpp,ipp,h,c'
           clangFormatVersion: 12
           inplace: True
+      - name: Apply python formatting
+        if: inputs.format_python == true
+        run: |
+          pip install yapf
+          find . -name '*.py' -print0 | xargs -0 yapf -i
+        shell: bash
       - name: Commit any changes
         id: commit-changes
         uses: EndBug/add-and-commit@v9
