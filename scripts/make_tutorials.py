@@ -23,7 +23,7 @@ def strip_newline(block):
             break
         end -= 1
 
-    return block[start: end]
+    return block[start:end]
 
 
 def write_code(block, lang):
@@ -36,7 +36,7 @@ def write_code(block, lang):
     :param lang: The language of the code snippet
     :return: A string suitable for printing in a reST file
     """
-    a_tab = " "*4
+    a_tab = " " * 4
 
     parsed_block = strip_newline(block)
 
@@ -138,7 +138,7 @@ def parse_file(cc, filename):
             else:  # n-th line outside a comment block
                 if which_first is None:
                     which_first = False
-                if len(code) == 0: # If code came first, there's no array yet
+                if len(code) == 0:  # If code came first, there's no array yet
                     code.append([])
                 code[-1].append(line)
 
@@ -179,9 +179,10 @@ def write_tutorial(name, lang, comments, code, first):
 
     # Write the title of the tutorial
     output = name + '\n'
-    output += '='*len(name) + "\n\n"
+    output += '=' * len(name) + "\n\n"
 
-    for i in range(n_second):  # Loop over second because it is possibly shorter
+    for i in range(
+            n_second):  # Loop over second because it is possibly shorter
         if first:
             output += write_comment(comments[i])
             output += write_code(code[i], lang)
@@ -229,14 +230,8 @@ def make_tutorials(input_dir, output_dir):
     """
 
     # Define the comment characters and name for each language
-    comment_chars = {".py": '#',
-                     ".hpp": "//",
-                     ".cpp" : "//",
-                     ".cmake": '#'}
-    lang = {".py": "python",
-            ".hpp": "c++",
-            ".cpp": "c++",
-            ".cmake": "cmake"}
+    comment_chars = {".py": '#', ".hpp": "//", ".cpp": "//", ".cmake": '#'}
+    lang = {".py": "python", ".hpp": "c++", ".cpp": "c++", ".cmake": "cmake"}
 
     # Make output directory if it does not exist
     if not os.path.exists(output_dir):
@@ -250,7 +245,7 @@ def make_tutorials(input_dir, output_dir):
 
         if os.path.isdir(input_file):
             make_tutorials(input_file, os.path.join(output_dir, file_name))
-            file_names.append(os.path.join(file_name,"index"))
+            file_names.append(os.path.join(file_name, "index"))
             continue
 
         if extension not in lang:  # Not a file we're supposed to parse
@@ -270,7 +265,6 @@ def make_tutorials(input_dir, output_dir):
 
     #with open(os.path.join(output_dir, "index.rst"), 'w') as index_file:
     #    index_file.write(write_index(file_names))
-
 
 
 # def main():
