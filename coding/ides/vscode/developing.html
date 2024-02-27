@@ -136,23 +136,12 @@ bring up a menu with common git commands like push and pull.</p>
 <p>VSCode can use <code class="docutils literal notranslate"><span class="pre">yapf</span></code> to automatically format Python code through the
 <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">official Microsoft Python extension</a>.</p>
 <ol class="arabic simple">
-<li><p>Install <code class="docutils literal notranslate"><span class="pre">yapf</span></code> by running:</p></li>
+<li><p>Install the <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=eeyore.yapf">yapf extension</a>.</p></li>
+<li><p>Ensure that the Python interpreter you want to run <code class="docutils literal notranslate"><span class="pre">yapf</span></code> with has
+<code class="docutils literal notranslate"><span class="pre">yapf</span></code> installed.</p></li>
+<li><p>In settings, under <code class="docutils literal notranslate"><span class="pre">yapf.interpreter</span></code>, set the path to the Python
+interpreter from step 2.</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Highly recommended, but optional virtual environment</span>
-$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
-$<span class="w"> </span>.<span class="w"> </span>venv/bin/activate
-
-<span class="c1"># Install yapf</span>
-$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>yapf
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Set the <code class="docutils literal notranslate"><span class="pre">python.formatting.provider</span></code> setting in VSCode to “yapf”.</p></li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>More information on VSCode Python formatting can be found <a class="reference external" href="https://code.visualstudio.com/docs/python/editing#_formatting">here</a>.</p>
-</div>
 </div>
 </div>
 <div class="section" id="documentation">
