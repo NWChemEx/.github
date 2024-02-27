@@ -41,23 +41,14 @@ VSCode can use ``yapf`` to automatically format Python code through the
 `official Microsoft Python extension <https://marketplace.visualstudio.com/
 items?itemName=ms-python.python>`__. 
 
-1. Install ``yapf`` by running:
+1. Install the `yapf extension <https://marketplace.visualstudio.com/
+   items?itemName=eeyore.yapf>`__.
 
-.. code-block:: bash
+2. Ensure that the Python interpreter you want to run ``yapf`` with has
+   ``yapf`` installed.
 
-   # Highly recommended, but optional virtual environment
-   $ python -m venv venv
-   $ . venv/bin/activate
-
-   # Install yapf
-   $ pip install yapf
-
-2. Set the ``python.formatting.provider`` setting in VSCode to "yapf".
-
-.. note:: 
-
-   More information on VSCode Python formatting can be found `here 
-   <https://code.visualstudio.com/docs/python/editing#_formatting>`__.
+3. In settings, under ``yapf.interpreter``, set the path to the Python
+   interpreter from step 2.
 
 Documentation
 -------------
