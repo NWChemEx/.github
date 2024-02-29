@@ -24,7 +24,9 @@ to any of the first party libraries will be expected to have corresponding unit
 tests. Testing of functions (as well as Plugin modules) should minimally ensure 
 that all return routes and errors are checked. Tests for classes should do the 
 same for all member functions, while additionally testing that the state of all 
-instances is consistent at construction and after modifications.
+instances is consistent at construction and after modifications. Generally, the
+unit tests should be able to run quickly, and use simplified data with the 
+minimum level of complexity need to ensure completeness in the testing.
 
 The C++ unit tests use the `Catch2 framework <https://github.com/catchorg/Catch2>`_,
 while python tests use the `unittest framework <https://docs.python.org/3/library/unittest.html>`_.
