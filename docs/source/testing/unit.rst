@@ -26,134 +26,138 @@ that all return routes and errors are checked. Tests for classes should do the
 same for all member functions, while additionally testing that the state of all 
 instances is consistent at construction and after modifications.
 
-
-C++ Unit Tests
-==============
-
-The C++ unit tests use the `Catch2 framework <https://github.com/catchorg/Catch2>`_.
+The C++ unit tests use the `Catch2 framework <https://github.com/catchorg/Catch2>`_,
+while python tests use the `unittest framework <https://docs.python.org/3/library/unittest.html>`_.
 Assume the following class and related comparison function are intended to be 
 added to one of the first party libraries:
 
-.. code-block:: c++
+.. tabs::
 
-    #include <stdexcept>
+    .. tab:: C++
 
-    class ToBeTested {
-    private:
-        using value_type = int;
-        value_type my_value_;
+        .. code-block:: c++
+            :linenos:
 
-    public:
-        ToBeTested(value_type a_value = 0) : my_value_(a_value) {}
+            #include <stdexcept>
 
-        value_type check_my_value() { return my_value_; }
-        
-        void change_my_value(value_type new_value) {
-            if(new_value == 13) throw std::runtime_error("Unlucky Number");
-            my_value_ = new_value;
-        }
-        
-        bool operator==(const ToBeTested& rhs) const noexcept {
-            return my_value_ == rhs.my_value_;
-        }
+            class ToBeTested {
+            private:
+                using value_type = int;
+                value_type my_value_;
 
-    }; // ToBeTested
+            public:
+                ToBeTested(value_type a_value = 0) : my_value_(a_value) {}
 
-    inline bool operator!=(const ToBeTested& lhs, const ToBeTested& rhs) {
-        return !(lhs == rhs);
-    }
+                value_type check_my_value() { return my_value_; }
+                
+                void change_my_value(value_type new_value) {
+                    if(new_value == 13) throw std::runtime_error("Unlucky Number");
+                    my_value_ = new_value;
+                }
+                
+                bool operator==(const ToBeTested& rhs) const noexcept {
+                    return my_value_ == rhs.my_value_;
+                }
+
+            }; // ToBeTested
+
+            inline bool operator!=(const ToBeTested& lhs, const ToBeTested& rhs) {
+                return !(lhs == rhs);
+            }
+
+    .. tab:: Python
+
+        .. code-block:: python
+            :linenos:
+
+            class ToBeTested():
+
+            def __init__(self, a_value = 0): 
+                self.__my_value = a_value
+
+            def check_my_value(self):
+                return self.__my_value
+
+            def change_my_value(self, new_value):
+                if new_value == 13: 
+                    raise RuntimeError("Unlucky Number")
+                self.__my_value = new_value
+
+            def __eq__(self, other):
+                if not isinstance(other, ToBeTested):
+                    return NotImplemented
+                return self.__my_value == other.__my_value
 
 An example unit test for the above looks like:
 
-.. code-block:: c++
+.. tabs::
 
-    #include "to_be_tested.hpp"
-    #include <catch2/catch.hpp>
+    .. tab:: C++
 
-    TEST_CASE("ToBeTested") {
-        auto defaulted  = ToBeTested();
-        auto with_value = ToBeTested(3);
+        .. code-block:: c++
+            :linenos:
 
-        SECTION("Comparisons") {
-            SECTION("operator==") {
-                REQUIRE(defaulted == ToBeTested());
-                REQUIRE(with_value == ToBeTested(3));
-                REQUIRE_FALSE(defaulted == with_value);
+            #include "to_be_tested.hpp"
+            #include <catch2/catch.hpp>
+
+            TEST_CASE("ToBeTested") {
+                auto defaulted  = ToBeTested();
+                auto with_value = ToBeTested(3);
+
+                SECTION("Comparisons") {
+                    SECTION("operator==") {
+                        REQUIRE(defaulted == ToBeTested());
+                        REQUIRE(with_value == ToBeTested(3));
+                        REQUIRE_FALSE(defaulted == with_value);
+                    }
+                    SECTION("operator!=") { 
+                        REQUIRE(defaulted != with_value); 
+                    }
+                }
+
+                SECTION("check_my_value") {
+                    REQUIRE(defaulted.check_my_value() == 0);
+                    REQUIRE(with_value.check_my_value() == 3);
+                }
+
+                SECTION("change_my_value") {
+                    SECTION("Not Unlucky") {
+                        defaulted.change_my_value(7);
+                        REQUIRE(defaulted.check_my_value() == 7);
+                    }
+                    SECTION("Unlucky") {
+                        REQUIRE_THROWS_AS(defaulted.change_my_value(13),
+                                          std::runtime_error);
+                    }
+                }
             }
-            SECTION("operator!=") { 
-                REQUIRE(defaulted != with_value); 
-            }
-        }
 
-        SECTION("check_my_value") {
-            REQUIRE(defaulted.check_my_value() == 0);
-            REQUIRE(with_value.check_my_value() == 3);
-        }
+    .. tab:: Python
 
-        SECTION("change_my_value") {
-            SECTION("Not Unlucky") {
-                defaulted.change_my_value(7);
-                REQUIRE(defaulted.check_my_value() == 7);
-            }
-            SECTION("Unlucky") {
-                REQUIRE_THROWS_AS(defaulted.change_my_value(13),
-                                  std::runtime_error);
-            }
-        }
-    }
+        .. code-block:: python
+            :linenos:
 
-Python Unit Tests
-=================
+            from to_be_tested import ToBeTested
+            import unittest
 
-The Python unit tests use the `unittest framework <https://docs.python.org/3/library/unittest.html>`_.
-Assume the following class is intended to be added to one of the first party 
-libraries:
+            class TestNewClass(unittest.TestCase):
+                def setUp(self):
+                    self.defaulted = ToBeTested()
+                    self.with_value = ToBeTested(3)
 
-.. code-block:: python
+                def test_equality(self):
+                    self.assertEqual(self.defaulted, ToBeTested())
+                    self.assertEqual(self.with_value, ToBeTested(3))
+                    self.assertNotEqual(self.defaulted, self.with_value)
 
-    class ToBeTested():
+                def test_check_my_value(self):
+                    self.assertEqual(self.defaulted.check_my_value(), 0)
+                    self.assertEqual(self.with_value.check_my_value(), 3)
 
-    def __init__(self, a_value = 0): 
-        self.__my_value = a_value
+                def test_change_my_value(self):
+                    self.defaulted.change_my_value(7)
+                    self.assertEqual(self.defaulted.check_my_value(), 7)
 
-    def check_my_value(self):
-        return self.__my_value
-
-    def change_my_value(self, new_value):
-        if new_value == 13: 
-            raise RuntimeError("Unlucky Number")
-        self.__my_value = new_value
-
-    def __eq__(self, other):
-        if not isinstance(other, ToBeTested):
-            return NotImplemented
-        return self.__my_value == other.__my_value
-
-An example unit test for the above looks like:
-
-.. code-block:: python
-
-    from to_be_tested import ToBeTested
-    import unittest
-
-    class TestNewClass(unittest.TestCase):
-        def setUp(self):
-            self.defaulted = ToBeTested()
-            self.with_value = ToBeTested(3)
-
-        def test_equality(self):
-            self.assertEqual(self.defaulted, ToBeTested())
-            self.assertEqual(self.with_value, ToBeTested(3))
-            self.assertNotEqual(self.defaulted, self.with_value)
-
-        def test_check_my_value(self):
-            self.assertEqual(self.defaulted.check_my_value(), 0)
-            self.assertEqual(self.with_value.check_my_value(), 3)
-
-        def test_change_my_value(self):
-            self.defaulted.change_my_value(7)
-            self.assertEqual(self.defaulted.check_my_value(), 7)
-
-            with self.assertRaises(RuntimeError) as context:
-                self.defaulted.change_my_value(13)
-            self.assertTrue("Unlucky Number" in str(context.exception))
+                    with self.assertRaises(RuntimeError) as context:
+                        self.defaulted.change_my_value(13)
+                    self.assertTrue("Unlucky Number" in str(context.exception))
