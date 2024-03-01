@@ -33,7 +33,7 @@ tests to run quickly.
     :align: center
     :scale: 50 %
 
-    A simplified diagram of the NWChemEx dependency structure. Note that Plugins
+    A simplified diagram of the NWChemEx dependency structure. Note that plugins
     depending on SimDE are parallel to one another, and are integrated together
     within NWChemEx. Arrows point from a dependency to the dependent library.
 
@@ -44,9 +44,9 @@ systems. Additionally, changes to the integrals code could have deleterious
 effects on the SCF code, which we would like to detect before merging. For these
 (and other) reasons, it can be useful to implement integration tests to ensure
 the continued interoperability of the isolated components of the NWX stack.
-Because the tests are built on top of the Plugins, it is simple to include
+Because the tests are built on top of the plugins, it is simple to include
 NWChemEx itself as a dependency of the test (see :numref:`fig_integration_chart`).
-This way, changes at the Plugin level can be screened to guarantee that they
+This way, changes at the plugin level can be screened to guarantee that they
 don't break interoperability with the others.
 
 .. _fig_integration_chart:
