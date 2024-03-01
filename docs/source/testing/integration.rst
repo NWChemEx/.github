@@ -42,7 +42,7 @@ With that said, the initial development and testing of the SCF becomes very
 awkward when one is unable to easily acquire real integrals for real molecular 
 systems. Additionally, changes to the integrals code could have deleterious
 effects on the SCF code, which we would like to detect before merging. For these
-(and other reasons), it can be useful to implement integration tests to ensure
+(and other) reasons, it can be useful to implement integration tests to ensure
 the continued interoperability of the isolated components of the NWX stack.
 Because the tests are built on top of the Plugins, it is simple to include
 NWChemEx itself as a dependency of the test (see :numref:`fig_integration_chart`).

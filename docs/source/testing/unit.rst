@@ -18,7 +18,7 @@
 Writing Unit Tests for NWChemEx
 ###############################
 
-Within the first party NWX libraries, we aim for extensive unit testing to 
+Within the first party NWChemEx libraries, we aim for extensive unit testing to 
 ensure functionality and correctness. All classes, functions, and modules added
 to any of the first party libraries will be expected to have corresponding unit
 tests. Testing of functions (as well as Plugin modules) should minimally ensure 
