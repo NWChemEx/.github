@@ -36,7 +36,7 @@ release = version
 extensions = [
     'sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.intersphinx',
     'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.mathjax',
-    'sphinxcontrib.bibtex'
+    'sphinxcontrib.bibtex', 'sphinx_tabs.tabs'
 ]
 dir_path = os.path.dirname(os.path.realpath(__file__))
 doc_path = os.path.dirname(dir_path)
@@ -137,7 +137,9 @@ latex_elements = {
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
+intersphinx_mapping = {
+    # 'python': ('https://docs.python.org/3', None)
+}
 
 # -- Options for todo extension ----------------------------------------------
 
