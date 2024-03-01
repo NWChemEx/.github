@@ -6,6 +6,7 @@
   <title>Writing Integration Tests for NWChemEx &mdash; Developer Documentation 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
 
   
   <!--[if lt IE 9]>
@@ -56,7 +57,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../coding/index.html">Developing NWChemEx</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Testing NWChemEx</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="unit.html">Writing Unit Tests for NWChemEx</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Writing Integration Tests for NWChemEx</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Writing Integration Tests for NWChemEx</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cmake-for-integration-testing">CMake for Integration Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integration-tests">Integration Tests</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html">Writing Performance Tests for NWChemEx</a></li>
 </ul>
 </li>
@@ -92,7 +97,122 @@
              
   <div class="section" id="writing-integration-tests-for-nwchemex">
 <span id="writing-integration-tests"></span><h1>Writing Integration Tests for NWChemEx<a class="headerlink" href="#writing-integration-tests-for-nwchemex" title="Permalink to this heading"></a></h1>
-<p>TODO: Write me!!!!</p>
+<p>NWChemEx is a modular ecosystem designed with separation of concerns as a key
+design point. An example of this separation can be found with the
+SCF, integrals, ChemCache libraries. These components of NWX are linked by
+SimDE and are intended to be used together, but are not explicitly required for
+the development of the other (see <a class="reference internal" href="#fig-deps-chart"><span class="std std-numref">Fig. 14</span></a>). The unit tests for
+these libraries are intended to ensure basic functionality and correctness,
+which can usually be accomplished with simple test data that allow the unit
+tests to run quickly.</p>
+<div class="figure align-center" id="id1">
+<span id="fig-deps-chart"></span><a class="reference internal image-reference" href="../_images/DependencyChart.png"><img alt="../_images/DependencyChart.png" src="../_images/DependencyChart.png" style="width: 312.5px; height: 241.0px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">A simplified diagram of the NWChemEx dependency structure. Note that plugins
+depending on SimDE are parallel to one another, and are integrated together
+within NWChemEx. Arrows point from a dependency to the dependent library.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</div>
+<p>With that said, the initial development and testing of the SCF becomes very
+awkward when one is unable to easily acquire real integrals for real molecular
+systems. Additionally, changes to the integrals code could have deleterious
+effects on the SCF code, which we would like to detect before merging. For these
+(and other) reasons, it can be useful to implement integration tests to ensure
+the continued interoperability of the isolated components of the NWX stack.
+Because the tests are built on top of the plugins, it is simple to include
+NWChemEx itself as a dependency of the test (see <a class="reference internal" href="#fig-integration-chart"><span class="std std-numref">Fig. 15</span></a>).
+This way, changes at the plugin level can be screened to guarantee that they
+don’t break interoperability with the others.</p>
+<div class="figure align-center" id="id2">
+<span id="fig-integration-chart"></span><a class="reference internal image-reference" href="../_images/DependencyChartExtended.png"><img alt="../_images/DependencyChartExtended.png" src="../_images/DependencyChartExtended.png" style="width: 457.0px; height: 354.0px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">A diagram illustrating the relationship between the integration tests, the
+library they test, and the top-level NWChemEx library. Arrows point from a
+dependency to the dependent library.</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</div>
+<div class="section" id="cmake-for-integration-testing">
+<h2>CMake for Integration Testing<a class="headerlink" href="#cmake-for-integration-testing" title="Permalink to this heading"></a></h2>
+<p>The following code-block provides an example for how one can add the option for
+an integration test to a project that uses the NWX ecosystem.</p>
+<div class="highlight-CMake notranslate"><div class="highlight"><pre><span></span><span class="c"># Include option</span>
+<span class="nb">cmaize_option_list</span><span class="p">(</span>
+<span class="w">    </span><span class="s">BUILD_INTEGRATION_TESTS</span><span class="w"> </span><span class="s">ON</span><span class="w"> </span><span class="s2">&quot;Build the integration tests?&quot;</span>
+<span class="p">)</span>
+
+<span class="c"># How to build the integration tests</span>
+<span class="nb">if</span><span class="p">(</span><span class="s2">&quot;${BUILD_INTEGRATION_TESTS}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">include</span><span class="p">(</span><span class="s">nwx_pybind11</span><span class="p">)</span>
+<span class="w">    </span><span class="c"># Set relevant test directories</span>
+<span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">CXX_INCLUDE_DIR</span><span class="w"> </span><span class="s">/path/to/cxx/includes</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">CXX_TEST_DIR</span><span class="w"> </span><span class="s">/path/to/cxx/integration/tests</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">PYTHON_TEST_DIR</span><span class="w"> </span><span class="s">/path/to/python/integration/tests</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c"># Build NWChemEx for the test</span>
+<span class="w">    </span><span class="nb">cmaize_find_or_build_dependency</span><span class="p">(</span>
+<span class="w">        </span><span class="s">nwchemex</span>
+<span class="w">        </span><span class="s">URL</span><span class="w"> </span><span class="s">github.com/NWChemEx/NWChemEx</span>
+<span class="w">        </span><span class="s">VERSION</span><span class="w"> </span><span class="s">master</span>
+<span class="w">        </span><span class="s">BUILD_TARGET</span><span class="w"> </span><span class="s">nwchemex</span>
+<span class="w">        </span><span class="s">FIND_TARGET</span><span class="w"> </span><span class="s">nwx::nwchemex</span>
+<span class="w">        </span><span class="s">CMAKE_ARGS</span><span class="w"> </span><span class="s">BUILD_TESTING=OFF</span>
+<span class="w">                   </span><span class="s">BUILD_PYBIND11_PYBINDINGS=ON</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="w">    </span><span class="c"># Add integration tests</span>
+<span class="w">    </span><span class="nb">nwx_pybind11_tests</span><span class="p">(</span>
+<span class="w">        </span><span class="s">py_test_integration_scf</span>
+<span class="w">        </span><span class="s2">&quot;${PYTHON_TEST_DIR}/test_main.py&quot;</span>
+<span class="w">        </span><span class="s">SUBMODULES</span><span class="w"> </span><span class="s">parallelzone</span><span class="w"> </span><span class="s">pluginplay</span><span class="w"> </span><span class="s">chemist</span><span class="w"> </span><span class="s">simde</span><span class="w"> </span><span class="s">chemcache</span><span class="w"> </span><span class="s">friendzone</span><span class="w"> </span><span class="s">nwchemex</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="integration-tests">
+<h2>Integration Tests<a class="headerlink" href="#integration-tests" title="Permalink to this heading"></a></h2>
+<p>Building on the description provided in <a class="reference internal" href="unit.html#writing-unit-tests"><span class="std std-ref">Writing Unit Tests for NWChemEx</span></a>, integration
+tests are written in the same manner. Below is an example of how to use NWChemEx
+in our new integration test to acquire input values and submodules that may be
+needed by a module in our project.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">nwchemex</span>
+<span class="kn">import</span> <span class="nn">scf</span>
+<span class="kn">from</span> <span class="nn">pluginplay</span> <span class="kn">import</span> <span class="n">ModuleManager</span>
+<span class="kn">from</span> <span class="nn">simde</span> <span class="kn">import</span> <span class="n">AOEnergy</span>
+<span class="kn">from</span> <span class="nn">simde</span> <span class="kn">import</span> <span class="n">MoleculeFromString</span>
+<span class="kn">from</span> <span class="nn">simde</span> <span class="kn">import</span> <span class="n">MolecularBasisSet</span>
+
+<span class="k">class</span> <span class="nc">TestIntegration</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">test_scf_module</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Module we want to test</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;SCF Module&quot;</span>
+
+        <span class="c1"># Property Types from SimDE</span>
+        <span class="n">molecule_pt</span> <span class="o">=</span> <span class="n">MoleculeFromString</span><span class="p">()</span>
+        <span class="n">basis_set_pt</span> <span class="o">=</span> <span class="n">MolecularBasisSet</span><span class="p">()</span>
+        <span class="n">energy_pt</span> <span class="o">=</span> <span class="n">AOEnergy</span><span class="p">()</span>
+
+        <span class="c1"># Can use NWChemEx modules to get inputs</span>
+        <span class="n">mol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">run_as</span><span class="p">(</span><span class="n">molecule_pt</span><span class="p">,</span> <span class="s2">&quot;NWX Molecules&quot;</span><span class="p">,</span> <span class="s2">&quot;water&quot;</span><span class="p">)</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">run_as</span><span class="p">(</span><span class="n">basis_set_pt</span><span class="p">,</span> <span class="s2">&quot;sto-3g&quot;</span><span class="p">,</span> <span class="n">mol</span><span class="p">)</span>
+
+        <span class="c1"># set NWChemEx modules as needed submodules</span>
+        <span class="n">submod_key</span> <span class="o">=</span> <span class="s2">&quot;A submodule of my SCF module&quot;</span>
+        <span class="n">integral_key</span> <span class="o">=</span> <span class="s2">&quot;Some integral needed to run SCF&quot;</span>
+        <span class="n">mm</span><span class="o">.</span><span class="n">change_submod</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">submod_key</span><span class="p">,</span> <span class="n">integral_key</span><span class="p">)</span>
+
+        <span class="c1"># Test our module</span>
+        <span class="n">egy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">run_as</span><span class="p">(</span><span class="n">energy_pt</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">bs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">egy</span><span class="p">,</span> <span class="mf">3.14159265359</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_another_module</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Add more tests where appropriate</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mm</span> <span class="o">=</span> <span class="n">ModuleManager</span><span class="p">()</span>
+        <span class="n">nwchemex</span><span class="o">.</span><span class="n">load_modules</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span> <span class="c1"># Also loads out SCF modules</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 

@@ -6,6 +6,7 @@
   <title>Writing Unit Tests for NWChemEx &mdash; Developer Documentation 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
 
   
   <!--[if lt IE 9]>
@@ -18,6 +19,7 @@
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/tabs.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -92,7 +94,133 @@
              
   <div class="section" id="writing-unit-tests-for-nwchemex">
 <span id="writing-unit-tests"></span><h1>Writing Unit Tests for NWChemEx<a class="headerlink" href="#writing-unit-tests-for-nwchemex" title="Permalink to this heading"></a></h1>
-<p>TODO: Write me!!!!</p>
+<p>Within the first party NWChemEx libraries, we aim for extensive unit testing to
+ensure functionality and correctness. All classes, functions, and modules added
+to any of the first party libraries will be expected to have corresponding unit
+tests. Testing of functions (as well as Plugin modules) should minimally ensure
+that all return routes and errors are checked. Tests for classes should do the
+same for all member functions, while additionally testing that the state of all
+instances is consistent at construction and after modifications. Generally, the
+unit tests should be able to run quickly, and use simplified data with the
+minimum level of complexity need to ensure completeness in the testing.</p>
+<p>The C++ unit tests use the <a class="reference external" href="https://github.com/catchorg/Catch2">Catch2 framework</a>,
+while python tests use the <a class="reference external" href="https://docs.python.org/3/library/unittest.html">unittest framework</a>.
+Assume the following class and related comparison function are intended to be
+added to one of the first party libraries:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">C++</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Python</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdexcept&gt;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">class</span><span class="w"> </span><span class="nc">ToBeTested</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 4</span><span class="k">private</span><span class="o">:</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">value_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="n">value_type</span><span class="w"> </span><span class="n">my_value_</span><span class="p">;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="k">public</span><span class="o">:</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="n">ToBeTested</span><span class="p">(</span><span class="n">value_type</span><span class="w"> </span><span class="n">a_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">my_value_</span><span class="p">(</span><span class="n">a_value</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span><span class="w">    </span><span class="n">value_type</span><span class="w"> </span><span class="n">check_my_value</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">my_value_</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">change_my_value</span><span class="p">(</span><span class="n">value_type</span><span class="w"> </span><span class="n">new_value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">14</span><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">new_value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">13</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&quot;Unlucky Number&quot;</span><span class="p">);</span>
+<span class="linenos">15</span><span class="w">        </span><span class="n">my_value_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_value</span><span class="p">;</span>
+<span class="linenos">16</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ToBeTested</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">19</span><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">my_value_</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">rhs</span><span class="p">.</span><span class="n">my_value_</span><span class="p">;</span>
+<span class="linenos">20</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="p">};</span><span class="w"> </span><span class="c1">// ToBeTested</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="k">operator</span><span class="o">!=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ToBeTested</span><span class="o">&amp;</span><span class="w"> </span><span class="n">lhs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">ToBeTested</span><span class="o">&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">25</span><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">lhs</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">rhs</span><span class="p">);</span>
+<span class="linenos">26</span><span class="p">}</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">ToBeTested</span><span class="p">():</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="linenos"> 4</span>    <span class="bp">self</span><span class="o">.</span><span class="n">__my_value</span> <span class="o">=</span> <span class="n">a_value</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">def</span> <span class="nf">check_my_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 7</span>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__my_value</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="k">def</span> <span class="nf">change_my_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+<span class="linenos">10</span>    <span class="k">if</span> <span class="n">new_value</span> <span class="o">==</span> <span class="mi">13</span><span class="p">:</span>
+<span class="linenos">11</span>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unlucky Number&quot;</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="bp">self</span><span class="o">.</span><span class="n">__my_value</span> <span class="o">=</span> <span class="n">new_value</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span><span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="linenos">15</span>    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">ToBeTested</span><span class="p">):</span>
+<span class="linenos">16</span>        <span class="k">return</span> <span class="bp">NotImplemented</span>
+<span class="linenos">17</span>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__my_value</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">__my_value</span>
+</pre></div>
+</div>
+</div></div>
+<p>An example unit test for the above looks like:</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">C++</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Python</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;to_be_tested.hpp&quot;</span>
+<span class="linenos"> 2</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;catch2/catch.hpp&gt;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="n">TEST_CASE</span><span class="p">(</span><span class="s">&quot;ToBeTested&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">defaulted</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">ToBeTested</span><span class="p">();</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">with_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ToBeTested</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="n">SECTION</span><span class="p">(</span><span class="s">&quot;Comparisons&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 9</span><span class="w">        </span><span class="n">SECTION</span><span class="p">(</span><span class="s">&quot;operator==&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">10</span><span class="w">            </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">defaulted</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ToBeTested</span><span class="p">());</span>
+<span class="linenos">11</span><span class="w">            </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">with_value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ToBeTested</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+<span class="linenos">12</span><span class="w">            </span><span class="n">REQUIRE_FALSE</span><span class="p">(</span><span class="n">defaulted</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">with_value</span><span class="p">);</span>
+<span class="linenos">13</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">14</span><span class="w">        </span><span class="n">SECTION</span><span class="p">(</span><span class="s">&quot;operator!=&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">15</span><span class="w">            </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">defaulted</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">with_value</span><span class="p">);</span>
+<span class="linenos">16</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">17</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="w">    </span><span class="n">SECTION</span><span class="p">(</span><span class="s">&quot;check_my_value&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">20</span><span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">defaulted</span><span class="p">.</span><span class="n">check_my_value</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="linenos">21</span><span class="w">        </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">with_value</span><span class="p">.</span><span class="n">check_my_value</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="linenos">22</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="w">    </span><span class="n">SECTION</span><span class="p">(</span><span class="s">&quot;change_my_value&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">25</span><span class="w">        </span><span class="n">SECTION</span><span class="p">(</span><span class="s">&quot;Not Unlucky&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">26</span><span class="w">            </span><span class="n">defaulted</span><span class="p">.</span><span class="n">change_my_value</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+<span class="linenos">27</span><span class="w">            </span><span class="n">REQUIRE</span><span class="p">(</span><span class="n">defaulted</span><span class="p">.</span><span class="n">check_my_value</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
+<span class="linenos">28</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">29</span><span class="w">        </span><span class="n">SECTION</span><span class="p">(</span><span class="s">&quot;Unlucky&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">30</span><span class="w">            </span><span class="n">REQUIRE_THROWS_AS</span><span class="p">(</span><span class="n">defaulted</span><span class="p">.</span><span class="n">change_my_value</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span>
+<span class="linenos">31</span><span class="w">                              </span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">);</span>
+<span class="linenos">32</span><span class="w">        </span><span class="p">}</span>
+<span class="linenos">33</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">34</span><span class="p">}</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">to_be_tested</span> <span class="kn">import</span> <span class="n">ToBeTested</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="k">class</span> <span class="nc">TestNewClass</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="linenos"> 5</span>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 6</span>        <span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span> <span class="o">=</span> <span class="n">ToBeTested</span><span class="p">()</span>
+<span class="linenos"> 7</span>        <span class="bp">self</span><span class="o">.</span><span class="n">with_value</span> <span class="o">=</span> <span class="n">ToBeTested</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>    <span class="k">def</span> <span class="nf">test_equality</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">10</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span><span class="p">,</span> <span class="n">ToBeTested</span><span class="p">())</span>
+<span class="linenos">11</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">with_value</span><span class="p">,</span> <span class="n">ToBeTested</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="linenos">12</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_value</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="k">def</span> <span class="nf">test_check_my_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">15</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span><span class="o">.</span><span class="n">check_my_value</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">16</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">with_value</span><span class="o">.</span><span class="n">check_my_value</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="k">def</span> <span class="nf">test_change_my_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">19</span>        <span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span><span class="o">.</span><span class="n">change_my_value</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="linenos">20</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span><span class="o">.</span><span class="n">check_my_value</span><span class="p">(),</span> <span class="mi">7</span><span class="p">)</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">context</span><span class="p">:</span>
+<span class="linenos">23</span>            <span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span><span class="o">.</span><span class="n">change_my_value</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="linenos">24</span>        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s2">&quot;Unlucky Number&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">exception</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></div>
 </div>
 
 
