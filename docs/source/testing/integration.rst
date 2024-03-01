@@ -54,38 +54,22 @@ an integration test to a project that uses the NWX ecosystem.
         set(CXX_TEST_DIR /path/to/cxx/integration/tests)
         set(PYTHON_TEST_DIR /path/to/python/integration/tests)
 
-        # Find or build needed dependencies
+        # Build NWChemEx for the test
         cmaize_find_or_build_dependency(
-            Catch2
-            URL github.com/catchorg/Catch2
-            BUILD_TARGET Catch2
-            FIND_TARGET Catch2::Catch2
-            VERSION ${NWX_CATCH2_VERSION}
-        )
-
-        cmaize_find_or_build_dependency(
-            chemcache
-            URL github.com/NWChemEx/ChemCache
-            VERSION ${NWX_CHEMCACHE_VERSION}
-            BUILD_TARGET chemcache
-            FIND_TARGET nwx::chemcache
+            nwchemex
+            URL github.com/NWChemEx/NWChemEx
+            VERSION master
+            BUILD_TARGET nwchemex
+            FIND_TARGET nwx::nwchemex
             CMAKE_ARGS BUILD_TESTING=OFF
                        BUILD_PYBIND11_PYBINDINGS=ON
         )
 
-        # Add C++ integration tests
-        cmaize_add_tests(
-            test_integration_my_project
-            SOURCE_DIR "${CXX_TEST_DIR}"
-            INCLUDE_DIRS "${CXX_INCLUDE_DIR}"
-            DEPENDS Catch2 chemcache my_project
-        )
-
-        # Add Python integration tests
+        # Add integration tests
         nwx_pybind11_tests(
-            py_test_integration_my_project
+            py_test_integration_scf
             "${PYTHON_TEST_DIR}/test_main.py"
-            SUBMODULES parallelzone pluginplay chemist simde chemcache
+            SUBMODULES parallelzone pluginplay chemist simde chemcache friendzone nwchemex
         )
     endif()
 
@@ -93,89 +77,49 @@ Integration Tests
 =================
 
 Building on the description provided in :ref:`writing_unit_tests`, integration
-tests are written in the same manner. Below are examples of how to use ChemCache
+tests are written in the same manner. Below is an example of how to use NWChemEx
 in our new integration test to acquire input values and submodules that may be
 needed by a module in our project.
 
-.. tabs::
+.. code-block:: python
 
-    .. tab:: C++
+    import unittest
+    import nwchemex
+    import scf
+    from pluginplay import ModuleManager
+    from simde import AOEnergy
+    from simde import MoleculeFromString
+    from simde import MolecularBasisSet
 
-        .. code-block:: C++
+    class TestIntegration(unittest.TestCase):
 
-            #include "my_project/my_project.hpp"
-            #include <catch2/catch.hpp>
-            #include <chemcache/chemcache.hpp>
-            #include <simde/energy/ao_energy.hpp>
-            #include <simde/chemical_system/molecule_from_string.hpp>
-            #include <simde/chemical_system/atom.hpp>
+        def test_scf_module(self):
+            # Module we want to test
+            key = "SCF Module"
 
-            // Property Types from SimDE
-            using molecule_pt  = simde::MoleculeFromString;
-            using basis_set_pt = simde::MolecularBasisSet;
-            using energy_pt    = simde::AOEnergy;
+            # Property Types from SimDE
+            molecule_pt = MoleculeFromString()
+            basis_set_pt = MolecularBasisSet()
+            energy_pt = AOEnergy()
 
-            TEST_CASE("My New Module") {
-                pluginplay::ModuleManager mm;
-                chemcache::load_modules(mm);
-                my_project::load_modules(mm);
+            # Can use NWChemEx modules to get inputs
+            mol = self.mm.run_as(molecule_pt, "NWX Molecules", "water")
+            bs = self.mm.run_as(basis_set_pt, "sto-3g", mol)
 
-                // Module we want to test
-                std::string key{"My New Module"};
+            # set NWChemEx modules as needed submodules
+            submod_key = "A submodule of my SCF module"
+            integral_key = "Some integral needed to run SCF"
+            mm.change_submod(key, submod_key, integral_key)
 
-                // Can use ChemCache modules to get inputs
-                std::string mol_name{"water"};
-                auto mol = mm.at("NWX Molecules").run_as<molecule_pt>(mol_name);
-                auto bs = mm.at("sto-3g").run_as<basis_set_pt>(mol);
+            # Test our module
+            egy = self.mm.run_as(energy_pt, key, mol, bs)
+            self.assertAlmostEqual(egy, 3.14159265359, places=6)
 
-                // set ChemCache modules as needed submodules
-                std::string submod_key{"A submodule of my new module"};
-                mm.change_submod(key, submod_key, "Atom")
+        def test_another_module(self):
+            # Add more tests where appropriate
+            pass
 
-                // Test our module
-                auto egy = mm.at(key).run_as<energy_pt>(mol, bs)
-                REQUIRE(egy == Approx(3.14159265359).margin(1.0e-7))
-            }
-        
-    .. tab:: Python
-
-        .. code-block:: python
-
-            import unittest
-            import chemcache
-            import my_project
-            from pluginplay import ModuleManager
-            from simde import AOEnergy
-            from simde import MoleculeFromString
-            from simde import MolecularBasisSet
-
-            class TestIntegration(unittest.TestCase):
-
-                def test_my_module(self):
-                    # Module we want to test
-                    key = "My New Module"
-
-                    # Property Types from SimDE
-                    molecule_pt = MoleculeFromString()
-                    basis_set_pt = MolecularBasisSet()
-                    energy_pt = AOEnergy()
-
-                    # Can use ChemCache modules to get inputs
-                    mol = self.mm.run_as(molecule_pt, "NWX Molecules", "water")
-                    bs = self.mm.run_as(basis_set_pt, "sto-3g", mol)
-
-                    # set ChemCache modules as needed submodules
-                    submod_key = "A submodule of my new module"
-                    mm.change_submod(key, submod_key, "Atom")
-
-                    # Test our module
-                    egy = self.mm.run_as(energy_pt, key, mol, bs)
-                    self.assertAlmostEqual(egy, 3.14159265359, places=6)
-
-
-                def setUp(self):
-                    self.mm = ModuleManager()
-                    chemcache.load_modules(mm)
-                    my_project.load_modules(mm)
-            
+        def setUp(self):
+            self.mm = ModuleManager()
+            nwchemex.load_modules(mm) # Also loads out SCF modules
 
