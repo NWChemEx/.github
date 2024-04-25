@@ -87,6 +87,14 @@ jobs:
         if: inputs.format_python == true
         with:
           python-version: '3.x'
+      - name: Check License Config
+        if: |
+          inputs.config_file != '' &&
+          hashFiles(inputs.config_file) == ''
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed("License Config file doesn't exist: ${{inputs.config_file}}")
       - name: Add license
         if: inputs.config_file != ''
         uses: apache/skywalking-eyes@v0.4.0
