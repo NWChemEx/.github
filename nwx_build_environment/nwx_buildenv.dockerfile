@@ -2,9 +2,8 @@ FROM ubuntu:latest
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
-    gcc-9 g++-9 \
     gcc-11 g++-11 \
-    clang-11 libc++-11-dev libc++abi-11-dev libomp-dev \
+    clang-14 libc++-14-dev libc++abi-14-dev libomp-dev \
     doxygen \
     graphviz \
     python3-dev python3-pip python3-sphinx\
