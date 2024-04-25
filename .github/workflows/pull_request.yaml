@@ -24,7 +24,7 @@ jobs:
   Common-Pull-Request:
     uses: ./.github/workflows/common_pull_request.yaml
     with:
-      config_file: 'nonexistent.yaml'
+      config_file: ''
       source_dir: ''
       compilers: ''
       doc_target: 'Sphinx'
