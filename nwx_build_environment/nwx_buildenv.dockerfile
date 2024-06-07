@@ -18,7 +18,7 @@ RUN apt-get update \
     libboost-all-dev \
     libopenblas-base libopenblas-dev \
     libscalapack-openmpi-dev \
-    libint2-dev \
+    # libint2-dev \
     libxml2-dev \
     libxslt-dev \
     nwchem \
