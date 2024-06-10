@@ -1,7 +1,7 @@
 FROM nwx_buildenv:latest
 
 ARG VERSION=ad0e89cbfb4d0c1ce4d097e134eb7be67baebb36
-ARG COMPILER=gcc-9
+ARG COMPILER=gcc-11
 
 # Install spdlog
 RUN cd /tmp \

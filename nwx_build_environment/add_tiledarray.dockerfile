@@ -1,7 +1,7 @@
 FROM nwx_buildenv:latest
 
 ARG VERSION=63e180bf55849c173585a734c5e7456cbf31a986
-ARG COMPILER=gcc-9
+ARG COMPILER=gcc-11
 
 # Install TiledArray
 RUN cd /tmp \

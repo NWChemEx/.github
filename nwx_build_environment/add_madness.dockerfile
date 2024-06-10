@@ -1,7 +1,7 @@
 FROM nwx_buildenv:latest
 
 ARG VERSION=3d585293f0094588778dbd3bec24b65e7bbe6a5d
-ARG COMPILER=gcc-9
+ARG COMPILER=gcc-11
 
 # Install MADNESS
 RUN cd /tmp \
