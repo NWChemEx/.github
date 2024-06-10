@@ -1,6 +1,6 @@
 FROM nwx_buildenv:latest
 
-ARG VERSION=7c6657610640c5d0f0aa2128da0eef4873f72738
+ARG VERSION=c9ac8eba1bbb237206f620d7464be7725d1809eb
 
 # Install tamm (add dependencies)
 RUN cd /tmp \
