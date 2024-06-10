@@ -8,7 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 list(APPEND CMAKE_PREFIX_PATH "/nwx_dependencies/${CMAKE_C_COMPILER}")
 # list(APPEND CMAKE_PREFIX_PATH "/usr/share/cmake/libint2/")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -std=c++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -std=c++17 -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOMPI_SKIP_MPICXX")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs")
