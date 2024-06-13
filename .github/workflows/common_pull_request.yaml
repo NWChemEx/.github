@@ -142,6 +142,7 @@ jobs:
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+    continue-on-error: true
     strategy:
       matrix:
         compiler: ${{ fromJSON(inputs.compilers) }}
