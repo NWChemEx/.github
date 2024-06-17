@@ -1,0 +1,1 @@
+list(APPEND CMAKE_PREFIX_PATH "/nwx_dependencies/gcc-11")
