@@ -11,3 +11,4 @@ done
 
 # TAMM is a special case for now
 docker build -t nwx_buildenv -f add_tamm.dockerfile .
+docker image prune -f
