@@ -1,7 +1,7 @@
 FROM nwx_buildenv:latest
 
 ARG VERSION=1.3.0
-ARG COMPILER=gcc-9
+ARG COMPILER=gcc-11
 
 # Install cereal
 RUN cd /tmp \

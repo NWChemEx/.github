@@ -55,6 +55,11 @@ on:
         type: boolean
         required: false
         default: true
+      build_fail_on_warning:
+        description: "Whether warnings in the library build should be failures"
+        type: boolean
+        required: false
+        default: true
       format_python:
         description: "Whether or not to format python files"
         type: boolean
@@ -137,6 +142,7 @@ jobs:
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+    continue-on-error: true
     strategy:
       matrix:
         compiler: ${{ fromJSON(inputs.compilers) }}
@@ -148,9 +154,14 @@ jobs:
         run: |
           # Fix for git not liking owner of the checkout dir
           chown -R $(id -u):$(id -g) $PWD
+      - name: Make warnings into errors
+        if: inputs.build_fail_on_warning == true
+        run: |
+          toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
+          echo 'include(/toolchains/error_flag.cmake)' >> $toolchain
       - name: Append Repo Settings to CMake Toolchain
         if: inputs.repo_toolchain != ''
-        run:  |
+        run: |
           toolchain=/toolchains/nwx_${{ matrix.compiler }}.cmake
           echo 'include('${PWD}'/${{ inputs.repo_toolchain }})' >> $toolchain
         shell: bash

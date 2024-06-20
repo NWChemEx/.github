@@ -1,7 +1,7 @@
 FROM nwx_buildenv:latest
 
 ARG VERSION=0.4.2
-ARG COMPILER=gcc-9
+ARG COMPILER=gcc-11
 
 # Install libfort ##
 RUN cd /tmp \

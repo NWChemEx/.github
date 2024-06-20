@@ -1,5 +1,6 @@
 docker build -t nwx_buildenv -f nwx_buildenv.dockerfile .
 
+# Build dependencies with both GCC and Clang
 deps=("cereal" "gauxc" "libfort" "catch2" "spdlog")
 for dep in "${deps[@]}"
 do
@@ -7,3 +8,7 @@ do
     docker build -t nwx_buildenv -f add_${dep}.dockerfile --build-arg COMPILER=clang-14 .
     docker image prune -f
 done
+
+# TAMM is a special case for now
+docker build -t nwx_buildenv -f add_tamm.dockerfile .
+docker image prune -f
