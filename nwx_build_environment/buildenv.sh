@@ -9,6 +9,7 @@ do
     docker image prune -f
 done
 
-# TAMM is a special case for now
+# TAMM, exachem are special cases for now
 docker build -t nwx_buildenv -f add_tamm.dockerfile .
+docker build -t nwx_buildenv -f add_exachem.dockerfile .
 docker image prune -f
