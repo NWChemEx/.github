@@ -1,6 +1,6 @@
 FROM nwx_buildenv:latest
 
-ARG VERSION=main
+ARG VERSION=2024-07-15
 
 # Install exachem (add dependencies)
 RUN cd /tmp \
