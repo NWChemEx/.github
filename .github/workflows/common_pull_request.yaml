@@ -108,7 +108,7 @@ jobs:
           mode: fix
       - name: Apply formatting
         if: inputs.source_dir != ''
-        uses: DoozyX/clang-format-lint-action@v0.12
+        uses: DoozyX/clang-format-lint-action@v0.18
         with:
           source: ${{ inputs.source_dir }}
           extensions: 'hpp,cpp,ipp,h,c'
