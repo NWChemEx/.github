@@ -1,6 +1,6 @@
 FROM nwx_buildenv:latest
 
-ARG VERSION=2.13.8
+ARG VERSION=3.6.0
 ARG COMPILER=gcc-11
 
 # Install catch2 ##
