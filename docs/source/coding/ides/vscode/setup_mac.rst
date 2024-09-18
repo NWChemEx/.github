@@ -404,3 +404,5 @@ Troubleshooting
 
      How to set the email and user name for git.   
 
+
+- You get a cryptic error like.
