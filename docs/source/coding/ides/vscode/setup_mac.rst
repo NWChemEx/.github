@@ -222,6 +222,8 @@ CMake relies on toolchain files to pass configuration variables to dependencies.
        set(CMAKE_CXX_STANDARD 17)
        set(BUILD_TESTING TRUE)
 
+.. _setting_up_kits:
+
 Setting up Kits
 ===============
 
@@ -319,6 +321,26 @@ Troubleshooting
 Building and Testing
 ====================
 
+.. note::
+
+   We assume you have setup a kit already. If not see :ref:`setting_up_kits`.
+
+.. figure:: assets/mac_setup/select_what_to_build.png
+   :align: center
+
+   Step 1. Set the project, build configuration, and kit to what you want.
+
+.. figure:: assets/mac_setup/click_build.png
+   :align: center
+
+   Step 2. Click build.
+
+.. figure:: assets/mac_setup/run_ctest.png
+   :align: center
+
+   Step 3. Assuming Step 2 is successful, click on "Run CTest" to run the test
+   suite.
+
 Committing Changes Back to GitHub
 =================================
 
@@ -335,12 +357,26 @@ Committing Changes Back to GitHub
    :align: center
 
    Step 2. (Optional) select the file(s) you want to stage by clicking on the 
-   "+" next to the file(s).
+   "+" next to the file(s). If you do not stage files VSCode will assume you
+   want to commit all changed files.
 
 .. figure:: assets/mac_setup/commit_message.png
    :align: center
 
    Step 3. Type a descriptive commit message.
+
+.. figure:: assets/mac_setup/click_commit.png
+   :align: center
+
+   Step 4. Click on the commit button. At this point your changes are only
+   committed to your local copy of the repository. We still need to push them
+   to GitHub.
+
+.. figure:: assets/mac_setup/click_synch.png
+   :align: center
+
+   Step 5. Once you click "Commit" the button should change to "Synch Changes".
+   Click that to push your changes to GitHub.
 
 Troubleshooting
 ---------------
