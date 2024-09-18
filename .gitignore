@@ -6,3 +6,5 @@ venv/
 
 # This is the default build directory for the docs
 docs/build
+
+.DS_Store

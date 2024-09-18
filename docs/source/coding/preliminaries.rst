@@ -21,8 +21,12 @@ can't build everything. You'll need to get:
 - BLAS/LAPACK
 - Boost
 
-on your own. Check your operating system's package manager as they're all super
-common things.
+.. _obtaining_dependencies_on_ubuntu:
+
+Obtaining Dependencies on Ubuntu
+=================================
+
+TODO: write me
 
 .. _obtaining_dependencies_on_macos:
 
