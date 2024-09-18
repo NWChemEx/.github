@@ -14,14 +14,47 @@ Dependencies
 The NWChemEx build system can build a lot of dependencies for you; however, it
 can't build everything. You'll need to get:
 
-- C++ compiler
+- git
+- C and C++ compilers
 - CMake
 - MPI
 - BLAS/LAPACK
 - Boost
 
-on your own. Check your operating system's package manager as they're all super
-common things.
+.. _obtaining_dependencies_on_ubuntu:
+
+Obtaining Dependencies on Ubuntu
+=================================
+
+TODO: write me
+
+.. _obtaining_dependencies_on_macos:
+
+Obtaining Dependencies on MacOS
+===============================
+
+We recommend using `Homebrew <https://brew.hs>`__ for obtaining packages on Mac.
+
+Obtaining Homebrew
+------------------
+
+- Go to `https://brew.hs`.
+- Copy the command they have listed (or follow one of the other install methods)
+- Open a terminal and paste the command.
+- Enter your password.
+- Press enter to accept the install parameters.
+- Recommended: run the commands under "Next steps" to add Homebrew to your path.
+
+Installing Dependencies
+-----------------------
+
+With Homebrew the dependencies and corresponding terminal commands are:
+
+- git ``brew install git``.
+- C and C++ compilers (MacOS comes with ``clang`` and ``clang++``)
+- CMake ``brew install cmake``.
+- MPI ``brew install mpich``.
+- Boost ``brew install boost``.
 
 *******************
 Directory Structure

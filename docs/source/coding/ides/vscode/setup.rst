@@ -1,9 +1,9 @@
-#########################
-Setting Up VSCode for NWX
-#########################
+###########################
+Setting Up VSCode for Linux
+###########################
 
 This page focuses on how to initially setup VSCode, specifically from the
-perspective of developing a module/plugin for NWChemEx.
+perspective of developing a module/plugin for NWChemEx on a Linux machine.
 
 *****************
 Adding Extensions
