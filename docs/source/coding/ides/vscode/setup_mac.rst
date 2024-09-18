@@ -405,4 +405,14 @@ Troubleshooting
      How to set the email and user name for git.   
 
 
-- You get a cryptic error like.
+- When attempting to synchronize with GitHub you get a cryptic error like:
+
+   .. figure:: assets/mac_setup/cryptic_error.png
+      :align: center
+
+      Cryptic error when synchronizing.
+  
+  For me this was caused by a credentials issue. I simply ran ``git push`` from
+  the VSCode terminal (in the root directory of the repo) and gave permission
+  to VSCode to use my passwords. From that point forward commit and 
+  synchronization worked fine from VSCode.
