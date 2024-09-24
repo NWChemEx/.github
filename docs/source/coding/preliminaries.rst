@@ -50,11 +50,18 @@ Installing Dependencies
 
 With Homebrew the dependencies and corresponding terminal commands are:
 
+- python3 
 - git ``brew install git``.
 - C and C++ compilers (MacOS comes with ``clang`` and ``clang++``)
 - CMake ``brew install cmake``.
 - MPI ``brew install mpich``.
 - Boost ``brew install boost``.
+
+.. note::
+
+   To find the Python developer libraries run ``python3-config --include``.
+   Add the output of this command (without the ``-I``) to the CMake variables:
+   ``Python_INCLUDE_DIRS`` and ``Python3_INCLUDE_DIRS``.
 
 *******************
 Directory Structure
