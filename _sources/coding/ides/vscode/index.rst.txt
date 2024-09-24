@@ -11,6 +11,7 @@ for C++ development.
    :caption: Contents:
 
    setup
+   setup_mac
    building
    developing
    tips_and_tricks

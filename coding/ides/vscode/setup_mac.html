@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setting Up VSCode on MacOS &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Building NWX with VSCode" href="building.html" />
+    <link rel="prev" title="Setting Up VSCode for Linux" href="setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../community/index.html">NWChemEx Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documenting/index.html">Documenting NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conventions/index.html">NWChemEx Organization Conventions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developing NWChemEx</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../preliminaries.html">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cxx/index.html">Developing C++ Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/index.html">Developing Python Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Using IDEs to Develop NWX</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">VSCode</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="setup.html">Setting Up VSCode for Linux</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Setting Up VSCode on MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="building.html">Building NWX with VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="developing.html">Developing NWX with VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tips_and_tricks.html">Tips and Tricks for VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faqs.html">FAQs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../continuous_deployment/index.html">Continuous Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/index.html">Additional Developer Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography/bibliography.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Developing NWChemEx</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Using IDEs to Develop NWX</a></li>
+          <li class="breadcrumb-item"><a href="index.html">VSCode</a></li>
+      <li class="breadcrumb-item active">Setting Up VSCode on MacOS</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/NWChemEx/.github/edit/master/docs/source/coding/ides/vscode/setup_mac.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="setting-up-vscode-on-macos">
+<h1>Setting Up VSCode on MacOS<a class="headerlink" href="#setting-up-vscode-on-macos" title="Permalink to this heading"></a></h1>
+<p>These instructions were created on 9/16/2025 for macOS Sonoma (Version 14.6.1)
+targeting VSCode Version 1.93.1.</p>
+<div class="section" id="obtaining-vscode">
+<h2>Obtaining VSCode<a class="headerlink" href="#obtaining-vscode" title="Permalink to this heading"></a></h2>
+<p>The easiest way to obtain VSCode is from their
+<a class="reference external" href="https://code.visualstudio.com/Download">website</a>. Select the version you
+want, download it, open the downloaded file, and copy the application to the
+<code class="docutils literal notranslate"><span class="pre">Applications</span></code> directory.</p>
+</div>
+<div class="section" id="setup-from-fresh-install">
+<h2>Setup From Fresh Install<a class="headerlink" href="#setup-from-fresh-install" title="Permalink to this heading"></a></h2>
+<p>When you start up VSCode you’ll be greeted with the “Get Started with VS Code”
+screen.</p>
+<ul>
+<li><p>Pick your preferred theme.</p>
+<div class="figure align-center" id="id4">
+<img alt="../../../_images/pick_theme.png" src="../../../_images/pick_theme.png" />
+<p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">First you will be asked to pick your theme. The choice is up to you.</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</div>
+</li>
+<li><p>Pick your languages. We want the C/C++, and Python language extensions.</p>
+<blockquote>
+<div><div class="figure align-center" id="id5">
+<img alt="../../../_images/choose_apps.png" src="../../../_images/choose_apps.png" />
+<p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">You will be prompted to choose the coding languages you will use.</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id6">
+<img alt="../../../_images/cxx_extension.png" src="../../../_images/cxx_extension.png" />
+<p class="caption"><span class="caption-number">Fig. 16 </span><span class="caption-text">The VSCode C++ extension.</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id7">
+<img alt="../../../_images/python_extension.png" src="../../../_images/python_extension.png" />
+<p class="caption"><span class="caption-number">Fig. 17 </span><span class="caption-text">Install the Python extension.</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</div>
+<ul>
+<li><p>If you have not previously installed “command line developer tools” follow
+the prompts.</p>
+<div class="figure align-center" id="id8">
+<img alt="../../../_images/install_command_line_tools.png" src="../../../_images/install_command_line_tools.png" />
+<p class="caption"><span class="caption-number">Fig. 18 </span><span class="caption-text">If necessary, install command line developer tools to get access to
+Python.</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Tune your settings. Click “Open Settings”.</p>
+<blockquote>
+<div><div class="figure align-center" id="id9">
+<img alt="../../../_images/tune_settings.png" src="../../../_images/tune_settings.png" />
+<p class="caption"><span class="caption-number">Fig. 19 </span><span class="caption-text">Tune VSCode’s settings to your liking.</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</div>
+<ul>
+<li><p>Recommended to enable backup and sync settings. If you want do this then
+sign in before changing any options.</p>
+<blockquote>
+<div><div class="figure align-center" id="id10">
+<img alt="../../../_images/synch_settings.png" src="../../../_images/synch_settings.png" />
+<p class="caption"><span class="caption-number">Fig. 20 </span><span class="caption-text">Recommended to turn on settings synch to ensure a consistent VSCode
+experience across devices.</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+</div>
+</div></blockquote>
+</li>
+<li><p>Settings to consider (you can search for them to quickly find them):</p>
+<blockquote>
+<div><div class="figure align-center" id="id11">
+<img alt="../../../_images/settings_open.png" src="../../../_images/settings_open.png" />
+<p class="caption"><span class="caption-number">Fig. 21 </span><span class="caption-text">VSCode has a lot of settings. If you’re new to IDEs you probably just
+want to start with the suggestions below.</span><a class="headerlink" href="#id11" title="Permalink to this image"></a></p>
+</div>
+<ul class="simple">
+<li><p>Files: Auto Save</p></li>
+<li><p>Editor: Rulers (we’re sticklers for 80 character lines)</p></li>
+<li><p>CMake: Options: Status Bar Visibility (set to visible)</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>With setting synching on make sure you don’t set any user setting to a
+workspace specific path or it will be set across all your accounts.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>At this point you’re free to follow the remaining “Get Started” steps, but
+VSCode is mainly interested in showing you how to start a new project and we
+want to use an existing one.</p></li>
+</ul>
+</div>
+<div class="section" id="creating-an-nwchemex-development-environment">
+<h2>Creating an NWChemEx Development Environment<a class="headerlink" href="#creating-an-nwchemex-development-environment" title="Permalink to this heading"></a></h2>
+<p>Now that you have VSCode initialized we will create a development environment,
+or as VSCode calls it, a “workspace”. Workspaces reside in directories so go
+ahead and create the directory for the workspace now. We recommend something
+like <code class="docutils literal notranslate"><span class="pre">/Users/your_username/nwchemex</span></code> (you can create the directory in Finder
+or via terminal). The remainder of this tutorial refers to this directory as
+the “workspace directory”.</p>
+<div class="section" id="adding-repositories">
+<h3>Adding Repositories<a class="headerlink" href="#adding-repositories" title="Permalink to this heading"></a></h3>
+<div class="figure align-center" id="id12">
+<img alt="../../../_images/source_control_view.png" src="../../../_images/source_control_view.png" />
+<p class="caption"><span class="caption-number">Fig. 22 </span><span class="caption-text">Step 1. Switch to the source control view (if it’s not there go to
+<code class="docutils literal notranslate"><span class="pre">&quot;View&quot;-&gt;&quot;Source</span> <span class="pre">Control&quot;</span></code>). (If you have files open you will instead
+see the source control for those files. To add a repo close the files or
+skip ahead to step 9).</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
+<div class="legend">
+<ul class="simple">
+<li><p>If you have not previously installed git see
+<cite>obtaining_dependencies_on_macos</cite> (if you click on “Download Git for
+macOS”, it’ll just redirect you to git’s website which will duplicate
+our instructions). Once git is installed, click <code class="docutils literal notranslate"><span class="pre">reload</span></code> in the source
+control view.</p></li>
+</ul>
+</div>
+</div>
+<div class="figure align-center" id="id13">
+<img alt="../../../_images/clone_repo.png" src="../../../_images/clone_repo.png" />
+<p class="caption"><span class="caption-number">Fig. 23 </span><span class="caption-text">Step 2. (With git installed) click “Clone Repository”.</span><a class="headerlink" href="#id13" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id14">
+<img alt="../../../_images/clone_from_github.png" src="../../../_images/clone_from_github.png" />
+<p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text">Step 3. Click “Clone from Github”.</span><a class="headerlink" href="#id14" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id15">
+<img alt="../../../_images/allow_github.png" src="../../../_images/allow_github.png" />
+<p class="caption"><span class="caption-number">Fig. 25 </span><span class="caption-text">Step 4. If asked, allow the GitHub extension to sign in.</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id16">
+<img alt="../../../_images/your_repos.png" src="../../../_images/your_repos.png" />
+<p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">Step 5. You should now see all the repos you have. Search for the one you
+want. For sake of the tutorial search for <code class="docutils literal notranslate"><span class="pre">NWChemEx/.github</span></code>, i.e., this
+repo.</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>That will bring up Finder. Select the workspace directory as the
+destination.</p></li>
+</ol>
+<div class="figure align-center" id="id17">
+<img alt="../../../_images/open_cloned_repo.png" src="../../../_images/open_cloned_repo.png" />
+<p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">Step 7. When prompted open the repository.</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id18">
+<img alt="../../../_images/trust_us.png" src="../../../_images/trust_us.png" />
+<p class="caption"><span class="caption-number">Fig. 28 </span><span class="caption-text">Step 8. If prompted, decide whether you trust us (we’ll assume you do and
+click yes).</span><a class="headerlink" href="#id18" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id19">
+<img alt="../../../_images/search_git_clone.png" src="../../../_images/search_git_clone.png" />
+<p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">Step 9. Once there are files in your workspace the souce control view will
+change to allow you to interact with the version control of the open files.
+Unfortunately, this means we can not add additional repositories the same way
+we did in Step 2. Rather, you need to use the command palate
+(command + shift + P) then search <code class="docutils literal notranslate"><span class="pre">Git:</span> <span class="pre">Clone</span></code>. That will return you to
+Step 3 above, with the caveat that what was Step 7 should be replaced by
+Step 10 below.</span><a class="headerlink" href="#id19" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id20">
+<img alt="../../../_images/add_to_workspace.png" src="../../../_images/add_to_workspace.png" />
+<p class="caption"><span class="caption-number">Fig. 30 </span><span class="caption-text">Step 10. Since you have files in your workspace already the dialog box from
+Step 7 will change and you will want to select “Add to Workspace” instead of
+“Open”.</span><a class="headerlink" href="#id20" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id21">
+<img alt="../../../_images/save_workspace.png" src="../../../_images/save_workspace.png" />
+<p class="caption"><span class="caption-number">Fig. 31 </span><span class="caption-text">Step 11. Repeat Steps 9 and 10 until you have all the repositories you want.
+Once you are done save your workspace by going to
+<code class="docutils literal notranslate"><span class="pre">File-&gt;&quot;Save</span> <span class="pre">Workspace</span> <span class="pre">As...&quot;</span></code>. We recommend saving it into the
+<code class="docutils literal notranslate"><span class="pre">nwchemex</span></code> workspace directory and naming it as
+<code class="docutils literal notranslate"><span class="pre">nwchemex.code-workspace</span></code>.</span><a class="headerlink" href="#id21" title="Permalink to this image"></a></p>
+<div class="legend">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you choose a repository containing C++ source code, e.g.,
+<code class="docutils literal notranslate"><span class="pre">NWChemEx/chemist</span></code>, VSCode may prompt you to select a kit.
+Instructions for this are below. To get this to go away for now just
+click “unspecified” or press esc.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-a-cmake-toolchain-file">
+<span id="id1"></span><h3>Creating a CMake Toolchain File<a class="headerlink" href="#creating-a-cmake-toolchain-file" title="Permalink to this heading"></a></h3>
+<p>CMake relies on toolchain files to pass configuration variables to dependencies.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We suggest putting the toolchain in the workspace directory and not in any
+of the repositories. Unfortunately, this means we can’t use VSCode’s editor
+to create/edit the file (VSCode will only let us create/edit files in the
+repository directories we downloaded). Thus, if you put it in the workspace
+you’ll have to use an external editor to write the file.</p>
+</div>
+<ol class="arabic">
+<li><p>In the directory of you choice, create a new file <code class="docutils literal notranslate"><span class="pre">toolchain.cmake</span></code>.</p></li>
+<li><p>Modify the toolchain file. Syntax is <code class="docutils literal notranslate"><span class="pre">set(&lt;name_of_variable&gt;</span> <span class="pre">&lt;value&gt;)</span></code>.
+Some variables you may want to include are:</p>
+<blockquote>
+<div><blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NWX_MODULE_DIRECTORY</span></code>. Set this to where you want plugins and
+modules to be installed to.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_CXX_STANDARD</span></code>. Set this to 17 if for some reason your C++17
+compliant compiler doesn’t at least default to 17 being enabled.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BUILD_TESTING</span></code>. To build the unit tests.</p></li>
+</ul>
+</div></blockquote>
+<p>An example:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="s">NWX_MODULE_DIRECTORY</span><span class="w"> </span><span class="s">/path/to/your/workspace/directory</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="s">17</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">BUILD_TESTING</span><span class="w"> </span><span class="s">TRUE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="setting-up-kits">
+<span id="id2"></span><h3>Setting up Kits<a class="headerlink" href="#setting-up-kits" title="Permalink to this heading"></a></h3>
+<p>Kits are sets of tools to use to build the code. They are usually named based
+on the compiler you want to use. Since MacOS ships with Clang, this tutorial
+assumes you have Clang and are creating a Clang kit.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tutorial assumes you have set the setting
+<code class="docutils literal notranslate"><span class="pre">cmake.options.statusBarVisibility</span></code> to visible.</p>
+</div>
+<div class="figure align-center" id="id22">
+<img alt="../../../_images/click_no_active_kit.png" src="../../../_images/click_no_active_kit.png" />
+<p class="caption"><span class="caption-number">Fig. 32 </span><span class="caption-text">Step 1. Click on <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">active</span> <span class="pre">kit</span></code>. If you had previously selected a kit,
+this may instead display the name of that kit.</span><a class="headerlink" href="#id22" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id23">
+<img alt="../../../_images/select_clang.png" src="../../../_images/select_clang.png" />
+<p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">Step 2. Select <code class="docutils literal notranslate"><span class="pre">Clang</span> <span class="pre">&lt;version</span> <span class="pre">goes</span> <span class="pre">here&gt;</span></code>.</span><a class="headerlink" href="#id23" title="Permalink to this image"></a></p>
+<div class="legend">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Depending on your VSCode settings, selecting your kit will
+immediately start a CMake configuration run. Since we’re not done setting
+up, it will likely fail…</p>
+</div>
+</div>
+</div>
+<div class="figure align-center" id="id24">
+<img alt="../../../_images/edit_kit.png" src="../../../_images/edit_kit.png" />
+<p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">Step 3. Now we need to edit the kit to know about the toolchain file. Open
+the command pallette (command + shift + P) and search for
+<code class="docutils literal notranslate"><span class="pre">Edit</span> <span class="pre">User-Local</span> <span class="pre">CMake</span> <span class="pre">Kits</span></code>.</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
+<div class="legend">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step assumes you did not skip the
+<a class="reference internal" href="#creating-a-cmake-toolchain-file"><span class="std std-ref">Creating a CMake Toolchain File</span></a> section.</p>
+</div>
+</div>
+</div>
+<div class="figure align-center" id="id25">
+<img alt="../../../_images/add_toolchain_to_kit.png" src="../../../_images/add_toolchain_to_kit.png" />
+<p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Step 4. Add <code class="docutils literal notranslate"><span class="pre">&quot;toolchainFile&quot;:</span> <span class="pre">&quot;&lt;path/to/the/toolchain&gt;&quot;</span></code> to your kit.</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
+</div>
+</div>
+<div class="section" id="configuring-a-project">
+<h3>Configuring a Project<a class="headerlink" href="#configuring-a-project" title="Permalink to this heading"></a></h3>
+<div class="figure align-center" id="id26">
+<img alt="../../../_images/select_active_project.png" src="../../../_images/select_active_project.png" />
+<p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">Step 1. If you have multiple git projects open, make sure you select the one
+you want to configure.</span><a class="headerlink" href="#id26" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id27">
+<img alt="../../../_images/run_configure.png" src="../../../_images/run_configure.png" />
+<p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text">Step 2. Click <code class="docutils literal notranslate"><span class="pre">CMake:</span> <span class="pre">[Debug]:</span> <span class="pre">Ready</span></code> to start configuring.</span><a class="headerlink" href="#id27" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id28">
+<img alt="../../../_images/select_configuration.png" src="../../../_images/select_configuration.png" />
+<p class="caption"><span class="caption-number">Fig. 38 </span><span class="caption-text">Step 3. Select the configuration you would like.</span><a class="headerlink" href="#id28" title="Permalink to this image"></a></p>
+</div>
+<div class="section" id="troubleshooting">
+<h4>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p>If you get an error about the CMake executable like:</p>
+<blockquote>
+<div><div class="figure align-center" id="id29">
+<img alt="../../../_images/bad_cmake_executable.png" src="../../../_images/bad_cmake_executable.png" />
+<p class="caption"><span class="caption-number">Fig. 39 </span><span class="caption-text">Bad CMake executable error.</span><a class="headerlink" href="#id29" title="Permalink to this image"></a></p>
+</div>
+</div></blockquote>
+<p>it most likely means you do not have CMake installed (see
+<a class="reference internal" href="../../preliminaries.html#obtaining-dependencies-on-macos"><span class="std std-ref">Obtaining Dependencies on MacOS</span></a> for instructions) or VSCode can not
+find CMake. To set the CMake executable open the command pallette
+(command + shift + P) and search for <code class="docutils literal notranslate"><span class="pre">cmake.cmakePath</span></code>.</p>
+</li>
+<li><p>If you get an error about <code class="docutils literal notranslate"><span class="pre">NWX_MODULE_DIRECTORY</span></code> not being set, i.e.:</p>
+<blockquote>
+<div><div class="figure align-center" id="id30">
+<img alt="../../../_images/nwx_module_dir_not_set.png" src="../../../_images/nwx_module_dir_not_set.png" />
+<p class="caption"><span class="caption-number">Fig. 40 </span><span class="caption-text">Failure to set <code class="docutils literal notranslate"><span class="pre">NWX_MODULE_DIRECTORY</span></code>.</span><a class="headerlink" href="#id30" title="Permalink to this image"></a></p>
+</div>
+</div></blockquote>
+<p>it either means you did not pass your toolchain to CMake (see
+<a class="reference internal" href="#creating-a-cmake-toolchain-file"><span class="std std-ref">Creating a CMake Toolchain File</span></a>) or you did not set
+<code class="docutils literal notranslate"><span class="pre">NWX_MODULE_DIRECTORY</span></code> in your toolchain file.</p>
+</li>
+<li><p>If the configuration fails because of a missing dependency (e.g.,
+MPI or Boost) consult <a class="reference internal" href="../../preliminaries.html#obtaining-dependencies-on-macos"><span class="std std-ref">Obtaining Dependencies on MacOS</span></a>.</p></li>
+<li><p>If the configuration fails because of the missing Python developer files,
+e.g.,</p>
+<blockquote>
+<div><div class="figure align-center" id="id31">
+<img alt="../../../_images/missing_python_headers.png" src="../../../_images/missing_python_headers.png" />
+<p class="caption"><span class="caption-number">Fig. 41 </span><span class="caption-text">CMake could not locate the Python header files.</span><a class="headerlink" href="#id31" title="Permalink to this image"></a></p>
+</div>
+<p>consult <a class="reference internal" href="../../preliminaries.html#obtaining-dependencies-on-macos"><span class="std std-ref">Obtaining Dependencies on MacOS</span></a>.</p>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="building-and-testing">
+<h3>Building and Testing<a class="headerlink" href="#building-and-testing" title="Permalink to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We assume you have setup a kit already. If not see <a class="reference internal" href="#setting-up-kits"><span class="std std-ref">Setting up Kits</span></a>.</p>
+</div>
+<div class="figure align-center" id="id32">
+<img alt="../../../_images/select_what_to_build.png" src="../../../_images/select_what_to_build.png" />
+<p class="caption"><span class="caption-number">Fig. 42 </span><span class="caption-text">Step 1. Set the project, build configuration, and kit to what you want.</span><a class="headerlink" href="#id32" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id33">
+<img alt="../../../_images/click_build.png" src="../../../_images/click_build.png" />
+<p class="caption"><span class="caption-number">Fig. 43 </span><span class="caption-text">Step 2. Click build.</span><a class="headerlink" href="#id33" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id34">
+<img alt="../../../_images/run_ctest.png" src="../../../_images/run_ctest.png" />
+<p class="caption"><span class="caption-number">Fig. 44 </span><span class="caption-text">Step 3. Assuming Step 2 is successful, click on “Run CTest” to run the test
+suite.</span><a class="headerlink" href="#id34" title="Permalink to this image"></a></p>
+</div>
+</div>
+<div class="section" id="committing-changes-back-to-github">
+<h3>Committing Changes Back to GitHub<a class="headerlink" href="#committing-changes-back-to-github" title="Permalink to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This section assumes familiarity with git terminology.</p>
+</div>
+<div class="figure align-center" id="id35">
+<img alt="../../../_images/switch_to_source_control.png" src="../../../_images/switch_to_source_control.png" />
+<p class="caption"><span class="caption-number">Fig. 45 </span><span class="caption-text">Step 1. Switch to the source control view.</span><a class="headerlink" href="#id35" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id36">
+<img alt="../../../_images/stage_changes.png" src="../../../_images/stage_changes.png" />
+<p class="caption"><span class="caption-number">Fig. 46 </span><span class="caption-text">Step 2. (Optional) select the file(s) you want to stage by clicking on the
+“+” next to the file(s). If you do not stage files VSCode will assume you
+want to commit all changed files.</span><a class="headerlink" href="#id36" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id37">
+<img alt="../../../_images/commit_message.png" src="../../../_images/commit_message.png" />
+<p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Step 3. Type a descriptive commit message.</span><a class="headerlink" href="#id37" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id38">
+<img alt="../../../_images/click_commit.png" src="../../../_images/click_commit.png" />
+<p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">Step 4. Click on the commit button. At this point your changes are only
+committed to your local copy of the repository. We still need to push them
+to GitHub.</span><a class="headerlink" href="#id38" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id39">
+<img alt="../../../_images/click_synch.png" src="../../../_images/click_synch.png" />
+<p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">Step 5. Once you click “Commit” the button should change to “Synch Changes”.
+Click that to push your changes to GitHub.</span><a class="headerlink" href="#id39" title="Permalink to this image"></a></p>
+</div>
+<div class="section" id="id3">
+<h4>Troubleshooting<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<ul>
+<li><p>You get an error about <code class="docutils literal notranslate"><span class="pre">user.name</span></code> and/or <code class="docutils literal notranslate"><span class="pre">user.email</span></code> for git is not set.
+i.e., something like:</p>
+<blockquote>
+<div><div class="figure align-center" id="id40">
+<img alt="../../../_images/error_git_name_not_set.png" src="../../../_images/error_git_name_not_set.png" />
+<p class="caption"><span class="caption-number">Fig. 50 </span><span class="caption-text">Error when your git credentials have not been set.</span><a class="headerlink" href="#id40" title="Permalink to this image"></a></p>
+</div>
+</div></blockquote>
+<p>The easiest way to fix this is to open a terminal (the one in VSCode works
+fine) and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;your email goes here&quot;</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;your name goes here&quot;</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="figure align-center" id="id41">
+<img alt="../../../_images/set_git_name.png" src="../../../_images/set_git_name.png" />
+<p class="caption"><span class="caption-number">Fig. 51 </span><span class="caption-text">How to set the email and user name for git.</span><a class="headerlink" href="#id41" title="Permalink to this image"></a></p>
+</div>
+</li>
+<li><p>When attempting to synchronize with GitHub you get a cryptic error like:</p>
+<blockquote>
+<div><div class="figure align-center" id="id42">
+<img alt="../../../_images/cryptic_error.png" src="../../../_images/cryptic_error.png" />
+<p class="caption"><span class="caption-number">Fig. 52 </span><span class="caption-text">Cryptic error when synchronizing.</span><a class="headerlink" href="#id42" title="Permalink to this image"></a></p>
+</div>
+</div></blockquote>
+<p>For me this was caused by a credentials issue. I simply ran <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> from
+the VSCode terminal (in the root directory of the repo) and gave permission
+to VSCode to use my passwords. From that point forward commit and
+synchronization worked fine from VSCode.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="setup.html" class="btn btn-neutral float-left" title="Setting Up VSCode for Linux" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="building.html" class="btn btn-neutral float-right" title="Building NWX with VSCode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
