@@ -318,6 +318,16 @@ Troubleshooting
 - If the configuration fails because of a missing dependency (e.g.,
   MPI or Boost) consult :ref:`obtaining_dependencies_on_macos`.
 
+- If the configuration fails because of the missing Python developer files, 
+  e.g.,
+
+   .. figure:: assets/mac_setup/missing_python_headers.png
+      :align: center
+
+      CMake could not locate the Python header files.
+  
+   consult :ref:`obtaining_dependencies_on_macos`.
+
 Building and Testing
 ====================
 
