@@ -1,6 +1,6 @@
 FROM nwx_buildenv:latest
 
-ARG VERSION=2024-07-15
+ARG VERSION=main
 
 # Install tamm (add dependencies)
 RUN cd /tmp \
