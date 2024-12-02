@@ -1,7 +1,7 @@
 docker build -t nwx_buildenv -f nwx_buildenv.dockerfile .
 
 # Build dependencies with both GCC and Clang
-deps=("cereal" "gauxc" "libfort" "spdlog")
+deps=("cereal" "gauxc" "libfort" "spdlog" "libint")
 for dep in "${deps[@]}"
 do
     docker build -t nwx_buildenv -f add_${dep}.dockerfile --build-arg COMPILER=gcc-11 .
