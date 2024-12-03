@@ -9,6 +9,7 @@ RUN cd /tmp \
     && tar -zxf libint-${VERSION}.tgz \
     && cd libint-${VERSION} \
     && cmake -Bbuild -H. -GNinja \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
     -DCMAKE_INSTALL_PREFIX=/nwx_dependencies/${COMPILER} \
     -DCMAKE_TOOLCHAIN_FILE=/toolchains/${COMPILER}.cmake \
     && cmake --build build --target install --parallel \
