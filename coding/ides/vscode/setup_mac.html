@@ -366,6 +366,19 @@ the command pallette (command + shift + P) and search for
 <img alt="../../../_images/add_toolchain_to_kit.png" src="../../../_images/add_toolchain_to_kit.png" />
 <p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Step 4. Add <code class="docutils literal notranslate"><span class="pre">&quot;toolchainFile&quot;:</span> <span class="pre">&quot;&lt;path/to/the/toolchain&gt;&quot;</span></code> to your kit.</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have ninja installed (<code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">ninja</span></code>) we strongly
+recommend adding it to your kit by adding the lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;preferredGenerator&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ninja&quot;</span>
+<span class="p">},</span>
+<span class="s2">&quot;environmentVariables&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;PATH&quot;</span><span class="p">:</span> <span class="s2">&quot;/opt/homebrew/bin;${env:PATH}&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="configuring-a-project">
 <h3>Configuring a Project<a class="headerlink" href="#configuring-a-project" title="Permalink to this heading"></a></h3>
