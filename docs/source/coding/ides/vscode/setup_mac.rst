@@ -270,6 +270,20 @@ assumes you have Clang and are creating a Clang kit.
    
    Step 4. Add ``"toolchainFile": "<path/to/the/toolchain>"`` to your kit.
 
+.. note::
+
+   If you have ninja installed (``brew install ninja``) we strongly
+   recommend adding it to your kit by adding the lines:
+
+   .. code-block::
+
+      "preferredGenerator": {
+        "name": "Ninja"
+      },
+      "environmentVariables": {
+        "PATH": "/opt/homebrew/bin;${env:PATH}"
+      }
+
 Configuring a Project
 =====================
 
