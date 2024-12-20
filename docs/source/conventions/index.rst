@@ -30,3 +30,9 @@ Repository Conventions
     :maxdepth: 2
 
     file_structure
+
+In NWChemEx the following convetions are followed:
+C++ header: file_name.hpp
+C++ source files: file_name.cpp
+CMake source files : filename.cmake 
+CMake Lists: CMakeLists.txt
