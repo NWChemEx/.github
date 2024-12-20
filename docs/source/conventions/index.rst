@@ -30,3 +30,4 @@ Repository Conventions
     :maxdepth: 2
 
     file_structure
+    file_extension_conventions
