@@ -43,6 +43,38 @@ repo we are able to facilitate:
   the NWChemEx organization. By adhering to such standard we lower the barrier
   to entry for new developers.
 
+***********************
+File Naming Conventions
+***********************
+
+- To avoid pitfalls related to differences in operating system behavior, all
+  files should be "lower_snake_case", i.e., all lowercase letters, underscores
+  for separating words.
+- It is strongly recommended you stick to letters, numbers, and underscores
+  only. Notably avoid symbols like ``*``, ``?``, ``(``, ``)``, ``'``, 
+  and ``"``.
+
+Extensions
+==========
+
+- C++ header files end with ``*.hpp``, e.g., ``file_name.hpp``.
+- C++ source files end with ``*.cpp``, e.g., ``file_name.cpp``.
+- C++ inline implementation files end with ``*.ipp``, e.g., ``file_name.ipp``.
+- CMake modules end with ``*.cmake``, e.g., ``file_name.cmake``.
+- (GitHub-flavored) Markdown end with ``*.md``, e.g., ``file_name.md``. 
+- Python source files end with ``.py``, e.g., ``file_name.py``.
+- ReStructured Text files end with ``.rst``, e.g., ``file_name.py``.
+
+
+Exceptions
+==========
+
+The following exceptions to the above file naming conventions are allowed:
+
+- CMake build systems should be stored in one or more ``CMakeLists.txt``.
+  - Reason for exception: CMake convention.
+
+
 *********************
 Files and Directories
 *********************
