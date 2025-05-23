@@ -296,7 +296,7 @@ programming is preferred over object oriented style as described in their <a cla
 standard</a>.</p>
 <p>Below you can find how to run an RHF calculation for a hydrogen molecule using
 PySCF.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyscf</span> <span class="kn">import</span> <span class="n">gto</span><span class="p">,</span> <span class="n">scf</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyscf</span><span class="w"> </span><span class="kn">import</span> <span class="n">gto</span><span class="p">,</span> <span class="n">scf</span>
 <span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">M</span><span class="p">(</span><span class="n">atom</span><span class="o">=</span><span class="s1">&#39;O 0 0 0; H 0 1 0; H 0 0 1&#39;</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="s1">&#39;sto-3g&#39;</span><span class="p">)</span>
 <span class="n">rhf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
 <span class="n">energy</span> <span class="o">=</span> <span class="n">rhf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
@@ -316,7 +316,7 @@ a domain specific language similar to Python. In the PsiAPI mode, the user can
 write a pure Python script that interacts with PSI4 as a Python module. Since
 the latter is more relevant to our design, we show below how to run an RHF
 calculation for a hydrogen molecule using the PsiAPI mode.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psi4</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">psi4</span>
 <span class="n">mol</span> <span class="o">=</span> <span class="n">psi4</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s1">&#39;H 0. 0. 0. </span><span class="se">\n</span><span class="s1"> H 0. 0. 1.&#39;</span><span class="p">)</span>
 <span class="n">energy</span><span class="o">=</span> <span class="n">psi4</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="s1">&#39;scf/sto-3g&#39;</span><span class="p">)</span>
 </pre></div>
@@ -337,8 +337,8 @@ Python library that provides a common API for quantum chemistry programs.
 QCEngine is an open-source package distributed under the Apache License 2.0.</p>
 <p>Below you can find how to run an RHF calculation for a hydrogen molecule using
 QCEngine.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">qcengine</span> <span class="k">as</span> <span class="nn">qcng</span>
-<span class="kn">import</span> <span class="nn">qcelemental</span> <span class="k">as</span> <span class="nn">qcel</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">qcengine</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">qcng</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">qcelemental</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">qcel</span>
 <span class="n">mol</span> <span class="o">=</span> <span class="n">qcel</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Molecule</span><span class="o">.</span><span class="n">from_data</span><span class="p">(</span><span class="s1">&#39;H 0. 0. 0. </span><span class="se">\n</span><span class="s1"> H 0. 0. 1.&#39;</span><span class="p">)</span>
 <span class="n">out</span> <span class="o">=</span> <span class="n">qcng</span><span class="o">.</span><span class="n">compute</span><span class="p">({</span><span class="s2">&quot;molecule&quot;</span><span class="p">:</span> <span class="n">mol</span><span class="p">,</span> <span class="s2">&quot;driver&quot;</span><span class="p">:</span> <span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span>
 <span class="s2">&quot;SCF&quot;</span><span class="p">,</span> <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="s2">&quot;sto-3g&quot;</span><span class="p">}},</span> <span class="s2">&quot;NWChemEx&quot;</span><span class="p">)</span>
@@ -358,7 +358,7 @@ with a schema defined by QCElemental.</p>
 <p>The backbone of the current NWChemEx UI is the <cite>calculate()</cite> function. This
 function enables users to run quantum chemistry methods implemented in NWChemEx,
 with a very simple interface. The signature of this function is given below.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="n">molecule</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">chemist</span><span class="o">.</span><span class="n">Molecule</span><span class="p">],</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">calculate</span><span class="p">(</span><span class="n">molecule</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">chemist</span><span class="o">.</span><span class="n">Molecule</span><span class="p">],</span>
 <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">basis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">chemist</span><span class="o">.</span><span class="n">AOBasisSet</span><span class="p">,</span> <span class="n">simde</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">ao_space</span><span class="p">],</span>
 <span class="n">task</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="s2">&quot;gradient&quot;</span><span class="p">,</span> <span class="s2">&quot;wavefunction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;energy&quot;</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span>
 <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
@@ -386,7 +386,7 @@ function call as <code class="docutils literal notranslate"><span class="pre">kw
 also an opaque type that can hold key/value pairs.</p>
 <p>With the <code class="docutils literal notranslate"><span class="pre">calculate()</span></code> function, a user can run the RHF example by
 specifying only the required arguments as shown below.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nwchemex</span> <span class="k">as</span> <span class="nn">nwx</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nwchemex</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nwx</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">nwx</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">molecule</span> <span class="o">=</span> <span class="s1">&#39;H 0. 0. 0. </span><span class="se">\n</span><span class="s1"> H 0., 0. 1.&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;scf&#39;</span><span class="p">,</span> <span class="n">basis</span> <span class="o">=</span> <span class="s1">&#39;sto-3g&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -401,7 +401,7 @@ scan, which is basically an embarrassingly parallel workflow composed of single
 point energy calculations at different geometries. The user can run this
 workflow in two different ways:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the parallel environment with mpi4py</span>
-<span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpi4py</span><span class="w"> </span><span class="kn">import</span> <span class="n">MPI</span>
 <span class="n">comm</span> <span class="o">=</span> <span class="n">MPI</span><span class="o">.</span><span class="n">COMM_WORLD</span>
 <span class="n">rank</span> <span class="o">=</span> <span class="n">comm</span><span class="o">.</span><span class="n">Get_rank</span><span class="p">()</span>
 

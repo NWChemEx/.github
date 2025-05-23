@@ -100,13 +100,13 @@
 design point. An example of this separation can be found with the
 SCF, integrals, ChemCache libraries. These components of NWX are linked by
 SimDE and are intended to be used together, but are not explicitly required for
-the development of the other (see <a class="reference internal" href="#fig-deps-chart"><span class="std std-numref">Fig. 53</span></a>). The unit tests for
+the development of the other (see <a class="reference internal" href="#fig-deps-chart"><span class="std std-numref">Fig. 57</span></a>). The unit tests for
 these libraries are intended to ensure basic functionality and correctness,
 which can usually be accomplished with simple test data that allow the unit
 tests to run quickly.</p>
 <div class="figure align-center" id="id1">
 <span id="fig-deps-chart"></span><a class="reference internal image-reference" href="../_images/DependencyChart.png"><img alt="../_images/DependencyChart.png" src="../_images/DependencyChart.png" style="width: 312.5px; height: 241.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 53 </span><span class="caption-text">A simplified diagram of the NWChemEx dependency structure. Note that plugins
+<p class="caption"><span class="caption-number">Fig. 57 </span><span class="caption-text">A simplified diagram of the NWChemEx dependency structure. Note that plugins
 depending on SimDE are parallel to one another, and are integrated together
 within NWChemEx. Arrows point from a dependency to the dependent library.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
 </div>
@@ -117,12 +117,12 @@ effects on the SCF code, which we would like to detect before merging. For these
 (and other) reasons, it can be useful to implement integration tests to ensure
 the continued interoperability of the isolated components of the NWX stack.
 Because the tests are built on top of the plugins, it is simple to include
-NWChemEx itself as a dependency of the test (see <a class="reference internal" href="#fig-integration-chart"><span class="std std-numref">Fig. 54</span></a>).
+NWChemEx itself as a dependency of the test (see <a class="reference internal" href="#fig-integration-chart"><span class="std std-numref">Fig. 58</span></a>).
 This way, changes at the plugin level can be screened to guarantee that they
 don’t break interoperability with the others.</p>
 <div class="figure align-center" id="id2">
 <span id="fig-integration-chart"></span><a class="reference internal image-reference" href="../_images/DependencyChartExtended.png"><img alt="../_images/DependencyChartExtended.png" src="../_images/DependencyChartExtended.png" style="width: 457.0px; height: 354.0px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 54 </span><span class="caption-text">A diagram illustrating the relationship between the integration tests, the
+<p class="caption"><span class="caption-number">Fig. 58 </span><span class="caption-text">A diagram illustrating the relationship between the integration tests, the
 library they test, and the top-level NWChemEx library. Arrows point from a
 dependency to the dependent library.</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
 </div>
@@ -170,17 +170,17 @@ an integration test to a project that uses the NWX ecosystem.</p>
 tests are written in the same manner. Below is an example of how to use NWChemEx
 in our new integration test to acquire input values and submodules that may be
 needed by a module in our project.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">import</span> <span class="nn">nwchemex</span>
-<span class="kn">import</span> <span class="nn">scf</span>
-<span class="kn">from</span> <span class="nn">pluginplay</span> <span class="kn">import</span> <span class="n">ModuleManager</span>
-<span class="kn">from</span> <span class="nn">simde</span> <span class="kn">import</span> <span class="n">AOEnergy</span>
-<span class="kn">from</span> <span class="nn">simde</span> <span class="kn">import</span> <span class="n">MoleculeFromString</span>
-<span class="kn">from</span> <span class="nn">simde</span> <span class="kn">import</span> <span class="n">MolecularBasisSet</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nwchemex</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pluginplay</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModuleManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simde</span><span class="w"> </span><span class="kn">import</span> <span class="n">AOEnergy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simde</span><span class="w"> </span><span class="kn">import</span> <span class="n">MoleculeFromString</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">simde</span><span class="w"> </span><span class="kn">import</span> <span class="n">MolecularBasisSet</span>
 
-<span class="k">class</span> <span class="nc">TestIntegration</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TestIntegration</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">test_scf_module</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_scf_module</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Module we want to test</span>
         <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;SCF Module&quot;</span>
 
@@ -202,11 +202,11 @@ needed by a module in our project.</p>
         <span class="n">egy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mm</span><span class="o">.</span><span class="n">run_as</span><span class="p">(</span><span class="n">energy_pt</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">bs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">egy</span><span class="p">,</span> <span class="mf">3.14159265359</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">test_another_module</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_another_module</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Add more tests where appropriate</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mm</span> <span class="o">=</span> <span class="n">ModuleManager</span><span class="p">()</span>
         <span class="n">nwchemex</span><span class="o">.</span><span class="n">load_modules</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span> <span class="c1"># Also loads out SCF modules</span>
 </pre></div>

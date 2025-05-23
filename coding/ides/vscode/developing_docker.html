@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developing in a Docker Container With VSCode &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Tips and Tricks for VSCode" href="tips_and_tricks.html" />
+    <link rel="prev" title="Developing NWX with VSCode" href="developing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../community/index.html">NWChemEx Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documenting/index.html">Documenting NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conventions/index.html">NWChemEx Organization Conventions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developing NWChemEx</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../preliminaries.html">Preliminaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cxx/index.html">Developing C++ Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../python/index.html">Developing Python Software</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Using IDEs to Develop NWX</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">VSCode</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="setup.html">Setting Up VSCode for Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="setup_mac.html">Setting Up VSCode on MacOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="building.html">Building NWX with VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="developing.html">Developing NWX with VSCode</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Developing in a Docker Container With VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tips_and_tricks.html">Tips and Tricks for VSCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="faqs.html">FAQs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../continuous_deployment/index.html">Continuous Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../resources/index.html">Additional Developer Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bibliography/bibliography.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Developing NWChemEx</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Using IDEs to Develop NWX</a></li>
+          <li class="breadcrumb-item"><a href="index.html">VSCode</a></li>
+      <li class="breadcrumb-item active">Developing in a Docker Container With VSCode</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/NWChemEx/.github/edit/master/docs/source/coding/ides/vscode/developing_docker.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="developing-in-a-docker-container-with-vscode">
+<h1>Developing in a Docker Container With VSCode<a class="headerlink" href="#developing-in-a-docker-container-with-vscode" title="Permalink to this heading"></a></h1>
+<p>For the purposes of this page we define “Local” to mean in your native operating
+system (OS) / file system. “Local” is contrasted with “Docker”, which means the
+OS and file system being used in a Docker container.</p>
+<div class="section" id="why">
+<h2>Why?<a class="headerlink" href="#why" title="Permalink to this heading"></a></h2>
+<p>Compared to just running VSCode in the local OS this introduces additional
+complexity, so why would you want to do it?</p>
+<ul class="simple">
+<li><p>You want to develop for a different OS than what you currently have. The
+quintessential example is targeting true Linux from MacOS.</p></li>
+<li><p>You want to containerize your development environment so that it is the same
+on all systems, i.e., no more setting it up on each computer you go to.</p></li>
+</ul>
+</div>
+<div class="section" id="scenario-1-vscode-creates-a-docker-container-and-runs-in-it">
+<h2>Scenario 1: VSCode Creates a Docker Container and Runs In It<a class="headerlink" href="#scenario-1-vscode-creates-a-docker-container-and-runs-in-it" title="Permalink to this heading"></a></h2>
+<p>In this scenario, we have a local directory containing source files that we
+want to do development on and do NOT yet have a Docker container. The files will
+be accessible from inside the Docker container we create, but will ultimately
+live locally (meaning changes to the files will persist even after the Docker
+container is closed). Development will occur in the Docker container. We will
+run the VSCode GUI (the graphical user interface) locally, but run the VSCode
+server (the guts of the VSCode application responsible for most VSCode tasks) in
+the Docker container (more efficient than running all of VSCode locally).</p>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>We assume you have VSCode installed locally already.</p></li>
+<li><p>If you haven’t installed Docker locally you need to do that. We recommend
+using <a class="reference external" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a>.
+Make sure you open the app and complete setup before continuing.</p></li>
+</ul>
+</div>
+<div class="section" id="creating-the-container">
+<h3>Creating the Container<a class="headerlink" href="#creating-the-container" title="Permalink to this heading"></a></h3>
+<ul>
+<li><p>Start up VSCode locally.</p></li>
+<li><p>Install the “Dev Containers” extension.</p>
+<div class="figure align-center" id="id1">
+<img alt="../../../_images/install_dev_containers.png" src="../../../_images/install_dev_containers.png" />
+<p class="caption"><span class="caption-number">Fig. 53 </span><span class="caption-text">Navigate to the “Extensions” tab of VSCode and search for “Dev Containers”
+and click install.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</div>
+</li>
+<li><p>If you haven’t already, add the repository you want to develop to your
+current workspace.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">palette</span> <span class="pre">-&gt;</span> <span class="pre">git</span> <span class="pre">clone</span></code> and follow prompts.</p></li>
+</ul>
+</li>
+<li><p>Add the repository to a container.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">palette</span> <span class="pre">-&gt;</span> <span class="pre">Dev</span> <span class="pre">Containers:</span> <span class="pre">Open</span> <span class="pre">Folder</span> <span class="pre">in</span> <span class="pre">Container</span></code></p></li>
+<li><p>We strongly suggest “add configuration to workspace”  (and then adding
+<code class="docutils literal notranslate"><span class="pre">.devcontainer</span></code> to <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code>). This will ensure you can find the
+settings easily.</p>
+<div class="figure align-center" id="id2">
+<img alt="../../../_images/select_options.png" src="../../../_images/select_options.png" />
+<p class="caption"><span class="caption-number">Fig. 54 </span><span class="caption-text">Follow the prompts the Dev Containers Extension raises.</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</div>
+</li>
+<li><p>The Dev Containers extension will build your container in the background, so
+it may take a while for this step to complete.</p></li>
+</ul>
+</li>
+<li><p>If the container was built successful you will be dropped into a “normal”
+VSCode session except that it will actually be running in the container.</p>
+<div class="figure align-center" id="id3">
+<img alt="../../../_images/in_container.png" src="../../../_images/in_container.png" />
+<p class="caption"><span class="caption-number">Fig. 55 </span><span class="caption-text">You can see the name of the container in the explorer and in the bottom
+right.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</div>
+</li>
+<li><p>If you want to install dependencies into the container edit <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>.</p>
+<ul>
+<li><p>If you followed our advice to add settings to the project, <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>
+will be in <code class="docutils literal notranslate"><span class="pre">.devcontainers/</span></code>.</p></li>
+<li><p>After editing, make sure you rebuild by clicking on the “blue button” in
+the bottom left and then choosing “Rebuild Container”. Note rebuilding the
+container will destroy any changes you made to the environment (but not the
+source files).</p>
+<div class="figure align-center" id="id4">
+<img alt="../../../_images/blue_button.png" src="../../../_images/blue_button.png" />
+<p class="caption"><span class="caption-number">Fig. 56 </span><span class="caption-text">The location of the “blue button”.</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</div>
+</li>
+</ul>
+</li>
+<li><p>When you are happy with the development environment start developing!</p>
+<ul class="simple">
+<li><p>Again, note that changes to the environment will be lost the next time the
+container is built.</p></li>
+</ul>
+</li>
+<li><p>When you’re done developing click the “blue button” in the bottom left and
+choose “Close Remote Connection”.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="sources">
+<h2>Sources<a class="headerlink" href="#sources" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tinyurl.com/y483a63c">Dev Containers Extension</a>.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="developing.html" class="btn btn-neutral float-left" title="Developing NWX with VSCode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tips_and_tricks.html" class="btn btn-neutral float-right" title="Tips and Tricks for VSCode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

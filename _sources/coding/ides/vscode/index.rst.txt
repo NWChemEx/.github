@@ -14,5 +14,6 @@ for C++ development.
    setup_mac
    building
    developing
+   developing_docker
    tips_and_tricks
    faqs
