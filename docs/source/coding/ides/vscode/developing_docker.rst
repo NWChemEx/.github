@@ -2,16 +2,15 @@
 Developing in a Docker Container With VSCode
 ############################################
 
-VSCode and Docker are capable of interacting in a number of ways. For the
-purposes of this page we define "Local" to mean in your native operating system/
-file system. "Local" is contrasted with "Docker", which means the operating
-system and file system being used in a Docker container.
+For the purposes of this page we define "Local" to mean in your native operating
+system (OS) / file system. "Local" is contrasted with "Docker", which means the 
+OS and file system being used in a Docker container.
 
 ****
 Why?
 ****
 
-Compared to just running VSCode in the Local OS this introduces additional
+Compared to just running VSCode in the local OS this introduces additional
 complexity, so why would you want to do it?
 
 - You want to develop for a different OS than what you currently have. The
@@ -19,27 +18,32 @@ complexity, so why would you want to do it?
 - You want to containerize your development environment so that it is the same
   on all systems, i.e., no more setting it up on each computer you go to.
 
-*********************
-VSCode Runs in Docker
-*********************
+************************************************************
+Scenario 1: VSCode Creates a Docker Container and Runs In It
+************************************************************
 
-In this scenario, we have source files that live locally, but we want to develop
-them in Docker. We will run the VSCode UI locally, but run the VSCode server
-(the guts of the VSCode application) in Docker with the files.
+In this scenario, we have a local directory containing source files that we
+want to do development on and do NOT yet have a Docker container. The files will
+be accessible from inside the Docker container we create, but will ultimately 
+live locally (meaning changes to the files will persist even after the Docker 
+container is closed). Development will occur in the Docker container. We will 
+run the VSCode GUI (the graphical user interface) locally, but run the VSCode 
+server (the guts of the VSCode application responsible for most VSCode tasks) in 
+the Docker container (more efficient than running all of VSCode locally).
 
 Prerequisites
 -------------
 
-We assume you have VSCode installed already. If you haven't installed Docker 
-locally you need to do that. We recommend using 
-`Docker Desktop <https://www.docker.com/products/docker-desktop/>`__. Make sure
-you open the app and complete setup before continuing.
+- We assume you have VSCode installed locally already. 
+- If you haven't installed Docker locally you need to do that. We recommend 
+  using `Docker Desktop <https://www.docker.com/products/docker-desktop/>`__. 
+  Make sure you open the app and complete setup before continuing.
 
 Creating the Container
 ----------------------
 
 - Start up VSCode locally.
-- Install the "Dev Containers" extension
+- Install the "Dev Containers" extension.
   
   .. figure:: assets/docker/install_dev_containers.png
      :align: center
@@ -90,10 +94,16 @@ Creating the Container
 
        The location of the "blue button".
 
+- When you are happy with the development environment start developing!
+
+  - Again, note that changes to the environment will be lost the next time the
+    container is built.
+    
 - When you're done developing click the "blue button" in the bottom left and
   choose "Close Remote Connection".
 
+*******
 Sources
--------
+*******
 
 - `Dev Containers Extension <https://tinyurl.com/y483a63c>`__.
