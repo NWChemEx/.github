@@ -352,25 +352,24 @@ up, it will likely fail…</p>
 </div>
 <div class="figure align-center" id="id24">
 <img alt="../../../_images/edit_kit.png" src="../../../_images/edit_kit.png" />
-<p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">Step 3. Now we need to edit the kit to know about the toolchain file. Open
-the command pallette (command + shift + P) and search for
-<code class="docutils literal notranslate"><span class="pre">Edit</span> <span class="pre">User-Local</span> <span class="pre">CMake</span> <span class="pre">Kits</span></code>.</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
+<p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">Step 3.  If you want to always use the same options with the same
+tool kit (e.g., always use Ninja generator), you can edit the tool
+kit file. To do this, open the command palette (command + shift + P)
+and search for  <code class="docutils literal notranslate"><span class="pre">Edit</span> <span class="pre">User-Local</span> <span class="pre">CMake</span> <span class="pre">Kits</span></code>.</span><a class="headerlink" href="#id24" title="Permalink to this image"></a></p>
+</div>
+<div class="figure align-center" id="id25">
+<img alt="../../../_images/add_toolchain_to_kit.png" src="../../../_images/add_toolchain_to_kit.png" />
+<p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Step 4. If we want to always use the same toolchain file with the same
+toolkit, we can edit the kit to know about the toolchain file.
+Add <code class="docutils literal notranslate"><span class="pre">&quot;toolchainFile&quot;:</span> <span class="pre">&quot;&lt;path/to/the/toolchain&gt;&quot;</span></code> to your kit.</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
 <div class="legend">
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This step assumes you did not skip the
 <a class="reference internal" href="#creating-a-cmake-toolchain-file"><span class="std std-ref">Creating a CMake Toolchain File</span></a> section.</p>
 </div>
-</div>
-</div>
-<div class="figure align-center" id="id25">
-<img alt="../../../_images/add_toolchain_to_kit.png" src="../../../_images/add_toolchain_to_kit.png" />
-<p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Step 4. Add <code class="docutils literal notranslate"><span class="pre">&quot;toolchainFile&quot;:</span> <span class="pre">&quot;&lt;path/to/the/toolchain&gt;&quot;</span></code> to your kit.</span><a class="headerlink" href="#id25" title="Permalink to this image"></a></p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you have ninja installed (<code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">ninja</span></code>) we strongly
-recommend adding it to your kit by adding the lines:</p>
+<p>Another good idea, assuming you have Ninja installed
+(<code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">ninja</span></code>) is to add it to your kit via:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;preferredGenerator&quot;</span><span class="p">:</span> <span class="p">{</span>
   <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ninja&quot;</span>
 <span class="p">},</span>
@@ -378,6 +377,7 @@ recommend adding it to your kit by adding the lines:</p>
   <span class="s2">&quot;PATH&quot;</span><span class="p">:</span> <span class="s2">&quot;/opt/homebrew/bin;${env:PATH}&quot;</span>
 <span class="p">}</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

@@ -256,24 +256,25 @@ assumes you have Clang and are creating a Clang kit.
 .. figure:: assets/mac_setup/edit_kit.png
    :align: center 
 
-   Step 3. Now we need to edit the kit to know about the toolchain file. Open 
-   the command pallette (command + shift + P) and search for 
-   ``Edit User-Local CMake Kits``.
+   Step 3.  If you want to always use the same options with the same
+   tool kit (e.g., always use Ninja generator), you can edit the tool
+   kit file. To do this, open the command palette (command + shift + P) 
+   and search for  ``Edit User-Local CMake Kits``.
+
+.. figure:: assets/mac_setup/add_toolchain_to_kit.png
+   :align: center
+   
+   Step 4. If we want to always use the same toolchain file with the same 
+   toolkit, we can edit the kit to know about the toolchain file.
+   Add ``"toolchainFile": "<path/to/the/toolchain>"`` to your kit.
 
    .. note::
 
       This step assumes you did not skip the 
       :ref:`creating_a_cmake_toolchain_file` section.
 
-.. figure:: assets/mac_setup/add_toolchain_to_kit.png
-   :align: center
-   
-   Step 4. Add ``"toolchainFile": "<path/to/the/toolchain>"`` to your kit.
-
-.. note::
-
-   If you have ninja installed (``brew install ninja``) we strongly
-   recommend adding it to your kit by adding the lines:
+   Another good idea, assuming you have Ninja installed 
+   (``brew install ninja``) is to add it to your kit via:
 
    .. code-block::
 
