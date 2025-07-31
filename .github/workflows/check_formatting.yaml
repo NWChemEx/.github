@@ -1,0 +1,88 @@
+# Copyright 2025 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Check Formatting
+# Performs checks for proper license headers and formatting.
+
+on:
+  workflow_call:
+    inputs:
+      license_config:
+        description: "The license configuration file for SkyWalking Eyes"
+        type: string
+        required: false
+        default: ".licenserc.yaml"
+      cpp_source_dirs:
+        description: "Space seperated list of dirs to apply clang-format to"
+        type: string
+        required: false
+        default: "include src tests"
+      format_python:
+        description: "Whether or not to format python files"
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  # Check licensing.
+  check_licensing:
+    if: inputs.license_config != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Check for License Config
+        if: hashFiles(inputs.license_config) == ''
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed("License Config file doesn't exist: ${{inputs.license_config}}")
+      - name: Check License
+        uses: apache/skywalking-eyes@v0.4.0
+        with:
+          config: ${{ inputs.license_config }}
+          mode: check
+
+  # Check C++ formatting.
+  check_cpp_format:
+    if: inputs.cpp_source_dirs != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Check C++ Formatting
+        uses: DoozyX/clang-format-lint-action@v0.18
+        with:
+          source: ${{ inputs.cpp_source_dirs }}
+          extensions: "hpp,cpp,ipp,h,c"
+          clangFormatVersion: 12
+          inplace: False
+
+  # Check Python formatting.
+  check_python_format:
+    if: inputs.format_python == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install yapf
+        run: pip install yapf
+        shell: bash
+      - name: Check Python Formatting
+        run: yapf -r -q .
+        shell: bash

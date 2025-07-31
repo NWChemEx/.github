@@ -1,4 +1,4 @@
-# Copyright 2023 NWChemEx-Project
+# Copyright 2025 NWChemEx-Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,30 +13,25 @@
 # limitations under the License.
 #
 
-name: Build nwx_buildenv Image
+name: Update Commit Tag
 
-on: workflow_dispatch
+on:
+  workflow_call:
+    secrets:
+      TAG_TOKEN:
+        description: "Token used to bump the version tag"
+        required: true
 
 jobs:
-  build_image:
+  increment_tag:
+    if: inputs.bump_tag == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+      - uses: haya14busa/action-bumpr@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.CONTAINER_REPO_TOKEN }}
-      - name: Build Image
-        run: |
-          cd ./nwx_build_environment
-          bash buildenv.sh
-        shell: bash
-      - name: Push Image
-        run: |
-          docker tag nwx_buildenv:latest ghcr.io/nwchemex/nwx_buildenv:latest
-          docker push ghcr.io/nwchemex/nwx_buildenv:latest
-        shell: bash
-      
+          default_bump_level: patch
+          github_token: ${{ secrets.TAG_TOKEN }}
+          tag_as_user: .github[bot]
+          tag_as_email: .github[bot]@github.com
