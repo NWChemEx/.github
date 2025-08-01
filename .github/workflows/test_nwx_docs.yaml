@@ -1,0 +1,76 @@
+# Copyright 2025 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Test NWX Library Docs
+# Test building documentation
+
+on:
+  workflow_call:
+    inputs:
+      doc_target:
+        description: "The name of the documentation target. Set to 'Sphinx' to skip doxygen"
+        type: string
+        required: true
+      sphinx_fail_on_warning:
+        description: "Whether or not the Sphinx docs should fail due to warnings"
+        type: boolean
+        required: false
+        default: true
+      
+      
+
+jobs:
+  test_build_docs:
+    runs-on: ubuntu-latest
+    container: 
+      image: ghcr.io/nwchemex/nwx_buildenv:latest
+    steps:
+      - name: Fail if Target is Blank
+        if: inputs.doc_target == ''
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed("doc_target must not be blank.")
+      - name: Checkout Source
+        uses: actions/checkout@v4
+      - name: Set ownership
+        run: |
+          # Fix for git not liking owner of the checkout dir
+          chown -R $(id -u):$(id -g) $PWD
+      - name: Doxygen Docs
+        if: ${{ inputs.doc_target != 'Sphinx' }}
+        run:  |
+          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
+          cmake --build build --target ${{ inputs.doc_target }} --parallel
+
+          # Migrate the Doxygen documentation to the docs source
+          mkdir docs/build
+          mkdir docs/build/html
+          mv build/html "docs/build/html/${{ inputs.doc_target }}"
+        shell: bash
+      - name: Set Fail on Warnings
+        if: inputs.sphinx_fail_on_warning == true
+        run:  |
+          echo "SPHINX_OPTS=-W --keep-going -n" >> $GITHUB_ENV
+        shell: bash
+      - name: Sphinx Docs
+        run:  |
+          cd docs
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+          make html SPHINXOPTS="${SPHINX_OPTS}"
+        shell: bash
+          

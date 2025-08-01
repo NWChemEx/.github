@@ -1,4 +1,4 @@
-# Copyright 2023 NWChemEx-Project
+# Copyright 2025 NWChemEx-Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,70 +13,34 @@
 # limitations under the License.
 #
 
-name: Common Merge Workflow
-# Collects common Merge related jobs for the NWX stack, specifically
-# 1. Bumping version tags
-# 2. Deploying updated documentation
+name: Deploy Documentation
 
 on:
   workflow_call:
     inputs:
-      bump_tag:
-        description: "Whether or not to bump the tag of the commit"
-        type: boolean
-        required: false
-        default: true
       doc_target:
         description: "The name of the documentation target. Set to 'Sphinx' to skip doxygen"
         type: string
-        required: false
-        default: 'Sphinx'
+        required: true
       generate_module_docs:
         description: "Whether or not to generate PluginPlay Module documentation"
         type: boolean
         default: false
-    secrets:
-      CMAIZE_GITHUB_TOKEN:
-        description: "Token passed to CMaize"
-        required: false
-      TAG_TOKEN:
-        description: "Token used to bump the version tag"
-        required: true
-      CONTAINER_REPO_TOKEN:
-        description: "Token to access Github Image Registry"
-        required: true
 
 jobs:
-  # Bump the version tag
-  increment_tag:
-    if: inputs.bump_tag == true
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: haya14busa/action-bumpr@v1
-        with:
-          default_bump_level: patch
-          github_token: ${{ secrets.TAG_TOKEN }}
-          tag_as_user: .github[bot]
-          tag_as_email: .github[bot]@github.com
-
-  # Deploy updated documentation
   deploy_docs:
-    if: inputs.doc_target != ''
     runs-on: ubuntu-latest
     container: 
       image: ghcr.io/nwchemex/nwx_buildenv:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Fail if Target is Blank
+        if: inputs.doc_target == ''
+        uses: actions/github-script@v3
         with:
-          fetch-depth: 0
-      - name: Set ownership
-        run: |
-          # Fix for git not liking owner of the checkout dir
-          chown -R $(id -u):$(id -g) $PWD
+          script: |
+            core.setFailed("doc_target must not be blank.")
+      - name: Checkout Source
+        uses: actions/checkout@v4
       # These next two steps will configure CMake if required
       - name: Configure Only Docs
         if: |
@@ -87,11 +51,8 @@ jobs:
         shell: bash
       - name: Configure Library
         if: inputs.generate_module_docs == true
-        env:
-          CMAIZE_GITHUB_TOKEN: ${{secrets.CMAIZE_GITHUB_TOKEN}}
         run: |
           toolchain=/toolchains/nwx_gcc-11.cmake
-          echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')' >> $toolchain
 
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON \
           -DCMAKE_INSTALL_PREFIX=./install \
