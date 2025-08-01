@@ -22,9 +22,11 @@ functions. The C++ API documentation should be written using Doxygen's native
 markdown (markup?) language. The Doxygen documentation is built using CMake's
 Doxygen module. Using CMake's Doxygen module is fairly cookie-cutter so NWChemEx
 provides the ``nwx_cxx_api_docs.cmake`` CMake module to avoid code duplication.
-The master version of ``nwx_cxx_api_docs.cmake`` lives in this repo and is
-synchronized with all other repos. Downstream repos need only include the
-following two lines in their top-level ``CMakeLists.txt`` file:
+The master version of ``nwx_cxx_api_docs.cmake`` lives in the 
+``MWChemEx/NWXCMake`` repo and is downloaded along with the other scripts in
+that repo by the CMake module ``get_nwx_cmake.cmake`` found in most repositories
+in this organization. Downstream repos need only include the following two lines
+in their top-level ``CMakeLists.txt`` file:
 
 .. code-block:: cmake
 
