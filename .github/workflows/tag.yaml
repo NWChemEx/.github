@@ -24,7 +24,6 @@ on:
 
 jobs:
   increment_tag:
-    if: inputs.bump_tag == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
