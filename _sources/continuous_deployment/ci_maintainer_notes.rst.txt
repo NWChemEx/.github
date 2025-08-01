@@ -21,18 +21,18 @@ Here are a few useful tutorials on workflows in GitHub:
 Currently the following repositories in ``NWChemEx`` follow the methods
 outlined here:
 
-1. ``ChemCache``
-2. ``Chemist`` 
-3. ``.github`` (This is our configuration repository) 
-4. ``Integrals``
-5. ``Mokup`` 
-6. ``NWChemEx`` 
-7. ``ParallelZone``
-8. ``PluginPlay``
-9. ``SimDE``
-10. ``SCF``
-11. ``TensorWrapper``
-12. ``Utilities``
+#. ``.github`` (This is our configuration repository) 
+#. ``ChemCache``
+#. ``Chemist`` 
+#. ``Integrals``
+#. ``Mokup`` 
+#. ``NWChemEx`` 
+#. ``ParallelZone``
+#. ``PluginPlay``
+#. ``SimDE``
+#. ``SCF``
+#. ``TensorWrapper``
+#. ``Utilities``
 
 Common and Repo-Specific Workflows
 ==================================
@@ -40,13 +40,17 @@ Common and Repo-Specific Workflows
 The ``.github/workflow`` directory in the ``NWChemEx/.github`` repo
 houses both the set of workflows specific to the ``.github`` repo and the set 
 of reusable workflows that should be used throughout the NWX stack. Generally,
-these reusable workflows should be named as ``common_{trigger event}.yaml``,
-where ``{trigger event}`` can be ``pull_request``, ``merge``, or other `workflow
-triggering events <https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows>`__.
-These common workflows aggregrate the reoccurring jobs required by the NWX repos 
-when a given event occurs, e.g applying formatting and testing changes to files 
-in a pull request. The common workflows for pull requests and merging changes 
-are discussed more specifically below.
+these reusable workflows should be named in a way that describes what kind of
+effect they should achieve, e.g. ``tag.yaml`` or ``check_formatting.yaml``.
+These common workflows represent the reoccurring GitHub Actions operations 
+required by the NWX repos, e.g tagging a newly merged commit or checking 
+formatting. The common workflows currently available include:
+
+* ``check_formatting.yaml`` - performs common formatting and licensing checks
+* ``deploy_nwx_docs.yaml`` - deploys the docs for an NWX library to GitHub pages
+* ``tag.yaml`` - updates the version tag for a commit, used after merging into ``master``
+* ``test_nwx_docs.yaml`` - ensures the documentation of an NWX library builds properly
+* ``test_nwx_library.yaml`` - ensures an NWX library builds and passes its tests
 
 Aside from the common workflows, there are the repo-specific workflows with the
 naming convention ``{trigger event}.yaml``. Where needed, a version of these
@@ -55,56 +59,60 @@ workflows can be added in each repo. Here's an example of a repo-specific
 
 .. code-block:: yaml
 
+    name: Pull Request Workflow
+
     on:
       pull_request:
         branches:
           - master
-  
+
     jobs:
-      Common-Pull-Request:
-        uses: NWChemEx/.github/.github/workflows/common_pull_request.yaml@master
+      check_formatting:
+        uses: NWChemEx/.github/.github/workflows/check_formatting.yaml@master
         with:
-          config_file: ''
-          source_dir: ''
-          compilers: ''
-          doc_target: 'Sphinx'
-        secrets:
-          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
-      Unique-Job:
+          license_config: ".github/.licenserc.yaml"
+
+      test_nwx_docs:
+        uses: NWChemEx/.github/.github/workflows/test_nwx_docs.yaml@master
+        with:
+          doc_target: "tensorwrapper_cxx_api"
+
+      test_library:
+        uses: NWChemEx/.github/.github/workflows/test_nwx_library.yaml@master
+        with:
+          compilers: '["gcc-11", "clang-14"]'
+
+      unique_job:
         # Other steps unique to the individual repos can be added as Jobs
 
-Generally, these workflows are expected to call to the corresponding reusable
-workflow to handle the reoccurring task and then locally implement any unique
+And here is an example of the repo-specific ``merge.yaml``:
+
+.. code-block:: yaml
+
+    name: Merge Workflow
+
+    on:
+      push:
+        branches:
+          - master
+
+    jobs:
+      tag-commit:
+        uses: NWChemEx/.github/.github/workflows/tag.yaml@master
+        secrets: inherit
+
+      deploy_nwx_docs:
+        uses: NWChemEx/.github/.github/workflows/deploy_nwx_docs.yaml@master
+        with:
+          doc_target: "XYZ_cxx_api"
+        secrets: inherit
+
+      unique_job:
+        # Other steps unique to the individual repos can be added as Jobs
+
+Generally, these workflows are expected to call to the necessary reusable
+workflows to handle the reoccurring tasks and then locally implement any unique
 automations.
-
-CI coverage
-===========
-
-Common Pull Request Workflow
-----------------------------
-
-The common workflow for pull requests first handles the addition of any license
-headers to files and runs clang formatting. NWChemEx uses `Apache License (2.0) 
-<https://www.apache.org/licenses/LICENSE-2.0>`__. We want all our source code 
-(except for some configuration, test and input files) to have the proper license
-header when deployed. The licensing setting are configured by the 
-``.licenserc.yaml`` file in each repo's ``.github`` directory. For details on
-this files construction, see `here <https://github.com/apache/skywalking-eyes/tree/v0.4.0>`__
-
-If there are changes resulting from these first steps, they will be pushed to
-the branch and the workflow will end. The new commit resulting from this step
-should then re-trigger the origin workflow, ensuring that the new changes are
-included in the following steps. If changes were not made by the license and 
-formatting step, the workflow continues on to attempt to build the current 
-library and its documentation. If the library builds properly, it's test suite 
-is also run.
-
-Common Merge Workflow
----------------------
-
-The common workflow for merging a successful pull request applies the correct
-version tag to the resulting commit and deployes the repo's documentation to
-GitHub Pages.
 
 NWX Build Environment Image
 ===========================

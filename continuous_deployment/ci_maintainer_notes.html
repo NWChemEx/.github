@@ -58,11 +58,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Continuous Deployment</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">How NWX’s Continuous Integration (CI) Works</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#common-and-repo-specific-workflows">Common and Repo-Specific Workflows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ci-coverage">CI coverage</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#common-pull-request-workflow">Common Pull Request Workflow</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#common-merge-workflow">Common Merge Workflow</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#nwx-build-environment-image">NWX Build Environment Image</a></li>
 </ul>
 </li>
@@ -114,9 +109,9 @@ maximum re-use of CI components across multiple repositories.</p>
 <p>Currently the following repositories in <code class="docutils literal notranslate"><span class="pre">NWChemEx</span></code> follow the methods
 outlined here:</p>
 <ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.github</span></code> (This is our configuration repository)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ChemCache</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Chemist</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">.github</span></code> (This is our configuration repository)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Integrals</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Mokup</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">NWChemEx</span></code></p></li>
@@ -132,64 +127,75 @@ outlined here:</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">.github/workflow</span></code> directory in the <code class="docutils literal notranslate"><span class="pre">NWChemEx/.github</span></code> repo
 houses both the set of workflows specific to the <code class="docutils literal notranslate"><span class="pre">.github</span></code> repo and the set
 of reusable workflows that should be used throughout the NWX stack. Generally,
-these reusable workflows should be named as <code class="docutils literal notranslate"><span class="pre">common_{trigger</span> <span class="pre">event}.yaml</span></code>,
-where <code class="docutils literal notranslate"><span class="pre">{trigger</span> <span class="pre">event}</span></code> can be <code class="docutils literal notranslate"><span class="pre">pull_request</span></code>, <code class="docutils literal notranslate"><span class="pre">merge</span></code>, or other <a class="reference external" href="https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows">workflow
-triggering events</a>.
-These common workflows aggregrate the reoccurring jobs required by the NWX repos
-when a given event occurs, e.g applying formatting and testing changes to files
-in a pull request. The common workflows for pull requests and merging changes
-are discussed more specifically below.</p>
+these reusable workflows should be named in a way that describes what kind of
+effect they should achieve, e.g. <code class="docutils literal notranslate"><span class="pre">tag.yaml</span></code> or <code class="docutils literal notranslate"><span class="pre">check_formatting.yaml</span></code>.
+These common workflows represent the reoccurring GitHub Actions operations
+required by the NWX repos, e.g tagging a newly merged commit or checking
+formatting. The common workflows currently available include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">check_formatting.yaml</span></code> - performs common formatting and licensing checks</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deploy_nwx_docs.yaml</span></code> - deploys the docs for an NWX library to GitHub pages</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tag.yaml</span></code> - updates the version tag for a commit, used after merging into <code class="docutils literal notranslate"><span class="pre">master</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_nwx_docs.yaml</span></code> - ensures the documentation of an NWX library builds properly</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_nwx_library.yaml</span></code> - ensures an NWX library builds and passes its tests</p></li>
+</ul>
 <p>Aside from the common workflows, there are the repo-specific workflows with the
 naming convention <code class="docutils literal notranslate"><span class="pre">{trigger</span> <span class="pre">event}.yaml</span></code>. Where needed, a version of these
 workflows can be added in each repo. Here’s an example of a repo-specific
 <code class="docutils literal notranslate"><span class="pre">pull_request.yaml</span></code>:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">on</span><span class="p">:</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pull Request Workflow</span>
+
+<span class="nt">on</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span>
 
 <span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">Common-Pull-Request</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NWChemEx/.github/.github/workflows/common_pull_request.yaml@master</span>
+<span class="w">  </span><span class="nt">check_formatting</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NWChemEx/.github/.github/workflows/check_formatting.yaml@master</span>
 <span class="w">    </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">config_file</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="w">      </span><span class="nt">source_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="w">      </span><span class="nt">compilers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
-<span class="w">      </span><span class="nt">doc_target</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Sphinx&#39;</span>
-<span class="w">    </span><span class="nt">secrets</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">CMAIZE_GITHUB_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.CMAIZE_GITHUB_TOKEN }}</span>
-<span class="w">  </span><span class="nt">Unique-Job</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">license_config</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;.github/.licenserc.yaml&quot;</span>
+
+<span class="w">  </span><span class="nt">test_nwx_docs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NWChemEx/.github/.github/workflows/test_nwx_docs.yaml@master</span>
+<span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">doc_target</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tensorwrapper_cxx_api&quot;</span>
+
+<span class="w">  </span><span class="nt">test_library</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NWChemEx/.github/.github/workflows/test_nwx_library.yaml@master</span>
+<span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">compilers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;[&quot;gcc-11&quot;,</span><span class="nv"> </span><span class="s">&quot;clang-14&quot;]&#39;</span>
+
+<span class="w">  </span><span class="nt">unique_job</span><span class="p">:</span>
 <span class="w">    </span><span class="c1"># Other steps unique to the individual repos can be added as Jobs</span>
 </pre></div>
 </div>
-<p>Generally, these workflows are expected to call to the corresponding reusable
-workflow to handle the reoccurring task and then locally implement any unique
+<p>And here is an example of the repo-specific <code class="docutils literal notranslate"><span class="pre">merge.yaml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Merge Workflow</span>
+
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">master</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tag-commit</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NWChemEx/.github/.github/workflows/tag.yaml@master</span>
+<span class="w">    </span><span class="nt">secrets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inherit</span>
+
+<span class="w">  </span><span class="nt">deploy_nwx_docs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NWChemEx/.github/.github/workflows/deploy_nwx_docs.yaml@master</span>
+<span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">doc_target</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;XYZ_cxx_api&quot;</span>
+<span class="w">    </span><span class="nt">secrets</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">inherit</span>
+
+<span class="w">  </span><span class="nt">unique_job</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Other steps unique to the individual repos can be added as Jobs</span>
+</pre></div>
+</div>
+<p>Generally, these workflows are expected to call to the necessary reusable
+workflows to handle the reoccurring tasks and then locally implement any unique
 automations.</p>
-</div>
-<div class="section" id="ci-coverage">
-<h2>CI coverage<a class="headerlink" href="#ci-coverage" title="Permalink to this heading"></a></h2>
-<div class="section" id="common-pull-request-workflow">
-<h3>Common Pull Request Workflow<a class="headerlink" href="#common-pull-request-workflow" title="Permalink to this heading"></a></h3>
-<p>The common workflow for pull requests first handles the addition of any license
-headers to files and runs clang formatting. NWChemEx uses <a class="reference external" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License (2.0)</a>. We want all our source code
-(except for some configuration, test and input files) to have the proper license
-header when deployed. The licensing setting are configured by the
-<code class="docutils literal notranslate"><span class="pre">.licenserc.yaml</span></code> file in each repo’s <code class="docutils literal notranslate"><span class="pre">.github</span></code> directory. For details on
-this files construction, see <a class="reference external" href="https://github.com/apache/skywalking-eyes/tree/v0.4.0">here</a></p>
-<p>If there are changes resulting from these first steps, they will be pushed to
-the branch and the workflow will end. The new commit resulting from this step
-should then re-trigger the origin workflow, ensuring that the new changes are
-included in the following steps. If changes were not made by the license and
-formatting step, the workflow continues on to attempt to build the current
-library and its documentation. If the library builds properly, it’s test suite
-is also run.</p>
-</div>
-<div class="section" id="common-merge-workflow">
-<h3>Common Merge Workflow<a class="headerlink" href="#common-merge-workflow" title="Permalink to this heading"></a></h3>
-<p>The common workflow for merging a successful pull request applies the correct
-version tag to the resulting commit and deployes the repo’s documentation to
-GitHub Pages.</p>
-</div>
 </div>
 <div class="section" id="nwx-build-environment-image">
 <h2>NWX Build Environment Image<a class="headerlink" href="#nwx-build-environment-image" title="Permalink to this heading"></a></h2>
