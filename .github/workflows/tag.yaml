@@ -17,10 +17,6 @@ name: Update Commit Tag
 
 on:
   workflow_call:
-    secrets:
-      TAG_TOKEN:
-        description: "Token used to bump the version tag"
-        required: true
 
 jobs:
   increment_tag:
@@ -31,6 +27,5 @@ jobs:
       - uses: haya14busa/action-bumpr@v1
         with:
           default_bump_level: patch
-          github_token: ${{ secrets.TAG_TOKEN }}
           tag_as_user: .github[bot]
           tag_as_email: .github[bot]@github.com
