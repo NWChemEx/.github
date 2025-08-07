@@ -44,7 +44,7 @@ The first step is to clone NWChemEx/pre-commit-config
 
 It is recommended to use a Python virtual environment when developing NWX
 libraries (see :ref:`development_python_development_workflow` for more details).
-In a new or existing python virtual environment, install the required packages
+In a new or existing Python virtual environment, install the required packages
 for pre-commit:
 
 .. code-block:: bash
@@ -67,7 +67,7 @@ would clone that repo and install the pre-commit hooks as follows:
     # Clone PluginPlay
     git clone https://github.com/NWChemEx/PluginPlay.git
 
-    # Activate a python virtual environment where pre-commit is installed
+    # Activate a Python virtual environment where pre-commit is installed
     . {path/to/}.venv/bin/activate
 
     # Navigate into the repository where you want to install the hooks
@@ -150,3 +150,6 @@ in their shell configuration. For the bash shell, this could be
 .. code-block:: bash
 
     alias run_nwx_precommit="pre-commit run --all-files -c {path/to/}pre-commit-config/.pre-commit-config.yaml"
+
+If at any point you want to remove the installed pre-commit hooks, you can run
+``pre-commit uninstall`` within the repo where you want to remove the hooks.
