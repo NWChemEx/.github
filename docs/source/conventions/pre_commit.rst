@@ -30,7 +30,7 @@ within the NWX stack.
 
 The NWX configuration for pre-commit (``.pre-commit-config.yaml``) lives in
 `NWChemEx/pre-commit-config <https://github.com/NWChemEx/pre-commit-config>`__.
-Normally, this yaml file would be expected to live in the root directory of the
+Normally, this YAML file would be expected to live in the root directory of the
 repository where pre-commit would be used. NWX is made up of a number of
 different libraries in different repositories, so we find it helpful to keep
 the configuration file in a centralized location. This methodology does cause
@@ -42,7 +42,7 @@ The first step is to clone NWChemEx/pre-commit-config
 
     git clone https://github.com/NWChemEx/pre-commit-config.git
 
-It is recommended to use a python virtual environment when developing NWX
+It is recommended to use a Python virtual environment when developing NWX
 libraries (see :ref:`development_python_development_workflow` for more details).
 In a new or existing python virtual environment, install the required packages
 for pre-commit:
@@ -71,7 +71,7 @@ would clone that repo and install the pre-commit hooks as follows:
     . {path/to/}.venv/bin/activate
 
     # Navigate into the repository where you want to install the hooks
-    cd  PluginPlay
+    cd PluginPlay
 
     # Finally, install the pre-commit hooks
     pre-commit install -c {path/to/}pre-commit-config/.pre-commit-config.yaml
