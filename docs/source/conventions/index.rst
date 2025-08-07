@@ -35,6 +35,7 @@ Coding Conventions
     python_conventions
     doxygen_conventions
     rst_conventions
+    pre_commit
 
 **********************
 Repository Conventions
