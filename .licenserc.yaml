@@ -1,4 +1,4 @@
-# Copyright 2025 NWChemEx-Project
+# Copyright 2021 NWChemEx-Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,8 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+header:
+  license:
+    spdx-id: Apache-2.0
+    copyright-owner: NWChemEx-Project
 
-CC=gcc CXX=g++ FC=gfortran cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=/nwx_dependencies/gcc-11 -DCMAKE_BUILD_TYPE=Release -DBLAS_INT4=ON -DMODULES="CC" -DCMAKE_TOOLCHAIN_FILE=/toolchains/tamm.cmake -DUSE_LIBNUMA=OFF
-cd build
-make -j2
-make install
+  paths-ignore:
+    - .github/
+    - docs/Makefile
+    - docs/source/bibliography/software.bib
+    - LICENSE
+    - docs/requirements.txt
+    - version.txt
+
+  comment: never

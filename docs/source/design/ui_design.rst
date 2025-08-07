@@ -1,3 +1,17 @@
+.. Copyright 2025 NWChemEx-Project
+..
+.. Licensed under the Apache License, Version 2.0 (the "License");
+.. you may not use this file except in compliance with the License.
+.. You may obtain a copy of the License at
+..
+.. http://www.apache.org/licenses/LICENSE-2.0
+..
+.. Unless required by applicable law or agreed to in writing, software
+.. distributed under the License is distributed on an "AS IS" BASIS,
+.. WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+.. See the License for the specific language governing permissions and
+.. limitations under the License.
+
 ######################
 User Interface Design
 ######################
@@ -44,13 +58,13 @@ possible.For user convenience some conversions may be necessary (*e.g.*, our
 `Molecule` class is never going to do string parsing), but the set of such
 conversions should be minimal, or limited to those supported by some other
 library (which we agree to take on as a dependency).
- 
+
 User-friendly
 =============
 We aim to make our UI intuitive and simple particularly for the most common use
 cases to minimize the learning curve for beginners. The UI is also designed to
 provide user-friendly error handling, offering clear and actionable feedback
-when something goes wrong, guiding users to resolve issues effectively. 
+when something goes wrong, guiding users to resolve issues effectively.
 
 Tool-friendly
 =============
@@ -105,7 +119,7 @@ Focus on common tasks
 =====================
 The UI targets the most common use cases (see :ref:`common-tasks`), but should
 try to be flexible. At some point, harnessing the full power of the code
-requires forgoing the UI and dropping down to PluginPlay's API. 
+requires forgoing the UI and dropping down to PluginPlay's API.
 
 Minimal dependencies
 ====================
@@ -124,7 +138,7 @@ facilitating reproducibility.
 
 *************************************
 Common Quantum Chemistry Calculations
-************************************* 
+*************************************
 
 As described in the design principles, the UI should enable users to conduct
 commonly used quantum chemistry calculations such as single-point energies and
@@ -136,30 +150,30 @@ fine-grained control of their workflow, they can utilize the Python and/or C++
 API.
 
 1. **Single Point Energy**
-   
+
    In these calculations total energy is computed for a fixed geometry of the
    molecule (arrangement of atomic nuclei) corresponding to a single point in
    the potential energy surface. While energy calculation is the most common
    case, the user might be interested in obtaining the wave function,
    derivatives, or other properties (dipole moment, electron density, etc.) for
-   this specific geometry. 
+   this specific geometry.
 
 2. **Geometry Optimization**
-   
+
    This is a procedure to find the arrangement of atomic nuclei that corresponds
    to a stationary point in the potential energy surface. This procedure
    generally requires the calculation of the gradients and Hessian (first and
    second order partial derivatives of the energy with respect to nuclear
-   coordinates, respectively) at many different geometries. 
+   coordinates, respectively) at many different geometries.
 
 3. **Vibrational Frequency Calculation**
-   
+
    These calculations provide the vibrational modes of a molecule and their
    corresponding frequencies. The procedure requires Hessian calculation at the
    equilibrium  geometry.
 
 4. **Molecular Dynamics Simulation**
-   
+
    These calculations allow for the study of the trajectory of atoms and
    molecules over time using classical dynamics. Gradient calculations are
    required to compute the forces acting on the atoms.
@@ -215,7 +229,7 @@ calculation for a hydrogen molecule using the PsiAPI mode.
 
     import psi4
     mol = psi4.geometry('H 0. 0. 0. \n H 0. 0. 1.')
-    energy= psi4.energy('scf/sto-3g')    
+    energy= psi4.energy('scf/sto-3g')
 
 Here, mol is the molecule object, which is created using the ``psi4.geometry()``
 function and the energy is computed using the ``psi4.energy()`` function, which
@@ -224,7 +238,7 @@ to pass the molecule object explicitly to the subsequent energy calculation. By
 default energy is computed for the last molecule defined with the
 ``psi4.geometry()`` function. Additional options can be set with the
 ``psi4.set_options()`` function, which takes a Python dictionary as the required
-argument. 
+argument.
 
 QCEngine
 ========
@@ -285,14 +299,14 @@ PluginPlay `#308 <https://github.com/NWChemEx/PluginPlay/issues/308>`_),
 which is capable of holding key/value pairs for inputs similar to a Python
 dictionary. Alternatively, key/value pairs can be passed directly to the
 function call as ``kwargs``. The return type of the ``calculate()`` function is
-also an opaque type that can hold key/value pairs.  
+also an opaque type that can hold key/value pairs.
 
 With the ``calculate()`` function, a user can run the RHF example by
 specifying only the required arguments as shown below.
 
 .. code-block:: python
 
-    import nwchemex as nwx 
+    import nwchemex as nwx
     result = nwx.calculate(molecule = 'H 0. 0. 0. \n H 0., 0. 1.', method='scf', basis = 'sto-3g')
 
 Here, ``method = 'scf'`` will default to the RHF energy calculation since the
@@ -309,7 +323,7 @@ point energy calculations at different geometries. The user can run this
 workflow in two different ways:
 
 .. code-block:: python
-    
+
     # Initialize the parallel environment with mpi4py
     from mpi4py import MPI
     comm = MPI.COMM_WORLD
@@ -318,14 +332,14 @@ workflow in two different ways:
     # Use one rank per sub-communicator
     sub_comm = comm.Split(rank)
     # Define the distance between atoms based on the global rank
-    d = 1. + rank * 0.1 
+    d = 1. + rank * 0.1
 
     # Alternative 1
-    # Initialize NWChemEx runtime with the sub-communicator  
+    # Initialize NWChemEx runtime with the sub-communicator
     nwx_comm = nwx.initialize(sub_comm)
     result = nwx.calculate(molecule = f'H 0. 0. 0. \n H 0. 0. {d}', method = 'scf', basis = 'sto-3g')
     print(f'Energy calculated by rank: {rank} for distance: {d} is {result.scf_energy}')
-    
+
     # Alternative 2
     # Initialize NWChemEx runtime inside the function call
     # Sub-communicator can be passed directly or through the options argument
@@ -338,7 +352,7 @@ workflow in two different ways:
 Not In Scope
 *************
 
-**Graphical user interface (GUI)** 
+**Graphical user interface (GUI)**
 
 Arguably a GUI represents the pinnacle of UX; however, we presently are focused
 on a programmatic UI. Implementing a GUI is an orthogonal task that can benefit

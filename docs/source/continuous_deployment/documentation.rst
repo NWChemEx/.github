@@ -1,3 +1,17 @@
+.. Copyright 2025 NWChemEx-Project
+..
+.. Licensed under the Apache License, Version 2.0 (the "License");
+.. you may not use this file except in compliance with the License.
+.. You may obtain a copy of the License at
+..
+.. http://www.apache.org/licenses/LICENSE-2.0
+..
+.. Unless required by applicable law or agreed to in writing, software
+.. distributed under the License is distributed on an "AS IS" BASIS,
+.. WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+.. See the License for the specific language governing permissions and
+.. limitations under the License.
+
 ************************
 Documentation Deployment
 ************************
@@ -22,7 +36,7 @@ functions. The C++ API documentation should be written using Doxygen's native
 markdown (markup?) language. The Doxygen documentation is built using CMake's
 Doxygen module. Using CMake's Doxygen module is fairly cookie-cutter so NWChemEx
 provides the ``nwx_cxx_api_docs.cmake`` CMake module to avoid code duplication.
-The master version of ``nwx_cxx_api_docs.cmake`` lives in the 
+The master version of ``nwx_cxx_api_docs.cmake`` lives in the
 ``MWChemEx/NWXCMake`` repo and is downloaded along with the other scripts in
 that repo by the CMake module ``get_nwx_cmake.cmake`` found in most repositories
 in this organization. Downstream repos need only include the following two lines
