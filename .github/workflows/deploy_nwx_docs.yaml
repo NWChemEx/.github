@@ -30,7 +30,7 @@ on:
 jobs:
   deploy_docs:
     runs-on: ubuntu-latest
-    container: 
+    container:
       image: ghcr.io/nwchemex/nwx_buildenv:latest
     steps:
       - name: Fail if Target is Blank
@@ -44,7 +44,7 @@ jobs:
       # These next two steps will configure CMake if required
       - name: Configure Only Docs
         if: |
-          inputs.generate_module_docs == false && 
+          inputs.generate_module_docs == false &&
           inputs.doc_target != 'Sphinx'
         run: |
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
@@ -90,4 +90,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          publish_dir: ./docs/build/html  
+          publish_dir: ./docs/build/html
