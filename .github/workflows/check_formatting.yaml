@@ -80,9 +80,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: "3.x"
-      - name: Install yapf
-        run: pip install yapf
+      - name: Install black
+        run: pip install black
         shell: bash
       - name: Check Python Formatting
-        run: yapf -r -q .
+        run: black --check .
         shell: bash
