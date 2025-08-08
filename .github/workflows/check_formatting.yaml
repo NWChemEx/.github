@@ -84,5 +84,5 @@ jobs:
         run: pip install black
         shell: bash
       - name: Check Python Formatting
-        run: black --check .
+        run: black --check --line-length=79 .
         shell: bash
