@@ -1,3 +1,19 @@
+<!--
+  ~ Copyright 2025 NWChemEx-Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
 Testing Requirements for New Pull Requests
 ==========================================
 
@@ -15,7 +31,7 @@ There are outstanding questions regarding the test requirements:
     - Tests from approved pull requests should be added to either the [core or
       extended test sets](BuildValidation.md), as determined by the code reviewers.
 - What do tests look like?
-  - Unit tests 
+  - Unit tests
     - Very useful, but they don't test interoperability with other software
       components. For example, a unit test for some Rys Quadrature code doesn't test
       whether those AO integrals can be used successfully in a subsequent coupled
@@ -32,4 +48,3 @@ There are outstanding questions regarding the test requirements:
       which test functionality without unnecessarily long execution time. For
       example, a molecular dynamics equilibration run with thousands of timesteps
       is a poor test for a canonical Hartree-Fock gradient code.
-

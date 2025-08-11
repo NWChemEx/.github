@@ -1,3 +1,17 @@
+.. Copyright 2025 NWChemEx-Project
+..
+.. Licensed under the Apache License, Version 2.0 (the "License");
+.. you may not use this file except in compliance with the License.
+.. You may obtain a copy of the License at
+..
+.. http://www.apache.org/licenses/LICENSE-2.0
+..
+.. Unless required by applicable law or agreed to in writing, software
+.. distributed under the License is distributed on an "AS IS" BASIS,
+.. WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+.. See the License for the specific language governing permissions and
+.. limitations under the License.
+
 FAQs
 ====
 
@@ -30,9 +44,9 @@ the command palette. Then select ``Python: Select Interpreter``. Navigate to
 
 By default VSCode assumes that when you set a breakpoint in a file ``x.cpp``
 you want that breakpoint to be set in ``src/x.cpp`` and in ``tests/x.cpp``;
-you probably don't. To fix this add to the ``launch.json`` file for your 
+you probably don't. To fix this add to the ``launch.json`` file for your
 debugging session:
- 
+
 .. code-block:: json
 
    "sourceFileMap": {
@@ -48,7 +62,7 @@ debugging session:
 Add the following to the ``"setupCommands"`` block of your ``launch.json`` file:
 
 .. code-block:: json
-   
+
    "description": "Enable break on all exceptions",
    "text": "catch throw",
    "ignoreFailures": true

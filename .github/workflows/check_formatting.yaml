@@ -63,11 +63,11 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
       - name: Check C++ Formatting
-        uses: DoozyX/clang-format-lint-action@v0.18
+        uses: DoozyX/clang-format-lint-action@v0.20
         with:
           source: ${{ inputs.cpp_source_dirs }}
           extensions: "hpp,cpp,ipp,h,c"
-          clangFormatVersion: 12
+          clangFormatVersion: 20
           inplace: False
 
   # Check Python formatting.
@@ -80,9 +80,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: "3.x"
-      - name: Install yapf
-        run: pip install yapf
+      - name: Install black
+        run: pip install black
         shell: bash
       - name: Check Python Formatting
-        run: yapf -r -q .
+        run: black --check --line-length=79 .
         shell: bash

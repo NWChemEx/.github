@@ -1,3 +1,17 @@
+.. Copyright 2025 NWChemEx-Project
+..
+.. Licensed under the Apache License, Version 2.0 (the "License");
+.. you may not use this file except in compliance with the License.
+.. You may obtain a copy of the License at
+..
+.. http://www.apache.org/licenses/LICENSE-2.0
+..
+.. Unless required by applicable law or agreed to in writing, software
+.. distributed under the License is distributed on an "AS IS" BASIS,
+.. WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+.. See the License for the specific language governing permissions and
+.. limitations under the License.
+
 ##########################
 Setting Up VSCode on MacOS
 ##########################
@@ -29,7 +43,7 @@ screen.
      First you will be asked to pick your theme. The choice is up to you.
 
 - Pick your languages. We want the C/C++, and Python language extensions.
-   
+
    .. figure:: assets/mac_setup/choose_apps.png
       :align: center
 
@@ -45,7 +59,7 @@ screen.
 
       Install the Python extension.
 
-   - If you have not previously installed "command line developer tools" follow 
+   - If you have not previously installed "command line developer tools" follow
      the prompts.
 
      .. figure:: assets/mac_setup/install_command_line_tools.png
@@ -55,11 +69,11 @@ screen.
         Python.
 
 - Tune your settings. Click "Open Settings".
-  
+
    .. figure:: assets/mac_setup/tune_settings.png
       :align: center
 
-      Tune VSCode's settings to your liking. 
+      Tune VSCode's settings to your liking.
 
    - Recommended to enable backup and sync settings. If you want do this then
      sign in before changing any options.
@@ -75,8 +89,8 @@ screen.
       .. figure:: assets/mac_setup/settings_open.png
          :align: center
 
-         VSCode has a lot of settings. If you're new to IDEs you probably just 
-         want to start with the suggestions below.  
+         VSCode has a lot of settings. If you're new to IDEs you probably just
+         want to start with the suggestions below.
 
       - Files: Auto Save
       - Editor: Rulers (we're sticklers for 80 character lines)
@@ -123,7 +137,7 @@ Adding Repositories
    :align: center
 
    Step 2. (With git installed) click "Clone Repository".
- 
+
 .. figure:: assets/mac_setup/clone_from_github.png
    :align: center
 
@@ -131,14 +145,14 @@ Adding Repositories
 
 .. figure:: assets/mac_setup/allow_github.png
    :align: center
-   
+
    Step 4. If asked, allow the GitHub extension to sign in.
 
 .. figure:: assets/mac_setup/your_repos.png
    :align: center
 
    Step 5. You should now see all the repos you have. Search for the one you
-   want. For sake of the tutorial search for ``NWChemEx/.github``, i.e., this 
+   want. For sake of the tutorial search for ``NWChemEx/.github``, i.e., this
    repo.
 
 6. That will bring up Finder. Select the workspace directory as the
@@ -151,13 +165,13 @@ Adding Repositories
 
 .. figure:: assets/mac_setup/trust_us.png
    :align: center
-   
+
    Step 8. If prompted, decide whether you trust us (we'll assume you do and
    click yes).
 
 .. figure:: assets/mac_setup/search_git_clone.png
    :align: center
-   
+
    Step 9. Once there are files in your workspace the souce control view will
    change to allow you to interact with the version control of the open files.
    Unfortunately, this means we can not add additional repositories the same way
@@ -165,21 +179,21 @@ Adding Repositories
    (command + shift + P) then search ``Git: Clone``. That will return you to
    Step 3 above, with the caveat that what was Step 7 should be replaced by
    Step 10 below.
-   
+
 .. figure:: assets/mac_setup/add_to_workspace.png
    :align: center
-   
+
    Step 10. Since you have files in your workspace already the dialog box from
-   Step 7 will change and you will want to select "Add to Workspace" instead of 
+   Step 7 will change and you will want to select "Add to Workspace" instead of
    "Open".
 
 .. figure:: assets/mac_setup/save_workspace.png
    :align: center
-   
+
    Step 11. Repeat Steps 9 and 10 until you have all the repositories you want.
-   Once you are done save your workspace by going to 
-   ``File->"Save Workspace As..."``. We recommend saving it into the 
-   ``nwchemex`` workspace directory and naming it as 
+   Once you are done save your workspace by going to
+   ``File->"Save Workspace As..."``. We recommend saving it into the
+   ``nwchemex`` workspace directory and naming it as
    ``nwchemex.code-workspace``.
 
    .. note::
@@ -238,42 +252,42 @@ assumes you have Clang and are creating a Clang kit.
 
 .. figure:: assets/mac_setup/click_no_active_kit.png
    :align: center
-   
+
    Step 1. Click on ``No active kit``. If you had previously selected a kit,
    this may instead display the name of that kit.
 
 .. figure:: assets/mac_setup/select_clang.png
    :align: center
-   
+
    Step 2. Select ``Clang <version goes here>``.
 
    .. note::
-      
+
       Depending on your VSCode settings, selecting your kit will
       immediately start a CMake configuration run. Since we're not done setting
       up, it will likely fail...
 
 .. figure:: assets/mac_setup/edit_kit.png
-   :align: center 
+   :align: center
 
    Step 3.  If you want to always use the same options with the same
    tool kit (e.g., always use Ninja generator), you can edit the tool
-   kit file. To do this, open the command palette (command + shift + P) 
+   kit file. To do this, open the command palette (command + shift + P)
    and search for  ``Edit User-Local CMake Kits``.
 
 .. figure:: assets/mac_setup/add_toolchain_to_kit.png
    :align: center
-   
-   Step 4. If we want to always use the same toolchain file with the same 
+
+   Step 4. If we want to always use the same toolchain file with the same
    toolkit, we can edit the kit to know about the toolchain file.
    Add ``"toolchainFile": "<path/to/the/toolchain>"`` to your kit.
 
    .. note::
 
-      This step assumes you did not skip the 
+      This step assumes you did not skip the
       :ref:`creating_a_cmake_toolchain_file` section.
 
-   Another good idea, assuming you have Ninja installed 
+   Another good idea, assuming you have Ninja installed
    (``brew install ninja``) is to add it to your kit via:
 
    .. code-block::
@@ -296,7 +310,7 @@ Configuring a Project
 
 .. figure:: assets/mac_setup/run_configure.png
    :align: center
-   
+
    Step 2. Click ``CMake: [Debug]: Ready`` to start configuring.
 
 .. figure:: assets/mac_setup/select_configuration.png
@@ -314,9 +328,9 @@ Troubleshooting
 
       Bad CMake executable error.
 
-  it most likely means you do not have CMake installed (see 
-  :ref:`obtaining_dependencies_on_macos` for instructions) or VSCode can not 
-  find CMake. To set the CMake executable open the command pallette 
+  it most likely means you do not have CMake installed (see
+  :ref:`obtaining_dependencies_on_macos` for instructions) or VSCode can not
+  find CMake. To set the CMake executable open the command pallette
   (command + shift + P) and search for ``cmake.cmakePath``.
 
 - If you get an error about ``NWX_MODULE_DIRECTORY`` not being set, i.e.:
@@ -327,20 +341,20 @@ Troubleshooting
       Failure to set ``NWX_MODULE_DIRECTORY``.
 
   it either means you did not pass your toolchain to CMake (see
-  :ref:`creating_a_cmake_toolchain_file`) or you did not set 
+  :ref:`creating_a_cmake_toolchain_file`) or you did not set
   ``NWX_MODULE_DIRECTORY`` in your toolchain file.
 
 - If the configuration fails because of a missing dependency (e.g.,
   MPI or Boost) consult :ref:`obtaining_dependencies_on_macos`.
 
-- If the configuration fails because of the missing Python developer files, 
+- If the configuration fails because of the missing Python developer files,
   e.g.,
 
    .. figure:: assets/mac_setup/missing_python_headers.png
       :align: center
 
       CMake could not locate the Python header files.
-  
+
    consult :ref:`obtaining_dependencies_on_macos`.
 
 Building and Testing
@@ -381,7 +395,7 @@ Committing Changes Back to GitHub
 .. figure:: assets/mac_setup/stage_changes.png
    :align: center
 
-   Step 2. (Optional) select the file(s) you want to stage by clicking on the 
+   Step 2. (Optional) select the file(s) you want to stage by clicking on the
    "+" next to the file(s). If you do not stage files VSCode will assume you
    want to commit all changed files.
 
@@ -413,7 +427,7 @@ Troubleshooting
       :align: center
 
       Error when your git credentials have not been set.
- 
+
   The easiest way to fix this is to open a terminal (the one in VSCode works
   fine) and run:
 
@@ -427,7 +441,7 @@ Troubleshooting
   .. figure:: assets/mac_setup/set_git_name.png
      :align: center
 
-     How to set the email and user name for git.   
+     How to set the email and user name for git.
 
 
 - When attempting to synchronize with GitHub you get a cryptic error like:
@@ -436,8 +450,8 @@ Troubleshooting
       :align: center
 
       Cryptic error when synchronizing.
-  
+
   For me this was caused by a credentials issue. I simply ran ``git push`` from
   the VSCode terminal (in the root directory of the repo) and gave permission
-  to VSCode to use my passwords. From that point forward commit and 
+  to VSCode to use my passwords. From that point forward commit and
   synchronization worked fine from VSCode.

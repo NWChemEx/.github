@@ -28,13 +28,13 @@ on:
         type: boolean
         required: false
         default: true
-      
-      
+
+
 
 jobs:
   test_build_docs:
     runs-on: ubuntu-latest
-    container: 
+    container:
       image: ghcr.io/nwchemex/nwx_buildenv:latest
     steps:
       - name: Fail if Target is Blank
@@ -73,4 +73,3 @@ jobs:
           fi
           make html SPHINXOPTS="${SPHINX_OPTS}"
         shell: bash
-          

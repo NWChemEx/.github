@@ -24,7 +24,7 @@ jobs:
   check_formatting:
     uses: ./.github/workflows/check_formatting.yaml
     with:
-      license_config: "" # Skip license check here
+      license_config: ".licenserc.yaml"
       cpp_source_dirs: "" # Skip clang-format check
 
   test_nwx_docs:

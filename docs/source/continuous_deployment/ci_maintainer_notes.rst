@@ -1,32 +1,46 @@
+.. Copyright 2025 NWChemEx-Project
+..
+.. Licensed under the Apache License, Version 2.0 (the "License");
+.. you may not use this file except in compliance with the License.
+.. You may obtain a copy of the License at
+..
+.. http://www.apache.org/licenses/LICENSE-2.0
+..
+.. Unless required by applicable law or agreed to in writing, software
+.. distributed under the License is distributed on an "AS IS" BASIS,
+.. WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+.. See the License for the specific language governing permissions and
+.. limitations under the License.
+
 *******************************************
 How NWX's Continuous Integration (CI) Works
 *******************************************
 
 The purpose of this page is to document various aspects of NWX's CI.
 
-NWX has a lot of repositories. And more repositories will be added into NWX. To 
-make the CI of NWX generic and re-useable, we've used `reuseable workflows 
-<https://docs.github.com/en/actions/using-workflows/reusing-workflows>`__ and 
-`composite actions 
-<https://docs.github.com/en/actions/creating-actions/creating-a-composite-action>`__ 
-for designing our CI architecture. The goal of this design was to ensure 
+NWX has a lot of repositories. And more repositories will be added into NWX. To
+make the CI of NWX generic and re-useable, we've used `reuseable workflows
+<https://docs.github.com/en/actions/using-workflows/reusing-workflows>`__ and
+`composite actions
+<https://docs.github.com/en/actions/creating-actions/creating-a-composite-action>`__
+for designing our CI architecture. The goal of this design was to ensure
 maximum re-use of CI components across multiple repositories.
 
 Here are a few useful tutorials on workflows in GitHub:
 
 - `Quickstart for GitHub Actions <https://docs.github.com/en/actions/quickstart>`__
-- `GitHub Actions Tutorial, From Zero to Hero in 90 minutes 
+- `GitHub Actions Tutorial, From Zero to Hero in 90 minutes
   <https://www.youtube.com/watch?v=TLB5MY9BBa4>`__
 
 Currently the following repositories in ``NWChemEx`` follow the methods
 outlined here:
 
-#. ``.github`` (This is our configuration repository) 
+#. ``.github`` (This is our configuration repository)
 #. ``ChemCache``
-#. ``Chemist`` 
+#. ``Chemist``
 #. ``Integrals``
-#. ``Mokup`` 
-#. ``NWChemEx`` 
+#. ``Mokup``
+#. ``NWChemEx``
 #. ``ParallelZone``
 #. ``PluginPlay``
 #. ``SimDE``
@@ -38,12 +52,12 @@ Common and Repo-Specific Workflows
 ==================================
 
 The ``.github/workflow`` directory in the ``NWChemEx/.github`` repo
-houses both the set of workflows specific to the ``.github`` repo and the set 
+houses both the set of workflows specific to the ``.github`` repo and the set
 of reusable workflows that should be used throughout the NWX stack. Generally,
 these reusable workflows should be named in a way that describes what kind of
 effect they should achieve, e.g. ``tag.yaml`` or ``check_formatting.yaml``.
-These common workflows represent the reoccurring GitHub Actions operations 
-required by the NWX repos, e.g tagging a newly merged commit or checking 
+These common workflows represent the reoccurring GitHub Actions operations
+required by the NWX repos, e.g tagging a newly merged commit or checking
 formatting. The common workflows currently available include:
 
 * ``check_formatting.yaml`` - performs common formatting and licensing checks
@@ -119,9 +133,9 @@ NWX Build Environment Image
 
 To avoid rebuilding costly dependencies for the various repos in the NWX stack,
 the building and testing steps in the common workflows run in containers built
-on the image ``ghcr.io/nwchemex/nwx_buildenv:latest``. This image 
+on the image ``ghcr.io/nwchemex/nwx_buildenv:latest``. This image
 defines an Ubuntu based environment where the various dependencies of the stack
 (such as compilers, math libraries, MPI, and other C++ libraries outside) have
 been pre-installed. The files used to build this image are found in
-``NWChemEx/.github/nwx_build_environment``, along side the 
+``NWChemEx/.github/nwx_build_environment``, along side the
 ``buildenv.sh`` script which builds the image through consecutive Docker calls.

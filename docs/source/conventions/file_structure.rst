@@ -51,7 +51,7 @@ File Naming Conventions
   files should be "lower_snake_case", i.e., all lowercase letters, underscores
   for separating words.
 - It is strongly recommended you stick to letters, numbers, and underscores
-  only. Notably avoid symbols like ``*``, ``?``, ``(``, ``)``, ``'``, 
+  only. Notably avoid symbols like ``*``, ``?``, ``(``, ``)``, ``'``,
   and ``"``.
 
 Extensions
@@ -61,7 +61,7 @@ Extensions
 - C++ source files end with ``*.cpp``, e.g., ``file_name.cpp``.
 - C++ inline implementation files end with ``*.ipp``, e.g., ``file_name.ipp``.
 - CMake modules end with ``*.cmake``, e.g., ``file_name.cmake``.
-- (GitHub-flavored) Markdown end with ``*.md``, e.g., ``file_name.md``. 
+- (GitHub-flavored) Markdown end with ``*.md``, e.g., ``file_name.md``.
 - Python source files end with ``.py``, e.g., ``file_name.py``.
 - ReStructured Text files end with ``.rst``, e.g., ``file_name.py``.
 
