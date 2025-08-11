@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pre-commmit Configuration for NWChemEx &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="File Structure for NWChemEx Repositories" href="file_structure.html" />
+    <link rel="prev" title="Conventions for Writing reST Documentation" href="rst_conventions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">NWChemEx Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documenting/index.html">Documenting NWChemEx</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">NWChemEx Organization Conventions</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#coding-conventions">Coding Conventions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="cxx_conventions.html">C++ Coding Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python_conventions.html">Python Coding Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doxygen_conventions.html">Using Doxygen in the NWChemEx Project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst_conventions.html">Conventions for Writing reST Documentation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">pre-commmit Configuration for NWChemEx</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#repository-conventions">Repository Conventions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../continuous_deployment/index.html">Continuous Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography/bibliography.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">NWChemEx Organization Conventions</a></li>
+      <li class="breadcrumb-item active">pre-commmit Configuration for NWChemEx</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/NWChemEx/.github/edit/master/docs/source/conventions/pre_commit.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="pre-commmit-configuration-for-nwchemex">
+<span id="pre-commit-configuration"></span><h1>pre-commmit Configuration for NWChemEx<a class="headerlink" href="#pre-commmit-configuration-for-nwchemex" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://pre-commit.com/">pre-commmit</a> is a tool for configuring and
+automating <a class="reference external" href="https://git-scm.com/docs/githooks">githooks</a>, which are a series
+of hooks for inserting custom automations into git’s operations. The pre-commit
+tool takes its name from arguably the most commonly used githook, the pre-commit
+hook, that runs when a user attempts to commit changes. The pre-commit tool
+provides a simplified syntax for configuring githooks, and has a community of
+defined hooks from which to draw. To simplify the process of formatting/linting,
+we advise developers to use pre-commit as outlined in the following when working
+within the NWX stack.</p>
+<p>The NWX configuration for pre-commit (<code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>) lives in
+<a class="reference external" href="https://github.com/NWChemEx/pre-commit-config">NWChemEx/pre-commit-config</a>.
+Normally, this YAML file would be expected to live in the root directory of the
+repository where pre-commit would be used. NWX is made up of a number of
+different libraries in different repositories, so we find it helpful to keep
+the configuration file in a centralized location. This methodology does cause
+some deviation from the default usage of pre-commit, but not excessively so.</p>
+<p>The first step is to clone NWChemEx/pre-commit-config</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/NWChemEx/pre-commit-config.git
+</pre></div>
+</div>
+<p>It is recommended to use a Python virtual environment when developing NWX
+libraries (see <a class="reference internal" href="../coding/python/python_development_workflow.html#development-python-development-workflow"><span class="std std-ref">Python Development Workflow</span></a> for more details).
+In a new or existing Python virtual environment, install the required packages
+for pre-commit:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>pre-commit-config
+<span class="c1"># Make a virtual environment if one doesn&#39;t already exist</span>
+python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="c1"># Activate the virtual environment and install the requirements</span>
+.<span class="w"> </span>.venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<span class="nb">cd</span><span class="w"> </span>../
+</pre></div>
+</div>
+<p>When you clone a new repository, you will need to install the pre-commit hooks
+for them to take effect. Assuming for the moment that you want to develop code
+within the <a class="reference external" href="https://github.com/NWChemEx/PluginPlay">PluginPlay</a> library, you
+would clone that repo and install the pre-commit hooks as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone PluginPlay</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/NWChemEx/PluginPlay.git
+
+<span class="c1"># Activate a Python virtual environment where pre-commit is installed</span>
+.<span class="w"> </span><span class="o">{</span>path/to/<span class="o">}</span>.venv/bin/activate
+
+<span class="c1"># Navigate into the repository where you want to install the hooks</span>
+<span class="nb">cd</span><span class="w"> </span>PluginPlay
+
+<span class="c1"># Finally, install the pre-commit hooks</span>
+pre-commit<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span><span class="o">{</span>path/to/<span class="o">}</span>pre-commit-config/.pre-commit-config.yaml
+</pre></div>
+</div>
+<p>At this point, the pre-commit hooks are installed and will run when a <code class="docutils literal notranslate"><span class="pre">git</span>
+<span class="pre">commit</span></code> is attempted. If all hooks pass successfully, the commit should finish
+successfully and you should see an output similar to the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>trim<span class="w"> </span>trailing<span class="w"> </span>whitespace.................................................Passed
+check<span class="w"> </span><span class="k">for</span><span class="w"> </span>added<span class="w"> </span>large<span class="w"> </span>files..............................................Passed
+check<span class="w"> </span>python<span class="w"> </span>ast.....................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+check<span class="w"> </span>json...........................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+check<span class="w"> </span><span class="k">for</span><span class="w"> </span>merge<span class="w"> </span>conflicts................................................Passed
+check<span class="w"> </span>xml............................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+check<span class="w"> </span>yaml...........................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+debug<span class="w"> </span>statements<span class="w"> </span><span class="o">(</span>python<span class="o">)</span>............................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+fix<span class="w"> </span>end<span class="w"> </span>of<span class="w"> </span>files.........................................................Passed
+fix<span class="w"> </span>requirements.txt.................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+mixed<span class="w"> </span>line<span class="w"> </span>ending........................................................Passed
+yapf.................................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+clang-format.........................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+license-eye..............................................................Passed
+</pre></div>
+</div>
+<p>When one or more hooks fail, the commit will fail and the failing hooks will be
+noted in the printout:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>trim<span class="w"> </span>trailing<span class="w"> </span>whitespace.................................................Failed
+-<span class="w"> </span>hook<span class="w"> </span>id:<span class="w"> </span>trailing-whitespace
+-<span class="w"> </span><span class="nb">exit</span><span class="w"> </span>code:<span class="w"> </span><span class="m">1</span>
+-<span class="w"> </span>files<span class="w"> </span>were<span class="w"> </span>modified<span class="w"> </span>by<span class="w"> </span>this<span class="w"> </span>hook
+
+Fixing<span class="w"> </span>docs/source/conventions/pre_commit.rst
+
+check<span class="w"> </span><span class="k">for</span><span class="w"> </span>added<span class="w"> </span>large<span class="w"> </span>files..............................................Passed
+check<span class="w"> </span>python<span class="w"> </span>ast.....................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+check<span class="w"> </span>json...........................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+check<span class="w"> </span><span class="k">for</span><span class="w"> </span>merge<span class="w"> </span>conflicts................................................Passed
+check<span class="w"> </span>xml............................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+check<span class="w"> </span>yaml...........................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+debug<span class="w"> </span>statements<span class="w"> </span><span class="o">(</span>python<span class="o">)</span>............................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+fix<span class="w"> </span>end<span class="w"> </span>of<span class="w"> </span>files.........................................................Failed
+-<span class="w"> </span>hook<span class="w"> </span>id:<span class="w"> </span>end-of-file-fixer
+-<span class="w"> </span><span class="nb">exit</span><span class="w"> </span>code:<span class="w"> </span><span class="m">1</span>
+-<span class="w"> </span>files<span class="w"> </span>were<span class="w"> </span>modified<span class="w"> </span>by<span class="w"> </span>this<span class="w"> </span>hook
+
+Fixing<span class="w"> </span>docs/source/conventions/pre_commit.rst
+
+fix<span class="w"> </span>requirements.txt.................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+mixed<span class="w"> </span>line<span class="w"> </span>ending........................................................Passed
+yapf.................................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+clang-format.........................................<span class="o">(</span>no<span class="w"> </span>files<span class="w"> </span>to<span class="w"> </span>check<span class="o">)</span>Skipped
+license-eye..............................................................Passed
+</pre></div>
+</div>
+<p>When most hooks fail, they will also make the requisite changes to the
+corresponding files to allow them to pass. These new changes will need to be
+staged for commit via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">.</span></code> or equivalent, at which time the commit can
+be attempted again.</p>
+<p>It is also possible to manually run the pre-commit hooks:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># With appropriate virtual environment active</span>
+pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files<span class="w"> </span>-c<span class="w"> </span><span class="o">{</span>path/to/<span class="o">}</span>pre-commit-config/.pre-commit-config.yaml
+</pre></div>
+</div>
+<p>Note, it is required to pass the
+<code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">{path/to/}pre-commit-config/.pre-commit-config.yaml</span></code> flag each time this
+command is run, even if the pre-commit hooks have already been installed. To
+simplify this call, the developer may want to define an alias for this command
+in their shell configuration. For the bash shell, this could be</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">alias</span><span class="w"> </span><span class="nv">run_nwx_precommit</span><span class="o">=</span><span class="s2">&quot;pre-commit run --all-files -c {path/to/}pre-commit-config/.pre-commit-config.yaml&quot;</span>
+</pre></div>
+</div>
+<p>If at any point you want to remove the installed pre-commit hooks, you can run
+<code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">uninstall</span></code> within the repo where you want to remove the hooks.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rst_conventions.html" class="btn btn-neutral float-left" title="Conventions for Writing reST Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="file_structure.html" class="btn btn-neutral float-right" title="File Structure for NWChemEx Repositories" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
