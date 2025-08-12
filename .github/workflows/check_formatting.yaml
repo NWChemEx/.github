@@ -18,71 +18,29 @@ name: Check Formatting
 
 on:
   workflow_call:
-    inputs:
-      license_config:
-        description: "The license configuration file for SkyWalking Eyes"
-        type: string
-        required: false
-        default: ".licenserc.yaml"
-      cpp_source_dirs:
-        description: "Space seperated list of dirs to apply clang-format to"
-        type: string
-        required: false
-        default: "include src tests"
-      format_python:
-        description: "Whether or not to format python files"
-        type: boolean
-        required: false
-        default: true
 
 jobs:
-  # Check licensing.
-  check_licensing:
-    if: inputs.license_config != ''
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
-      - name: Check for License Config
-        if: hashFiles(inputs.license_config) == ''
-        uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed("License Config file doesn't exist: ${{inputs.license_config}}")
-      - name: Check License
-        uses: apache/skywalking-eyes@v0.4.0
-        with:
-          config: ${{ inputs.license_config }}
-          mode: check
-
-  # Check C++ formatting.
-  check_cpp_format:
-    if: inputs.cpp_source_dirs != ''
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-      - name: Check C++ Formatting
-        uses: DoozyX/clang-format-lint-action@v0.20
-        with:
-          source: ${{ inputs.cpp_source_dirs }}
-          extensions: "hpp,cpp,ipp,h,c"
-          clangFormatVersion: 20
-          inplace: False
-
-  # Check Python formatting.
-  check_python_format:
-    if: inputs.format_python == true
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-      - uses: actions/setup-python@v2
+      - name: Download .pre-commit-config.yaml
+        run: wget https://raw.githubusercontent.com/NWChemEx/pre-commit-config/master/.pre-commit-config.yaml
+        shell: bash
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - name: Install black
-        run: pip install black
+      - name: Create Python virtual environment
+        run: python -m venv venv
         shell: bash
-      - name: Check Python Formatting
-        run: black --check --line-length=79 .
+      - name: Install pre-commit
+        run: |
+          source venv/bin/activate
+          pip install pre-commit
+        shell: bash
+      - name: Run pre-commit
+        run: |
+          source venv/bin/activate
+          pre-commit run --all-files
         shell: bash
