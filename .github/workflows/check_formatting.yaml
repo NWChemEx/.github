@@ -28,12 +28,19 @@ jobs:
       - name: Download .pre-commit-config.yaml
         run: wget https://raw.githubusercontent.com/NWChemEx/pre-commit-config/master/.pre-commit-config.yaml
         shell: bash
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
+      - name: Create Python virtual environment
+        run: python -m venv venv
+        shell: bash
       - name: Install pre-commit
-        run: pip install pre-commit
+        run: |
+          source venv/bin/activate
+          pip install pre-commit
         shell: bash
       - name: Run pre-commit
-        run: pre-commit run --all-files
+        run: |
+          source venv/bin/activate
+          pre-commit run --all-files
         shell: bash
