@@ -47,12 +47,12 @@ TODO: write me
 Obtaining Dependencies on MacOS
 ===============================
 
-We recommend using `Homebrew <https://brew.hs>`__ for obtaining packages on Mac.
+We recommend using `Homebrew <https://brew.sh>`__ for obtaining packages on Mac.
 
 Obtaining Homebrew
 ------------------
 
-- Go to `https://brew.hs`.
+- Go to `https://brew.sh`.
 - Copy the command they have listed (or follow one of the other install methods)
 - Open a terminal and paste the command.
 - Enter your password.
