@@ -31,8 +31,7 @@ Prerequisites
 =============
 
 - Have Docker installed.
-  - We recommend using
-    `Docker Desktop <https://www.docker.com/products/docker-desktop/>`__.
+  - We recommend using `Docker Desktop <https://www.docker.com/products/docker-desktop/>`__.
 - Have the Docker daemon running.
   - If you are using Docker Desktop, just make sure the app is open.
 
@@ -55,7 +54,7 @@ Steps
 3. You now need to manually run the commands that are in the workflow
    you want to debug. Workflows can be found in the ``.github``
    `repository <https://github.com/NWChemEx/.github/tree/master>`__ in the
-    ``.github/workflows`` directory.
+   ``.github/workflows`` directory.
 
    - If you are building a library that uses CMake follow the
      ``test_nwx_library.yaml`` workflow.
@@ -77,4 +76,4 @@ FAQs
 
   - This means lldb was not allowed to start debugging the executable.
   - If you have Apple silicon you may not be able to debug x86_64 binaries
-    (`source < https://github.com/docker/for-mac/issues/5191#issuecomment-821319621>`__).
+    (`source <https://github.com/docker/for-mac/issues/5191#issuecomment-821319621>`__).
