@@ -28,3 +28,4 @@ deploying the master branch (continuous deployment).
 
    ci_maintainer_notes
    documentation
+   debugging
