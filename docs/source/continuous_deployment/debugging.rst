@@ -31,8 +31,8 @@ Prerequisites
 =============
 
 - Have Docker installed.
-  - We recommend using 
-    `Docker Desktop <https://www.docker.com/products/docker-desktop/>`__. 
+  - We recommend using
+    `Docker Desktop <https://www.docker.com/products/docker-desktop/>`__.
 - Have the Docker daemon running.
   - If you are using Docker Desktop, just make sure the app is open.
 
@@ -53,18 +53,18 @@ Steps
    - ``git checkout your_branch_name``
 
 3. You now need to manually run the commands that are in the workflow
-   you want to debug. Workflows can be found in the ``.github`` 
+   you want to debug. Workflows can be found in the ``.github``
    `repository <https://github.com/NWChemEx/.github/tree/master>`__ in the
     ``.github/workflows`` directory.
 
-   - If you are building a library that uses CMake follow the 
-     ``test_nwx_library.yaml`` workflow.  
+   - If you are building a library that uses CMake follow the
+     ``test_nwx_library.yaml`` workflow.
 
 4. (Optional) After you are done building we recommend saving the state of the
    container as a new image. This way you don't have to repeat steps 2-3 if the
-   container is stopped/closed for whatever reason. 
+   container is stopped/closed for whatever reason.
 
-   - From another terminal run 
+   - From another terminal run
      ``docker commit <container_id> nwchemex_debug_image`` to create the
      image.
 
@@ -72,9 +72,9 @@ Steps
 FAQs
 ****
 
-- When trying to run an executable in a Docker container under lldb, I get an 
+- When trying to run an executable in a Docker container under lldb, I get an
   lldb error: ``lldb error: 'A' packet returned an error: -1``.
-  
-  - This means lldb was not allowed to start debugging the executable. 
-  - If you have Apple silicon you may not be able to debug x86_64 binaries 
+
+  - This means lldb was not allowed to start debugging the executable.
+  - If you have Apple silicon you may not be able to debug x86_64 binaries
     (`source < https://github.com/docker/for-mac/issues/5191#issuecomment-821319621>`__).
