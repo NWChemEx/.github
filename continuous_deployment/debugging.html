@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Debug CI Issues Locally &mdash; Developer Documentation 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Additional Developer Resources" href="../resources/index.html" />
+    <link rel="prev" title="Documentation Deployment" href="documentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Developer Documentation
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../community/index.html">NWChemEx Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design/index.html">Design Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documenting/index.html">Documenting NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conventions/index.html">NWChemEx Organization Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coding/index.html">Developing NWChemEx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing NWChemEx</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Continuous Deployment</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ci_maintainer_notes.html">How NWX’s Continuous Integration (CI) Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html">Documentation Deployment</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to Debug CI Issues Locally</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-docker-image">Building the Docker Image</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#steps">Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#faqs">FAQs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/index.html">Additional Developer Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography/bibliography.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Developer Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Continuous Deployment</a></li>
+      <li class="breadcrumb-item active">How to Debug CI Issues Locally</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/NWChemEx/.github/edit/master/docs/source/continuous_deployment/debugging.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="how-to-debug-ci-issues-locally">
+<h1>How to Debug CI Issues Locally<a class="headerlink" href="#how-to-debug-ci-issues-locally" title="Permalink to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you try to Google “how to debug Github Actions locally” you will find
+a tool called <a class="reference external" href="https://github.com/nektos/act">Act</a>. In our experience,
+we seem to always be in th 10% of edge cases that Act cannot faithfully
+reproduce locally, i.e., feel free to try it, but it probably won’t work.</p>
+</div>
+<div class="section" id="building-the-docker-image">
+<h2>Building the Docker Image<a class="headerlink" href="#building-the-docker-image" title="Permalink to this heading"></a></h2>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Have Docker installed.
+- We recommend using <a class="reference external" href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a>.</p></li>
+<li><p>Have the Docker daemon running.
+- If you are using Docker Desktop, just make sure the app is open.</p></li>
+</ul>
+</div>
+<div class="section" id="steps">
+<h3>Steps<a class="headerlink" href="#steps" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>In a terminal run <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">pull</span> <span class="pre">ghcr.io/nwchemex/nwx_buildenv:latest</span></code>.</p>
+<ul class="simple">
+<li><p>This will download the Docker image we use in our CI workflows.</p></li>
+<li><p>It’s somewhat big and will probably take a while to download.</p></li>
+</ul>
+</li>
+<li><p>Run the image: <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">ghcr.io/nwchemex/nwx_buildenv:latest</span></code>.</p></li>
+<li><p>Clone the branch you want to debug.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://url/of/repo/your/branch/is/part/of.git</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/directory/where/repo/was/cloned</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">fetch</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">your_branch_name</span></code></p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="3">
+<li><p>You now need to manually run the commands that are in the workflow
+you want to debug. Workflows can be found in the <code class="docutils literal notranslate"><span class="pre">.github</span></code>
+<a class="reference external" href="https://github.com/NWChemEx/.github/tree/master">repository</a> in the
+<code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code> directory.</p>
+<ul class="simple">
+<li><p>If you are building a library that uses CMake follow the
+<code class="docutils literal notranslate"><span class="pre">test_nwx_library.yaml</span></code> workflow.</p></li>
+</ul>
+</li>
+<li><p>(Optional) After you are done building we recommend saving the state of the
+container as a new image. This way you don’t have to repeat steps 2-3 if the
+container is stopped/closed for whatever reason.</p>
+<ul class="simple">
+<li><p>From another terminal run
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span> <span class="pre">&lt;container_id&gt;</span> <span class="pre">nwchemex_debug_image</span></code> to create the
+image.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="faqs">
+<h2>FAQs<a class="headerlink" href="#faqs" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>When trying to run an executable in a Docker container under lldb, I get an
+lldb error: <code class="docutils literal notranslate"><span class="pre">lldb</span> <span class="pre">error:</span> <span class="pre">'A'</span> <span class="pre">packet</span> <span class="pre">returned</span> <span class="pre">an</span> <span class="pre">error:</span> <span class="pre">-1</span></code>.</p>
+<ul>
+<li><p>This means lldb was not allowed to start debugging the executable.</p></li>
+<li><p>If you have Apple silicon you may not be able to debug x86_64 binaries
+(<a class="reference external" href="https://github.com/docker/for-mac/issues/5191#issuecomment-821319621">source</a>).</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="documentation.html" class="btn btn-neutral float-left" title="Documentation Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../resources/index.html" class="btn btn-neutral float-right" title="Additional Developer Resources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, NWChemEx Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
