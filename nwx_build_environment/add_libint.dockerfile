@@ -27,4 +27,4 @@ RUN cd /tmp \
     -DCMAKE_INSTALL_PREFIX=/nwx_dependencies/${COMPILER} \
     -DCMAKE_TOOLCHAIN_FILE=/toolchains/${COMPILER}.cmake \
     && cmake --build build --target install --parallel \
-    && rm -rf /tmp/libint-${VERSION}
+    && rm -rf /tmp/libint-${VERSION}*

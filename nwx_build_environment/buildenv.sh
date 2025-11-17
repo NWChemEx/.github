@@ -24,6 +24,6 @@ do
 done
 
 # TAMM, exachem are special cases for now
-docker build -t nwx_buildenv -f add_tamm.dockerfile .
-docker build -t nwx_buildenv -f add_exachem.dockerfile .
-docker image prune -f
+# docker build -t nwx_buildenv -f add_tamm.dockerfile .
+# docker build -t nwx_buildenv -f add_exachem.dockerfile .
+# docker image prune -f
