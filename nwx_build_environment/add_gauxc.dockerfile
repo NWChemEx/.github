@@ -14,7 +14,7 @@
 
 FROM nwx_buildenv:latest
 
-ARG VERSION=master
+ARG VERSION=71008cffd5d13d5ee813fb13d14d8bf7b06b8f6e
 ARG COMPILER=gcc-11
 
 # Install libfort ##
