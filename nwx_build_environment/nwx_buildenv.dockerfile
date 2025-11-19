@@ -16,8 +16,8 @@ FROM ubuntu:noble
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
-    gcc-13 g++-13 \
-    clang-14 libc++-14-dev libc++abi-14-dev \
+    gcc-14 g++-14 \
+    clang-19 libc++-19-dev libc++abi-19-dev \
     libomp-dev \
     doxygen \
     graphviz \

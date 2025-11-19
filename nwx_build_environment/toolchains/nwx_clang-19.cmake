@@ -12,5 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include(/toolchains/clang-14.cmake)
+include(/toolchains/clang-19.cmake)
 include(/toolchains/nwx_base.cmake)
