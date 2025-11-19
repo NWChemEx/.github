@@ -76,10 +76,13 @@ jobs:
       # Generate the module docs source files
       - name: Generate Module Docs
         if: inputs.generate_module_docs == true
-        run: python3 /scripts/generate_module_dox.py ${{ inputs.doc_target }}
+        run: |
+          . /pyenv/bin/activate
+          python3 /scripts/generate_module_dox.py ${{ inputs.doc_target }}
       # Build the Sphinx docs and then deploy
       - name: Sphinx Docs
         run: |
+          . /pyenv/bin/activate
           cd docs
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt

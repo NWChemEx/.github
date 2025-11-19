@@ -87,6 +87,7 @@ jobs:
           echo 'include(/toolchains/error_flag.cmake)' >> $toolchain
       - name: Install Python Requirements
         run: |
+          . /pyenv/bin/activate
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi

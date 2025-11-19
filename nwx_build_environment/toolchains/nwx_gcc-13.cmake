@@ -12,5 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include(/toolchains/gcc-11.cmake)
+include(/toolchains/gcc-13.cmake)
 include(/toolchains/nwx_base.cmake)
