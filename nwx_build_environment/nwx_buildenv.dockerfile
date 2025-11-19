@@ -12,15 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
-    gcc-11 g++-11 \
-    clang-14 libc++-14-dev libc++abi-14-dev libomp-dev \
+    gcc-13 g++-13 \
+    clang-14 libc++-14-dev libc++abi-14-dev \
+    libomp-dev \
     doxygen \
     graphviz \
-    python3-dev python3-pip python3-sphinx\
+    python3-dev python3-pip python3-sphinx python3-venv\
     cmake \
     ninja-build \
     git \
@@ -29,14 +30,17 @@ RUN apt-get update \
     libgslcblas0 libgsl-dev \
     libeigen3-dev \
     liblapacke liblapacke-dev \
-    libboost-all-dev \
-    libopenblas-base libopenblas-dev \
+    libboost-dev \
+    libopenblas-dev \
     libscalapack-openmpi-dev \
     wget \
     libxml2-dev \
     libxslt-dev \
     nwchem \
+    && python3 -m venv /pyenv \
+    && . /pyenv/bin/activate \
     && pip install gcovr numpy qcelemental qcengine networkx ase \
+    && deactivate \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY toolchains /toolchains

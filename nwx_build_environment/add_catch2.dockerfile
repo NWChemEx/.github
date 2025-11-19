@@ -15,7 +15,7 @@
 FROM nwx_buildenv:latest
 
 ARG VERSION=3.6.0
-ARG COMPILER=gcc-11
+ARG COMPILER=gcc-13
 
 # Install catch2 ##
 RUN cd /tmp \

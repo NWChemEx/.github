@@ -15,7 +15,7 @@
 FROM nwx_buildenv:latest
 
 ARG VERSION=71008cffd5d13d5ee813fb13d14d8bf7b06b8f6e
-ARG COMPILER=gcc-11
+ARG COMPILER=gcc-13
 
 # Install libfort ##
 RUN cd /tmp \
@@ -24,6 +24,7 @@ RUN cd /tmp \
     && git checkout ${VERSION} \
     && cmake -Bbuild -H. -GNinja \
     -DGAUXC_ENABLE_HDF5=OFF \
+    -DGAUXC_ENABLE_OPENMP=OFF \
     -DBUILD_TESTING=OFF \
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
     -DCMAKE_INSTALL_PREFIX=/nwx_dependencies/${COMPILER} \
