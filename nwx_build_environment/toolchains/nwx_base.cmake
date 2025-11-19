@@ -32,5 +32,5 @@ set(LAPACK_LIBRARIES "-L${LIBDIR} -llapack ${BLAS_LIBRARIES}")
 set(ScaLAPACK_LIBRARIES  "-L${LIBDIR} -lscalapack-openmpi ${LAPACK_LIBRARIES}")
 
 set(BUILD_PYBIND11_PYBINDINGS ON)
-set(Python_EXECUTABLE /pyenv/python3)
-set(Python3_EXECUTABLE /pyenv/python3)
+set(Python_EXECUTABLE /pyenv/bin/python3)
+set(Python3_EXECUTABLE /pyenv/bin/python3)
