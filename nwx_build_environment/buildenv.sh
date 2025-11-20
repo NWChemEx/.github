@@ -19,7 +19,7 @@ deps=("cereal" "gauxc" "libfort" "spdlog" "libint")
 for dep in "${deps[@]}"
 do
     docker build -t nwx_buildenv -f add_${dep}.dockerfile --build-arg COMPILER=gcc-14 .
-    docker build -t nwx_buildenv -f add_${dep}.dockerfile --build-arg COMPILER=clang-19 .
+    docker build -t nwx_buildenv -f add_${dep}.dockerfile --build-arg COMPILER=clang-18 .
     docker image prune -f
 done
 
