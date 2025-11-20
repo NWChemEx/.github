@@ -24,7 +24,6 @@ RUN cd /tmp \
     && git checkout ${VERSION} \
     && cmake -Bbuild -H. -GNinja \
     -DGAUXC_ENABLE_HDF5=OFF \
-    -DGAUXC_ENABLE_OPENMP=OFF \
     -DBUILD_TESTING=OFF \
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
     -DCMAKE_INSTALL_PREFIX=/nwx_dependencies/${COMPILER} \

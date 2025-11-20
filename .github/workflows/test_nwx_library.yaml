@@ -23,7 +23,7 @@ on:
         description: "String of a JSON list of compilers to test"
         type: string
         required: false
-        default: '["gcc-11", "clang-14"]'
+        default: '["gcc-14", "clang-18"]'
       repo_toolchain:
         description: "Path (from repo root) to a CMake toolchain for repo specific settings"
         type: string
