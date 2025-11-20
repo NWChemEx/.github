@@ -52,7 +52,7 @@ jobs:
       - name: Configure Library
         if: inputs.generate_module_docs == true
         run: |
-          toolchain=/toolchains/nwx_gcc-11.cmake
+          toolchain=/toolchains/nwx_gcc-14.cmake
 
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON \
           -DCMAKE_INSTALL_PREFIX=./install \
