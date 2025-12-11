@@ -14,7 +14,7 @@
 
 FROM nwx_buildenv:latest
 
-ARG VERSION=1.3.0
+ARG VERSION=1.3.2
 ARG COMPILER=gcc-14
 
 # Install cereal
