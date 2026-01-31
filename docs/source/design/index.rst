@@ -16,23 +16,66 @@
 Design Documentation
 ####################
 
-This section focuses on documentation relating to the overall design philosophy
-and implementation of the NWChemEx package. The documentation is laid out to
-give you a top-down approach to the design. That is to say it starts very
-general and high-level, and as you progress through the design more details are
-added. The design documents in this section describe the overall project design,
-but do not specify how the components are designed. Consult the documentation of
-the individual components for details pertaining to their respective designs.
+The documentation in these pages capture assumptions and decisions made along
+the way to creating NWChemEx. These are meant to be a living document and should
+be updated as new concerns arise.
+
+*********************************
+NWChemEx Philosophy and Ecosystem
+*********************************
+
+Topics in these sections cover project-wide design considerations and help
+ground the rest of the design documentation.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    philosophy
-   vision
+   nwx_community
    nwx_ecosystem
+
+
+*******************
+Organization Design
+*******************
+
+Topics in these sections cover design decisions that impact how the NWChemEx
+organization appears on GitHub and how that organization works. These topics
+focus more on preserving and maintaining the software versus developing it. 
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   directory_structure
+
+****************
+NWChemEx Package
+****************
+
+Topics in these sections cover design decisions for the development of the
+software within the NWChemEx organization. Out of scope are design decisions
+for any particular component.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
    overall_design
-   overall_justifications/index
    energy_workflow
+   overall_justifications/index
    ui_design
+
+*************
+Miscellaneous
+*************
+
+Topics in these sections cover high-level design decisions that don't fit into
+other categories.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
    faqs

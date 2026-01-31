@@ -16,36 +16,10 @@
 NWChemEx Ecosystem
 ##################
 
-In this section we spec out the use cases for NWChemEx and how it fits into the
-broader computational chemistry ecosystem.
+Here we introduce the concept of the "NWChemEx ecosystem". The 
+"NWChemEx ecosystem" is defined as the :ref:`nwx_community`, software, and 
+hardware that will interact with NWChemEx either directly or indirectly. 
 
-******************
-NWChemEx Use Cases
-******************
-
-Generally speaking we see NWChemEx being used for:
-
-- electronic structure calculations on the largest supercomputers in the world
-- day-to-day electronic structure calculations
-- as part of high-throughput workflows
-- as a research platform for developing new theories
-
-At this stage of design we are not concerned with capabilities (e.g.
-single-point energies, thermodynamic analysis, molecular dynamics) those will be
-handled at a lower level of design. Rather we're interested in what sort of
-design requirements need to be built into the highest level APIs. From these
-use cases we can establish the following concerns:
-
-- performance (needed to make running on supercomputers worthwhile)
-- high-quality linear algebra (electronic structure involves lots of
-  linear algebra)
-- ease of use (too high of a barrier will inhibit use cases where there are
-  other choices)
-- library instead of program mentality (we shouldn't assume we are driving the
-  workflow)
-- extensibility (adding new theories should be easy)
-- varying levels of programming expertise (research is done by undergraduates,
-  graduates, post docs, scientists/professors from a multitude of backgrounds)
 
 These concerns are not orthogonal (for example ease of use and varying levels of
 programming expertise are related).

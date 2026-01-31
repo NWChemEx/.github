@@ -67,6 +67,9 @@ Steps
      ``docker commit <container_id> nwchemex_debug_image`` to create the
      image.
 
+5. (Optional) If you would like to debug the code in VSCode you can install the
+   "Dev Container" extension and then attach to the running container.
+
 ****
 FAQs
 ****

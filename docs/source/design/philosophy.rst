@@ -54,8 +54,8 @@ their own costs:
 - higher learning curves, and
 - compiling costs
 
-Our design attempts to place the brunt of these costs on the more experienced
-developers, leaving the more novice developers to use the objects like a domain
-specific language. In this scenario everybody wins; developers wanting to test
-out new chemistry can do that easily, whereas developers wanting to improve
-performance can do so without impacting the chemistry development.
+Our approach to design attempts to place the brunt of these costs on the more 
+experienced developers, leaving the more novice developers to use the objects 
+like a domain specific language. In this scenario everybody wins; developers 
+wanting to test out new chemistry can do that easily, whereas developers wanting
+to improve performance can do so without impacting the chemistry development.
