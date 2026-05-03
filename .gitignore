@@ -14,6 +14,8 @@
 
 # This is where VSCode stores its settings
 .vscode
+.cache/
+.cursor/
 
 #This is a common Python3 virtual environment name
 venv/
