@@ -1,4 +1,0 @@
-sphinx==8.1
-sphinx_rtd_theme
-sphinx_tabs
-sphinxcontrib.bibtex

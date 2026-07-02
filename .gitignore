@@ -15,10 +15,17 @@
 # This is where VSCode stores its settings
 .vscode
 
+# This is Claude/Cursor directory
+.claude
+.cursor
+
 #This is a common Python3 virtual environment name
+.venv/
 venv/
 
 # This is the default build directory for the docs
 docs/build
 
+
+# Mac Files
 .DS_Store
