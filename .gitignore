@@ -14,6 +14,12 @@
 
 # This is where VSCode stores its settings
 .vscode
+.cache/
+.cursor/
+
+# This is Claude/Cursor directory
+.claude
+.cursor
 
 # This is Claude/Cursor directory
 .claude
