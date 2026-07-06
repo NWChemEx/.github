@@ -23,8 +23,3 @@ on:
 jobs:
   check_formatting:
     uses: ./.github/workflows/check_formatting.yaml
-
-  test_nwx_docs:
-    uses: ./.github/workflows/test_nwx_docs.yaml
-    with:
-      doc_target: "Sphinx"

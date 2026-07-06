@@ -1,5 +1,0 @@
-docutils<=0.16
-sphinx
-sphinx_rtd_theme
-sphinx_tabs
-sphinxcontrib.bibtex
