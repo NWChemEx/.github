@@ -1,0 +1,90 @@
+# Copyright 2025 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: CMake Build
+description: Configure, build, and optionally test a repository with CMake using an NWX compiler toolchain.
+
+inputs:
+  compiler:
+    description: "Compiler toolchain name (e.g. gcc-14, clang-18). Must match a file at /toolchains/nwx_<compiler>.cmake."
+    required: true
+  build_tests:
+    description: "Whether to build and run tests (sets -DBUILD_TESTING)."
+    required: false
+    default: "true"
+  cmake_opts:
+    description: "Additional CMake options to pass at configure time."
+    required: false
+    default: ""
+  repo_toolchain:
+    description: "Path (from repo root) to a CMake toolchain for repo-specific settings."
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Check for Compiler Toolchain
+      shell: bash
+      run: |
+        toolchain=/toolchains/nwx_${{ inputs.compiler }}.cmake
+        echo "Checking for compiler toolchain: $toolchain"
+        if test -f "$toolchain"; then
+            echo "Toolchain for compiler found."
+        else
+            echo "Toolchain for compiler not found."
+            exit 1
+        fi
+
+    - name: Check for Repo Toolchain
+      if: inputs.repo_toolchain != ''
+      shell: bash
+      run: |
+        toolchain=${GITHUB_WORKSPACE}/${{ inputs.repo_toolchain }}
+        echo "Checking for repo toolchain: ${{ inputs.repo_toolchain }}"
+        if test -f "$toolchain"; then
+            echo "Repo toolchain found."
+        else
+            echo "Repo toolchain not found."
+            exit 1
+        fi
+
+    - name: Append Repo Settings to CMake Toolchain
+      if: inputs.repo_toolchain != ''
+      shell: bash
+      run: |
+        echo 'include('${GITHUB_WORKSPACE}'/${{ inputs.repo_toolchain }})' \
+          >> /toolchains/nwx_${{ inputs.compiler }}.cmake
+
+    - name: Configure
+      shell: bash
+      run: |
+        toolchain=/toolchains/nwx_${{ inputs.compiler }}.cmake
+        build_testing=${{ inputs.build_tests == 'true' && 'ON' || 'OFF' }}
+
+        cmake -Bbuild -H. -GNinja \
+          -DCMAKE_INSTALL_PREFIX=./install \
+          -DCMAKE_TOOLCHAIN_FILE="${toolchain}" \
+          -DBUILD_TESTING="${build_testing}" \
+          ${{ inputs.cmake_opts }}
+
+    - name: Build
+      shell: bash
+      run: cmake --build build --parallel
+
+    - name: Test
+      if: inputs.build_tests == 'true'
+      shell: bash
+      working-directory: build
+      run: OMPI_ALLOW_RUN_AS_ROOT=1 OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1 ctest -VV
