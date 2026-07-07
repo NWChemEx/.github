@@ -24,9 +24,3 @@ jobs:
   tag-commit:
     uses: ./.github/workflows/tag.yaml
     secrets: inherit
-
-  deploy_nwx_docs:
-    uses: ./.github/workflows/deploy_nwx_docs.yaml
-    with:
-      doc_target: "Sphinx"
-    secrets: inherit
