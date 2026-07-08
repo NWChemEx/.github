@@ -12,12 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: CMake Build
+name: Pip Build
 description: >-
-  Configure, build, and optionally test a repository with CMake using a
+  Build and optionally test a repository's Python package with pip, using a
   native (apt/Homebrew) compiler toolchain on Linux or macOS. The calling
-  job must provide python/pip on PATH (e.g. via actions/setup-python) for
-  the Python test step.
+  job must provide python/pip on PATH (e.g. via actions/setup-python).
 
 inputs:
   compiler:
@@ -28,11 +27,11 @@ inputs:
     required: false
     default: "true"
   run_python_tests:
-    description: "Whether to run the pytest (Python) test suite against the built pybind11 module."
+    description: "Whether to install the package editable with its dev extras and run the pytest (Python) test suite."
     required: false
     default: "true"
-  cmake_opts:
-    description: "Additional CMake options to pass at configure time."
+  pip_opts:
+    description: "Additional options to pass to pip install."
     required: false
     default: ""
 
@@ -52,21 +51,39 @@ runs:
         restore-keys: |
           deps-${{ runner.os }}-${{ inputs.compiler }}-
 
-    - name: Configure
+    - name: Install
       shell: bash
       run: |
         build_testing=${{ inputs.run_cmake_tests == 'true' && 'ON' || 'OFF' }}
 
-        cmake -Bbuild -H. -GNinja \
-          -DCMAKE_INSTALL_PREFIX=./install \
-          -DCMAKE_C_COMPILER="${CC}" \
-          -DCMAKE_CXX_COMPILER="${CXX}" \
-          -DBUILD_TESTING="${build_testing}" \
-          ${{ inputs.cmake_opts }}
+        if [ "${{ inputs.run_python_tests }}" == "true" ]; then
+            pip install -e ".[dev]" \
+              --config-settings=cmake.define.CMAKE_C_COMPILER="${CC}" \
+              --config-settings=cmake.define.CMAKE_CXX_COMPILER="${CXX}" \
+              --config-settings=cmake.define.BUILD_TESTING="${build_testing}" \
+              ${{ inputs.pip_opts }}
+        else
+            pip install . \
+              --config-settings=cmake.define.CMAKE_C_COMPILER="${CC}" \
+              --config-settings=cmake.define.CMAKE_CXX_COMPILER="${CXX}" \
+              --config-settings=cmake.define.BUILD_TESTING="${build_testing}" \
+              ${{ inputs.pip_opts }}
+        fi
 
-    - name: Build
+    - name: Test Python
+      if: inputs.run_python_tests == 'true'
       shell: bash
-      run: cmake --build build --parallel
+      run: |
+        set +e
+        pytest -v
+        pytest_exit=$?
+        set -e
+
+        if [ "$pytest_exit" -eq 5 ]; then
+            echo "::error::run_python_tests is true but zero pytest tests were found."
+            exit 1
+        fi
+        exit "$pytest_exit"
 
     - name: Test C++
       if: inputs.run_cmake_tests == 'true'
@@ -79,26 +96,3 @@ runs:
             exit 1
         fi
         ctest -VV
-
-    - name: Test Python
-      if: inputs.run_python_tests == 'true'
-      shell: bash
-      run: |
-        pip install --quiet pytest
-
-        pythonpath=$(find build -name "*.so" -exec dirname {} \; | sort -u | paste -sd: -)
-        if [ -z "$pythonpath" ]; then
-            echo "::error::run_python_tests is true but no built Python module (*.so) was found under build/."
-            exit 1
-        fi
-
-        set +e
-        PYTHONPATH="$pythonpath" pytest -v
-        pytest_exit=$?
-        set -e
-
-        if [ "$pytest_exit" -eq 5 ]; then
-            echo "::error::run_python_tests is true but zero pytest tests were found."
-            exit 1
-        fi
-        exit "$pytest_exit"

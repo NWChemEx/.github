@@ -1,0 +1,125 @@
+# Copyright 2026 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Deploy to PyPI
+description: >-
+  Build a repository's sdist and/or wheel and publish them to the real (not
+  Test) PyPI, using trusted publishing (OIDC), or just verify they build with
+  dry_run: true. The calling job must set `permissions: id-token: write` (not
+  needed for dry_run), run on a bare runner (no `container:`), and provide a
+  `python`/`pip` on PATH (e.g. via actions/setup-python).
+
+inputs:
+  cibw_build:
+    description: >-
+      A cibuildwheel CIBW_BUILD selector (e.g. cp312-manylinux_x86_64). When
+      set, the wheel is built with pypa/cibuildwheel instead of `python -m
+      build`, for a compiled package that needs a manylinux/macOS-portable
+      wheel. Leave unset for a pure-Python package with no compiled extension
+      (e.g. NWXCMake itself) -- a package with a CMakeLists.txt should always
+      set this, since a wheel built directly (not via cibuildwheel) isn't
+      manylinux-portable and PyPI will reject it.
+      Intended to be called once per {os, cibw_build} matrix leg from the
+      calling workflow; the job must NOT run inside a `container:`, since
+      cibuildwheel manages its own (nested) build containers on Linux.
+    required: false
+    default: ""
+  build_sdist:
+    description: >-
+      Whether this invocation ALSO builds and publishes the source
+      distribution, in addition to the wheel. Does not affect the wheel
+      itself -- that is always built and published whenever cibw_build is
+      set, regardless of this input. Only relevant to multi-platform matrices:
+      every leg would build byte-identical sdist content, and PyPI rejects
+      re-uploading an existing filename, so set this to "true" on exactly one
+      leg and "false" on the rest to publish the sdist once instead of
+      once-per-leg. Ignored (always true) on the plain, non-cibw_build path,
+      since there's only ever one leg there.
+    required: false
+    default: "true"
+  dry_run:
+    description: >-
+      When "true", build and verify everything as normal but skip the actual
+      PyPI upload. Useful for PR-time "can this be released" checks without
+      publishing anything.
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Install Packaging Tools
+      shell: bash
+      run: pip install --quiet build twine
+
+    # Uses the normal (isolated) build-system.requires resolution, i.e. the
+    # same git-fetched nwxcmake a real `pip install` from PyPI would use, so
+    # this publishes exactly what a fresh `pip install` would build.
+    - name: Build Source Distribution
+      if: inputs.build_sdist == 'true'
+      shell: bash
+      run: python -m build --sdist --outdir dist
+
+    # Building the wheel from the *extracted sdist* (rather than the repo
+    # checkout) catches packaging bugs where a file the build needs was
+    # never included in the sdist manifest -- publishing that wheel
+    # unbuilt-from-sdist could otherwise ship silently broken. Only applies
+    # to the plain path: cibuildwheel builds its own way (see below) and
+    # doesn't need this repo's build-system.requires forwarded a second time.
+    - name: Build Wheel From Source Distribution
+      if: inputs.cibw_build == ''
+      shell: bash
+      run: |
+        sdist=$(ls dist/*.tar.gz)
+        rm -rf sdist_extracted
+        mkdir sdist_extracted
+        tar -xzf "${sdist}" -C sdist_extracted --strip-components=1
+
+        python -m build --wheel --outdir dist sdist_extracted
+
+    # cibuildwheel manages its own (manylinux/macOS) build images, so it
+    # builds straight from the repo checkout rather than an extracted sdist.
+    - name: Build Wheel With cibuildwheel
+      if: inputs.cibw_build != ''
+      uses: pypa/cibuildwheel@v2.22.0
+      env:
+        CIBW_BUILD: ${{ inputs.cibw_build }}
+
+    - name: Collect cibuildwheel Output
+      if: inputs.cibw_build != ''
+      shell: bash
+      run: |
+        mkdir -p dist
+        mv wheelhouse/*.whl dist/
+
+    - name: Check Packaging Metadata
+      shell: bash
+      run: twine check dist/*
+
+    # Cheap safety net before publishing to a registry where a bad upload
+    # can only be yanked, never truly deleted: catch an unimportable wheel
+    # here rather than after it's live on PyPI.
+    - name: Verify Wheel Installs
+      shell: bash
+      run: |
+        python -m venv /tmp/deploy_to_pypi_venv
+        . /tmp/deploy_to_pypi_venv/bin/activate
+        wheel=$(ls dist/*.whl)
+        pip install --quiet "${wheel}"
+
+    - name: Publish to PyPI
+      if: inputs.dry_run != 'true'
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        packages-dir: dist/

@@ -1,0 +1,65 @@
+# Copyright 2026 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Test NWX Pip Build
+# Build and test a repository's Python package with pip, across the shared
+# NWChemEx dev matrix (see platform_matrix.yaml).
+
+on:
+  workflow_call:
+    inputs:
+      run_cmake_tests:
+        description: "Whether to build and run the CTest (C++) test suite (sets -DBUILD_TESTING)."
+        type: string
+        required: false
+        default: "true"
+      run_python_tests:
+        description: "Whether to install the package editable with its dev extras and run the pytest (Python) test suite."
+        type: string
+        required: false
+        default: "true"
+      pip_opts:
+        description: "Additional options to pass to pip install."
+        type: string
+        required: false
+        default: ""
+
+jobs:
+  platform_matrix:
+    uses: NWChemEx/.github/.github/workflows/platform_matrix.yaml@master
+
+  test_pip_build:
+    needs: platform_matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.platform_matrix.outputs.dev_matrix) }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Pip Build
+        uses: NWChemEx/.github/.github/actions/pip_build@master
+        with:
+          compiler: ${{ matrix.compiler }}
+          run_cmake_tests: ${{ inputs.run_cmake_tests }}
+          run_python_tests: ${{ inputs.run_python_tests }}
+          pip_opts: ${{ inputs.pip_opts }}
