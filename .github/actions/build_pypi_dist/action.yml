@@ -114,6 +114,29 @@ runs:
       shell: bash
       run: twine check dist/*
 
+    # A cibuildwheel wheel is tagged for one specific CPython (e.g. cp312),
+    # which usually differs from the ambient "Set up Python" 3.x (latest).
+    # Installing it there would fail with "not a supported wheel on this
+    # platform", so re-point PATH at a matching interpreter first.
+    - name: Determine cibuildwheel Python Version
+      if: inputs.cibw_build != ''
+      id: cibw_python_version
+      shell: bash
+      run: |
+        # e.g. "cp312-manylinux_x86_64" -> "3.12"
+        if [[ "${{ inputs.cibw_build }}" =~ ^cp([0-9])([0-9]+) ]]; then
+          echo "version=${BASH_REMATCH[1]}.${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
+        else
+          echo "::error::Could not parse a Python version out of cibw_build='${{ inputs.cibw_build }}'"
+          exit 1
+        fi
+
+    - name: Set up Python Matching cibuildwheel Target
+      if: inputs.cibw_build != ''
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ steps.cibw_python_version.outputs.version }}
+
     # Cheap safety net before publishing to a registry where a bad upload
     # can only be yanked, never truly deleted: catch an unimportable wheel
     # here rather than after it's live on PyPI.
