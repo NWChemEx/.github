@@ -67,6 +67,17 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Checkout Source
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
     - name: Install Packaging Tools
       shell: bash
       run: pip install --quiet build twine
