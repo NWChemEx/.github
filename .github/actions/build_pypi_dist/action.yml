@@ -12,15 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Deploy to PyPI
+name: Build PyPI Distribution
 description: >-
-  Build a repository's sdist and/or wheel and publish them to PyPI (or, with
-  use_test_pypi: true, to Test PyPI), using trusted publishing (OIDC), or
-  just verify they build with dry_run: true. The calling job must set
-  `permissions: id-token: write` (not needed for dry_run), run on a bare
-  runner (no `container:`), and provide a `python`/`pip` on PATH (e.g. via
-  actions/setup-python). Trusted publishing must be configured separately on
-  (Test) PyPI for this repository/workflow.
+  Checkout and build a repository's sdist and/or wheel into dist/, verifying
+  the metadata and that the wheel installs cleanly. Does NOT publish --
+  the calling job must add its own pypa/gh-action-pypi-publish step
+  afterwards, as a sibling step never nested inside another composite
+  action: gh-action-pypi-publish's own docker-trampoline image-tag
+  resolution breaks when called from within a composite action (a known
+  upstream limitation, actions/runner#2473). Runs on a bare runner
+  (no `container:`).
 
 inputs:
   cibw_build:
@@ -39,30 +40,17 @@ inputs:
     default: ""
   build_sdist:
     description: >-
-      Whether this invocation ALSO builds and publishes the source
-      distribution, in addition to the wheel. Does not affect the wheel
-      itself -- that is always built and published whenever cibw_build is
-      set, regardless of this input. Only relevant to multi-platform matrices:
-      every leg would build byte-identical sdist content, and PyPI rejects
-      re-uploading an existing filename, so set this to "true" on exactly one
-      leg and "false" on the rest to publish the sdist once instead of
-      once-per-leg. Ignored (always true) on the plain, non-cibw_build path,
-      since there's only ever one leg there.
+      Whether this invocation ALSO builds the source distribution, in
+      addition to the wheel. Does not affect the wheel itself -- that is
+      always built whenever cibw_build is set, regardless of this input.
+      Only relevant to multi-platform matrices: every leg would build
+      byte-identical sdist content, and PyPI rejects re-uploading an
+      existing filename, so set this to "true" on exactly one leg and
+      "false" on the rest to publish the sdist once instead of once-per-leg.
+      Ignored (always true) on the plain, non-cibw_build path, since
+      there's only ever one leg there.
     required: false
     default: "true"
-  dry_run:
-    description: >-
-      When "true", build and verify everything as normal but skip the actual
-      PyPI upload. Useful for PR-time "can this be released" checks without
-      publishing anything.
-    required: false
-    default: "false"
-  use_test_pypi:
-    description: >-
-      When "true", publish to Test PyPI (test.pypi.org) instead of the real
-      PyPI. Ignored when dry_run is "true".
-    required: false
-    default: "false"
 
 runs:
   using: composite
@@ -132,20 +120,7 @@ runs:
     - name: Verify Wheel Installs
       shell: bash
       run: |
-        python -m venv /tmp/deploy_to_pypi_venv
-        . /tmp/deploy_to_pypi_venv/bin/activate
+        python -m venv /tmp/build_pypi_dist_venv
+        . /tmp/build_pypi_dist_venv/bin/activate
         wheel=$(ls dist/*.whl)
         pip install --quiet "${wheel}"
-
-    - name: Publish to PyPI
-      if: inputs.dry_run != 'true' && inputs.use_test_pypi != 'true'
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        packages-dir: dist/
-
-    - name: Publish to Test PyPI
-      if: inputs.dry_run != 'true' && inputs.use_test_pypi == 'true'
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        packages-dir: dist/
-        repository-url: https://test.pypi.org/legacy/
