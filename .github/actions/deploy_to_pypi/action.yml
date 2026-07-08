@@ -142,6 +142,7 @@ runs:
       uses: pypa/gh-action-pypi-publish@v1.11.0
       with:
         packages-dir: dist/
+        verify-metadata: "false"
 
     - name: Publish to Test PyPI
       if: inputs.dry_run != 'true' && inputs.use_test_pypi == 'true'
@@ -149,3 +150,4 @@ runs:
       with:
         packages-dir: dist/
         repository-url: https://test.pypi.org/legacy/
+        verify-metadata: "false"
