@@ -33,11 +33,16 @@ on:
         type: string
         required: false
         default: "false"
+      use_test_pypi:
+        description: "When 'true', publish to Test PyPI instead of the real PyPI."
+        type: string
+        required: false
+        default: "false"
 
 jobs:
   platform_matrix:
     if: inputs.compiled
-    uses: NWChemEx/.github/.github/workflows/platform_matrix.yaml@master
+    uses: ryanmrichard/.github/.github/workflows/platform_matrix.yaml@master
 
   deploy_to_pypi:
     if: inputs.compiled
@@ -60,11 +65,12 @@ jobs:
         with:
           python-version: "3.x"
       - name: Deploy to PyPI
-        uses: NWChemEx/.github/.github/actions/deploy_to_pypi@master
+        uses: ryanmrichard/.github/.github/actions/deploy_to_pypi@master
         with:
           cibw_build: ${{ matrix.cibw_build }}
           build_sdist: ${{ matrix.os == 'ubuntu-latest' && 'true' || 'false' }}
           dry_run: ${{ inputs.dry_run }}
+          use_test_pypi: ${{ inputs.use_test_pypi }}
 
   deploy_to_pypi_pure_python:
     if: ${{ !inputs.compiled }}
@@ -82,6 +88,7 @@ jobs:
         with:
           python-version: "3.x"
       - name: Deploy to PyPI
-        uses: NWChemEx/.github/.github/actions/deploy_to_pypi@master
+        uses: ryanmrichard/.github/.github/actions/deploy_to_pypi@master
         with:
           dry_run: ${{ inputs.dry_run }}
+          use_test_pypi: ${{ inputs.use_test_pypi }}
