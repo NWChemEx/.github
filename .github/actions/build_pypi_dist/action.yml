@@ -62,6 +62,18 @@ inputs:
       index. Leave unset for a package with no such dependencies.
     required: false
     default: ""
+  needs_mpi:
+    description: >-
+      Whether the cibuildwheel build needs an MPI installation. The
+      manylinux/macOS cibuildwheel containers are minimal and don't have
+      one, unlike the ambient dev matrix (see setup_nwx_dev_env). When
+      "true", installs openmpi3-devel (via EPEL) inside the manylinux
+      container and puts its bin/ on PATH so CMake's find_package(MPI)
+      succeeds there, and installs open-mpi via Homebrew on macOS. Ignored
+      when cibw_build is unset (the plain, non-cibuildwheel path assumes
+      the ambient runner already has whatever the package needs).
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -113,6 +125,12 @@ runs:
       uses: pypa/cibuildwheel@v2.22.0
       env:
         CIBW_BUILD: ${{ inputs.cibw_build }}
+        CIBW_BEFORE_ALL_LINUX: >-
+          ${{ inputs.needs_mpi == 'true' && 'yum install -y epel-release && yum install -y openmpi3-devel' || '' }}
+        CIBW_ENVIRONMENT_LINUX: >-
+          ${{ inputs.needs_mpi == 'true' && 'PATH=/usr/lib64/openmpi3/bin:$PATH' || '' }}
+        CIBW_BEFORE_ALL_MACOS: >-
+          ${{ inputs.needs_mpi == 'true' && 'brew install open-mpi' || '' }}
 
     - name: Collect cibuildwheel Output
       if: inputs.cibw_build != ''
