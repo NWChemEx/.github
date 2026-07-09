@@ -51,6 +51,17 @@ inputs:
       there's only ever one leg there.
     required: false
     default: "true"
+  extra_index_url:
+    description: >-
+      Extra package index passed to the post-build `pip install` sanity
+      check (e.g. https://test.pypi.org/simple/), in addition to the
+      default index. Needed when this package's runtime dependencies are
+      other nwx packages that only exist on that extra index (e.g. a
+      TestPyPI-only publish chain) -- without it, the verification install
+      can only ever resolve dependencies that are already on the default
+      index. Leave unset for a package with no such dependencies.
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -146,4 +157,8 @@ runs:
         python -m venv /tmp/build_pypi_dist_venv
         . /tmp/build_pypi_dist_venv/bin/activate
         wheel=$(ls dist/*.whl)
-        pip install --quiet "${wheel}"
+        extra_index_args=()
+        if [ -n "${{ inputs.extra_index_url }}" ]; then
+          extra_index_args=(--extra-index-url "${{ inputs.extra_index_url }}")
+        fi
+        pip install --quiet "${extra_index_args[@]}" "${wheel}"
