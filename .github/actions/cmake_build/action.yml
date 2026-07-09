@@ -80,6 +80,14 @@ runs:
         fi
         ctest -VV
 
+    - name: Install Python Requirements
+      if: inputs.run_python_tests == 'true'
+      shell: bash
+      run: |
+        if [ -f requirements.txt ]; then
+          pip install --quiet -r requirements.txt
+        fi
+
     - name: Test Python
       if: inputs.run_python_tests == 'true'
       shell: bash
