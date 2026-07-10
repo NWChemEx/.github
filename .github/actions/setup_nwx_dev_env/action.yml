@@ -50,11 +50,19 @@ runs:
             echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas)" >> "$GITHUB_ENV"
             ;;
           macOS_clang-18)
-            brew install llvm@18 cmake ninja open-mpi boost openblas eigen
+            brew install llvm@18 libomp cmake ninja open-mpi boost openblas eigen
             prefix=$(brew --prefix llvm@18)
+            libomp_prefix=$(brew --prefix libomp)
             echo "CC=${prefix}/bin/clang"    >> "$GITHUB_ENV"
             echo "CXX=${prefix}/bin/clang++" >> "$GITHUB_ENV"
-            echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas)" >> "$GITHUB_ENV"
+            echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas);${libomp_prefix}" >> "$GITHUB_ENV"
+            # llvm@18's own clang has no bundled OpenMP runtime; find_package(OpenMP)
+            # needs omp.h/libomp.dylib on the compiler's default search paths to pass
+            # its "-fopenmp compiles" check and locate the library, and CPATH/LIBRARY_PATH
+            # are how Clang picks those up without needing explicit -I/-L flags threaded
+            # through every cmake_opts caller.
+            echo "CPATH=${libomp_prefix}/include" >> "$GITHUB_ENV"
+            echo "LIBRARY_PATH=${libomp_prefix}/lib" >> "$GITHUB_ENV"
             ;;
           *)
             echo "::error::Unsupported (os, compiler): (${{ runner.os }}, ${{ inputs.compiler }})"
