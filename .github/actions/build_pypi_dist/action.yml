@@ -92,6 +92,17 @@ inputs:
       since it's keg-only there). Ignored when cibw_build is unset.
     required: false
     default: "false"
+  needs_eigen:
+    description: >-
+      Whether the cibuildwheel build needs an installed Eigen3 CMake config
+      (e.g. libint2's own CMakeLists does its own find_package(Eigen3),
+      independent of and unsatisfied by nwxcmake's own FetchContent'd Eigen
+      target). The manylinux/macOS cibuildwheel containers don't have one.
+      When "true", installs eigen3-devel (via EPEL) inside the manylinux
+      container and eigen via Homebrew on macOS. Ignored when cibw_build is
+      unset.
+    required: false
+    default: "false"
   needs_openmp:
     description: >-
       Whether the cibuildwheel build needs OpenMP (e.g. transitively via
@@ -194,6 +205,11 @@ runs:
           # arguments contain a space, which would otherwise split it into
           # two bogus tokens.
           env_macos+=('CMAKE_PREFIX_PATH="$(brew --prefix openblas)"')
+        fi
+
+        if [ "${{ inputs.needs_eigen }}" = "true" ]; then
+          before_linux+=("yum install -y epel-release" "yum install -y eigen3-devel")
+          before_macos+=("brew install eigen")
         fi
 
         if [ "${{ inputs.needs_openmp }}" = "true" ]; then
