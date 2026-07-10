@@ -39,7 +39,7 @@ runs:
             ;;
           Linux_clang-18)
             sudo apt-get update -y
-            sudo apt-get install -y clang-18 cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev libeigen3-dev
+            sudo apt-get install -y clang-18 libomp-18-dev cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev libeigen3-dev
             echo "CC=clang-18"    >> "$GITHUB_ENV"
             echo "CXX=clang++-18" >> "$GITHUB_ENV"
             ;;
