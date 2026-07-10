@@ -154,7 +154,14 @@ runs:
         fi
 
         if [ "${{ inputs.needs_boost }}" = "true" ]; then
-          before_linux+=("yum install -y boost-devel")
+          # manylinux2014's plain boost-devel is 1.53.0, too old for headers
+          # some repos need (e.g. boost/container_hash/hash.hpp). EPEL's
+          # boost169-devel (parallel-installable, doesn't replace the base
+          # boost-devel) is the newest available via yum there, but installs
+          # under a versioned, non-default include path, so CMake's FindBoost
+          # needs to be pointed at it explicitly via BOOST_INCLUDEDIR.
+          before_linux+=("yum install -y boost169-devel")
+          env_linux+=("BOOST_INCLUDEDIR=/usr/include/boost169")
           before_macos+=("brew install boost")
         fi
 
