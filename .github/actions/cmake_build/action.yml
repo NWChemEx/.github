@@ -44,6 +44,17 @@ runs:
       with:
         compiler: ${{ inputs.compiler }}
 
+    # Some repos' CMake build invokes a Python codegen script at configure or
+    # build time (e.g. GauXC's gau2grid dependency imports numpy to generate
+    # C source), so this needs to run before Configure/Build below, not only
+    # before the Python test step later in this same file.
+    - name: Install Python Requirements
+      shell: bash
+      run: |
+        if [ -f requirements.txt ]; then
+          pip install --quiet -r requirements.txt
+        fi
+
     - name: Cache Dependency Build Tree
       uses: actions/cache@v4
       with:
@@ -79,14 +90,6 @@ runs:
             exit 1
         fi
         ctest -VV
-
-    - name: Install Python Requirements
-      if: inputs.run_python_tests == 'true'
-      shell: bash
-      run: |
-        if [ -f requirements.txt ]; then
-          pip install --quiet -r requirements.txt
-        fi
 
     - name: Test Python
       if: inputs.run_python_tests == 'true'
