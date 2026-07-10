@@ -132,6 +132,14 @@ runs:
           ${{ inputs.needs_mpi == 'true' && 'PATH=/usr/lib64/openmpi3/bin:$PATH' || '' }}
         CIBW_BEFORE_ALL_MACOS: >-
           ${{ inputs.needs_mpi == 'true' && 'brew install open-mpi' || '' }}
+        # Homebrew's open-mpi (and its own deps: libpmix, libhwloc, libevent)
+        # are built against the actual runner OS, so their dylibs report a
+        # minimum target matching it (14.0 on macos-14) -- higher than
+        # cibuildwheel's default arm64 target (11.0). delocate then refuses
+        # to tag the repaired wheel as 11.0-compatible, since that would be
+        # false. Raise the declared target to match what's actually bundled.
+        CIBW_ENVIRONMENT_MACOS: >-
+          ${{ inputs.needs_mpi == 'true' && 'MACOSX_DEPLOYMENT_TARGET=14.0' || '' }}
 
     - name: Collect cibuildwheel Output
       if: inputs.cibw_build != ''
