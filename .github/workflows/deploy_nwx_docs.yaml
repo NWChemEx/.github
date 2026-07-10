@@ -51,7 +51,10 @@ jobs:
         if: inputs.generate_module_docs == true
         run: |
           if [ -f requirements.txt ]; then
-            python3 -m pip install --quiet -r requirements.txt
+            # This container's system python3 is PEP 668
+            # externally-managed; --break-system-packages is safe here
+            # since the whole container is ephemeral CI state anyway.
+            python3 -m pip install --quiet --break-system-packages -r requirements.txt
           fi
         shell: bash
       # These next two steps will configure CMake if required
