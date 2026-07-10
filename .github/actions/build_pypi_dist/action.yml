@@ -82,6 +82,27 @@ inputs:
       boost via Homebrew on macOS. Ignored when cibw_build is unset.
     required: false
     default: "false"
+  needs_blas:
+    description: >-
+      Whether the cibuildwheel build needs a BLAS/LAPACK installation (e.g.
+      transitively via GauXC). The manylinux/macOS cibuildwheel containers
+      are minimal and don't have one. When "true", installs openblas-devel
+      and lapack-devel (via EPEL) inside the manylinux container, and
+      openblas via Homebrew on macOS (pointing CMAKE_PREFIX_PATH at it,
+      since it's keg-only there). Ignored when cibw_build is unset.
+    required: false
+    default: "false"
+  needs_openmp:
+    description: >-
+      Whether the cibuildwheel build needs OpenMP (e.g. transitively via
+      GauXC, which unconditionally find_package(OpenMP)s). Linux's gcc
+      ships its own OpenMP runtime (libgomp) so no extra provisioning is
+      needed there; AppleClang has no built-in OpenMP support, so on macOS
+      this installs libomp via Homebrew and points scikit-build-core's
+      SKBUILD_CMAKE_ARGS at it (CMake's FindOpenMP can't locate Homebrew's
+      keg-only libomp on its own). Ignored when cibw_build is unset.
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -163,6 +184,24 @@ runs:
           before_linux+=("yum install -y boost169-devel")
           env_linux+=("BOOST_INCLUDEDIR=/usr/include/boost169")
           before_macos+=("brew install boost")
+        fi
+
+        if [ "${{ inputs.needs_blas }}" = "true" ]; then
+          before_linux+=("yum install -y epel-release" "yum install -y openblas-devel lapack-devel")
+          before_macos+=("brew install openblas")
+          # Quoted: cibuildwheel's CIBW_ENVIRONMENT parses space-separated
+          # KEY=VALUE tokens, and the $(brew --prefix ...) substitution's
+          # arguments contain a space, which would otherwise split it into
+          # two bogus tokens.
+          env_macos+=('CMAKE_PREFIX_PATH="$(brew --prefix openblas)"')
+        fi
+
+        if [ "${{ inputs.needs_openmp }}" = "true" ]; then
+          before_macos+=("brew install libomp")
+          # AppleClang has no built-in OpenMP; CMake's FindOpenMP can't
+          # locate Homebrew's keg-only libomp without explicit hints. Quoted
+          # as a single token for the same reason as CMAKE_PREFIX_PATH above.
+          env_macos+=('SKBUILD_CMAKE_ARGS="-DOpenMP_C_FLAGS=-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include;-DOpenMP_C_LIB_NAMES=omp;-DOpenMP_CXX_FLAGS=-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include;-DOpenMP_CXX_LIB_NAMES=omp;-DOpenMP_omp_LIBRARY=$(brew --prefix libomp)/lib/libomp.dylib"')
         fi
 
         join_and() {

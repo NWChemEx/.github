@@ -14,10 +14,10 @@
 
 name: Setup NWX Dev Environment
 description: >-
-  Installs a C/C++ compiler plus CMake, Ninja, MPI, and Boost via the native
-  package manager (apt on Linux, Homebrew on macOS), and exports CC/CXX to
-  $GITHUB_ENV for later steps in the same job. Single source of truth for
-  this, shared by cmake_build and pip_build.
+  Installs a C/C++ compiler plus CMake, Ninja, MPI, Boost, and BLAS/LAPACK
+  via the native package manager (apt on Linux, Homebrew on macOS), and
+  exports CC/CXX to $GITHUB_ENV for later steps in the same job. Single
+  source of truth for this, shared by cmake_build and pip_build.
 
 inputs:
   compiler:
@@ -33,26 +33,28 @@ runs:
         case "${{ runner.os }}_${{ inputs.compiler }}" in
           Linux_gcc-14)
             sudo apt-get update -y
-            sudo apt-get install -y gcc-14 g++-14 cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev
+            sudo apt-get install -y gcc-14 g++-14 cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev
             echo "CC=gcc-14"  >> "$GITHUB_ENV"
             echo "CXX=g++-14" >> "$GITHUB_ENV"
             ;;
           Linux_clang-18)
             sudo apt-get update -y
-            sudo apt-get install -y clang-18 cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev
+            sudo apt-get install -y clang-18 cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev
             echo "CC=clang-18"    >> "$GITHUB_ENV"
             echo "CXX=clang++-18" >> "$GITHUB_ENV"
             ;;
           macOS_gcc-14)
-            brew install gcc@14 cmake ninja open-mpi boost
+            brew install gcc@14 cmake ninja open-mpi boost openblas
             echo "CC=gcc-14"  >> "$GITHUB_ENV"
             echo "CXX=g++-14" >> "$GITHUB_ENV"
+            echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas)" >> "$GITHUB_ENV"
             ;;
           macOS_clang-18)
-            brew install llvm@18 cmake ninja open-mpi boost
+            brew install llvm@18 cmake ninja open-mpi boost openblas
             prefix=$(brew --prefix llvm@18)
             echo "CC=${prefix}/bin/clang"    >> "$GITHUB_ENV"
             echo "CXX=${prefix}/bin/clang++" >> "$GITHUB_ENV"
+            echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas)" >> "$GITHUB_ENV"
             ;;
           *)
             echo "::error::Unsupported (os, compiler): (${{ runner.os }}, ${{ inputs.compiler }})"
