@@ -83,13 +83,17 @@ runs:
       if: inputs.run_cmake_tests == 'true'
       shell: bash
       working-directory: build
+      # Some C++ tests embed a Python interpreter that imports this repo's
+      # own (and its dependencies') built pybind11 modules -- same PYTHONPATH
+      # need as the pytest step below, just computed relative to build/.
       run: |
         total_tests=$(ctest -N | grep "Total Tests:" | grep -oE "[0-9]+$")
         if [ "${total_tests:-0}" -eq 0 ]; then
             echo "::error::run_cmake_tests is true but zero CTest tests were found."
             exit 1
         fi
-        ctest -VV
+        pythonpath=$(find . -name "*.so" -exec dirname {} \; | sort -u | paste -sd: -)
+        PYTHONPATH="$pythonpath" ctest -VV
 
     - name: Test Python
       if: inputs.run_python_tests == 'true'
