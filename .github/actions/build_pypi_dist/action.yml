@@ -74,6 +74,14 @@ inputs:
       the ambient runner already has whatever the package needs).
     required: false
     default: "false"
+  needs_boost:
+    description: >-
+      Whether the cibuildwheel build needs Boost. The manylinux/macOS
+      cibuildwheel containers are minimal and don't have it. When "true",
+      installs boost-devel (via EPEL) inside the manylinux container and
+      boost via Homebrew on macOS. Ignored when cibw_build is unset.
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -118,6 +126,53 @@ runs:
 
         python -m build --wheel --outdir dist sdist_extracted
 
+    # Composes the CIBW_BEFORE_ALL_*/CIBW_ENVIRONMENT_* values in a shell
+    # step (rather than inline ternary expressions in the cibuildwheel env:
+    # block below) so needs_mpi and needs_boost can each independently
+    # contribute a clause without one clobbering the other.
+    - name: Compute cibuildwheel System Dependencies
+      if: inputs.cibw_build != ''
+      shell: bash
+      run: |
+        before_linux=()
+        before_macos=()
+        env_linux=()
+        env_macos=("MACOSX_DEPLOYMENT_TARGET=11.0")
+
+        if [ "${{ inputs.needs_mpi }}" = "true" ]; then
+          before_linux+=("yum install -y epel-release" "yum install -y openmpi3-devel")
+          env_linux+=("PATH=/usr/lib64/openmpi3/bin:\$PATH")
+          before_macos+=("brew install open-mpi")
+          # Homebrew's open-mpi (and its own deps: libpmix, libhwloc,
+          # libevent) are built against the actual runner OS, so their
+          # dylibs report a minimum target matching it (14.0 on macos-14) --
+          # higher than cibuildwheel's default arm64 target (11.0). delocate
+          # then refuses to tag the repaired wheel as 11.0-compatible, since
+          # that would be false. Raise the declared target to match what's
+          # actually bundled.
+          env_macos=("MACOSX_DEPLOYMENT_TARGET=14.0")
+        fi
+
+        if [ "${{ inputs.needs_boost }}" = "true" ]; then
+          before_linux+=("yum install -y boost-devel")
+          before_macos+=("brew install boost")
+        fi
+
+        join_and() {
+          local out="" item
+          for item in "$@"; do
+            if [ -z "$out" ]; then out="$item"; else out="$out && $item"; fi
+          done
+          echo "$out"
+        }
+
+        {
+          echo "CIBW_BEFORE_ALL_LINUX=$(join_and "${before_linux[@]}")"
+          echo "CIBW_BEFORE_ALL_MACOS=$(join_and "${before_macos[@]}")"
+          echo "CIBW_ENVIRONMENT_LINUX=${env_linux[*]}"
+          echo "CIBW_ENVIRONMENT_MACOS=${env_macos[*]}"
+        } >> "$GITHUB_ENV"
+
     # cibuildwheel manages its own (manylinux/macOS) build images, so it
     # builds straight from the repo checkout rather than an extracted sdist.
     - name: Build Wheel With cibuildwheel
@@ -126,20 +181,6 @@ runs:
       env:
         CIBW_BUILD: ${{ inputs.cibw_build }}
         CIBW_BUILD_VERBOSITY: "1"
-        CIBW_BEFORE_ALL_LINUX: >-
-          ${{ inputs.needs_mpi == 'true' && 'yum install -y epel-release && yum install -y openmpi3-devel' || '' }}
-        CIBW_ENVIRONMENT_LINUX: >-
-          ${{ inputs.needs_mpi == 'true' && 'PATH=/usr/lib64/openmpi3/bin:$PATH' || '' }}
-        CIBW_BEFORE_ALL_MACOS: >-
-          ${{ inputs.needs_mpi == 'true' && 'brew install open-mpi' || '' }}
-        # Homebrew's open-mpi (and its own deps: libpmix, libhwloc, libevent)
-        # are built against the actual runner OS, so their dylibs report a
-        # minimum target matching it (14.0 on macos-14) -- higher than
-        # cibuildwheel's default arm64 target (11.0). delocate then refuses
-        # to tag the repaired wheel as 11.0-compatible, since that would be
-        # false. Raise the declared target to match what's actually bundled.
-        CIBW_ENVIRONMENT_MACOS: >-
-          ${{ inputs.needs_mpi == 'true' && 'MACOSX_DEPLOYMENT_TARGET=14.0' || '' }}
 
     - name: Collect cibuildwheel Output
       if: inputs.cibw_build != ''
