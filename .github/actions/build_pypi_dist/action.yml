@@ -278,6 +278,20 @@ runs:
       with:
         python-version: ${{ steps.cibw_python_version.outputs.version }}
 
+    # The plain (non-cibw) path's wheel itself is version-agnostic
+    # (py3-none-any), but a pure-Python package's runtime dependencies can
+    # include other nwx-ecosystem packages that are compiled and only
+    # published for one CPython version (cp312, per platform_matrix.yaml's
+    # release_matrix) -- installing under whatever "Set up Python"'s "3.x"
+    # resolves to today (e.g. 3.14) would find no matching wheel for those
+    # and fall back to building them from source, which fails on this bare
+    # verification venv (no MPI/Boost/etc.). Re-point at 3.12 to match.
+    - name: Set up Python Matching Ecosystem Release Target
+      if: inputs.cibw_build == ''
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
     # Cheap safety net before publishing to a registry where a bad upload
     # can only be yanked, never truly deleted: catch an unimportable wheel
     # here rather than after it's live on PyPI.
