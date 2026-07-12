@@ -178,19 +178,23 @@ runs:
           # across major versions. EPEL7 (manylinux2014's package repo) has
           # no openmpi4 package at all, so this can't be a yum install.
           #
-          # --enable-mpirun-prefix-by-default is the actual fix for the
-          # crash this whole from-source build exists to solve: OpenMPI
-          # normally hardcodes its runtime data/plugin directory (MCA
-          # components, help text, etc.) to the compile-time --prefix, which
-          # only exists inside this manylinux build container -- auditwheel
-          # bundles the .so files a wheel's DT_NEEDED references, but not
-          # arbitrary runtime data directories like share/openmpi/. Without
-          # this flag, MPI_Init fails wherever the wheel is actually used
-          # ("An error occurred in MPI_Init on a NULL communicator"), because
-          # libmpi looks for its own support files at a path
-          # (/usr/local/openmpi/...) that doesn't exist there. This flag
-          # makes OpenMPI compute that path relative to the loaded library
-          # instead, exactly the "relocatable install" case wheels need.
+          # --disable-dlopen is the actual fix for the crash this whole
+          # from-source build exists to solve. OpenMPI's MCA components
+          # (shmem, btl, etc.) normally live as separate plugin .so files
+          # under $prefix/lib/openmpi/, loaded via runtime dlopen() rather
+          # than standard ELF linking -- auditwheel only bundles a wheel's
+          # DT_NEEDED dependencies (found via ldd), so it has no way to even
+          # discover these, let alone bundle them. Without them, MPI_Init
+          # fails wherever the wheel actually runs: "opal_shmem_base_select
+          # failed" (confirmed by pointing OPAL_PREFIX at a copy of OpenMPI's
+          # own help text, since the *real* error was itself being masked by
+          # a secondary "couldn't find the help file" failure -- also caused
+          # by the same hardcoded-prefix problem, for share/openmpi/ this
+          # time). --disable-dlopen statically links every MCA component
+          # directly into libmpi.so/libopen-pal.so instead, so there's no
+          # runtime plugin directory to find in the first place -- the
+          # standard fix for exactly this portable/relocatable-build
+          # scenario (used by e.g. conda-forge's openmpi packaging).
           #
           # Costs real build time, but only on release/merge builds, not
           # every PR leg the way fixing this in setup_nwx_dev_env instead
@@ -199,7 +203,7 @@ runs:
             "curl -fsSL https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.6.tar.gz -o /tmp/openmpi.tar.gz"
             "mkdir -p /tmp/openmpi-src"
             "tar -xzf /tmp/openmpi.tar.gz -C /tmp/openmpi-src --strip-components=1"
-            "cd /tmp/openmpi-src && ./configure --prefix=/usr/local/openmpi --disable-mpi-fortran --enable-mpirun-prefix-by-default"
+            "cd /tmp/openmpi-src && ./configure --prefix=/usr/local/openmpi --disable-mpi-fortran --disable-dlopen"
             "cd /tmp/openmpi-src && make -j\$(nproc) install"
           )
           env_linux+=("PATH=/usr/local/openmpi/bin:\$PATH" "LD_LIBRARY_PATH=/usr/local/openmpi/lib:\$LD_LIBRARY_PATH")
