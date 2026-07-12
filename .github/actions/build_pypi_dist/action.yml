@@ -172,8 +172,28 @@ runs:
         env_macos=("MACOSX_DEPLOYMENT_TARGET=11.0")
 
         if [ "${{ inputs.needs_mpi }}" = "true" ]; then
-          before_linux+=("yum install -y epel-release" "yum install -y openmpi3-devel")
-          env_linux+=("PATH=/usr/lib64/openmpi3/bin:\$PATH")
+          # Built from source at the *exact* version Ubuntu 24.04's apt
+          # package provides (see setup_nwx_dev_env), not EPEL's openmpi3
+          # (3.1.3) as before: OpenMPI's ABI is not compatible across major
+          # versions, and a wheel built against 3.1.3 segfaults on import
+          # (no Python traceback -- a native-level crash) when a downstream
+          # consumer's ambient environment only has 4.x installed, which is
+          # exactly what happens the first time a prebuilt MPI-linked wheel
+          # (rather than an ambient from-source CMake build, which always
+          # matches its own local MPI) actually gets imported and run
+          # somewhere else -- e.g. a pure-Python package's own pytest suite
+          # installing nwchemex-simde as a dependency. EPEL7 (manylinux2014's
+          # package repo) has no openmpi4 package at all, so this can't be a
+          # yum install. Costs real build time, but only on release/merge
+          # builds, not every PR leg like setup_nwx_dev_env would.
+          before_linux+=(
+            "curl -fsSL https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.6.tar.gz -o /tmp/openmpi.tar.gz"
+            "mkdir -p /tmp/openmpi-src"
+            "tar -xzf /tmp/openmpi.tar.gz -C /tmp/openmpi-src --strip-components=1"
+            "cd /tmp/openmpi-src && ./configure --prefix=/usr/local/openmpi --disable-mpi-fortran"
+            "cd /tmp/openmpi-src && make -j\$(nproc) install"
+          )
+          env_linux+=("PATH=/usr/local/openmpi/bin:\$PATH" "LD_LIBRARY_PATH=/usr/local/openmpi/lib:\$LD_LIBRARY_PATH")
           before_macos+=("brew install open-mpi")
           # Homebrew's open-mpi (and its own deps: libpmix, libhwloc,
           # libevent) are built against the actual runner OS, so their
