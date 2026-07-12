@@ -176,29 +176,24 @@ runs:
           # package provides (see setup_nwx_dev_env), not EPEL's openmpi3
           # (3.1.3) as before -- OpenMPI's ABI is not guaranteed compatible
           # across major versions. EPEL7 (manylinux2014's package repo) has
-          # no openmpi4 package at all, so this can't be a yum install.
+          # no openmpi4 package at all, so this can't be a yum install. Still
+          # needed even though the wheel no longer vendors MPI (see
+          # CIBW_REPAIR_WHEEL_COMMAND_LINUX below): the extension must be
+          # *compiled* against a matching OpenMPI to link correctly against
+          # whatever system OpenMPI the wheel resolves to at runtime.
           #
-          # --disable-dlopen is the actual fix for the crash this whole
-          # from-source build exists to solve. OpenMPI's MCA components
-          # (shmem, btl, etc.) normally live as separate plugin .so files
-          # under $prefix/lib/openmpi/, loaded via runtime dlopen() rather
-          # than standard ELF linking -- auditwheel only bundles a wheel's
-          # DT_NEEDED dependencies (found via ldd), so it has no way to even
-          # discover these, let alone bundle them. Without them, MPI_Init
-          # fails wherever the wheel actually runs: "opal_shmem_base_select
-          # failed" (confirmed by pointing OPAL_PREFIX at a copy of OpenMPI's
-          # own help text, since the *real* error was itself being masked by
-          # a secondary "couldn't find the help file" failure -- also caused
-          # by the same hardcoded-prefix problem, for share/openmpi/ this
-          # time). --disable-dlopen statically links every MCA component
-          # directly into libmpi.so/libopen-pal.so instead, so there's no
-          # runtime plugin directory to find in the first place -- the
-          # standard fix for exactly this portable/relocatable-build
-          # scenario (used by e.g. conda-forge's openmpi packaging).
-          #
-          # Costs real build time, but only on release/merge builds, not
-          # every PR leg the way fixing this in setup_nwx_dev_env instead
-          # would.
+          # --disable-dlopen got MPI_Init's MCA shmem component selection
+          # working (previously failed: "opal_shmem_base_select failed",
+          # since auditwheel only bundles a wheel's DT_NEEDED dependencies
+          # found via ldd, not the dlopen()'d MCA plugin .so files normally
+          # living under $prefix/lib/openmpi/), but a vendored wheel install
+          # still crashes one step later: OpenMPI's singleton-mode ORTE
+          # startup (ess_singleton_module.c) needs to locate the `orted`
+          # daemon executable itself, and auditwheel/delocate only ever
+          # bundle shared libraries, never the accompanying bin/ executables
+          # -- "A system-required executable could not be found". Vendoring
+          # MPI into the wheel is a dead end; see CIBW_REPAIR_WHEEL_COMMAND
+          # below for the fix (exclude MPI libs, require system MPI instead).
           before_linux+=(
             "curl -fsSL https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.6.tar.gz -o /tmp/openmpi.tar.gz"
             "mkdir -p /tmp/openmpi-src"
@@ -207,6 +202,19 @@ runs:
             "cd /tmp/openmpi-src && make -j\$(nproc) install"
           )
           env_linux+=("PATH=/usr/local/openmpi/bin:\$PATH" "LD_LIBRARY_PATH=/usr/local/openmpi/lib:\$LD_LIBRARY_PATH")
+          # auditwheel repair normally bundles every DT_NEEDED lib (incl.
+          # libmpi/libopen-rte/libopen-pal) into the wheel via
+          # RPATH-relocation. Excluding them here means the wheel links
+          # against whatever libmpi.so.40 is on the *runtime* system's
+          # linker path instead -- the one that ships with a real OpenMPI
+          # install (incl. its bin/orted), which setup_nwx_dev_env already
+          # provides ambient (libopenmpi-dev/openmpi-bin) and which end users
+          # need to install themselves (documented as a runtime requirement).
+          # Requires auditwheel >=5.2 for --exclude; verify cibuildwheel
+          # v2.22.0's bundled auditwheel supports it if this step fails.
+          {
+            echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=auditwheel repair --exclude 'libmpi*' --exclude 'libopen-rte*' --exclude 'libopen-pal*' -w {dest_dir} {wheel}"
+          } >> "$GITHUB_ENV"
           before_macos+=("brew install open-mpi")
           # Homebrew's open-mpi (and its own deps: libpmix, libhwloc,
           # libevent) are built against the actual runner OS, so their
