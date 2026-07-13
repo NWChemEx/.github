@@ -210,10 +210,22 @@ runs:
           # install (incl. its bin/orted), which setup_nwx_dev_env already
           # provides ambient (libopenmpi-dev/openmpi-bin) and which end users
           # need to install themselves (documented as a runtime requirement).
-          # Requires auditwheel >=5.2 for --exclude; verify cibuildwheel
-          # v2.22.0's bundled auditwheel supports it if this step fails.
+          #
+          # Exact sonames (libmpi.so.40), NOT a glob (libmpi*): cibuildwheel
+          # v2.22.0's manylinux2014 image (quay.io/pypa/manylinux2014_x86_64:
+          # 2024.11.16-1) bakes in auditwheel 6.1.0, whose --exclude does a
+          # plain `soname in exclude` set-membership check (confirmed by
+          # reading that exact container's lddtree.py) -- fnmatch/glob
+          # support for --exclude was only added in a later auditwheel
+          # release. A glob pattern silently matches nothing and bundles the
+          # library anyway (reproduced locally via Docker: 'libmpi*' bundled
+          # libmpi/libopen-rte/libopen-pal same as no --exclude at all;
+          # 'libmpi.so.40' correctly excluded it, and since libopen-rte/
+          # libopen-pal are only reachable *through* libmpi in this tree,
+          # excluding libmpi.so.40 alone is sufficient -- auditwheel doesn't
+          # recurse into an excluded library's own dependencies).
           {
-            echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=auditwheel repair --exclude 'libmpi*' --exclude 'libopen-rte*' --exclude 'libopen-pal*' -w {dest_dir} {wheel}"
+            echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=auditwheel repair --exclude 'libmpi.so.40' --exclude 'libopen-rte.so.40' --exclude 'libopen-pal.so.40' -w {dest_dir} {wheel}"
           } >> "$GITHUB_ENV"
           before_macos+=("brew install open-mpi")
           # Homebrew's open-mpi (and its own deps: libpmix, libhwloc,
