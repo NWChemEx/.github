@@ -23,6 +23,19 @@ inputs:
   compiler:
     description: "One of: gcc-14, clang-18."
     required: true
+  needs_nwchem:
+    description: >-
+      Whether to install a real NWChem binary, for friend-integration tests
+      that shell out to the external NWChem quantum chemistry program (e.g.
+      FriendZone's nwx2molssi/nwx2ase NWChem wrappers, and NWChemEx's
+      compute_energy tests -- both gated behind
+      friendzone.friends.is_nwchem_enabled(), which checks whether `nwchem`
+      is on PATH). No apt or pip package ships the actual NWChem binary, only
+      Homebrew (macOS) and conda-forge (Linux, via a standalone micromamba
+      bootstrap -- no full Anaconda needed) do. Off by default: this is a
+      large, slow install that only a couple of repos' test suites need.
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -67,5 +80,26 @@ runs:
           *)
             echo "::error::Unsupported (os, compiler): (${{ runner.os }}, ${{ inputs.compiler }})"
             exit 1
+            ;;
+        esac
+
+    - name: Install NWChem
+      if: inputs.needs_nwchem == 'true'
+      shell: bash
+      run: |
+        case "${{ runner.os }}" in
+          Linux)
+            # No apt/pip package ships the real NWChem binary -- conda-forge
+            # is the only source of a precompiled one. Bootstrap a
+            # standalone micromamba (not a full Anaconda/conda install),
+            # install NWChem into its own env, then put just that env's
+            # bin/ on PATH via GITHUB_PATH rather than `conda activate`,
+            # so it doesn't shadow the Python venv the rest of the job uses.
+            "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+            "$HOME/.local/bin/micromamba" create -y -n nwchem -c conda-forge nwchem
+            echo "$HOME/micromamba/envs/nwchem/bin" >> "$GITHUB_PATH"
+            ;;
+          macOS)
+            brew install nwchem
             ;;
         esac
