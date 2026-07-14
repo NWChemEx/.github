@@ -98,6 +98,21 @@ runs:
             "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
             "$HOME/.local/bin/micromamba" create -y -n nwchem -c conda-forge nwchem
             echo "$HOME/micromamba/envs/nwchem/bin" >> "$GITHUB_PATH"
+            # conda-forge's nwchem is compiled with a hardcoded default
+            # NWCHEM_BASIS_LIBRARY pointing at the feedstock's own build
+            # directory (doesn't exist outside the build container), so
+            # basis set lookups fail unless overridden. The package's own
+            # etc/conda/activate.d/nwchem_env.sh sets these two vars
+            # correctly, but only on `conda activate`, which we don't do
+            # (just PATH, to avoid shadowing the job's Python venv) -- so
+            # set them explicitly instead. Confirmed via local repro
+            # (Docker) that a bare `nwchem` invocation missing these vars
+            # can hang indefinitely on some tasks (e.g. CCSD(T)) rather
+            # than fail cleanly, instead of the fast/clean "failed opening
+            # basis file" abort seen on simpler tasks (e.g. CCSD) --
+            # confirmed fixed by setting these.
+            echo "NWCHEM_BASIS_LIBRARY=$HOME/micromamba/envs/nwchem/share/nwchem/libraries/" >> "$GITHUB_ENV"
+            echo "NWCHEM_NWPW_LIBRARY=$HOME/micromamba/envs/nwchem/share/nwchem/libraryps/" >> "$GITHUB_ENV"
             ;;
           macOS)
             brew install nwchem
