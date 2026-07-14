@@ -72,11 +72,18 @@ runs:
       run: |
         build_testing=${{ inputs.run_cmake_tests == 'true' && 'ON' || 'OFF' }}
 
+        # Pin CMake's FindPython to the interpreter actions/setup-python put on
+        # PATH (and that "Install Python Requirements" above just installed
+        # into). Without this, CMake's own search can prefer a different
+        # ambient interpreter (e.g. a macOS Homebrew framework Python),
+        # leaving configure-time-installed packages invisible to build-time
+        # codegen scripts that embed a Python interpreter.
         cmake -Bbuild -H. -GNinja \
           -DCMAKE_INSTALL_PREFIX=./install \
           -DCMAKE_C_COMPILER="${CC}" \
           -DCMAKE_CXX_COMPILER="${CXX}" \
           -DBUILD_TESTING="${build_testing}" \
+          -DPython_EXECUTABLE="$(command -v python3)" \
           ${{ inputs.cmake_opts }}
 
     - name: Build
