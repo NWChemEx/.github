@@ -35,6 +35,16 @@ on:
         type: string
         required: false
         default: ""
+      python_version:
+        description: "Python version to set up (passed to actions/setup-python)."
+        type: string
+        required: false
+        default: "3.x"
+      extra_pip_packages:
+        description: "Extra packages to pip install into the ambient Python before the C++ test step."
+        type: string
+        required: false
+        default: ""
 
 jobs:
   platform_matrix:
@@ -55,7 +65,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: ${{ inputs.python_version }}
       - name: CMake Build
         uses: ryanmrichard/.github/.github/actions/cmake_build@master
         with:
@@ -63,3 +73,4 @@ jobs:
           run_cmake_tests: ${{ inputs.run_cmake_tests }}
           run_python_tests: ${{ inputs.run_python_tests }}
           cmake_opts: ${{ inputs.cmake_opts }}
+          extra_pip_packages: ${{ inputs.extra_pip_packages }}

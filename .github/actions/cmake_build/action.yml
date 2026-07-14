@@ -35,6 +35,10 @@ inputs:
     description: "Additional CMake options to pass at configure time."
     required: false
     default: ""
+  extra_pip_packages:
+    description: "Extra packages to pip install into the ambient Python before the C++ test step (e.g. CTest-driven Python tests that import a pip-installed package)."
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -78,6 +82,15 @@ runs:
     - name: Build
       shell: bash
       run: cmake --build build --parallel
+
+    - name: Install Extra Pip Packages
+      if: inputs.extra_pip_packages != ''
+      shell: bash
+      # Runs before "Test C++" because CTest-driven Python tests use the
+      # ambient Python_EXECUTABLE, whose sys.path always includes
+      # site-packages regardless of CTest's PYTHONPATH override -- so any
+      # package such a test imports needs to be pip-installed here.
+      run: pip install --quiet ${{ inputs.extra_pip_packages }}
 
     - name: Test C++
       if: inputs.run_cmake_tests == 'true'
