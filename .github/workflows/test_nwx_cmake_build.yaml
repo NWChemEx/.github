@@ -48,7 +48,7 @@ on:
 
 jobs:
   platform_matrix:
-    uses: ryanmrichard/.github/.github/workflows/platform_matrix.yaml@master
+    uses: NWChemEx/.github/.github/workflows/platform_matrix.yaml@master
 
   test_cmake_build:
     needs: platform_matrix
@@ -67,7 +67,7 @@ jobs:
         with:
           python-version: ${{ inputs.python_version }}
       - name: CMake Build
-        uses: ryanmrichard/.github/.github/actions/cmake_build@master
+        uses: NWChemEx/.github/.github/actions/cmake_build@master
         with:
           compiler: ${{ matrix.compiler }}
           run_cmake_tests: ${{ inputs.run_cmake_tests }}

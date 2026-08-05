@@ -44,7 +44,7 @@ runs:
   using: composite
   steps:
     - name: Setup NWX Dev Environment
-      uses: ryanmrichard/.github/.github/actions/setup_nwx_dev_env@master
+      uses: NWChemEx/.github/.github/actions/setup_nwx_dev_env@master
       with:
         compiler: ${{ inputs.compiler }}
 
