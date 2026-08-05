@@ -21,10 +21,6 @@
 .claude
 .cursor
 
-# This is Claude/Cursor directory
-.claude
-.cursor
-
 #This is a common Python3 virtual environment name
 .venv/
 venv/
