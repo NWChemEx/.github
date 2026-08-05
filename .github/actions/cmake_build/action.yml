@@ -1,0 +1,139 @@
+# Copyright 2025 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: CMake Build
+description: >-
+  Configure, build, and optionally test a repository with CMake using a
+  native (apt/Homebrew) compiler toolchain on Linux or macOS. The calling
+  job must provide python/pip on PATH (e.g. via actions/setup-python) for
+  the Python test step.
+
+inputs:
+  compiler:
+    description: "One of: gcc-14, clang-18. Installed via the native package manager (apt on Linux, Homebrew on macOS)."
+    required: true
+  run_cmake_tests:
+    description: "Whether to build and run the CTest (C++) test suite (sets -DBUILD_TESTING)."
+    required: false
+    default: "true"
+  run_python_tests:
+    description: "Whether to run the pytest (Python) test suite against the built pybind11 module."
+    required: false
+    default: "true"
+  cmake_opts:
+    description: "Additional CMake options to pass at configure time."
+    required: false
+    default: ""
+  extra_pip_packages:
+    description: "Extra packages to pip install into the ambient Python before the C++ test step (e.g. CTest-driven Python tests that import a pip-installed package)."
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Setup NWX Dev Environment
+      uses: NWChemEx/.github/.github/actions/setup_nwx_dev_env@master
+      with:
+        compiler: ${{ inputs.compiler }}
+
+    # Some repos' CMake build invokes a Python codegen script at configure or
+    # build time (e.g. GauXC's gau2grid dependency imports numpy to generate
+    # C source), so this needs to run before Configure/Build below, not only
+    # before the Python test step later in this same file.
+    - name: Install Python Requirements
+      shell: bash
+      run: |
+        if [ -f requirements.txt ]; then
+          pip install --quiet -r requirements.txt
+        fi
+
+    - name: Cache Dependency Build Tree
+      uses: actions/cache@v4
+      with:
+        path: build/_deps
+        key: deps-${{ runner.os }}-${{ inputs.compiler }}-${{ github.run_id }}
+        restore-keys: |
+          deps-${{ runner.os }}-${{ inputs.compiler }}-
+
+    - name: Configure
+      shell: bash
+      run: |
+        build_testing=${{ inputs.run_cmake_tests == 'true' && 'ON' || 'OFF' }}
+
+        # Pin CMake's FindPython to the interpreter actions/setup-python put on
+        # PATH (and that "Install Python Requirements" above just installed
+        # into). Without this, CMake's own search can prefer a different
+        # ambient interpreter (e.g. a macOS Homebrew framework Python),
+        # leaving configure-time-installed packages invisible to build-time
+        # codegen scripts that embed a Python interpreter.
+        cmake -Bbuild -H. -GNinja \
+          -DCMAKE_INSTALL_PREFIX=./install \
+          -DCMAKE_C_COMPILER="${CC}" \
+          -DCMAKE_CXX_COMPILER="${CXX}" \
+          -DBUILD_TESTING="${build_testing}" \
+          -DPython_EXECUTABLE="$(command -v python3)" \
+          ${{ inputs.cmake_opts }}
+
+    - name: Build
+      shell: bash
+      run: cmake --build build --parallel
+
+    - name: Install Extra Pip Packages
+      if: inputs.extra_pip_packages != ''
+      shell: bash
+      # Runs before "Test C++" because CTest-driven Python tests use the
+      # ambient Python_EXECUTABLE, whose sys.path always includes
+      # site-packages regardless of CTest's PYTHONPATH override -- so any
+      # package such a test imports needs to be pip-installed here.
+      run: pip install --quiet ${{ inputs.extra_pip_packages }}
+
+    - name: Test C++
+      if: inputs.run_cmake_tests == 'true'
+      shell: bash
+      working-directory: build
+      # Some C++ tests embed a Python interpreter that imports this repo's
+      # own (and its dependencies') built pybind11 modules -- same PYTHONPATH
+      # need as the pytest step below, just computed relative to build/.
+      run: |
+        total_tests=$(ctest -N | grep "Total Tests:" | grep -oE "[0-9]+$")
+        if [ "${total_tests:-0}" -eq 0 ]; then
+            echo "::error::run_cmake_tests is true but zero CTest tests were found."
+            exit 1
+        fi
+        pythonpath=$(find . -name "*.so" -exec dirname {} \; | sort -u | paste -sd: -)
+        PYTHONPATH="$pythonpath" ctest -VV
+
+    - name: Test Python
+      if: inputs.run_python_tests == 'true'
+      shell: bash
+      run: |
+        pip install --quiet pytest
+
+        pythonpath=$(find build -name "*.so" -exec dirname {} \; | sort -u | paste -sd: -)
+        if [ -z "$pythonpath" ]; then
+            echo "::error::run_python_tests is true but no built Python module (*.so) was found under build/."
+            exit 1
+        fi
+
+        set +e
+        PYTHONPATH="$pythonpath" pytest -v
+        pytest_exit=$?
+        set -e
+
+        if [ "$pytest_exit" -eq 5 ]; then
+            echo "::error::run_python_tests is true but zero pytest tests were found."
+            exit 1
+        fi
+        exit "$pytest_exit"

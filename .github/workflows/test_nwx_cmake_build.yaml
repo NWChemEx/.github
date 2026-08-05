@@ -1,0 +1,76 @@
+# Copyright 2026 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: Test NWX CMake Build
+# Configure, build, and test a repository with CMake, across the shared
+# NWChemEx dev matrix (see platform_matrix.yaml).
+
+on:
+  workflow_call:
+    inputs:
+      run_cmake_tests:
+        description: "Whether to build and run the CTest (C++) test suite."
+        type: string
+        required: false
+        default: "true"
+      run_python_tests:
+        description: "Whether to run the pytest (Python) test suite against the built pybind11 module."
+        type: string
+        required: false
+        default: "true"
+      cmake_opts:
+        description: "Additional CMake options to pass at configure time."
+        type: string
+        required: false
+        default: ""
+      python_version:
+        description: "Python version to set up (passed to actions/setup-python)."
+        type: string
+        required: false
+        default: "3.x"
+      extra_pip_packages:
+        description: "Extra packages to pip install into the ambient Python before the C++ test step."
+        type: string
+        required: false
+        default: ""
+
+jobs:
+  platform_matrix:
+    uses: NWChemEx/.github/.github/workflows/platform_matrix.yaml@master
+
+  test_cmake_build:
+    needs: platform_matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.platform_matrix.outputs.dev_matrix) }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python_version }}
+      - name: CMake Build
+        uses: NWChemEx/.github/.github/actions/cmake_build@master
+        with:
+          compiler: ${{ matrix.compiler }}
+          run_cmake_tests: ${{ inputs.run_cmake_tests }}
+          run_python_tests: ${{ inputs.run_python_tests }}
+          cmake_opts: ${{ inputs.cmake_opts }}
+          extra_pip_packages: ${{ inputs.extra_pip_packages }}

@@ -1,0 +1,361 @@
+# Copyright 2026 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Build PyPI Distribution
+description: >-
+  Checkout and build a repository's sdist and/or wheel into dist/, verifying
+  the metadata and that the wheel installs cleanly. Does NOT publish --
+  the calling job must add its own pypa/gh-action-pypi-publish step
+  afterwards, as a sibling step never nested inside another composite
+  action: gh-action-pypi-publish's own docker-trampoline image-tag
+  resolution breaks when called from within a composite action (a known
+  upstream limitation, actions/runner#2473). Runs on a bare runner
+  (no `container:`).
+
+inputs:
+  cibw_build:
+    description: >-
+      A cibuildwheel CIBW_BUILD selector (e.g. cp312-manylinux_x86_64). When
+      set, the wheel is built with pypa/cibuildwheel instead of `python -m
+      build`, for a compiled package that needs a manylinux/macOS-portable
+      wheel. Leave unset for a pure-Python package with no compiled extension
+      (e.g. NWXCMake itself) -- a package with a CMakeLists.txt should always
+      set this, since a wheel built directly (not via cibuildwheel) isn't
+      manylinux-portable and PyPI will reject it.
+      Intended to be called once per {os, cibw_build} matrix leg from the
+      calling workflow; the job must NOT run inside a `container:`, since
+      cibuildwheel manages its own (nested) build containers on Linux.
+    required: false
+    default: ""
+  build_sdist:
+    description: >-
+      Whether this invocation ALSO builds the source distribution, in
+      addition to the wheel. Does not affect the wheel itself -- that is
+      always built whenever cibw_build is set, regardless of this input.
+      Only relevant to multi-platform matrices: every leg would build
+      byte-identical sdist content, and PyPI rejects re-uploading an
+      existing filename, so set this to "true" on exactly one leg and
+      "false" on the rest to publish the sdist once instead of once-per-leg.
+      Ignored (always true) on the plain, non-cibw_build path, since
+      there's only ever one leg there.
+    required: false
+    default: "true"
+  extra_index_url:
+    description: >-
+      Extra package index passed to the post-build `pip install` sanity
+      check (e.g. https://test.pypi.org/simple/), in addition to the
+      default index. Needed when this package's runtime dependencies are
+      other nwx packages that only exist on that extra index (e.g. a
+      TestPyPI-only publish chain) -- without it, the verification install
+      can only ever resolve dependencies that are already on the default
+      index. Leave unset for a package with no such dependencies.
+    required: false
+    default: ""
+  needs_mpi:
+    description: >-
+      Whether the cibuildwheel build needs an MPI installation. The
+      manylinux/macOS cibuildwheel containers are minimal and don't have
+      one, unlike the ambient dev matrix (see setup_nwx_dev_env). When
+      "true", installs openmpi3-devel (via EPEL) inside the manylinux
+      container and puts its bin/ on PATH so CMake's find_package(MPI)
+      succeeds there, and installs open-mpi via Homebrew on macOS. Ignored
+      when cibw_build is unset (the plain, non-cibuildwheel path assumes
+      the ambient runner already has whatever the package needs).
+    required: false
+    default: "false"
+  needs_boost:
+    description: >-
+      Whether the cibuildwheel build needs Boost. The manylinux/macOS
+      cibuildwheel containers are minimal and don't have it. When "true",
+      installs boost-devel (via EPEL) inside the manylinux container and
+      boost via Homebrew on macOS. Ignored when cibw_build is unset.
+    required: false
+    default: "false"
+  needs_blas:
+    description: >-
+      Whether the cibuildwheel build needs a BLAS/LAPACK installation (e.g.
+      transitively via GauXC). The manylinux/macOS cibuildwheel containers
+      are minimal and don't have one. When "true", installs openblas-devel
+      and lapack-devel (via EPEL) inside the manylinux container, and
+      openblas via Homebrew on macOS (pointing CMAKE_PREFIX_PATH at it,
+      since it's keg-only there). Ignored when cibw_build is unset.
+    required: false
+    default: "false"
+  needs_eigen:
+    description: >-
+      Whether the cibuildwheel build needs an installed Eigen3 CMake config
+      (e.g. libint2's own CMakeLists does its own find_package(Eigen3),
+      independent of and unsatisfied by nwxcmake's own FetchContent'd Eigen
+      target). The manylinux/macOS cibuildwheel containers don't have one.
+      When "true", installs eigen3-devel (via EPEL) inside the manylinux
+      container and eigen via Homebrew on macOS. Ignored when cibw_build is
+      unset.
+    required: false
+    default: "false"
+  needs_openmp:
+    description: >-
+      Whether the cibuildwheel build needs OpenMP (e.g. transitively via
+      GauXC, which unconditionally find_package(OpenMP)s). Linux's gcc
+      ships its own OpenMP runtime (libgomp) so no extra provisioning is
+      needed there; AppleClang has no built-in OpenMP support, so on macOS
+      this installs libomp via Homebrew and points scikit-build-core's
+      SKBUILD_CMAKE_ARGS at it (CMake's FindOpenMP can't locate Homebrew's
+      keg-only libomp on its own). Ignored when cibw_build is unset.
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout Source
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
+    - name: Install Packaging Tools
+      shell: bash
+      run: pip install --quiet build twine
+
+    # Uses the normal (isolated) build-system.requires resolution, i.e. the
+    # same git-fetched nwxcmake a real `pip install` from PyPI would use, so
+    # this publishes exactly what a fresh `pip install` would build.
+    - name: Build Source Distribution
+      if: inputs.build_sdist == 'true'
+      shell: bash
+      run: python -m build --sdist --outdir dist
+
+    # Building the wheel from the *extracted sdist* (rather than the repo
+    # checkout) catches packaging bugs where a file the build needs was
+    # never included in the sdist manifest -- publishing that wheel
+    # unbuilt-from-sdist could otherwise ship silently broken. Only applies
+    # to the plain path: cibuildwheel builds its own way (see below) and
+    # doesn't need this repo's build-system.requires forwarded a second time.
+    - name: Build Wheel From Source Distribution
+      if: inputs.cibw_build == ''
+      shell: bash
+      run: |
+        sdist=$(ls dist/*.tar.gz)
+        rm -rf sdist_extracted
+        mkdir sdist_extracted
+        tar -xzf "${sdist}" -C sdist_extracted --strip-components=1
+
+        python -m build --wheel --outdir dist sdist_extracted
+
+    # Composes the CIBW_BEFORE_ALL_*/CIBW_ENVIRONMENT_* values in a shell
+    # step (rather than inline ternary expressions in the cibuildwheel env:
+    # block below) so needs_mpi and needs_boost can each independently
+    # contribute a clause without one clobbering the other.
+    - name: Compute cibuildwheel System Dependencies
+      if: inputs.cibw_build != ''
+      shell: bash
+      run: |
+        before_linux=()
+        before_macos=()
+        env_linux=()
+        env_macos=("MACOSX_DEPLOYMENT_TARGET=11.0")
+
+        if [ "${{ inputs.needs_mpi }}" = "true" ]; then
+          # Built from source at the *exact* version Ubuntu 24.04's apt
+          # package provides (see setup_nwx_dev_env), not EPEL's openmpi3
+          # (3.1.3) as before -- OpenMPI's ABI is not guaranteed compatible
+          # across major versions. EPEL7 (manylinux2014's package repo) has
+          # no openmpi4 package at all, so this can't be a yum install. Still
+          # needed even though the wheel no longer vendors MPI (see
+          # CIBW_REPAIR_WHEEL_COMMAND_LINUX below): the extension must be
+          # *compiled* against a matching OpenMPI to link correctly against
+          # whatever system OpenMPI the wheel resolves to at runtime.
+          #
+          # --disable-dlopen got MPI_Init's MCA shmem component selection
+          # working (previously failed: "opal_shmem_base_select failed",
+          # since auditwheel only bundles a wheel's DT_NEEDED dependencies
+          # found via ldd, not the dlopen()'d MCA plugin .so files normally
+          # living under $prefix/lib/openmpi/), but a vendored wheel install
+          # still crashes one step later: OpenMPI's singleton-mode ORTE
+          # startup (ess_singleton_module.c) needs to locate the `orted`
+          # daemon executable itself, and auditwheel/delocate only ever
+          # bundle shared libraries, never the accompanying bin/ executables
+          # -- "A system-required executable could not be found". Vendoring
+          # MPI into the wheel is a dead end; see CIBW_REPAIR_WHEEL_COMMAND
+          # below for the fix (exclude MPI libs, require system MPI instead).
+          before_linux+=(
+            "curl -fsSL https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.6.tar.gz -o /tmp/openmpi.tar.gz"
+            "mkdir -p /tmp/openmpi-src"
+            "tar -xzf /tmp/openmpi.tar.gz -C /tmp/openmpi-src --strip-components=1"
+            "cd /tmp/openmpi-src && ./configure --prefix=/usr/local/openmpi --disable-mpi-fortran --disable-dlopen"
+            "cd /tmp/openmpi-src && make -j\$(nproc) install"
+          )
+          env_linux+=("PATH=/usr/local/openmpi/bin:\$PATH" "LD_LIBRARY_PATH=/usr/local/openmpi/lib:\$LD_LIBRARY_PATH")
+          # auditwheel repair normally bundles every DT_NEEDED lib (incl.
+          # libmpi/libopen-rte/libopen-pal) into the wheel via
+          # RPATH-relocation. Excluding them here means the wheel links
+          # against whatever libmpi.so.40 is on the *runtime* system's
+          # linker path instead -- the one that ships with a real OpenMPI
+          # install (incl. its bin/orted), which setup_nwx_dev_env already
+          # provides ambient (libopenmpi-dev/openmpi-bin) and which end users
+          # need to install themselves (documented as a runtime requirement).
+          #
+          # Exact sonames (libmpi.so.40), NOT a glob (libmpi*): cibuildwheel
+          # v2.22.0's manylinux2014 image (quay.io/pypa/manylinux2014_x86_64:
+          # 2024.11.16-1) bakes in auditwheel 6.1.0, whose --exclude does a
+          # plain `soname in exclude` set-membership check (confirmed by
+          # reading that exact container's lddtree.py) -- fnmatch/glob
+          # support for --exclude was only added in a later auditwheel
+          # release. A glob pattern silently matches nothing and bundles the
+          # library anyway (reproduced locally via Docker: 'libmpi*' bundled
+          # libmpi/libopen-rte/libopen-pal same as no --exclude at all;
+          # 'libmpi.so.40' correctly excluded it, and since libopen-rte/
+          # libopen-pal are only reachable *through* libmpi in this tree,
+          # excluding libmpi.so.40 alone is sufficient -- auditwheel doesn't
+          # recurse into an excluded library's own dependencies).
+          {
+            echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=auditwheel repair --exclude 'libmpi.so.40' --exclude 'libopen-rte.so.40' --exclude 'libopen-pal.so.40' -w {dest_dir} {wheel}"
+          } >> "$GITHUB_ENV"
+          before_macos+=("brew install open-mpi")
+          # Homebrew's open-mpi (and its own deps: libpmix, libhwloc,
+          # libevent) are built against the actual runner OS, so their
+          # dylibs report a minimum target matching it (14.0 on macos-14) --
+          # higher than cibuildwheel's default arm64 target (11.0). delocate
+          # then refuses to tag the repaired wheel as 11.0-compatible, since
+          # that would be false. Raise the declared target to match what's
+          # actually bundled.
+          env_macos=("MACOSX_DEPLOYMENT_TARGET=14.0")
+        fi
+
+        if [ "${{ inputs.needs_boost }}" = "true" ]; then
+          # manylinux2014's plain boost-devel is 1.53.0, too old for headers
+          # some repos need (e.g. boost/container_hash/hash.hpp). EPEL's
+          # boost169-devel (parallel-installable, doesn't replace the base
+          # boost-devel) is the newest available via yum there, but installs
+          # under a versioned, non-default include path, so CMake's FindBoost
+          # needs to be pointed at it explicitly via BOOST_INCLUDEDIR.
+          before_linux+=("yum install -y boost169-devel")
+          env_linux+=("BOOST_INCLUDEDIR=/usr/include/boost169")
+          before_macos+=("brew install boost")
+        fi
+
+        if [ "${{ inputs.needs_blas }}" = "true" ]; then
+          before_linux+=("yum install -y epel-release" "yum install -y openblas-devel lapack-devel")
+          before_macos+=("brew install openblas")
+          # Quoted: cibuildwheel's CIBW_ENVIRONMENT parses space-separated
+          # KEY=VALUE tokens, and the $(brew --prefix ...) substitution's
+          # arguments contain a space, which would otherwise split it into
+          # two bogus tokens.
+          env_macos+=('CMAKE_PREFIX_PATH="$(brew --prefix openblas)"')
+        fi
+
+        if [ "${{ inputs.needs_eigen }}" = "true" ]; then
+          before_linux+=("yum install -y epel-release" "yum install -y eigen3-devel")
+          before_macos+=("brew install eigen")
+        fi
+
+        if [ "${{ inputs.needs_openmp }}" = "true" ]; then
+          before_macos+=("brew install libomp")
+          # AppleClang has no built-in OpenMP; CMake's FindOpenMP can't
+          # locate Homebrew's keg-only libomp without explicit hints. Quoted
+          # as a single token for the same reason as CMAKE_PREFIX_PATH above.
+          env_macos+=('SKBUILD_CMAKE_ARGS="-DOpenMP_C_FLAGS=-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include;-DOpenMP_C_LIB_NAMES=omp;-DOpenMP_CXX_FLAGS=-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include;-DOpenMP_CXX_LIB_NAMES=omp;-DOpenMP_omp_LIBRARY=$(brew --prefix libomp)/lib/libomp.dylib"')
+        fi
+
+        join_and() {
+          local out="" item
+          for item in "$@"; do
+            if [ -z "$out" ]; then out="$item"; else out="$out && $item"; fi
+          done
+          echo "$out"
+        }
+
+        {
+          echo "CIBW_BEFORE_ALL_LINUX=$(join_and "${before_linux[@]}")"
+          echo "CIBW_BEFORE_ALL_MACOS=$(join_and "${before_macos[@]}")"
+          echo "CIBW_ENVIRONMENT_LINUX=${env_linux[*]}"
+          echo "CIBW_ENVIRONMENT_MACOS=${env_macos[*]}"
+        } >> "$GITHUB_ENV"
+
+    # cibuildwheel manages its own (manylinux/macOS) build images, so it
+    # builds straight from the repo checkout rather than an extracted sdist.
+    - name: Build Wheel With cibuildwheel
+      if: inputs.cibw_build != ''
+      uses: pypa/cibuildwheel@v2.22.0
+      env:
+        CIBW_BUILD: ${{ inputs.cibw_build }}
+        CIBW_BUILD_VERBOSITY: "1"
+
+    - name: Collect cibuildwheel Output
+      if: inputs.cibw_build != ''
+      shell: bash
+      run: |
+        mkdir -p dist
+        mv wheelhouse/*.whl dist/
+
+    - name: Check Packaging Metadata
+      shell: bash
+      run: twine check dist/*
+
+    # A cibuildwheel wheel is tagged for one specific CPython (e.g. cp312),
+    # which usually differs from the ambient "Set up Python" 3.x (latest).
+    # Installing it there would fail with "not a supported wheel on this
+    # platform", so re-point PATH at a matching interpreter first.
+    - name: Determine cibuildwheel Python Version
+      if: inputs.cibw_build != ''
+      id: cibw_python_version
+      shell: bash
+      run: |
+        # e.g. "cp312-manylinux_x86_64" -> "3.12"
+        if [[ "${{ inputs.cibw_build }}" =~ ^cp([0-9])([0-9]+) ]]; then
+          echo "version=${BASH_REMATCH[1]}.${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
+        else
+          echo "::error::Could not parse a Python version out of cibw_build='${{ inputs.cibw_build }}'"
+          exit 1
+        fi
+
+    - name: Set up Python Matching cibuildwheel Target
+      if: inputs.cibw_build != ''
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ steps.cibw_python_version.outputs.version }}
+
+    # The plain (non-cibw) path's wheel itself is version-agnostic
+    # (py3-none-any), but a pure-Python package's runtime dependencies can
+    # include other nwx-ecosystem packages that are compiled and only
+    # published for one CPython version (cp312, per platform_matrix.yaml's
+    # release_matrix) -- installing under whatever "Set up Python"'s "3.x"
+    # resolves to today (e.g. 3.14) would find no matching wheel for those
+    # and fall back to building them from source, which fails on this bare
+    # verification venv (no MPI/Boost/etc.). Re-point at 3.12 to match.
+    - name: Set up Python Matching Ecosystem Release Target
+      if: inputs.cibw_build == ''
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    # Cheap safety net before publishing to a registry where a bad upload
+    # can only be yanked, never truly deleted: catch an unimportable wheel
+    # here rather than after it's live on PyPI.
+    - name: Verify Wheel Installs
+      shell: bash
+      run: |
+        python -m venv /tmp/build_pypi_dist_venv
+        . /tmp/build_pypi_dist_venv/bin/activate
+        wheel=$(ls dist/*.whl)
+        extra_index_args=()
+        if [ -n "${{ inputs.extra_index_url }}" ]; then
+          extra_index_args=(--extra-index-url "${{ inputs.extra_index_url }}")
+        fi
+        pip install --quiet "${extra_index_args[@]}" "${wheel}"

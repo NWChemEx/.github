@@ -1,0 +1,120 @@
+# Copyright 2026 NWChemEx-Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Setup NWX Dev Environment
+description: >-
+  Installs a C/C++ compiler plus CMake, Ninja, MPI, Boost, BLAS/LAPACK, and
+  Eigen3 via the native package manager (apt on Linux, Homebrew on macOS),
+  and exports CC/CXX to $GITHUB_ENV for later steps in the same job. Single
+  source of truth for this, shared by cmake_build and pip_build.
+
+inputs:
+  compiler:
+    description: "One of: gcc-14, clang-18."
+    required: true
+  needs_nwchem:
+    description: >-
+      Whether to install a real NWChem binary, for friend-integration tests
+      that shell out to the external NWChem quantum chemistry program (e.g.
+      FriendZone's nwx2molssi/nwx2ase NWChem wrappers, and NWChemEx's
+      compute_energy tests -- both gated behind
+      friendzone.friends.is_nwchem_enabled(), which checks whether `nwchem`
+      is on PATH). No apt or pip package ships the actual NWChem binary, only
+      Homebrew (macOS) and conda-forge (Linux, via a standalone micromamba
+      bootstrap -- no full Anaconda needed) do. Off by default: this is a
+      large, slow install that only a couple of repos' test suites need.
+    required: false
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Install Compiler and Dependencies
+      shell: bash
+      run: |
+        case "${{ runner.os }}_${{ inputs.compiler }}" in
+          Linux_gcc-14)
+            sudo apt-get update -y
+            sudo apt-get install -y gcc-14 g++-14 cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev libeigen3-dev
+            echo "CC=gcc-14"  >> "$GITHUB_ENV"
+            echo "CXX=g++-14" >> "$GITHUB_ENV"
+            ;;
+          Linux_clang-18)
+            sudo apt-get update -y
+            sudo apt-get install -y clang-18 libomp-18-dev cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev libeigen3-dev
+            echo "CC=clang-18"    >> "$GITHUB_ENV"
+            echo "CXX=clang++-18" >> "$GITHUB_ENV"
+            ;;
+          macOS_gcc-14)
+            brew install gcc@14 cmake ninja open-mpi boost openblas eigen
+            echo "CC=gcc-14"  >> "$GITHUB_ENV"
+            echo "CXX=g++-14" >> "$GITHUB_ENV"
+            echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas)" >> "$GITHUB_ENV"
+            ;;
+          macOS_clang-18)
+            brew install llvm@18 libomp cmake ninja open-mpi boost openblas eigen
+            prefix=$(brew --prefix llvm@18)
+            libomp_prefix=$(brew --prefix libomp)
+            echo "CC=${prefix}/bin/clang"    >> "$GITHUB_ENV"
+            echo "CXX=${prefix}/bin/clang++" >> "$GITHUB_ENV"
+            echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas);${libomp_prefix}" >> "$GITHUB_ENV"
+            # llvm@18's own clang has no bundled OpenMP runtime; find_package(OpenMP)
+            # needs omp.h/libomp.dylib on the compiler's default search paths to pass
+            # its "-fopenmp compiles" check and locate the library, and CPATH/LIBRARY_PATH
+            # are how Clang picks those up without needing explicit -I/-L flags threaded
+            # through every cmake_opts caller.
+            echo "CPATH=${libomp_prefix}/include" >> "$GITHUB_ENV"
+            echo "LIBRARY_PATH=${libomp_prefix}/lib" >> "$GITHUB_ENV"
+            ;;
+          *)
+            echo "::error::Unsupported (os, compiler): (${{ runner.os }}, ${{ inputs.compiler }})"
+            exit 1
+            ;;
+        esac
+
+    - name: Install NWChem
+      if: inputs.needs_nwchem == 'true'
+      shell: bash
+      run: |
+        case "${{ runner.os }}" in
+          Linux)
+            # No apt/pip package ships the real NWChem binary -- conda-forge
+            # is the only source of a precompiled one. Bootstrap a
+            # standalone micromamba (not a full Anaconda/conda install),
+            # install NWChem into its own env, then put just that env's
+            # bin/ on PATH via GITHUB_PATH rather than `conda activate`,
+            # so it doesn't shadow the Python venv the rest of the job uses.
+            "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+            "$HOME/.local/bin/micromamba" create -y -n nwchem -c conda-forge nwchem
+            echo "$HOME/micromamba/envs/nwchem/bin" >> "$GITHUB_PATH"
+            # conda-forge's nwchem is compiled with a hardcoded default
+            # NWCHEM_BASIS_LIBRARY pointing at the feedstock's own build
+            # directory (doesn't exist outside the build container), so
+            # basis set lookups fail unless overridden. The package's own
+            # etc/conda/activate.d/nwchem_env.sh sets these two vars
+            # correctly, but only on `conda activate`, which we don't do
+            # (just PATH, to avoid shadowing the job's Python venv) -- so
+            # set them explicitly instead. Confirmed via local repro
+            # (Docker) that a bare `nwchem` invocation missing these vars
+            # can hang indefinitely on some tasks (e.g. CCSD(T)) rather
+            # than fail cleanly, instead of the fast/clean "failed opening
+            # basis file" abort seen on simpler tasks (e.g. CCSD) --
+            # confirmed fixed by setting these.
+            echo "NWCHEM_BASIS_LIBRARY=$HOME/micromamba/envs/nwchem/share/nwchem/libraries/" >> "$GITHUB_ENV"
+            echo "NWCHEM_NWPW_LIBRARY=$HOME/micromamba/envs/nwchem/share/nwchem/libraryps/" >> "$GITHUB_ENV"
+            ;;
+          macOS)
+            brew install nwchem
+            ;;
+        esac

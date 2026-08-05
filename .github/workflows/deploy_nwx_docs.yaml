@@ -41,6 +41,22 @@ jobs:
             core.setFailed("doc_target must not be blank.")
       - name: Checkout Source
         uses: actions/checkout@v4
+      # Some repos' CMake build invokes a Python codegen script at configure
+      # or build time (e.g. GauXC's gau2grid dependency imports numpy to
+      # generate C source) using whichever python3 is on PATH by default in
+      # this container -- install into that same interpreter here, before
+      # CMake ever runs, rather than in the module-docs/Sphinx steps below
+      # (those activate /pyenv instead, a separate environment).
+      - name: Install Repo Python Build Dependencies
+        if: inputs.generate_module_docs == true
+        run: |
+          if [ -f requirements.txt ]; then
+            # This container's system python3 is PEP 668
+            # externally-managed; --break-system-packages is safe here
+            # since the whole container is ephemeral CI state anyway.
+            python3 -m pip install --quiet --break-system-packages -r requirements.txt
+          fi
+        shell: bash
       # These next two steps will configure CMake if required
       - name: Configure Only Docs
         if: |
