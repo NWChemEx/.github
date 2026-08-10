@@ -45,6 +45,17 @@ on:
         type: string
         required: false
         default: ""
+      allow_macos_failure:
+        description: >-
+          If "true", a failure on the macos-14 matrix leg is reported but
+          does not fail the job/block the workflow (via continue-on-error).
+          Other legs are unaffected. For repos with a known, tracked,
+          macOS-only issue that shouldn't block merges while it's being
+          investigated -- default "false" keeps the normal all-legs-required
+          behavior for every other caller.
+        type: string
+        required: false
+        default: "false"
 
 jobs:
   platform_matrix:
@@ -57,6 +68,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.platform_matrix.outputs.dev_matrix) }}
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.os == 'macos-14' && inputs.allow_macos_failure == 'true' }}
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
