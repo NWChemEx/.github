@@ -91,6 +91,36 @@ runs:
         # ambient interpreter (e.g. a macOS Homebrew framework Python),
         # leaving configure-time-installed packages invisible to build-time
         # codegen scripts that embed a Python interpreter.
+        #
+        # Python_EXECUTABLE alone only pins the interpreter/header search --
+        # on macOS, FindPython's separate Development.Module/.Embed library
+        # lookups can still independently resolve to a *different* Homebrew
+        # framework Python (e.g. python@3.14, present on GitHub's macos-14
+        # runner image regardless of what this job's own `brew install`
+        # pulls in) even though the headers matched the pinned 3.12
+        # interpreter. This produced a pybind11 module compiled against 3.12
+        # headers but linked against 3.14's libpython -- confirmed via
+        # `otool -L` showing a hardcoded link to
+        # /opt/homebrew/opt/python@3.14/.../Python -- which crashed at
+        # import time inside pybind11's own version-mismatch error path (see
+        # scf-macos-pybind11-segfault.md in NWChemEx/SCF for the full
+        # investigation). Python_FIND_STRATEGY=LOCATION is CMake's own
+        # documented mechanism for tying *all* Development component lookups
+        # to wherever the interpreter itself was found, instead of a
+        # separate framework search; explicitly forcing Python_LIBRARY
+        # instead was also tried and rejected -- it fixed the pybind11
+        # module link but broke a different dependency's
+        # Development.Embed lookup. Both Python_ and Python3_ spellings are
+        # set since different dependencies in the FetchContent graph call
+        # find_package() with either casing.
+        python_pin_opts=(-DPython_EXECUTABLE="$(command -v python3)")
+        if [ "$RUNNER_OS" = "macOS" ]; then
+            python_pin_opts+=(
+                -DPython_FIND_STRATEGY=LOCATION
+                -DPython3_FIND_STRATEGY=LOCATION
+            )
+        fi
+
         cmake -Bbuild -H. -GNinja \
           -DCMAKE_INSTALL_PREFIX=./install \
           -DCMAKE_C_COMPILER="${CC}" \
@@ -98,7 +128,7 @@ runs:
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
           -DBUILD_TESTING="${build_testing}" \
-          -DPython_EXECUTABLE="$(command -v python3)" \
+          "${python_pin_opts[@]}" \
           ${{ inputs.cmake_opts }}
 
     - name: Build
