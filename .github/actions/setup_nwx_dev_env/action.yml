@@ -46,24 +46,24 @@ runs:
         case "${{ runner.os }}_${{ inputs.compiler }}" in
           Linux_gcc-14)
             sudo apt-get update -y
-            sudo apt-get install -y gcc-14 g++-14 cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev libeigen3-dev
+            sudo apt-get install -y gcc-14 g++-14 cmake ninja-build ccache libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev libeigen3-dev
             echo "CC=gcc-14"  >> "$GITHUB_ENV"
             echo "CXX=g++-14" >> "$GITHUB_ENV"
             ;;
           Linux_clang-18)
             sudo apt-get update -y
-            sudo apt-get install -y clang-18 libomp-18-dev cmake ninja-build libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev libeigen3-dev
+            sudo apt-get install -y clang-18 libomp-18-dev cmake ninja-build ccache libopenmpi-dev openmpi-bin libboost-dev libopenblas-dev liblapack-dev libeigen3-dev
             echo "CC=clang-18"    >> "$GITHUB_ENV"
             echo "CXX=clang++-18" >> "$GITHUB_ENV"
             ;;
           macOS_gcc-14)
-            brew install gcc@14 cmake ninja open-mpi boost openblas eigen
+            brew install gcc@14 cmake ninja ccache open-mpi boost openblas eigen
             echo "CC=gcc-14"  >> "$GITHUB_ENV"
             echo "CXX=g++-14" >> "$GITHUB_ENV"
             echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas)" >> "$GITHUB_ENV"
             ;;
           macOS_clang-18)
-            brew install llvm@18 libomp cmake ninja open-mpi boost openblas eigen
+            brew install llvm@18 libomp cmake ninja ccache open-mpi boost openblas eigen
             prefix=$(brew --prefix llvm@18)
             libomp_prefix=$(brew --prefix libomp)
             echo "CC=${prefix}/bin/clang"    >> "$GITHUB_ENV"
@@ -82,6 +82,14 @@ runs:
             exit 1
             ;;
         esac
+
+        # Fixed, OS-independent ccache location/size so cmake_build's cache
+        # step can target one known path regardless of platform default
+        # (~/.cache/ccache on Linux vs ~/Library/Caches/ccache on macOS), and
+        # so cache growth is bounded against the GitHub Actions per-repo
+        # cache size cap.
+        echo "CCACHE_DIR=$HOME/.ccache" >> "$GITHUB_ENV"
+        echo "CCACHE_MAXSIZE=500M" >> "$GITHUB_ENV"
 
     - name: Install NWChem
       if: inputs.needs_nwchem == 'true'
