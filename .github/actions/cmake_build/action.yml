@@ -133,7 +133,26 @@ runs:
 
     - name: Build
       shell: bash
-      run: cmake --build build --parallel
+      # Unbounded `--parallel` (defaults to nproc) starts one gcc/clang
+      # invocation per core simultaneously; heavily-templated C++ (e.g.
+      # sigma's TaylorModel headers) makes each of those invocations
+      # memory-heavy enough that nproc concurrent compiles can exceed a
+      # GitHub-hosted runner's RAM. That OOM-kills the compiler *and* the
+      # runner's own listener process, which GitHub Actions then reports as
+      # the job being cancelled (exit 143 / "runner has received a shutdown
+      # signal") instead of a normal build failure -- confirmed via 3
+      # consecutive reproductions of exactly this on test_enable_sigma's
+      # (ubuntu-latest, gcc-14) matrix cell, while every other cell
+      # (including the same sigma build on macos-14 and on
+      # ubuntu-latest/clang-18) passed. Halving nproc trades some build
+      # speed for headroom; revisit if it turns out insufficient.
+      run: |
+        nproc_count=$(getconf _NPROCESSORS_ONLN)
+        jobs=$(( nproc_count / 2 ))
+        if [ "$jobs" -lt 1 ]; then
+            jobs=1
+        fi
+        cmake --build build --parallel "$jobs"
 
     - name: ccache Stats
       shell: bash
