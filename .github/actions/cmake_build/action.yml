@@ -80,6 +80,16 @@ runs:
         restore-keys: |
           ccache-${{ runner.os }}-${{ inputs.compiler }}-
 
+    # ENABLE_XHOST=OFF: several dependencies (gau2grid, libxc, GauXC's
+    # vendored gau2grid) default it ON, which builds them with
+    # "-march=native". The two caches above are shared across the whole
+    # runner fleet, and ccache hashes the flag *text* rather than the ISA
+    # "native" resolves to, so a hit restored from a job that ran on an
+    # AVX-512 host serves those instructions to a job that ran on one
+    # without -- which is exactly how NWChemEx/SCF's ubuntu leg started
+    # failing intermittently with SIGILL inside gau2grid. Passed here
+    # rather than defaulted OFF in NWXCMake so a local build on the machine
+    # it will run on still gets the tuning (see set_default_nwx_options).
     - name: Configure
       shell: bash
       run: |
@@ -128,6 +138,7 @@ runs:
           -DCMAKE_C_COMPILER_LAUNCHER=ccache \
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
           -DBUILD_TESTING="${build_testing}" \
+          -DENABLE_XHOST=OFF \
           "${python_pin_opts[@]}" \
           ${{ inputs.cmake_opts }}
 

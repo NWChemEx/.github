@@ -294,6 +294,27 @@ runs:
           env_macos+=('SKBUILD_CMAKE_ARGS="-DOpenMP_C_FLAGS=-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include;-DOpenMP_C_LIB_NAMES=omp;-DOpenMP_CXX_FLAGS=-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include;-DOpenMP_CXX_LIB_NAMES=omp;-DOpenMP_omp_LIBRARY=$(brew --prefix libomp)/lib/libomp.dylib"')
         fi
 
+        # Appended after every needs_* branch, not seeded with the arrays
+        # above, because the needs_mpi branch *reassigns* env_macos rather
+        # than appending to it (to raise MACOSX_DEPLOYMENT_TARGET) and would
+        # drop anything set earlier.
+        #
+        # Unconditional, and deliberately not tied to any needs_* input: a
+        # published wheel must never be tuned to whichever runner built it.
+        # gau2grid, libxc and GauXC's vendored gau2grid all default
+        # ENABLE_XHOST ON, which compiles them "-march=native" -- so a wheel
+        # built on an AVX-512 runner raises SIGILL on a user's machine
+        # without it. NWXCMake keeps ON as the default for local builds
+        # (see set_default_nwx_options) and expects redistributable builds
+        # to say otherwise, which is what this does.
+        #
+        # SKBUILD_CMAKE_DEFINE (scikit-build-core's env spelling of
+        # cmake.define.*, ";"-separated KEY=VALUE) rather than
+        # SKBUILD_CMAKE_ARGS, which needs_openmp already claims on macOS --
+        # a second assignment to it there would clobber the OpenMP hints.
+        env_linux+=("SKBUILD_CMAKE_DEFINE=ENABLE_XHOST=OFF")
+        env_macos+=("SKBUILD_CMAKE_DEFINE=ENABLE_XHOST=OFF")
+
         join_and() {
           local out="" item
           for item in "$@"; do
