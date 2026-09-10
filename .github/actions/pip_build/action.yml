@@ -51,6 +51,15 @@ runs:
         restore-keys: |
           deps-${{ runner.os }}-${{ inputs.compiler }}-
 
+    # ENABLE_XHOST=OFF: several dependencies (gau2grid, libxc, GauXC's
+    # vendored gau2grid) default it ON, which builds them with
+    # "-march=native". The dependency tree cached above is shared across
+    # the whole runner fleet, and it holds those dependencies' *built*
+    # artifacts, so a restore onto a runner with a narrower instruction set
+    # than the one that filled it hands the build a library it cannot
+    # execute (SIGILL). Passed here rather than defaulted OFF in NWXCMake
+    # so a local build on the machine it will run on still gets the tuning
+    # (see set_default_nwx_options).
     - name: Install
       shell: bash
       run: |
@@ -61,12 +70,14 @@ runs:
               --config-settings=cmake.define.CMAKE_C_COMPILER="${CC}" \
               --config-settings=cmake.define.CMAKE_CXX_COMPILER="${CXX}" \
               --config-settings=cmake.define.BUILD_TESTING="${build_testing}" \
+              --config-settings=cmake.define.ENABLE_XHOST=OFF \
               ${{ inputs.pip_opts }}
         else
             pip install . \
               --config-settings=cmake.define.CMAKE_C_COMPILER="${CC}" \
               --config-settings=cmake.define.CMAKE_CXX_COMPILER="${CXX}" \
               --config-settings=cmake.define.BUILD_TESTING="${build_testing}" \
+              --config-settings=cmake.define.ENABLE_XHOST=OFF \
               ${{ inputs.pip_opts }}
         fi
 
