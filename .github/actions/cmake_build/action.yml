@@ -59,6 +59,22 @@ runs:
           pip install --quiet -r requirements.txt
         fi
 
+    # Runs before Configure, not just before "Test C++"/"Test Python": a
+    # repo doing integration testing (e.g. -DINTEGRATION_TESTING=ON) needs
+    # the published ecosystem (nwchemex and its dependencies) already on
+    # site-packages by configure time, so that NWXCMake's
+    # nwx_ecosystem_dependency() resolves each sibling from its installed
+    # wheel instead of git master -- matching the sequence a real developer
+    # follows ("pip install nwchemex", then build their local checkout) and
+    # actually exercising NWXCMake's self-override rule (the repo under test
+    # always wins over its own published copy) rather than that rule merely
+    # being true by accident of nothing being installed yet at configure
+    # time. See https://nwchemex.github.io/author/testing/integration/.
+    - name: Install Extra Pip Packages
+      if: inputs.extra_pip_packages != ''
+      shell: bash
+      run: pip install --quiet ${{ inputs.extra_pip_packages }}
+
     - name: Cache Dependency Build Tree
       uses: actions/cache@v4
       with:
@@ -157,15 +173,6 @@ runs:
     - name: ccache Stats
       shell: bash
       run: ccache -s
-
-    - name: Install Extra Pip Packages
-      if: inputs.extra_pip_packages != ''
-      shell: bash
-      # Runs before "Test C++" because CTest-driven Python tests use the
-      # ambient Python_EXECUTABLE, whose sys.path always includes
-      # site-packages regardless of CTest's PYTHONPATH override -- so any
-      # package such a test imports needs to be pip-installed here.
-      run: pip install --quiet ${{ inputs.extra_pip_packages }}
 
     - name: Test C++
       if: inputs.run_cmake_tests == 'true'
