@@ -114,6 +114,27 @@ inputs:
       keg-only libomp on its own). Ignored when cibw_build is unset.
     required: false
     default: "false"
+  import_check:
+    description: >-
+      Space-separated module names to `import` in the post-build
+      verification venv, after the wheel is installed there. Installing a
+      wheel only unpacks it -- a compiled extension that crashes the
+      interpreter the moment it's loaded (e.g. a pybind11 module linked
+      against a different libpython than the headers it was compiled
+      with) installs perfectly cleanly, so `pip install` alone can't tell
+      a working wheel from an unloadable one. Importing it can, and a
+      segfault there fails the job before the publish step ever runs.
+      Runs on every leg, macOS included.
+
+      Leave unset (the normal case) to import every top-level module the
+      installed distribution actually declares in its own RECORD. That is
+      read off the wheel rather than guessed from the distribution name,
+      because the two don't reliably match across this ecosystem
+      (nwchemex-weaklytypedfloat imports as `wtf`, and a package can
+      install no importable module at all, in which case the check is
+      correctly a no-op). Set this only to narrow or override that.
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -273,6 +294,27 @@ runs:
           env_macos+=('SKBUILD_CMAKE_ARGS="-DOpenMP_C_FLAGS=-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include;-DOpenMP_C_LIB_NAMES=omp;-DOpenMP_CXX_FLAGS=-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include;-DOpenMP_CXX_LIB_NAMES=omp;-DOpenMP_omp_LIBRARY=$(brew --prefix libomp)/lib/libomp.dylib"')
         fi
 
+        # Appended after every needs_* branch, not seeded with the arrays
+        # above, because the needs_mpi branch *reassigns* env_macos rather
+        # than appending to it (to raise MACOSX_DEPLOYMENT_TARGET) and would
+        # drop anything set earlier.
+        #
+        # Unconditional, and deliberately not tied to any needs_* input: a
+        # published wheel must never be tuned to whichever runner built it.
+        # gau2grid, libxc and GauXC's vendored gau2grid all default
+        # ENABLE_XHOST ON, which compiles them "-march=native" -- so a wheel
+        # built on an AVX-512 runner raises SIGILL on a user's machine
+        # without it. NWXCMake keeps ON as the default for local builds
+        # (see set_default_nwx_options) and expects redistributable builds
+        # to say otherwise, which is what this does.
+        #
+        # SKBUILD_CMAKE_DEFINE (scikit-build-core's env spelling of
+        # cmake.define.*, ";"-separated KEY=VALUE) rather than
+        # SKBUILD_CMAKE_ARGS, which needs_openmp already claims on macOS --
+        # a second assignment to it there would clobber the OpenMP hints.
+        env_linux+=("SKBUILD_CMAKE_DEFINE=ENABLE_XHOST=OFF")
+        env_macos+=("SKBUILD_CMAKE_DEFINE=ENABLE_XHOST=OFF")
+
         join_and() {
           local out="" item
           for item in "$@"; do
@@ -359,3 +401,12 @@ runs:
           extra_index_args=(--extra-index-url "${{ inputs.extra_index_url }}")
         fi
         pip install --quiet "${extra_index_args[@]}" "${wheel}"
+
+        # See the import_check input: pip install proves the wheel unpacks,
+        # not that its extension modules can actually be loaded. Deliberately
+        # in this same step rather than a new one, so it inherits the
+        # interpreter the preceding setup-python step re-pointed PATH at
+        # (the cibuildwheel target version, not the ambient "3.x").
+        dist_name=$(basename "${wheel}" | cut -d- -f1)
+        IMPORT_CHECK="${{ inputs.import_check }}" DIST_NAME="${dist_name}" \
+          python "${GITHUB_ACTION_PATH}/import_check.py"
