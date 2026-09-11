@@ -328,8 +328,23 @@ runs:
         # cmake.define.*, ";"-separated KEY=VALUE) rather than
         # SKBUILD_CMAKE_ARGS, which needs_openmp already claims on macOS --
         # a second assignment to it there would clobber the OpenMP hints.
-        env_linux+=("SKBUILD_CMAKE_DEFINE=ENABLE_XHOST=OFF")
-        env_macos+=("SKBUILD_CMAKE_DEFINE=ENABLE_XHOST=OFF")
+        #
+        # The inner quotes around ENABLE_XHOST=OFF are load-bearing, for the
+        # same class of reason as CMAKE_PREFIX_PATH above. cibuildwheel does
+        # not hand CIBW_ENVIRONMENT to a shell: it splits it into KEY=VALUE
+        # assignments itself and evaluates each VALUE with bashlex, its
+        # vendored mini-bash. An unquoted value of ENABLE_XHOST=OFF is itself
+        # a syntactically valid bash assignment, and bashlex_eval.evaluate_node
+        # has no handler for that node kind, so the whole build dies before
+        # before_all even runs, with
+        #
+        #   ValueError: Unsupported bash construct: 'assignment'
+        #
+        # Quoting makes it a plain word; the quotes are stripped during
+        # evaluation, so CMake still sees ENABLE_XHOST=OFF. This bites any
+        # value containing "=", on every platform -- not just macOS.
+        env_linux+=('SKBUILD_CMAKE_DEFINE="ENABLE_XHOST=OFF"')
+        env_macos+=('SKBUILD_CMAKE_DEFINE="ENABLE_XHOST=OFF"')
 
         join_and() {
           local out="" item
