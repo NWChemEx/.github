@@ -114,6 +114,22 @@ inputs:
       keg-only libomp on its own). Ignored when cibw_build is unset.
     required: false
     default: "false"
+  python_version:
+    description: >-
+      Python version to build the sdist/wheel with on the plain (non-
+      cibuildwheel) path -- passed straight through to actions/setup-python.
+      Ignored when cibw_build is set (that path pins the build interpreter
+      itself via "Set up Python Matching cibuildwheel Target"). Defaults to
+      "3.x" (whatever's newest) because that's harmless for a pure-Python
+      package's wheel, which carries no Python-version tag. A compiled
+      package that builds on the plain path (no cibw_build) needs this
+      pinned to match "Set up Python Matching Ecosystem Release Target"'s
+      hardcoded 3.12 below -- otherwise the wheel this step builds gets
+      tagged with whatever "3.x" resolves to today, and the later verify
+      step's pinned-3.12 interpreter can't install it ("is not a supported
+      wheel on this platform").
+    required: false
+    default: "3.x"
   import_check:
     description: >-
       Space-separated module names to `import` in the post-build
@@ -148,7 +164,7 @@ runs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: "3.x"
+        python-version: ${{ inputs.python_version }}
 
     - name: Install Packaging Tools
       shell: bash
