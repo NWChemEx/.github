@@ -34,6 +34,7 @@ source text:
 
 import importlib
 import os
+import re
 import sys
 from importlib.metadata import distribution
 
@@ -44,6 +45,14 @@ from importlib.metadata import distribution
 # delocate/auditwheel .dylibs/ and .libs/ directories, lib/, include/,
 # share/, the .dist-info -- is data, not a module.
 _MODULE_SUFFIXES = (".py", ".so", ".pyd", ".dll")
+
+# On macOS the difference between say libscf.dylib and scf.cpython-312-darwin.so
+# (the C++ library vs. the python bindings) was  distinguishable by suffix alone
+# (.dylib vs .so), which is why the comment above only mentions
+# libscf.dylib -- but on Linux both a raw C++ library and a real Python
+# extension end in .so, so we need to also look for the "lib" prefix to
+# distinguish them.
+_LIB_NAME_RE = re.compile(r"^lib.+\.(so|dylib)(\.[0-9.]+)?$")
 
 
 def _top_level_modules(dist_name):
@@ -62,6 +71,8 @@ def _top_level_modules(dist_name):
                 modules.add(name)
             continue
         if not name.endswith(_MODULE_SUFFIXES):
+            continue
+        if _LIB_NAME_RE.match(name):
             continue
         # scf.cpython-312-darwin.so -> scf; friendzone.py -> friendzone
         modules.add(name.split(".")[0])
