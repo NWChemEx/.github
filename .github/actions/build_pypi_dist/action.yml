@@ -421,6 +421,34 @@ runs:
     # Cheap safety net before publishing to a registry where a bad upload
     # can only be yanked, never truly deleted: catch an unimportable wheel
     # here rather than after it's live on PyPI.
+    # The Linux wheel deliberately does NOT vendor MPI: CIBW_REPAIR_WHEEL_COMMAND_LINUX
+    # excludes libmpi/libopen-rte/libopen-pal so the wheel links against whatever
+    # OpenMPI is on the runtime system, because vendoring it is a dead end
+    # (auditwheel bundles shared libraries but never the accompanying bin/orted
+    # that OpenMPI's singleton startup needs). The flip side of that contract is
+    # that *something* has to provide MPI wherever such a wheel is imported.
+    #
+    # Nothing does, here. CIBW_BEFORE_ALL_LINUX builds OpenMPI into
+    # /usr/local/openmpi inside the manylinux *container*; the verification below
+    # runs on the runner host, which has no MPI at all. So importing the freshly
+    # built wheel fails with
+    #
+    #   ImportError: libmpi.so.40: cannot open shared object file
+    #
+    # Installing it here makes the host look like the end user's machine the
+    # wheel documents as a requirement. Same packages setup_nwx_dev_env uses, so
+    # the ABI matches what CIBW_BEFORE_ALL_LINUX compiled against (Ubuntu 24.04
+    # ships the OpenMPI 4.1.x that provides libmpi.so.40).
+    #
+    # macOS needs none of this: delocate vendors MPI into the wheel there, which
+    # is why only the Linux leg was affected.
+    - name: Install Runtime MPI for Verification
+      if: inputs.cibw_build != '' && inputs.needs_mpi == 'true' && runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libopenmpi-dev openmpi-bin
+
     - name: Verify Wheel Installs
       shell: bash
       run: |
