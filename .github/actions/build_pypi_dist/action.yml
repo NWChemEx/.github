@@ -293,13 +293,45 @@ runs:
             echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=auditwheel repair --exclude 'libmpi.so.40' --exclude 'libopen-rte.so.40' --exclude 'libopen-pal.so.40' -w {dest_dir} {wheel}"
           } >> "$GITHUB_ENV"
           before_macos+=("brew install open-mpi")
+          # macOS needs the same MPI exclusion as Linux above, for a second,
+          # macOS-specific reason on top of the bin/orted one.
+          #
+          # delocate's default behaviour copies libmpi.40.dylib (plus
+          # libopen-pal, libpmix, libevent*, libhwloc) into
+          # <pkg>.dylibs/ and rewrites libparallelzone.dylib to load them
+          # via @loader_path. A wheel repaired that way ALSO ships the C++
+          # SDK (headers + lib/cmake/<pkg> + lib/lib<pkg>.dylib), so a
+          # downstream CMake build -- e.g. SCF's test_cmake_build leg --
+          # links its own executable against the *system* (Homebrew)
+          # libmpi.40.dylib while the wheel's dylib still loads the vendored
+          # copy. Both OpenMPI images are then live in one process with
+          # independent copies of `ompi_mpi_comm_world`, and they do not stay
+          # in sync: MPI_Init (reached through the vendored libmpi) returns
+          # MPI_SUCCESS having populated the *Homebrew* copy, while the
+          # wheel dylib's own reference still resolves to the vendored copy,
+          # which is left zero-filled. The first MPI_Comm_size on it then
+          # dereferences a NULL c_local_group:
+          #
+          #   Signal: Segmentation fault: 11 / Signal code: Invalid permissions
+          #   Failing at address: 0x10
+          #    [1] libparallelzone.dylib CommPPPIMPL::CommPPPIMPL(ompi_communicator_t*)
+          #
+          # Excluding the MPI stack makes the wheel's dylib keep an absolute
+          # /opt/homebrew/opt/open-mpi/... install name, so there is exactly
+          # one OpenMPI in the process. Substring matching (delocate matches
+          # --exclude against the library name), unlike auditwheel's exact
+          # sonames above.
+          {
+            echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=delocate-wheel --require-archs {delocate_archs} --exclude libmpi --exclude libopen-pal --exclude libopen-rte --exclude libpmix --exclude libevent --exclude libhwloc -w {dest_dir} -v {wheel}"
+          } >> "$GITHUB_ENV"
           # Homebrew's open-mpi (and its own deps: libpmix, libhwloc,
           # libevent) are built against the actual runner OS, so their
           # dylibs report a minimum target matching it (14.0 on macos-14) --
-          # higher than cibuildwheel's default arm64 target (11.0). delocate
-          # then refuses to tag the repaired wheel as 11.0-compatible, since
-          # that would be false. Raise the declared target to match what's
-          # actually bundled.
+          # higher than cibuildwheel's default arm64 target (11.0). Even with
+          # those dylibs now excluded from the wheel, the *extension itself*
+          # is compiled against them and inherits that minimum, so delocate
+          # still refuses to tag the wheel 11.0. Raise the declared target to
+          # match what is actually linked.
           env_macos=("MACOSX_DEPLOYMENT_TARGET=14.0")
         fi
 
@@ -515,8 +547,11 @@ runs:
     # the ABI matches what CIBW_BEFORE_ALL_LINUX compiled against (Ubuntu 24.04
     # ships the OpenMPI 4.1.x that provides libmpi.so.40).
     #
-    # macOS needs none of this: delocate vendors MPI into the wheel there, which
-    # is why only the Linux leg was affected.
+    # macOS needs none of this even though its wheel no longer vendors MPI
+    # either (CIBW_REPAIR_WHEEL_COMMAND_MACOS above): cibuildwheel builds macOS
+    # wheels natively on the runner host rather than in a container, so the
+    # `brew install open-mpi` from CIBW_BEFORE_ALL_MACOS has already installed
+    # MPI on the very machine that runs the verification below.
     - name: Install Runtime MPI for Verification
       if: inputs.cibw_build != '' && inputs.needs_mpi == 'true' && runner.os == 'Linux'
       shell: bash
