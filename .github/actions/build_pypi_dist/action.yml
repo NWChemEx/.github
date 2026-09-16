@@ -208,6 +208,28 @@ runs:
         env_linux=()
         env_macos=("MACOSX_DEPLOYMENT_TARGET=11.0")
 
+        # gcc-toolset-14, unconditionally. The pinned manylinux_2_28 image
+        # ships gcc-toolset-13 (13.3.1), which has a constraint-satisfaction
+        # bug: wtf::fp::FloatView<Float> becomes non-assignable from double as
+        # soon as wtf/buffer/float_buffer.hpp is also included, even though
+        # concepts::FloatingPoint<double> is satisfied and gcc gives no reason
+        # at -fconcepts-diagnostics-depth=3. That breaks WeaklyTypedFloat and,
+        # through it, TensorWrapper/Chemist/SimDE and everything downstream.
+        # Verified locally: gcc 10.2.1 and gcc 14.2.1 both accept it, only 13
+        # rejects it, and WeaklyTypedFloat builds a clean new-ABI wheel on 14.
+        #
+        # Installed into the pinned image rather than moving to a newer image
+        # tag, so the base stays reproducible instead of chasing :latest.
+        # Placed before the needs_* blocks so their own PATH/LD_LIBRARY_PATH
+        # entries (e.g. needs_mpi's) prepend on top of it rather than replace
+        # it.
+        before_linux+=("dnf install -y gcc-toolset-14-gcc gcc-toolset-14-gcc-c++")
+        env_linux+=(
+          "PATH=/opt/rh/gcc-toolset-14/root/usr/bin:\$PATH"
+          "LD_LIBRARY_PATH=/opt/rh/gcc-toolset-14/root/usr/lib64:/opt/rh/gcc-toolset-14/root/usr/lib:\$LD_LIBRARY_PATH"
+          "PCP_DIR=/opt/rh/gcc-toolset-14/root"
+        )
+
         if [ "${{ inputs.needs_mpi }}" = "true" ]; then
           # Built from source at the *exact* version Ubuntu 24.04's apt
           # package provides (see setup_nwx_dev_env), not EPEL's openmpi3
@@ -400,12 +422,15 @@ runs:
         # references to ecosystem symbols once it finally got far enough to
         # link at all.
         #
-        # manylinux_2_28 (AlmaLinux 8, gcc 14.2.1) defaults to
-        # _GLIBCXX_USE_CXX11_ABI 1, and its auditwheel policy permits the
-        # GLIBCXX_3.4.21 symbols the new ABI needs -- manylinux_2_17 caps
-        # at 3.4.19, which is the other half of why the flag route is a
-        # dead end rather than merely risky. Its gcc 14.2.1 also happens to
-        # match the dev matrix's gcc-14 exactly.
+        # manylinux_2_28 (AlmaLinux 8) defaults to _GLIBCXX_USE_CXX11_ABI 1,
+        # and its auditwheel policy permits the GLIBCXX_3.4.21 symbols the new
+        # ABI needs -- manylinux_2_17 caps at 3.4.19, which is the other half
+        # of why the flag route is a dead end rather than merely risky.
+        #
+        # NB the PINNED tag ships gcc-toolset-13 (13.3.1), NOT 14.2.1; only
+        # :latest has 14. gcc-toolset-14 is installed explicitly above, which
+        # is what actually lines the wheel build up with the dev matrix's
+        # gcc-14.
         #
         # Verified against the exact image cibuildwheel v2.22.0 pins
         # (quay.io/pypa/manylinux_2_28_x86_64:2024.11.16-1, NOT :latest,
