@@ -212,8 +212,11 @@ runs:
           # Built from source at the *exact* version Ubuntu 24.04's apt
           # package provides (see setup_nwx_dev_env), not EPEL's openmpi3
           # (3.1.3) as before -- OpenMPI's ABI is not guaranteed compatible
-          # across major versions. EPEL7 (manylinux2014's package repo) has
-          # no openmpi4 package at all, so this can't be a yum install. Still
+          # across major versions. (manylinux_2_28's AppStream does carry
+          # an openmpi 4.1.1, but a source build pins the exact version
+          # instead of whatever the distro floats to, so this stays as it
+          # is; EPEL7, the package repo before the 2_28 switch, had no
+          # openmpi4 at all and left no choice in the matter.) Still
           # needed even though the wheel no longer vendors MPI (see
           # CIBW_REPAIR_WHEEL_COMMAND_LINUX below): the extension must be
           # *compiled* against a matching OpenMPI to link correctly against
@@ -248,19 +251,22 @@ runs:
           # provides ambient (libopenmpi-dev/openmpi-bin) and which end users
           # need to install themselves (documented as a runtime requirement).
           #
-          # Exact sonames (libmpi.so.40), NOT a glob (libmpi*): cibuildwheel
-          # v2.22.0's manylinux2014 image (quay.io/pypa/manylinux2014_x86_64:
-          # 2024.11.16-1) bakes in auditwheel 6.1.0, whose --exclude does a
+          # Exact sonames (libmpi.so.40), NOT a glob (libmpi*). The old
+          # manylinux2014 image (quay.io/pypa/manylinux2014_x86_64:
+          # 2024.11.16-1) baked in auditwheel 6.1.0, whose --exclude did a
           # plain `soname in exclude` set-membership check (confirmed by
-          # reading that exact container's lddtree.py) -- fnmatch/glob
-          # support for --exclude was only added in a later auditwheel
-          # release. A glob pattern silently matches nothing and bundles the
-          # library anyway (reproduced locally via Docker: 'libmpi*' bundled
-          # libmpi/libopen-rte/libopen-pal same as no --exclude at all;
-          # 'libmpi.so.40' correctly excluded it, and since libopen-rte/
-          # libopen-pal are only reachable *through* libmpi in this tree,
-          # excluding libmpi.so.40 alone is sufficient -- auditwheel doesn't
-          # recurse into an excluded library's own dependencies).
+          # reading that exact container's lddtree.py); fnmatch/glob support
+          # for --exclude only arrived in a later release, so a glob
+          # silently matched nothing and bundled the library anyway
+          # (reproduced via Docker against 6.1.0: 'libmpi*' bundled
+          # libmpi/libopen-rte/libopen-pal same as no --exclude at all,
+          # while 'libmpi.so.40' correctly excluded it). manylinux_2_28
+          # ships auditwheel 6.7.0, which does support globs, but the exact
+          # sonames are kept: they work under both, and they name precisely
+          # what is meant. Since libopen-rte/libopen-pal are only reachable
+          # *through* libmpi in this tree, excluding libmpi.so.40 alone is
+          # sufficient -- auditwheel doesn't recurse into an excluded
+          # library's own dependencies.
           {
             echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=auditwheel repair --exclude 'libmpi.so.40' --exclude 'libopen-rte.so.40' --exclude 'libopen-pal.so.40' -w {dest_dir} {wheel}"
           } >> "$GITHUB_ENV"
@@ -276,13 +282,23 @@ runs:
         fi
 
         if [ "${{ inputs.needs_boost }}" = "true" ]; then
-          # manylinux2014's plain boost-devel is 1.53.0, too old for headers
-          # some repos need (e.g. boost/container_hash/hash.hpp). EPEL's
-          # boost169-devel (parallel-installable, doesn't replace the base
-          # boost-devel) is the newest available via yum there, but installs
-          # under a versioned, non-default include path, so CMake's FindBoost
-          # needs to be pointed at it explicitly via BOOST_INCLUDEDIR.
-          before_linux+=("yum install -y boost169-devel")
+          # The image's base boost-devel is too old for headers some repos
+          # need: boost/container_hash/hash.hpp arrived in Boost 1.67, and
+          # the base package is 1.53.0 on manylinux2014 and 1.66.0 on
+          # manylinux_2_28 -- verified absent in both. EPEL's boost169-devel
+          # (1.69.0, parallel-installable, doesn't replace the base
+          # boost-devel) carries it, and installs at the same
+          # /usr/include/boost169 path under EPEL7 and EPEL8 alike. That
+          # versioned, non-default include path is why CMake's FindBoost has
+          # to be pointed at it explicitly via BOOST_INCLUDEDIR.
+          #
+          # epel-release is installed here rather than assumed: EPEL came
+          # pre-enabled on manylinux2014, but NOT on the manylinux_2_28
+          # image cibuildwheel v2.22.0 pins (2024.11.16-1) -- verified, it
+          # ships only baseos/appstream/extras/powertools, and this
+          # yum install fails without it. Harmlessly repeated by the
+          # needs_blas and needs_eigen branches below.
+          before_linux+=("yum install -y epel-release" "yum install -y boost169-devel")
           env_linux+=("BOOST_INCLUDEDIR=/usr/include/boost169")
           before_macos+=("brew install boost")
         fi
@@ -369,6 +385,40 @@ runs:
       env:
         CIBW_BUILD: ${{ inputs.cibw_build }}
         CIBW_BUILD_VERBOSITY: "1"
+        # Overrides cibuildwheel v2.22.0's default manylinux2014 image.
+        # That image is CentOS 7 + devtoolset-10, whose libstdc++ is built
+        # with _GLIBCXX_USE_DUAL_ABI 0 -- its <bits/c++config.h> does an
+        # unconditional "#undef _GLIBCXX_USE_CXX11_ABI" and pins the macro
+        # to 0, so it *discards* any -D_GLIBCXX_USE_CXX11_ABI=1 passed in.
+        # The new ABI is not merely off there, it is compiled out of the
+        # toolchain. Every C++ library in a Linux wheel therefore exported
+        # the pre-C++11 COW std::string ABI (pluginplay::ModuleManager::at
+        # taking RKSs rather than RKNSt7__cxx11...), which nothing built on
+        # a modern distro can link against: the dev matrix
+        # (ubuntu-24.04, gcc-14/clang-18) defaults to the new ABI, so
+        # SCF's test_cmake_build died at link with hundreds of undefined
+        # references to ecosystem symbols once it finally got far enough to
+        # link at all.
+        #
+        # manylinux_2_28 (AlmaLinux 8, gcc 14.2.1) defaults to
+        # _GLIBCXX_USE_CXX11_ABI 1, and its auditwheel policy permits the
+        # GLIBCXX_3.4.21 symbols the new ABI needs -- manylinux_2_17 caps
+        # at 3.4.19, which is the other half of why the flag route is a
+        # dead end rather than merely risky. Its gcc 14.2.1 also happens to
+        # match the dev matrix's gcc-14 exactly.
+        #
+        # Verified against the exact image cibuildwheel v2.22.0 pins
+        # (quay.io/pypa/manylinux_2_28_x86_64:2024.11.16-1, NOT :latest,
+        # which differs): yum is present, PowerTools is enabled out of the
+        # box so openblas-devel/lapack-devel/eigen3-devel resolve, and
+        # boost169-devel resolves at the same /usr/include/boost169 path
+        # once epel-release is installed -- EPEL is pre-enabled on
+        # manylinux2014 but not here, which is why the needs_boost branch
+        # above now installs it explicitly.
+        #
+        # Raises the minimum glibc for a consumer of these wheels from 2.17
+        # (CentOS 7, long EOL) to 2.28 (RHEL 8 / Ubuntu 18.10 and newer).
+        CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
 
     - name: Collect cibuildwheel Output
       if: inputs.cibw_build != ''

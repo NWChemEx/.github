@@ -21,7 +21,7 @@ description: >-
 
 inputs:
   compiler:
-    description: "One of: gcc-14, clang-18."
+    description: "One of: gcc-14, clang-18 (Linux); appleclang (macOS)."
     required: true
   needs_nwchem:
     description: >-
@@ -62,14 +62,28 @@ runs:
             echo "CXX=g++-14" >> "$GITHUB_ENV"
             echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas)" >> "$GITHUB_ENV"
             ;;
-          macOS_clang-18)
-            brew install llvm@18 libomp cmake ninja ccache open-mpi boost openblas eigen
-            prefix=$(brew --prefix llvm@18)
+          macOS_appleclang)
+            # /usr/bin/clang++ -- the SAME compiler cibuildwheel uses to build
+            # the macOS wheels (build_pypi_dist logs "AppleClang 15.0.0" on
+            # macos-14). Deliberately not Homebrew llvm@18, which was used
+            # here before: that ships its OWN libc++ (_LIBCPP_VERSION 18.01.00)
+            # while the wheels are built against the SDK's, and mixing two
+            # libc++ implementations links cleanly and then dies at dyld with
+            # "symbol not found in flat namespace" -- the SCF#76 segfault.
+            #
+            # It also closes a real gap: AppleClang builds every released
+            # macOS wheel but was compiled by no CI job, which is how a C++20
+            # P1091 (structured binding captured in a lambda) use survived in
+            # grid_from_integratorxx.cpp while all legs stayed green. The
+            # project requires C++20 and AppleClang 15 compiles the whole tree
+            # at -std=c++20 today; testing with it makes the ceiling it
+            # already imposes on releases visible in PR CI.
+            brew install libomp cmake ninja ccache open-mpi boost openblas eigen
             libomp_prefix=$(brew --prefix libomp)
-            echo "CC=${prefix}/bin/clang"    >> "$GITHUB_ENV"
-            echo "CXX=${prefix}/bin/clang++" >> "$GITHUB_ENV"
+            echo "CC=/usr/bin/clang"    >> "$GITHUB_ENV"
+            echo "CXX=/usr/bin/clang++" >> "$GITHUB_ENV"
             echo "CMAKE_PREFIX_PATH=$(brew --prefix openblas);${libomp_prefix}" >> "$GITHUB_ENV"
-            # llvm@18's own clang has no bundled OpenMP runtime; find_package(OpenMP)
+            # AppleClang has no bundled OpenMP runtime either; find_package(OpenMP)
             # needs omp.h/libomp.dylib on the compiler's default search paths to pass
             # its "-fopenmp compiles" check and locate the library, and CPATH/LIBRARY_PATH
             # are how Clang picks those up without needing explicit -I/-L flags threaded

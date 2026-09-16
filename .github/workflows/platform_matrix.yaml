@@ -46,11 +46,30 @@ jobs:
             {"os": "ubuntu-latest", "cibw_build": "cp312-manylinux_x86_64"},
             {"os": "macos-14",      "cibw_build": "cp312-macosx_arm64"}
           ]'
+          # macos-14/gcc-14 is deliberately absent. The macOS wheels are
+          # built by cibuildwheel with AppleClang against libc++, while
+          # Homebrew's GCC uses libstdc++ and has no working libc++ mode --
+          # they mangle std::string differently
+          # (NSt3__112basic_string... vs NSt7__cxx1112basic_string...), so a
+          # GCC build can never link them. That is a property of the
+          # platform, not a bug to be fixed, so the leg could only ever be
+          # red. macOS + GCC is supported only when the whole ecosystem is
+          # built from source (-DNWX_ECOSYSTEM_FROM_SOURCE=ON); NWXCMake's
+          # nwx_assert_wheel_toolchain_supported() fails loudly otherwise.
+          #
+          # The remaining macOS leg is AppleClang, not Homebrew llvm@18: the
+          # wheels are built by AppleClang, and llvm@18 carries its own libc++
+          # (18.01.00 vs the SDK's), which links cleanly and then dies at dyld
+          # -- the SCF#76 segfault. Matching the release compiler also means
+          # PR CI finally compiles what actually ships.
+          #
+          # Linux keeps both compilers: clang there consumes GCC's own
+          # libstdc++ headers and links the same libstdc++.so.6, so the two
+          # share one C++ runtime and agree on the mangling.
           dev_matrix='[
             {"os": "ubuntu-latest", "compiler": "gcc-14"},
             {"os": "ubuntu-latest", "compiler": "clang-18"},
-            {"os": "macos-14",      "compiler": "gcc-14"},
-            {"os": "macos-14",      "compiler": "clang-18"}
+            {"os": "macos-14",      "compiler": "appleclang"}
           ]'
           echo "release_matrix=$(echo "$release_matrix" | jq -c .)" >> "$GITHUB_OUTPUT"
           echo "dev_matrix=$(echo "$dev_matrix" | jq -c .)" >> "$GITHUB_OUTPUT"

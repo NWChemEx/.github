@@ -21,7 +21,7 @@ description: >-
 
 inputs:
   compiler:
-    description: "One of: gcc-14, clang-18. Installed via the native package manager (apt on Linux, Homebrew on macOS)."
+    description: "One of: gcc-14, clang-18 (Linux); appleclang (macOS, i.e. /usr/bin/clang++, the compiler that builds the wheels). Installed via the native package manager (apt on Linux, Homebrew on macOS)."
     required: true
   run_cmake_tests:
     description: "Whether to build and run the CTest (C++) test suite (sets -DBUILD_TESTING)."
