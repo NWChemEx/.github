@@ -26,6 +26,10 @@ on:
         description: "Whether or not to generate PluginPlay Module documentation"
         type: boolean
         default: false
+      wheel_artifact_name:
+        description: "Name of the uploaded wheel artifact to install for module-doc generation (required when generate_module_docs is true)"
+        type: string
+        default: ""
 
 jobs:
   deploy_docs:
@@ -39,40 +43,21 @@ jobs:
         with:
           script: |
             core.setFailed("doc_target must not be blank.")
+      - name: Fail if Wheel Artifact Name is Blank
+        if: inputs.generate_module_docs == true && inputs.wheel_artifact_name == ''
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed("wheel_artifact_name must be set when generate_module_docs is true.")
       - name: Checkout Source
         uses: actions/checkout@v4
-      # Some repos' CMake build invokes a Python codegen script at configure
-      # or build time (e.g. GauXC's gau2grid dependency imports numpy to
-      # generate C source) using whichever python3 is on PATH by default in
-      # this container -- install into that same interpreter here, before
-      # CMake ever runs, rather than in the module-docs/Sphinx steps below
-      # (those activate /pyenv instead, a separate environment).
-      - name: Install Repo Python Build Dependencies
-        if: inputs.generate_module_docs == true
-        run: |
-          if [ -f requirements.txt ]; then
-            # This container's system python3 is PEP 668
-            # externally-managed; --break-system-packages is safe here
-            # since the whole container is ephemeral CI state anyway.
-            python3 -m pip install --quiet --break-system-packages -r requirements.txt
-          fi
-        shell: bash
-      # These next two steps will configure CMake if required
-      - name: Configure Only Docs
-        if: |
-          inputs.generate_module_docs == false &&
-          inputs.doc_target != 'Sphinx'
+      # Configure CMake for a docs-only build (no library targets get
+      # configured/built -- see NWXCMake's ONLY_BUILD_DOCS option).
+      - name: Configure Docs
+        if: inputs.doc_target != 'Sphinx'
         run: |
           cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON -DONLY_BUILD_DOCS=ON
         shell: bash
-      - name: Configure Library
-        if: inputs.generate_module_docs == true
-        run: |
-          toolchain=/toolchains/nwx_gcc-14.cmake
-
-          cmake -Bbuild -H. -GNinja -DBUILD_DOCS=ON \
-          -DCMAKE_INSTALL_PREFIX=./install \
-          -DCMAKE_TOOLCHAIN_FILE="${toolchain}"
       # Build the Doxygen docs
       - name: Build Doxygen Docs
         if: ${{ inputs.doc_target != 'Sphinx' }}
@@ -84,10 +69,21 @@ jobs:
           mkdir docs/build/html
           mv build/html "docs/build/html/${{ inputs.doc_target }}"
         shell: bash
-      # Build the C++ Library if building module docs
-      - name: Build Library
+      # Module-doc generation needs an importable, compiled copy of the
+      # target module -- rather than building the library from source here,
+      # install the wheel that a sibling job in the caller workflow already
+      # built (e.g. build_pypi_dist).
+      - name: Download Wheel Artifact
         if: inputs.generate_module_docs == true
-        run: cmake --build build --parallel
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.wheel_artifact_name }}
+          path: dist
+      - name: Install Wheel
+        if: inputs.generate_module_docs == true
+        run: |
+          . /pyenv/bin/activate
+          pip install dist/*.whl
         shell: bash
       # Generate the module docs source files
       - name: Generate Module Docs
