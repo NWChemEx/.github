@@ -207,6 +207,11 @@ runs:
         before_macos=()
         env_linux=()
         env_macos=("MACOSX_DEPLOYMENT_TARGET=11.0")
+        # Extra --exclude arguments for the repair step (see "Repair command"
+        # below); the needs_* branches append system libraries the wheel
+        # must not vendor.
+        repair_exclude_linux=()
+        repair_exclude_macos=()
 
         # gcc-toolset-14, unconditionally. The pinned manylinux_2_28 image
         # ships gcc-toolset-13 (13.3.1), which has a constraint-satisfaction
@@ -289,9 +294,7 @@ runs:
           # *through* libmpi in this tree, excluding libmpi.so.40 alone is
           # sufficient -- auditwheel doesn't recurse into an excluded
           # library's own dependencies.
-          {
-            echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=auditwheel repair --exclude 'libmpi.so.40' --exclude 'libopen-rte.so.40' --exclude 'libopen-pal.so.40' -w {dest_dir} {wheel}"
-          } >> "$GITHUB_ENV"
+          repair_exclude_linux+=(libmpi.so.40 libopen-rte.so.40 libopen-pal.so.40)
           before_macos+=("brew install open-mpi")
           # macOS needs the same MPI exclusion as Linux above, for a second,
           # macOS-specific reason on top of the bin/orted one.
@@ -321,9 +324,7 @@ runs:
           # one OpenMPI in the process. Substring matching (delocate matches
           # --exclude against the library name), unlike auditwheel's exact
           # sonames above.
-          {
-            echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=delocate-wheel --require-archs {delocate_archs} --exclude libmpi --exclude libopen-pal --exclude libopen-rte --exclude libpmix --exclude libevent --exclude libhwloc -w {dest_dir} -v {wheel}"
-          } >> "$GITHUB_ENV"
+          repair_exclude_macos+=(libmpi libopen-pal libopen-rte libpmix libevent libhwloc)
           # Homebrew's open-mpi (and its own deps: libpmix, libhwloc,
           # libevent) are built against the actual runner OS, so their
           # dylibs report a minimum target matching it (14.0 on macos-14) --
@@ -424,7 +425,34 @@ runs:
           echo "$out"
         }
 
+        # Repair command. Every leg goes through repair_wheel.py, not only
+        # needs_mpi ones: any package with ecosystem dependencies links
+        # libraries (libparallelzone, libspdlog, ...) that its dependency
+        # wheels already install, and auditwheel/delocate would otherwise
+        # vendor a second copy of each -- or, since the build env holding
+        # those wheels is gone by repair time, fail to find them at all.
+        # See repair_wheel.py. cibuildwheel has no {project} placeholder for
+        # this command, so the script is copied into the checkout root, the
+        # repair step's working directory on both platforms (/project inside
+        # the Linux container). The sdist was already built above, so the
+        # copy can't leak into it.
+        cp "${GITHUB_ACTION_PATH}/repair_wheel.py" .nwx_repair_wheel.py
+        repair_args=()
+        if [ -n "${{ inputs.extra_index_url }}" ]; then
+          repair_args+=(--extra-index-url "${{ inputs.extra_index_url }}")
+        fi
+        repair_linux="python .nwx_repair_wheel.py --tool auditwheel ${repair_args[*]}"
+        for lib in "${repair_exclude_linux[@]}"; do
+          repair_linux+=" --exclude '${lib}'"
+        done
+        repair_macos="python .nwx_repair_wheel.py --tool delocate --archs {delocate_archs} ${repair_args[*]}"
+        for lib in "${repair_exclude_macos[@]}"; do
+          repair_macos+=" --exclude '${lib}'"
+        done
+
         {
+          echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=${repair_linux} {wheel} {dest_dir}"
+          echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=${repair_macos} {wheel} {dest_dir}"
           echo "CIBW_BEFORE_ALL_LINUX=$(join_and "${before_linux[@]}")"
           echo "CIBW_BEFORE_ALL_MACOS=$(join_and "${before_macos[@]}")"
           echo "CIBW_ENVIRONMENT_LINUX=${env_linux[*]}"
