@@ -51,6 +51,28 @@ runs:
         restore-keys: |
           deps-${{ runner.os }}-${{ inputs.compiler }}-
 
+    # The build runs without pip's build isolation, so its requirements are
+    # installed into this environment first. With isolation, pip installs
+    # them into a temporary pip-build-env-*/overlay that it deletes as soon
+    # as the build finishes. Ecosystem dependencies are build requirements
+    # (they resolve from their wheels), so the build-tree binaries the C++
+    # tests run from would be linked against libraries in a directory that
+    # no longer exists ("dyld: Library not loaded: @rpath/libutilities.dylib").
+    # scikit-build-core recommends this setup for editable installs anyway.
+    #
+    # tomllib is in the standard library from Python 3.11 on.
+    - name: Install Build Requirements
+      shell: bash
+      run: |
+        python - <<'EOF' > build_requirements.txt
+        import tomllib
+        with open("pyproject.toml", "rb") as f:
+            print("\n".join(tomllib.load(f)["build-system"]["requires"]))
+        EOF
+        cat build_requirements.txt
+        pip install -r build_requirements.txt ${{ inputs.pip_opts }}
+        rm build_requirements.txt
+
     # ENABLE_XHOST=OFF: several dependencies (gau2grid, libxc, GauXC's
     # vendored gau2grid) default it ON, which builds them with
     # "-march=native". The dependency tree cached above is shared across
@@ -66,14 +88,14 @@ runs:
         build_testing=${{ inputs.run_cmake_tests == 'true' && 'ON' || 'OFF' }}
 
         if [ "${{ inputs.run_python_tests }}" == "true" ]; then
-            pip install -e ".[dev]" \
+            pip install -e ".[dev]" --no-build-isolation \
               --config-settings=cmake.define.CMAKE_C_COMPILER="${CC}" \
               --config-settings=cmake.define.CMAKE_CXX_COMPILER="${CXX}" \
               --config-settings=cmake.define.BUILD_TESTING="${build_testing}" \
               --config-settings=cmake.define.ENABLE_XHOST=OFF \
               ${{ inputs.pip_opts }}
         else
-            pip install . \
+            pip install . --no-build-isolation \
               --config-settings=cmake.define.CMAKE_C_COMPILER="${CC}" \
               --config-settings=cmake.define.CMAKE_CXX_COMPILER="${CXX}" \
               --config-settings=cmake.define.BUILD_TESTING="${build_testing}" \
