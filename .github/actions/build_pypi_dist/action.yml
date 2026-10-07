@@ -170,13 +170,37 @@ runs:
       shell: bash
       run: pip install --quiet build twine
 
-    # Uses the normal (isolated) build-system.requires resolution, i.e. the
-    # same git-fetched nwxcmake a real `pip install` from PyPI would use, so
-    # this publishes exactly what a fresh `pip install` would build.
+    # Making an sdist only runs the build backend's packaging step
+    # (scikit-build-core does not run CMake for it), so it needs the backend
+    # and nothing else. An isolated `python -m build --sdist` would install
+    # *all* of build-system.requires, which includes the compiled ecosystem
+    # packages a wheel build links against (nwchemex-parallelzone, ...).
+    # This step runs on the runner's default Python, for which those have no
+    # published wheel, so pip falls back to building them from source -- on
+    # a host with no MPI -- and the sdist step fails before the wheel build
+    # starts ("Package 'mpi-cxx' ... not found" from ParallelZone).
+    #
+    # So install build-system.requires minus the nwchemex-* packages and
+    # build without isolation. Isolation does not change an sdist's contents.
+    # tomllib is in the standard library from Python 3.11 on.
     - name: Build Source Distribution
       if: inputs.build_sdist == 'true'
       shell: bash
-      run: python -m build --sdist --outdir dist
+      run: |
+        python - <<'EOF' > sdist_requirements.txt
+        import re
+        import tomllib
+        with open("pyproject.toml", "rb") as f:
+            requires = tomllib.load(f)["build-system"]["requires"]
+        for req in requires:
+            if not re.match(r"nwchemex[-_.]", req, re.IGNORECASE):
+                print(req)
+        EOF
+        cat sdist_requirements.txt
+        pip install -r sdist_requirements.txt
+        rm sdist_requirements.txt
+        python -m build --sdist --no-isolation --skip-dependency-check \
+          --outdir dist
 
     # Building the wheel from the *extracted sdist* (rather than the repo
     # checkout) catches packaging bugs where a file the build needs was

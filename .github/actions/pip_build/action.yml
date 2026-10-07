@@ -60,14 +60,29 @@ runs:
     # no longer exists ("dyld: Library not loaded: @rpath/libutilities.dylib").
     # scikit-build-core recommends this setup for editable installs anyway.
     #
+    # The dev extra's nwchemex-* packages are installed here too. An editable
+    # install turns on DEVELOPER_SETUP, so CMake configures integration tests,
+    # and the plugins those tests use (e.g. SCF's Integrals, ChemCache, NUX)
+    # must already be installed when it does. pip would otherwise install the
+    # extra only after the build, leaving CMake to fetch and compile them --
+    # and their own dependencies, such as libint2 -- from git master.
+    #
     # tomllib is in the standard library from Python 3.11 on.
     - name: Install Build Requirements
       shell: bash
       run: |
         python - <<'EOF' > build_requirements.txt
+        import re
         import tomllib
         with open("pyproject.toml", "rb") as f:
-            print("\n".join(tomllib.load(f)["build-system"]["requires"]))
+            pyproject = tomllib.load(f)
+        requires = list(pyproject["build-system"]["requires"])
+        dev = pyproject.get("project", {}).get("optional-dependencies", {})
+        requires += [
+            r for r in dev.get("dev", [])
+            if re.match(r"nwchemex[-_.]", r, re.IGNORECASE)
+        ]
+        print("\n".join(requires))
         EOF
         cat build_requirements.txt
         pip install -r build_requirements.txt ${{ inputs.pip_opts }}
