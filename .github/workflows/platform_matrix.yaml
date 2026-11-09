@@ -44,9 +44,9 @@ jobs:
         run: |
           release_matrix='[
             {"os": "ubuntu-latest", "cibw_build": "cp312-manylinux_x86_64"},
-            {"os": "macos-14",      "cibw_build": "cp312-macosx_arm64"}
+            {"os": "macos-15",      "cibw_build": "cp312-macosx_arm64"}
           ]'
-          # macos-14/gcc-14 is deliberately absent. The macOS wheels are
+          # macOS/gcc-14 is deliberately absent. The macOS wheels are
           # built by cibuildwheel with AppleClang against libc++, while
           # Homebrew's GCC uses libstdc++ and has no working libc++ mode --
           # they mangle std::string differently
@@ -69,7 +69,9 @@ jobs:
           dev_matrix='[
             {"os": "ubuntu-latest", "compiler": "gcc-14"},
             {"os": "ubuntu-latest", "compiler": "clang-18"},
-            {"os": "macos-14",      "compiler": "appleclang"}
+            {"os": "macos-15",      "compiler": "appleclang"}
           ]'
+          # N.B. GitHub retired the macos-14 image on 2026-11-02; jobs asking
+          # for it are cancelled before they get a runner.
           echo "release_matrix=$(echo "$release_matrix" | jq -c .)" >> "$GITHUB_OUTPUT"
           echo "dev_matrix=$(echo "$dev_matrix" | jq -c .)" >> "$GITHUB_OUTPUT"

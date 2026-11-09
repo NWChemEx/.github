@@ -121,7 +121,7 @@ runs:
         # Python_EXECUTABLE alone only pins the interpreter/header search --
         # on macOS, FindPython's separate Development.Module/.Embed library
         # lookups can still independently resolve to a *different* Homebrew
-        # framework Python (e.g. python@3.14, present on GitHub's macos-14
+        # framework Python (e.g. python@3.14, present on GitHub's macOS
         # runner image regardless of what this job's own `brew install`
         # pulls in) even though the headers matched the pinned 3.12
         # interpreter. This produced a pybind11 module compiled against 3.12
@@ -170,7 +170,7 @@ runs:
       # signal") instead of a normal build failure -- confirmed via 3
       # consecutive reproductions of exactly this on test_enable_sigma's
       # (ubuntu-latest, gcc-14) matrix cell, while every other cell
-      # (including the same sigma build on macos-14 and on
+      # (including the same sigma build on macOS and on
       # ubuntu-latest/clang-18) passed. Halving nproc trades some build
       # speed for headroom; revisit if it turns out insufficient.
       run: |

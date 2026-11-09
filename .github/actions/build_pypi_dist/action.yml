@@ -351,13 +351,19 @@ runs:
           repair_exclude_macos+=(libmpi libopen-pal libopen-rte libpmix libevent libhwloc)
           # Homebrew's open-mpi (and its own deps: libpmix, libhwloc,
           # libevent) are built against the actual runner OS, so their
-          # dylibs report a minimum target matching it (14.0 on macos-14) --
+          # dylibs report a minimum target matching it (e.g. 15.0 on macos-15) --
           # higher than cibuildwheel's default arm64 target (11.0). Even with
           # those dylibs now excluded from the wheel, the *extension itself*
           # is compiled against them and inherits that minimum, so delocate
           # still refuses to tag the wheel 11.0. Raise the declared target to
-          # match what is actually linked.
-          env_macos=("MACOSX_DEPLOYMENT_TARGET=14.0")
+          # match what is actually linked, i.e., the runner's major version,
+          # so the target follows the runner label in platform_matrix.yaml.
+          # N.B. computed here, not in CIBW_ENVIRONMENT_MACOS, since
+          # cibuildwheel's parser rejects pipes in command substitutions.
+          if [ "${RUNNER_OS}" = "macOS" ]; then
+            macos_major="$(sw_vers -productVersion | cut -d. -f1)"
+            env_macos=("MACOSX_DEPLOYMENT_TARGET=${macos_major}.0")
+          fi
         fi
 
         if [ "${{ inputs.needs_boost }}" = "true" ]; then
