@@ -67,11 +67,21 @@ jobs:
           # libstdc++ headers and links the same libstdc++.so.6, so the two
           # share one C++ runtime and agree on the mangling.
           dev_matrix='[
-            {"os": "ubuntu-latest", "compiler": "gcc-14"},
-            {"os": "ubuntu-latest", "compiler": "clang-18"},
-            {"os": "macos-15",      "compiler": "appleclang"}
+            {"os": "ubuntu-24.04", "compiler": "gcc-14"},
+            {"os": "ubuntu-24.04", "compiler": "clang-18"},
+            {"os": "macos-15",     "compiler": "appleclang"}
           ]'
           # N.B. GitHub retired the macos-14 image on 2026-11-02; jobs asking
           # for it are cancelled before they get a runner.
+          #
+          # Linux is pinned to ubuntu-24.04 because ubuntu-latest moved to
+          # 26.04 on 2026-11-13 and both Linux dev legs went red there:
+          # CMake 4.4's FindPython resolves Development.Module to the
+          # system Python 3.14 instead of the pinned setup-python
+          # interpreter, and the gcc-14 pip leg double-frees in
+          # tensorwrapper::diis::DIIS::extrapolate. Also, the build/_deps
+          # and ccache keys use runner.os ("Linux"), so a 26.04 job restores
+          # trees that were built on 24.04. Unpin once those are fixed and
+          # the cache keys include the image version.
           echo "release_matrix=$(echo "$release_matrix" | jq -c .)" >> "$GITHUB_OUTPUT"
           echo "dev_matrix=$(echo "$dev_matrix" | jq -c .)" >> "$GITHUB_OUTPUT"
